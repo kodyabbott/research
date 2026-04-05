@@ -46,9 +46,41 @@ Simon discussed boundaries for vibe coding. His [March 2025 blog post](https://s
 ### OpenClaw
 From first line of code (November 25, 2025) to Super Bowl ad (February/March 2026). Demonstrates massive demand for personal agents despite security concerns.
 
+### Testing as the New Bottleneck
+Implementation speed went from weeks to hours. The constraint moved to testing and validation. At [21:27](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=1287s): "The bottleneck has moved to testing."
+
+### Prototyping is Free
+At [22:40](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=1360s): "UI prototype is free now." Building three design options instead of one is now standard. Simon notes at [46:35](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=2795s): "my superpower has been prototyping...That's gone."
+
+### Interruption Cost Reduction
+Programming no longer requires 2-4 hour uninterrupted blocks. At [45:16](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=2716s): "I need two minutes every now and then to prompt my agent." This makes developers "much more interruptible."
+
+### Code Credibility Crisis
+Generated code with full documentation and tests looks professional but lacks real-world usage validation. Pre-2022 human-written code is more trustworthy because it has actual usage history.
+
+### AI Tools Are Hard to Use Well
+At [41:31](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=2491s): "It's just a chat bot. It's not easy." Simon pushes back on the idea that these tools are simple. "It takes a lot of practice and it takes a lot of trying things that didn't work and trying things that did work."
+
+### Journalism and AI
+At [1:34:58](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=5698s): "journalists deal with untrustworthy sources all the time." Simon argues journalists are uniquely equipped to work with AI because they already treat sources with appropriate skepticism.
+
 ### Vulnerability Research Transformation
 Coding agents became credible security researchers in 3-6 months. Open source getting flooded with junk reports from unverified AI findings.
-- Source: https://sockpuppet.org/blog/2026/03/30/vulnerability-research-is-cooked/
+- Source: Thomas Ptacek, [Vulnerability Research Is Cooked](https://sockpuppet.org/blog/2026/03/30/vulnerability-research-is-cooked/)
+- Also: [Anthropic/Mozilla Firefox hardening collaboration](https://blog.mozilla.org/en/firefox/hardening-firefox-anthropic-red-team/)
+
+### Prediction: 50% of Engineers at 95% AI Code by End of 2026
+Simon estimates half of software engineers will have 95% of their code produced by AI by end of 2026. At [12:49](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=769s): "95% of the code that I produce, I didn't type myself."
+
+### Pelican Benchmark
+Running joke/observation: quality of AI-generated pelican-riding-a-bicycle images correlates with overall model capability. At [56:10](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=3370s).
+
+### Cloudflare Hiring 1,000 Interns
+Cloudflare planning to hire 1,000 interns as an AI-era bet on junior talent pipeline.
+- Source: https://blog.cloudflare.com/cloudflare-1111-intern-program/
+
+### Kākāpō Parrots
+Episode ends on a positive note about kākāpō (flightless New Zealand parrots, only ~250 left) having a fantastic breeding season in 2026 due to rimu tree fruiting. At [1:38:10](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=5890s).
 
 ## Simon's Broader Safety Research Trail
 
