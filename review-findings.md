@@ -1,6 +1,6 @@
 # Adversarial Review Findings
 
-Review conducted April 5, 2026 by Claude (via OpenClaw) before initial publish.
+Review conducted April 5, 2026 by Claude Code (Opus 4.6) before initial publish.
 
 ## Critical -- Fix Before Publishing
 
@@ -42,9 +42,7 @@ Notes say "97% effectiveness = failing grade" but every Simon source says "99%".
 
 The README claims "I direct and verify" but notes.md files are full of TODOs and read as first-pass agent output. The repo claims AI-assisted but doesn't demonstrate the human layer. The notes don't show human course-corrections, rejected agent outputs, or explicit verification steps.
 
-### 6. OpenClaw is never explained
-
-Referenced in README, CLAUDE.md, and notes.md but never defined. A reader landing on this repo has no idea what OpenClaw is.
+### 6. ~~OpenClaw is never explained~~ (resolved -- removed OpenClaw references, now uses Claude Code)
 
 ### 7. GitHub URL hardcoded before repo exists
 

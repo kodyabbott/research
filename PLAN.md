@@ -48,7 +48,7 @@ His TIL structure:
 
 Our TIL plan:
 - [ ] Create separate `til` repo
-- [ ] Organize by topic (e.g., `ai-safety/`, `openclaw/`, `hardware/`, `supply-chain/`)
+- [ ] Organize by topic (e.g., `ai-safety/`, `agentic-engineering/`, `hardware/`, `supply-chain/`)
 - [ ] Source initial entries from Discord conversations and DMs (already have voice samples)
 - [ ] Add auto-generated README index
 - [ ] Consider Datasette hosting later

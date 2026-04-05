@@ -34,6 +34,6 @@ Include this at the top of every project README, below the title:
 ```markdown
 <!-- AI-ASSISTED-NOTE -->
 > [!NOTE]
-> This is an AI-assisted research report. Research was conducted collaboratively with an LLM (Claude via OpenClaw). For more information, see the [main research repository](https://github.com/kodyabbott/research).
+> This is an AI-assisted research report. Research was conducted collaboratively using Claude Code (Anthropic, Opus 4.6). For more information, see the [main research repository](https://github.com/kodyabbott/research).
 <!-- /AI-ASSISTED-NOTE -->
 ```
