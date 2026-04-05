@@ -8,6 +8,15 @@ Research is AI-assisted using Claude (Anthropic) via [OpenClaw](https://openclaw
 
 Repo structure based on Simon Willison's [simonw/research](https://github.com/simonw/research). Simon's work on the [Lethal Trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) and [prompt injection](https://simonwillison.net/series/prompt-injection/) is a primary source here.
 
+## How it works
+
+The `.claude/` directory contains the agent team that runs this research:
+- `agents/` -- specialized agents (researcher, source-verifier, adversarial-reviewer, url-auditor)
+- `rules/` -- research workflow and source verification rules, auto-loaded every session
+- `settings.json` -- project permissions and model config
+
+See [CLAUDE.md](CLAUDE.md) for full agent instructions.
+
 ## Projects
 
 - [jensen-gtc-agent-safety](jensen-gtc-agent-safety/) -- Jensen Huang's GTC comments on AI agent capability constraints
