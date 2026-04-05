@@ -15,7 +15,7 @@
 
 ## Summary
 
-Simon Willison -- who coined the term "prompt injection" in 2022 and created the [Lethal Trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) framework for AI agent security -- gives a wide-ranging assessment of where AI stands as of early 2026.
+Simon Willison -- who [coined the term "prompt injection"](https://simonwillison.net/2022/Sep/12/prompt-injection/) in 2022 and created the [Lethal Trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) framework for AI agent security -- gives a wide-ranging assessment of where AI stands as of early 2026.
 
 The core thesis: we passed an inflection point in November 2025 when GPT 5.1 and Claude Opus 4.5 crossed from "mostly works" to "almost all of the time does what you told it to do." Software engineers are the canaries -- because code either works or it doesn't, they're the first knowledge workers to fully feel the impact.
 
@@ -34,13 +34,13 @@ Four parallel agents by 11 AM leaves you "wiped out for the day." Simon notes pa
 25 years of experience predicting software timelines is "completely gone." What used to take two weeks might take 20 minutes.
 
 ### Mid-Career Engineers Are Most at Risk
-Per [ThoughtWorks research](https://www.thoughtworks.com/insights/articles/reflections-future-software-engineering-retreat): seniors get amplified, juniors get onboarding solved, but people in the middle face the most disruption.
+Simon described a three-tier impact, attributed to [ThoughtWorks research](https://www.thoughtworks.com/insights/articles/reflections-future-software-engineering-retreat): seniors get amplified, juniors get onboarding solved, but people in the middle face the most disruption. Note: this breakdown is Simon's paraphrase of their findings, not a direct claim from the ThoughtWorks article.
 
 ### Agency Is the Differentiator
 "The one thing AI can never have is agency because it doesn't have human motivations." The human investment in personal agency -- deciding what to build and why -- is what still matters.
 
 ### Vibe Coding Has Boundaries
-Fine for personal projects. The moment you ship it for other people: "you need to take a step back."
+Fine for personal projects. When shipping to others, more care is needed. From his [March 2025 blog post](https://simonwillison.net/2025/Mar/19/vibe-coding/#when-is-it-ok-to-vibe-code-): "If you're going to vibe code anything that might be used by other people, I recommend checking in with someone more experienced for a vibe check (hah) before you share it with the world."
 
 ## The Safety Thread
 
@@ -55,6 +55,7 @@ For the full safety framework, see:
 
 | Date | Source | URL |
 |------|--------|-----|
+| Sep 2022 | Prompt injection coinage | https://simonwillison.net/2022/Sep/12/prompt-injection/ |
 | Apr 2023 | Dual LLM Pattern | https://simonwillison.net/2023/Apr/25/dual-llm-pattern/ |
 | Mar 2025 | CaMeL paper (Google DeepMind) | https://arxiv.org/abs/2503.18813 |
 | Apr 2025 | CaMeL paper review (Simon) | https://simonwillison.net/2025/Apr/11/camel/ |

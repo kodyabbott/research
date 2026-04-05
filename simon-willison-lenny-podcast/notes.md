@@ -26,20 +26,19 @@ Fully automated development where nobody writes code and "nobody reads the code.
 25 years of experience estimating timelines is "completely gone." Projects once estimated at two weeks might take 20 minutes.
 
 ### Mid-Career Risk
-ThoughtWorks research: AI benefits seniors (amplified skills) and juniors (onboarding solved) but threatens mid-career engineers.
-- Source: https://www.thoughtworks.com/insights/articles/reflections-future-software-engineering-retreat
+Simon described a three-tier impact: AI benefits seniors (amplified skills) and juniors (onboarding solved) but threatens mid-career engineers. He attributed this framing to ThoughtWorks, though the [ThoughtWorks article](https://www.thoughtworks.com/insights/articles/reflections-future-software-engineering-retreat) itself discusses changing roles without this exact breakdown. The senior/junior/mid-career trichotomy appears to be Simon's paraphrase of their findings.
 
 ### Lethal Trifecta / Prompt Injection
 Referenced in YouTube chapters at [1:16:31](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=4591s). Not a deep-dive in this episode but connects to his broader body of work.
 
 Other safety-related chapter timestamps:
 - [1:08:21](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=4101s) -- Red/Green TDD pattern for better AI code
-- [1:21:53](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=4913s) -- "97% effectiveness = failing grade"
+- [1:21:53](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=4913s) -- "99% effectiveness = failing grade"
 - [1:25:19](https://www.youtube.com/watch?v=wc8FBhQtdsA&t=5119s) -- Normalization of Deviance
 
 ### Vibe Coding Ethics
-"If you're vibe coding something for yourself...go wild. The moment you ship your vibe coding code for other people to use...you need to take a step back."
-- Related: https://simonwillison.net/2025/Mar/19/vibe-coding/#when-is-it-ok-to-vibe-code-
+Simon discussed boundaries for vibe coding. His [March 2025 blog post](https://simonwillison.net/2025/Mar/19/vibe-coding/#when-is-it-ok-to-vibe-code-) on this topic says: "If you're going to vibe code anything that might be used by other people, I recommend checking in with someone more experienced for a vibe check (hah) before you share it with the world." He reiterated this position on the podcast -- fine for personal use, more care needed when shipping to others.
+- **Note**: Quotes in earlier drafts (e.g. "go wild", "take a step back") were paraphrases, not his actual words. The blog post quote above is verified.
 
 ### Agency as Differentiator
 "The one thing AI can never have is agency because it doesn't have human motivations."
@@ -92,6 +91,8 @@ This podcast appearance sits within a larger body of work:
 
 ## Simon's Research Repos
 
-- https://github.com/simonw/research (502 stars) -- 83 deep-dive investigations, all LLM-generated
-- https://github.com/simonw/til (1,397 stars) -- 575 short-form learnings, human-written
-- https://github.com/simonw/llm (11,523 stars) -- CLI tool for interacting with LLMs
+- https://github.com/simonw/research (~500 stars) -- 80+ deep-dive investigations, all LLM-generated
+- https://github.com/simonw/til (~1,400 stars) -- 575 short-form learnings, human-written
+- https://github.com/simonw/llm (~11.5k stars) -- CLI tool for interacting with LLMs
+
+*(Star counts approximate as of April 2026)*
