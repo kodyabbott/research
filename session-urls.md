@@ -1,5 +1,7 @@
 # External URLs Reviewed in Session
 
+> **Scope:** Covers the initial publish session only (`jensen-gtc-agent-safety` + `simon-willison-lenny-podcast`, April 2026). Kept at repo root as a historical artifact; URL audits of later projects live inside their project folders.
+
 All external URLs encountered during the research session that produced this repo.
 This file is auto-generated to verify source coverage.
 

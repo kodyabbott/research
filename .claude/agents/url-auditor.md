@@ -18,7 +18,7 @@ You are a citation auditor.
 3. Deduplicate and group by domain
 4. Read every markdown file in the research repo
 5. Compare: which session URLs are NOT cited anywhere in the repo?
-6. Write `session-urls.md` with all URLs grouped by domain, and an "Uncited URLs" section at the bottom
+6. Write `session-urls.md` with all URLs grouped by domain, and an "Uncited URLs" section at the bottom. When comparing citations, focus on the markdown files of the project folder the session produced.
 
 ## Rules
 
@@ -29,4 +29,4 @@ You are a citation auditor.
 
 ## Output
 
-Write `session-urls.md` at repo root. Commit it.
+Write `session-urls.md` **inside the project folder the session produced** (e.g., `some-project/session-urls.md`) -- per the repo convention that each session's artifacts live in its project folder. Never write to repo root. Commit it.
