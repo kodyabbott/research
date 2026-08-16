@@ -64,6 +64,40 @@ report as approximate until every model has been re-run through the harness.**
 The DeepSeek row is different again: llama.cpp's `llama-server`, not Ollama, since it needs
 `--n-cpu-moe` to split experts across VRAM and system RAM. Ollama has no equivalent flag.
 
+## 2026-08-15 — landscape check, and a correction to this project's framing
+
+Ran a survey before investing further. It contradicted the premise this folder was built on, so the
+README has been corrected rather than defended.
+
+**The format is saturated.** r/LocalLLaMA carried 249 unique benchmark posts in 30 days — about 58 a
+week. 36% scored under 10 points; 62% under 50. Twelve separate Qwen3.8 benchmark posts appeared
+within 24 hours of release, scoring between 0 and 47. On Hacker News, "I benchmarked local LLMs"
+submissions consistently sit at 1–3 points, including two separate submissions of Simon Willison's
+own `smevals`.
+
+**A well-funded incumbent is entering.** [Artificial Analysis](https://artificialanalysis.ai/benchmarks/hardware)
+lists a "Workstation — Coming late 2026" tier: *"Compare consumer- and prosumer-tier system
+performance for running open models at your desk."* Building a generic prosumer speed leaderboard
+means colliding with them.
+
+**Claims removed from README.md as unsupported:**
+- ~~"this column is rarely reported anywhere"~~ — Artificial Analysis reports reasoning tokens per
+  model. Narrowed to the local-GGUF-quant intersection, which does appear uncovered.
+- ~~"several of the [prompt-ingest] figures circulating for these models"~~ — `[REMOVED — no
+  supporting source found]`. Never verified that specific figures circulate; the real finding is that
+  `llama-bench` supports `-d` and the *convention* ignores it.
+- Framing implying novelty — replaced with an explicit prior-art section.
+
+**What the survey says the differentiator actually is.** The most rigorous work in this space
+([Rakuen Software](https://rakuensoftware.com/blog/synthesis-model-selection)) runs on a **$900 24 GB
+AMD card**. Their advantage is paired bootstrap confidence intervals over 10,000 resamples, reporting
+null results as headlines, publishing corrections with audit trails, and disclosing their own
+confounds unprompted. Statistical discipline, not VRAM.
+
+**Sustainability warning.** dubesor.de/benchtable covered 347 models from 02/2024 to 04/2026, then
+was **retired because manual upkeep became infeasible**. Any sweep goes stale in 6–8 weeks. Fully
+automated or it doesn't survive the year.
+
 ### TODO
 
 - Re-run every model through `bench.ps1` so the table is methodologically uniform

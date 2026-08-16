@@ -7,7 +7,12 @@
 
 Same-day benchmarks of trending open models, run on one known machine, with methodology stated so the numbers can be argued with.
 
-Most published benchmarks have one of three problems: they test a single model in isolation, they run on hardware the reader can't identify, or they report throughput without the context needed to interpret it. This is an attempt at the opposite — a fixed battery, a fixed machine, and every measurement traceable to a command anyone can re-run.
+A fixed battery, a fixed machine, and every measurement traceable to a command anyone can re-run.
+
+> [!IMPORTANT]
+> **Prior art, checked before claiming novelty.** Local-model throughput benchmarking is a crowded field and this project is not new work. [LocalScore](https://www.localscore.ai/) has ~4,000 submissions. The [llama.cpp CUDA scoreboard](https://github.com/ggml-org/llama.cpp/discussions/15013) is community-maintained and active. [MLPerf Client](https://mlcommons.org/benchmarks/client/) has the strongest methodology. [oobabooga's LocalBench](https://localbench.substack.com/) covers quantization quality via KL-divergence across 72+ quants, and `llama-perplexity --kl-divergence` ships free inside llama.cpp. [Artificial Analysis](https://artificialanalysis.ai/benchmarks/hardware) has announced a workstation-tier hardware leaderboard for late 2026.
+>
+> What follows is a personal instrument for one machine, kept because same-day numbers on identical hardware are useful to its owner. Treat any framing of it as novel with suspicion.
 
 ## The machine
 
@@ -43,16 +48,21 @@ while the coder model finished in under half a second at 259 tok/s.
 
 So the model that looks three times slower on the headline number is, for a short factual request,
 closer to a hundred and fifty times slower in practice. Throughput alone will mislead you about
-which model feels fast, and this column is rarely reported anywhere.
+which model feels fast.
+
+**How well-covered is this?** [Artificial Analysis tracks average reasoning tokens per model](https://artificialanalysis.ai/methodology) and prices them into cost-to-run — but only for **hosted API endpoints**. Two 2026 papers ([arXiv 2606.25519](https://arxiv.org/html/2606.25519v1), [arXiv 2606.00206](https://arxiv.org/abs/2606.00206)) show quantization inflates chain-of-thought length by +4.7% to +292%, which means hosted-API figures are **provably not a valid proxy for a local quant** — but both papers ran vLLM on H100s with research quants, not GGUF K-quants on consumer hardware. That specific intersection is the part that appears genuinely uncovered.
 
 ## Prompt ingest needs a real prompt
 
 Early hand-testing measured prompt ingest between 2.3 and 446 tok/s for the same model across runs.
 Those numbers were noise: the prompts were ~20 tokens, so fixed overhead dominated entirely.
 
-Measured properly with a ~7,000-token prompt, Qwen3.8-27B ingests at **2,555 tok/s**. Any
-prompt-ingest figure derived from a short prompt — including several of the ones circulating for
-these models — should be discarded.
+Measured properly with a ~7,000-token prompt, Qwen3.8-27B ingests at **2,555 tok/s**.
+
+To be precise about whose fault this is: `llama-bench` supports depth via `-d/--n-depth` and has for
+some time. The problem is convention, not tooling — the canonical hardware tables standardize on
+`pp512/tg128` against **Llama 2 7B**, a dense model from 2023 at a 512-token prompt, which says
+little about a 96 GB card running a large MoE at long context.
 
 ## The battery
 
