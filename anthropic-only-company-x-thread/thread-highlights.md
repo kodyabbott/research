@@ -1,6 +1,6 @@
 # Highlights: the Anthropic 'only company left' exchange -- high-profile thread
 
-The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of 1,086 captured). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 (API credits were exhausted before that conversation could be harvested). Full archive: `thread-digest.md`.
+The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured in the raw JSON (see the note in section 4). Full archive: `thread-digest.md`.
 
 Timeline: All-In clip (Aug 14) -> Sholto's rebuttal (Aug 15 03:12) -> Gavin's long reply (12:59) -> Sholto's response (15:28) -> Dario's 2-post reply quoting Gavin (22:44).
 
@@ -263,7 +263,7 @@ Yann LeCun did not appear in Dario's replies or top quotes as of the Aug 16 brow
 
 ## 4. The high-profile reaction to Dario (browser-captured, Aug 16)
 
-Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~18:00 UTC and timestamps are approximate (X shows relative times). Not in the raw JSON archive; the resume harvest will backfill these with full fields.
+Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~15:00-18:00 UTC and timestamps are approximate (X shows relative times). These entries are kept as browser-captured for provenance: 10 of the 21 posts below were later also captured with full fields in the raw JSON by API run 2 (where exact values differ slightly, the JSON is authoritative); the other 11 -- Elon's quote, Gavin's "Yes!" and self-quote, Beff Jezos, Anish Acharya, the Sasha de Marigny exchange, Gary Marcus, and Gavin's S-1 reply -- exist only here, since the 2/2 quote capture is truncated and the Sasha/Marcus material sits in out-of-scope conversations.
 
 ### Replies to Dario
 
@@ -309,7 +309,7 @@ Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as display
 > "[AI threats] are likely to become very serious at some unknown point in the near future."
 >
 > In 60 minutes:
-> "AI could displace half of all entry-level white collar jobs in the next 1-5 years"
+> "AI could displace half of all entry-level white collar jobs in the next 1–5 years"
 > Then doubling down on this "AI will have effects that are much broader and occur much faster"
 >
 > 2025 Axios AI Summit:
@@ -366,9 +366,9 @@ High-profile direct *replies* to Gavin's post are already in section 2 (LeCun, S
 > **Anish Acharya** (@illscience, a16z) | Aug 15 | 37 likes | 10k views | [post](https://x.com/illscience/status/2088729200354365783)
 > What a great discourse.
 
-### The Anthropic comms denial (under the All-In clip, Aug 14)
+### The Anthropic comms denial (under the All-In clip, Aug 15 00:47 UTC)
 
-> **Sasha de Marigny** (@sashadem, Anthropic comms) | reply to @theallinpod and @GavinSBaker, Aug 14 | 111 likes | 9.1k views | [post](https://x.com/sashadem/status/2088427297217110188)
+> **Sasha de Marigny** (@sashadem, Anthropic comms) | reply to @theallinpod and @GavinSBaker, Aug 15 00:47 UTC (Aug 14 evening US time) | 111 likes | 9.1k views | [post](https://x.com/sashadem/status/2088427297217110188)
 > Dario has never said this. Complete and utter nonsense.
 
 >> **Gavin Baker** (@GavinSBaker) | Aug 15 | 33 likes | 2.6k views | [post](https://x.com/GavinSBaker/status/2088617771072360864)
