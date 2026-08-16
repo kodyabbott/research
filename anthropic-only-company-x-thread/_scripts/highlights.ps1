@@ -1,4 +1,8 @@
-# Build thread-highlights.md: the conversation pruned to high-profile participants
+# Build thread-highlights.md SECTIONS 1-3 from x-archive raw JSON.
+# NOTE: this generates thread-highlights-gen.md only. The shipped thread-highlights.md
+# is that output spliced with hand-curated content (the timeline line, the section-3
+# LeCun note, and all of section 4, which came from browser capture) -- see README
+# "Reproduction". Re-running this script does NOT regenerate the shipped file.
 $dir = Split-Path $PSScriptRoot -Parent
 $roots   = Get-Content "$dir\roots.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $replies = Get-Content "$dir\replies_2088463770318516734.json" -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -66,7 +70,7 @@ $keptCount = $keep.Keys.Count
 
 Out-Line "# Highlights: the Anthropic 'only company left' exchange -- high-profile thread"
 Out-Line ""
-Out-Line "The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context ($keptCount reply-tree posts of 1,086 captured). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 (API credits were exhausted before that conversation could be harvested). Full archive: ``thread-digest.md``."
+Out-Line "The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context ($keptCount reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured in the raw JSON (see the note in section 4). Full archive: ``thread-digest.md``."
 Out-Line ""
 Out-Line "Timeline: All-In clip (Aug 14) -> Sholto's rebuttal (Aug 15 03:12) -> Gavin's long reply (12:59) -> Sholto's response (15:28) -> Dario's 2-post reply quoting Gavin (22:44)."
 Out-Line ""
@@ -111,7 +115,7 @@ Out-Line "## 3. Dario's reply to Gavin (separate conversation, Aug 15 22:44)"
 Out-Line ""
 Out-Post $rootById['2088758816376807762'] 0
 Out-Post $rootById['2088758819304443967'] 0
-Out-Line "*(Replies to Dario's posts not yet captured -- pending API credit top-up.)*"
+Out-Line "*(Section 4 -- the browser-captured reaction to Dario -- is hand-curated and spliced in after this generated output; see README Reproduction.)*"
 
 [System.IO.File]::WriteAllText("$dir\thread-highlights-gen.md", $sb.ToString(), (New-Object System.Text.UTF8Encoding $false))
 "highlights written: $((Get-Item "$dir\thread-highlights-gen.md").Length) bytes, kept $keptCount tree posts"
