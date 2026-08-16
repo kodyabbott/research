@@ -48,7 +48,7 @@ Compounding factors, all verifiable in the repo:
 - The repo's `LICENSE` is MIT with no data carve-out, so the repo affirmatively purports to grant "use, copy, modify, ... sell" rights over 6,000 posts the author does not own.
 - Grep for `privacy|ethic|takedown|terms of service|copyright|licen|redistribut` across `README.md`, `notes.md`, repo `CLAUDE.md`, and `.claude/rules/` returns **nothing**. There is no takedown contact, no deletion policy, no statement of purpose.
 - `users.json` maps 4,372 user IDs to real names and handles, including thousands of small accounts (sample entry: a 0-follower-tier user). Replies by small accounts are republished verbatim in `thread-digest.md`. If any of those users delete their posts, this archive keeps them public forever -- the exact scenario the IDs-only norm exists to prevent.
-- `session-urls.md` lines 63-68 publish the author's X Developer Console account ID (`2072134215626321920`), which links the (potentially policy-violating) dataset directly to the developer account that produced it. See M2.
+- `session-urls.md` lines 63-68 publish the author's X Developer Console account ID (`<redacted>`), which links the (potentially policy-violating) dataset directly to the developer account that produced it. See M2.
 
 At minimum the README needs a data-ethics/ToS section: what is republished and why, the public-figure/newsworthiness rationale, a takedown contact, and an explicit statement that the MIT license covers the scripts and prose but not the archived third-party content. The stronger fix is the field-standard one: ship IDs + the rendered digest of public-figure posts, not full-object JSON of 4,372 people.
 
@@ -107,7 +107,7 @@ Repo `README.md` line 7: "Claude Code (Anthropic, **Opus 4.6** 1M context)"; rep
 
 ### M2. session-urls.md leaks the X Developer Console account ID
 
-Lines 63-68 publish `console.x.com/accounts/2072134215626321920/...`. Not a credential, but a needless stable identifier for the author's developer account -- and given C3, it hands X a direct link from the dataset to the account to action. Redact to `console.x.com/accounts/<id>/usage`.
+Lines 63-68 publish `console.x.com/accounts/<redacted>/...`. Not a credential, but a needless stable identifier for the author's developer account -- and given C3, it hands X a direct link from the dataset to the account to action. Redact to `console.x.com/accounts/<id>/usage`.
 
 ### M3. README "Known gaps" misclassifies what the missing quote sets contain
 

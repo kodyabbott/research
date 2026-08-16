@@ -4,7 +4,7 @@ AI agent safety research by [Kody Abbott](https://kodyabbott.com). Learning in p
 
 Each folder is a research project. `notes.md` is the trail, `README.md` is the report.
 
-Research is AI-assisted using Claude Code (Anthropic, Opus 4.6 1M context). I direct and verify, the agent searches and drafts. Project READMEs are marked with an `AI-ASSISTED-NOTE` banner to make this transparent. See [CLAUDE.md](CLAUDE.md) for what that means and how this repo works.
+Research is AI-assisted using Claude Code (Anthropic; currently Claude Fable 5, earlier projects Opus 4.6). I direct and verify, the agent searches and drafts. Project READMEs are marked with an `AI-ASSISTED-NOTE` banner to make this transparent. See [CLAUDE.md](CLAUDE.md) for what that means and how this repo works.
 
 Repo structure based on Simon Willison's [simonw/research](https://github.com/simonw/research). Simon's work on the [Lethal Trifecta](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) and [prompt injection](https://simonwillison.net/series/prompt-injection/) is a primary source here.
 
