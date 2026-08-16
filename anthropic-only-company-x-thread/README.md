@@ -19,7 +19,7 @@ Captured 2026-08-16 via the X API v2 (app-only auth, read-only), supplemented by
 
 ## The event, briefly
 
-1. **Aug 14** -- All-In Podcast posts a clip of Gavin Baker (@GavinSBaker) relaying the "only private company" claim. Anthropic comms lead Sasha de Marigny replies: "Dario has never said this."
+1. **Aug 14, 20:51 UTC** -- All-In Podcast posts a clip of Gavin Baker (@GavinSBaker) relaying the "only private company" claim. Anthropic comms lead Sasha de Marigny replies at 00:47 UTC Aug 15: "Dario has never said this."
 2. **Aug 15, 03:12 UTC** -- Sholto Douglas (@_sholtodouglas, Anthropic) quote-posts the clip: "Completely false." Elon Musk replies. This starts conversation 1 (`2088463770318516734`).
 3. **Aug 15, 12:59 UTC** -- Gavin posts a long, conciliatory-but-critical reply inside Sholto's thread. Yann LeCun, Joe Weisenthal, and others respond; Gavin and Sholto have an extended back-and-forth.
 4. **Aug 15, 22:44 UTC** -- Dario Amodei quote-posts Gavin's reply with a 2-post response (regulation, messaging). This starts conversation 2 (`2088758816376807762`). Musk, Brad Gerstner, Joe Lonsdale, Steven Sinofsky, and others react.
