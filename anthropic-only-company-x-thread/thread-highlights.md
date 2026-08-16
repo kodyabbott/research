@@ -1,6 +1,6 @@
 # Highlights: the Anthropic 'only company left' exchange -- high-profile thread
 
-The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured in the raw JSON (see the note in section 4). Full archive: `thread-digest.md`.
+The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured in the raw JSON (see the note in section 4). Full dataset: `ids/` (post IDs; rehydrate via `_scripts/hydrate.sh` -- full-object redistribution is limited by the X Developer Policy).
 
 Timeline: All-In clip (Aug 14) -> Sholto's rebuttal (Aug 15 03:12) -> Gavin's long reply (12:59) -> Sholto's response (15:28) -> Dario's 2-post reply quoting Gavin (22:44).
 

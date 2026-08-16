@@ -63,3 +63,7 @@ The source-verifier and adversarial-reviewer agents (reports: `source-verificati
 3. "Verified LeCun never engaged on Dario's posts" -- he retweeted two critical quote posts of it.
 4. Sasha de Marigny's denial was dated "Aug 14"; in UTC (the convention everywhere else in these docs) it is Aug 15 00:47. The substantive claim -- denial predates Sholto's thread by ~2.4 hours -- holds.
 5. Wall-clock times were labeled Mountain Time but were actually UTC-7 machine-local; restated in UTC.
+
+## Data reduction to IDs-only (Aug 16, after the review)
+
+Decision: adhere to the X Developer Policy's redistribution limits (IDs-only "hydration" model). Removed from the repo and purged from git history: the four full-object JSON files, users.json, roots.json, pages-raw.zip, and thread-digest.md (the digest was the dataset in markdown form). Added: `ids/` (post/user IDs per source file) and `_scripts/hydrate.sh`. thread-highlights.md stays -- attributed, permalinked quotation of public figures' newsworthy statements is commentary, not dataset redistribution. The full-object capture is retained privately for verification; the earlier review reports (`review-findings.md`, `source-verification.md`) describe files that are no longer in the repo, kept as the audit trail of the version they reviewed.
