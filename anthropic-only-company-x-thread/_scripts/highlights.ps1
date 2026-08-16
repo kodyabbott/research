@@ -1,5 +1,5 @@
 # Build thread-highlights.md: the conversation pruned to high-profile participants
-$dir = "C:\Users\kody1\claude\x-archive"
+$dir = Split-Path $PSScriptRoot -Parent
 $roots   = Get-Content "$dir\roots.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $replies = Get-Content "$dir\replies_2088463770318516734.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $users   = Get-Content "$dir\users.json" -Raw -Encoding UTF8 | ConvertFrom-Json

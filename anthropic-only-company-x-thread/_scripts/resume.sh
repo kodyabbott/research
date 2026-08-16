@@ -2,7 +2,7 @@
 # Resume X archive harvest after credit top-up.
 # Picks up convA from the saved next_token, then convB and all quotes from scratch.
 set -u
-cd /c/Users/kody1/claude/x-archive || exit 1
+cd "$(dirname "$0")/.." || exit 1
 mkdir -p pages
 tok=$(tr -d '\r\n' < "$HOME/.x-bearer-token")
 F="tweet.fields=id,text,author_id,created_at,conversation_id,in_reply_to_user_id,referenced_tweets,public_metrics,note_tweet,entities&expansions=author_id,referenced_tweets.id,in_reply_to_user_id&user.fields=id,name,username,verified"

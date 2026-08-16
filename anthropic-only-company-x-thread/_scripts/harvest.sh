@@ -1,7 +1,7 @@
 #!/bin/bash
 # X thread archive harvester -- read-only, app-only bearer auth
 set -u
-cd /c/Users/kody1/claude/x-archive || exit 1
+cd "$(dirname "$0")/.." || exit 1
 mkdir -p pages
 tok=$(tr -d '\r\n' < "$HOME/.x-bearer-token")
 F="tweet.fields=id,text,author_id,created_at,conversation_id,in_reply_to_user_id,referenced_tweets,public_metrics,note_tweet,entities&expansions=author_id,referenced_tweets.id,in_reply_to_user_id&user.fields=id,name,username,verified"

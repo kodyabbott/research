@@ -1,7 +1,7 @@
 #!/bin/bash
 # Merge harvested pages into final deduped JSON files
 set -u
-cd /c/Users/kody1/claude/x-archive || exit 1
+cd "$(dirname "$0")/.." || exit 1
 
 merge_data() { # $1 = glob prefix, $2 = output file
   local files=(pages/$1_p*.json)

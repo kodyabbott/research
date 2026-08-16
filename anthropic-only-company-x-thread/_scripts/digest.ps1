@@ -1,5 +1,5 @@
 # Build complete thread-digest.md from x-archive raw JSON (both conversations + quotes)
-$dir = "C:\Users\kody1\claude\x-archive"
+$dir = Split-Path $PSScriptRoot -Parent
 $roots    = Get-Content "$dir\roots.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $repliesA = Get-Content "$dir\replies_2088463770318516734.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $repliesB = Get-Content "$dir\replies_2088758816376807762.json" -Raw -Encoding UTF8 | ConvertFrom-Json
