@@ -29,10 +29,10 @@ Captured 2026-08-16 via the X API v2 (app-only auth, read-only), supplemented by
 | File | Contents |
 |------|----------|
 | `roots.json` | The 5 root/context posts with full fields (All-In clip, Sholto root, Gavin reply, Dario 1/2 + 2/2) |
-| `replies_2088463770318516734.json` | All 1,112 replies in Sholto's conversation (complete) |
-| `replies_2088758816376807762.json` | All 2,474 replies in Dario's conversation (complete) |
-| `quotes_2088758816376807762.json` | 1,445 quote posts of Dario 1/2 |
-| `quotes_2088758819304443967.json` | 999 quote posts of Dario 2/2 |
+| `replies_2088463770318516734.json` | Sholto's conversation, complete: 1,111 replies + the root post (1,112 entries) |
+| `replies_2088758816376807762.json` | Dario's conversation, complete: 2,472 replies + his two posts (2,474 entries) |
+| `quotes_2088758816376807762.json` | quote_tweets results for Dario 1/2: 1,445 entries = 604 true quote posts + 841 truncated retweet stubs |
+| `quotes_2088758819304443967.json` | quote_tweets results for Dario 2/2, **truncated capture**: 999 entries = 153 true quote posts + 846 retweet stubs (see Known gaps) |
 | `users.json` | 4,372 user objects (id, name, username, verified) referenced across the data |
 | `pages-raw.zip` | The raw per-page API responses the merged files were built from |
 
@@ -40,10 +40,12 @@ All post objects carry full fields: `note_tweet` (full long-form text), `referen
 
 ## Known gaps
 
-- **Quote posts of Sholto's root and Gavin's reply were not captured** (API credits ran out; ~130 posts). The notable ones (Dario's response, Gavin's self-quote, Beff Jezos, Anish Acharya, the Sasha de Marigny exchange) are in `thread-highlights.md` section 4 via browser capture, with permalinks.
-- Replies to the All-In clip post itself were out of scope.
+- **Quote capture of Dario 2/2 is substantially incomplete.** The harvest died mid-pagination on the second credits-depleted error: the file covers only Aug 16 08:58-19:13 UTC, missing the first ~10 hours of quote activity. Against the root post's `quote_count` of 500, only 153 true quote posts were captured (~347 missing) -- including Elon Musk's "Interesting exchange" quote, the most-viewed reaction in the event. The high-profile missing quotes are preserved in `thread-highlights.md` section 4 via browser capture, with permalinks.
+- **The quote files mix in retweets.** The `quote_tweets` endpoint returns retweets-of-quote-posts as truncated "RT @..." stubs alongside actual quote posts; 58% (1/2) and 85% (2/2) of the entries are stubs. Counts in this README distinguish the two; roughly $8.50 of the API spend went to reading stubs.
+- **Quote posts of Sholto's root and Gavin's reply were not captured at all** (~64 + ~69 posts per those posts' `quote_count` metrics). Notable members of those sets (Gavin's self-quote, Beff Jezos, Anish Acharya) are in `thread-highlights.md` section 4 via browser capture.
+- Replies to the All-In clip post itself were out of scope; the Sasha de Marigny exchange in section 4 comes from that out-of-scope conversation, via browser.
 - Deleted posts and protected accounts are invisible to the API; they surface as "detached replies" in the digest.
-- Metrics are a snapshot of capture time (Aug 16 ~18:00 UTC) and drift from live numbers.
+- Metrics are a snapshot of capture time (run 2 ended ~19:16 UTC Aug 16) and drift from live numbers. The two rendered files also differ slightly from each other: `roots.json` (and thus the highlights headers) was fetched ~1 hour before the reply files the digest is built from, so e.g. Dario 1/2 shows 7,341 likes in highlights and 7,435 in the digest. Both are correct for their fetch times.
 
 ## Collection cost and method
 
