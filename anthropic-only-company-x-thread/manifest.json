@@ -14,8 +14,17 @@
   "totals": {
     "replies_convA_sholto": 1112,
     "replies_convB_dario": 2474,
-    "quotes_dario_1of2": 1445,
-    "quotes_dario_2of2": 999,
+    "quotes_dario_1of2": {
+      "entries": 1445,
+      "true_quote_posts": 604,
+      "retweet_stubs": 841
+    },
+    "quotes_dario_2of2": {
+      "entries": 999,
+      "true_quote_posts": 153,
+      "retweet_stubs": 846,
+      "truncated": true
+    },
     "quotes_sholto_root": 0,
     "quotes_gavin_reply": 0,
     "unique_users": 4372
@@ -25,6 +34,12 @@
     "Recent search covers ~7 days; posts date from Aug 14-15 2026, harvest ran Aug 16 2026 UTC.",
     "Deleted posts and protected-account replies are invisible to the API and appear as gaps in the reply tree."
   ],
-  "status": "COMPLETE except two small quote sets",
-  "second_run_note": "Aug 16 second harvest after credit top-up: convA completed (1112 replies), convB completed (2474 replies), quotes for Dario 1/2 (1445) and 2/2 (999) captured. Credits depleted again before quote posts of Sholto root (~64) and Gavin reply (~69) -- the notable ones from those sets are in thread-highlights.md via browser capture. quote_tweets pagination degrades to 1-result pages past the real tail; scripts now cut off at <=2 results/page to avoid billing waste."
+  "status": "Replies complete for both conversations. Quote capture: 1/2 full-window; 2/2 TRUNCATED (Aug 16 08:58-19:13 UTC only, ~347 of ~500 true quote posts missing); Sholto-root and Gavin-reply quote sets not captured (~133 posts).",
+  "second_run_note": "Aug 16 second harvest after credit top-up: convA completed (1,112 entries incl. root), convB completed (2,474 entries incl. Dario 1/2+2/2), quote_tweets results for Dario 1/2 (1,445 entries: 604 quote posts + 841 retweet stubs) and a truncated set for 2/2 (999 entries: 153 quote posts + 846 stubs; harvest died mid-pagination on the second 402 with a live next_token -- see pages-raw.zip p011). quote_tweets pagination also degrades to 1-result pages past the real tail; scripts now cut off at <=2 results/page.",
+  "hand_edited_fields": [
+    "status",
+    "second_run_note",
+    "totals.quotes_* composition breakdown",
+    "hand_edited_fields"
+  ]
 }
