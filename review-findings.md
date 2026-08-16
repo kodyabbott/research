@@ -1,5 +1,7 @@
 # Adversarial Review Findings
 
+> **Scope:** Covers the initial publish session only (`jensen-gtc-agent-safety` + `simon-willison-lenny-podcast`, plus repo-level files as of April 2026). Kept at repo root as a historical artifact; reviews of later projects live inside their project folders.
+
 Review conducted April 5, 2026 by Claude Code (Opus 4.6) before initial publish.
 
 ## Critical -- Fix Before Publishing
