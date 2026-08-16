@@ -60,12 +60,12 @@ API endpoints and console pages used to collect the data and cost figures. The R
 - https://api.x.com/2/tweets/search/recent?query=conversation_id:2088758816376807762%20from:DarioAmodei&max_results=100&$F
 - https://api.x.com/2/tweets/search/recent?query=conversation_id:2088758816376807762&max_results=100&$F
 - https://api.x.com/2/tweets?ids=2088611616577253502
-- https://console.x.com/accounts/2072134215626321920
-- https://console.x.com/accounts/2072134215626321920/billing/credits
-- https://console.x.com/accounts/2072134215626321920/billing/payments
-- https://console.x.com/accounts/2072134215626321920/credits
-- https://console.x.com/accounts/2072134215626321920/payments
-- https://console.x.com/accounts/2072134215626321920/usage
+- https://console.x.com/accounts/<redacted>
+- https://console.x.com/accounts/<redacted>/billing/credits
+- https://console.x.com/accounts/<redacted>/billing/payments
+- https://console.x.com/accounts/<redacted>/credits
+- https://console.x.com/accounts/<redacted>/payments
+- https://console.x.com/accounts/<redacted>/usage
 - https://github.com/kodyabbott/research.git
 
 ## Uncited: candidate sources

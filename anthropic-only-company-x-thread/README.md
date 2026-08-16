@@ -47,6 +47,14 @@ All post objects carry full fields: `note_tweet` (full long-form text), `referen
 - Deleted posts and protected accounts are invisible to the API; they surface as "detached replies" in the digest.
 - Metrics are a snapshot of capture time (run 2 ended ~19:16 UTC Aug 16) and drift from live numbers. The two rendered files also differ slightly from each other: `roots.json` (and thus the highlights headers) was fetched ~1 hour before the reply files the digest is built from, so e.g. Dario 1/2 shows 7,341 likes in highlights and 7,435 in the digest. Both are correct for their fetch times.
 
+## Data, licensing, and takedown
+
+- **What this republishes and why.** This is an archive of a newsworthy public policy debate conducted in public by public figures (a frontier-lab CEO, a fund manager, lab researchers). The full-text capture exists because the exchange is a primary source likely to be quoted, deleted, edited, or paraphrased-with-drift -- the drift problem is literally what the exchange itself was about.
+- **X Developer Policy tension, stated plainly.** X's [developer policy](https://docs.x.com/developer-terms/policy) limits redistributing API-derived datasets to post/user IDs ("hydration" model). This repo ships full post objects instead, which goes beyond that norm. The IDs are all present in the JSON, so an IDs-only version is trivially derivable; if X or affected parties object, the raw JSON files will be reduced to IDs + the rendered reports of public-figure posts.
+- **The `LICENSE` file does not cover the archived content.** MIT applies to the scripts and original prose in this folder only. The archived posts remain the property of their authors; no license to them is granted or implied.
+- **Ordinary users.** The reply files include thousands of small accounts. They are not surfaced in the curated reports (highlights covers public figures only) but do appear in the full digest and JSON. If you are one of them and want a post removed from this archive, open an issue on this repo or email the address on [kodyabbott.com](https://kodyabbott.com) -- removal on request, no questions.
+- Metrics and text are an Aug 16, 2026 snapshot; posts deleted since then persist here. That is inherent to archiving and the reason the takedown path above exists.
+
 ## Collection cost and method
 
 Two collection channels were used, with very different economics. Figures below are from the [X Developer Console](https://console.x.com/) usage analytics and payment history, and from harvest logs (times UTC, Aug 16, 2026).
