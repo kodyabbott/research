@@ -74,6 +74,6 @@ Rule of thumb from this project: the API wins for bulk structure (thousands of p
 
 ## Reproduction
 
-`_scripts/` contains the pipeline: `harvest.sh` / `resume.sh` (paginated API capture; resume continues from a saved pagination token), `quotes_rest.sh` (quote fetches with trickle-tail cutoff -- the quote_tweets endpoint degrades to 1-result pages that each bill a request), `merge.sh` (dedupe pages into the merged JSONs + manifest), `digest.ps1` and `highlights.ps1` (render the Markdown from the JSONs). Auth expects a bearer token in `~/.x-bearer-token`; never commit tokens.
+`_scripts/` contains the pipeline: `harvest.sh` / `resume.sh` (paginated API capture; resume continues from a saved pagination token), `quotes_rest.sh` (quote fetches with trickle-tail cutoff -- the quote_tweets endpoint degrades to 1-result pages that each bill a request), `merge.sh` (dedupe pages into the merged JSONs + manifest), `digest.ps1` and `highlights.ps1` (render the Markdown from the JSONs). Auth expects a bearer token in `~/.x-bearer-token`; never commit tokens. API setup followed the [X MCP server docs](https://docs.x.com/tools/mcp#simple-route-app-only-bearer) (app-only bearer route); the same endpoints were called over direct HTTP.
 
 Cost note: X API pay-per-use bills per post read. This archive (~6,000 post reads) consumed two credit top-ups.
