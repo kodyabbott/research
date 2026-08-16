@@ -1,0 +1,30 @@
+{
+  "run_timestamp_utc": "2026-08-16T19:16:38Z",
+  "tool": "X API v2 direct HTTP (app-only bearer), curl + jq",
+  "queries": [
+    "GET /2/tweets/:id and /2/tweets?ids= for the 5 root/context posts",
+    "GET /2/tweets/search/recent?query=conversation_id:2088463770318516734 (Sholto conversation)",
+    "GET /2/tweets/search/recent?query=conversation_id:2088758816376807762 (Dario conversation)",
+    "GET /2/tweets/:id/quote_tweets for 2088758816376807762, 2088758819304443967, 2088463770318516734, 2088611616577253502"
+  ],
+  "page_counts": {
+    "convA": 12,
+    "convB": 26
+  },
+  "totals": {
+    "replies_convA_sholto": 1112,
+    "replies_convB_dario": 2474,
+    "quotes_dario_1of2": 1445,
+    "quotes_dario_2of2": 999,
+    "quotes_sholto_root": 0,
+    "quotes_gavin_reply": 0,
+    "unique_users": 4372
+  },
+  "scope_notes": [
+    "Conversation 2088367978270142811 (All-In Podcast clip, quoted by Sholto) captured as context root only; its replies were NOT harvested.",
+    "Recent search covers ~7 days; posts date from Aug 14-15 2026, harvest ran Aug 16 2026 UTC.",
+    "Deleted posts and protected-account replies are invisible to the API and appear as gaps in the reply tree."
+  ],
+  "status": "COMPLETE except two small quote sets",
+  "second_run_note": "Aug 16 second harvest after credit top-up: convA completed (1112 replies), convB completed (2474 replies), quotes for Dario 1/2 (1445) and 2/2 (999) captured. Credits depleted again before quote posts of Sholto root (~64) and Gavin reply (~69) -- the notable ones from those sets are in thread-highlights.md via browser capture. quote_tweets pagination degrades to 1-result pages past the real tail; scripts now cut off at <=2 results/page to avoid billing waste."
+}
