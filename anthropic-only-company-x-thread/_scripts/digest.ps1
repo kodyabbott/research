@@ -4,10 +4,16 @@ $roots    = Get-Content "$dir\roots.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $repliesA = Get-Content "$dir\replies_2088463770318516734.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $repliesB = Get-Content "$dir\replies_2088758816376807762.json" -Raw -Encoding UTF8 | ConvertFrom-Json
 $users    = Get-Content "$dir\users.json" -Raw -Encoding UTF8 | ConvertFrom-Json
-$quoteFiles = @('quotes_2088758816376807762','quotes_2088758819304443967','quotes_2088463770318516734','quotes_2088611616577253502')
-$quoteOf = @{ 'quotes_2088758816376807762' = "Dario 1/2"; 'quotes_2088758819304443967' = "Dario 2/2"; 'quotes_2088463770318516734' = "Sholto root"; 'quotes_2088611616577253502' = "Gavin reply" }
+$quoteFiles = @('quotes_2088758816376807762','quotes_2088758819304443967') | Where-Object { Test-Path "$dir\$_.json" }
+$quoteOf = @{ 'quotes_2088758816376807762' = "Dario 1/2"; 'quotes_2088758819304443967' = "Dario 2/2" }
 
 $userById = @{}; foreach ($u in $users) { $userById[$u.id] = $u }
+# The conversation search returns the conversation roots too; exclude the posts rendered
+# as section roots (Sholto's root, Dario 1/2 + 2/2) from the reply set so counts and
+# top-10 lists describe actual replies. Gavin's reply stays: it is a reply in conv A.
+$rootIds = @('2088463770318516734','2088758816376807762','2088758819304443967')
+$repliesA = @($repliesA | Where-Object { $rootIds -notcontains $_.id })
+$repliesB = @($repliesB | Where-Object { $rootIds -notcontains $_.id })
 $allReplies = @($repliesA) + @($repliesB)
 $postById = @{}; foreach ($p in $allReplies) { $postById[$p.id] = $p }
 $rootById = @{}; foreach ($p in $roots.posts) { $rootById[$p.id] = $p }
@@ -62,20 +68,27 @@ function Out-Tree($parentId, $depth, $exclude) {
 # ---- header + stats ----
 $uniqueAuthors = ($allReplies | Select-Object -ExpandProperty author_id -Unique).Count
 $top10 = $allReplies | Sort-Object { -[int]$_.public_metrics.like_count } | Select-Object -First 10
+# The quote_tweets endpoint returns retweets-of-the-post as truncated "RT @..." stubs
+# alongside actual quote posts. Separate them: only true quote posts are listed below.
 $allQuotes = @()
+$rtStubCount = 0
 foreach ($qf in $quoteFiles) {
     $qs = Get-Content "$dir\$qf.json" -Raw -Encoding UTF8 | ConvertFrom-Json
-    foreach ($q in @($qs)) { if ($q) { $allQuotes += [pscustomobject]@{ post = $q; of = $quoteOf[$qf] } } }
+    foreach ($q in @($qs)) {
+        if (-not $q) { continue }
+        $isRT = @($q.referenced_tweets | Where-Object { $_.type -eq 'retweeted' }).Count -gt 0
+        if ($isRT) { $rtStubCount++ } else { $allQuotes += [pscustomobject]@{ post = $q; of = $quoteOf[$qf] } }
+    }
 }
 
 Out-Line "# Thread digest: Gavin Baker / Sholto Douglas / Dario Amodei -- Anthropic 'only company left' exchange"
 Out-Line ""
-Out-Line "Archived 2026-08-16 via X API v2 (read-only), completed after credit top-up. Raw data in ``./x-archive/``. Curated version: ``thread-highlights.md``."
+Out-Line "Archived 2026-08-16 via X API v2 (read-only), completed after credit top-up. Raw data sits in this folder. Curated version: ``thread-highlights.md``."
 Out-Line ""
 Out-Line "## Summary stats"
 Out-Line ""
-Out-Line "- Replies captured: $($allReplies.Count) ($($repliesA.Count) in Sholto's conversation, $($repliesB.Count) in Dario's)"
-Out-Line "- Quote posts captured: $($allQuotes.Count) across the four root posts"
+Out-Line "- Replies captured: $($allReplies.Count) ($($repliesA.Count) in Sholto's conversation, $($repliesB.Count) in Dario's), not counting the root posts themselves"
+Out-Line "- True quote posts captured: $($allQuotes.Count), all of Dario's two posts (the same endpoint also returned $rtStubCount truncated retweet stubs, excluded from the lists below; quote capture for 2/2 is truncated and quotes of Sholto's root and Gavin's reply were not captured -- see README Known gaps)"
 Out-Line "- Unique reply authors: $uniqueAuthors"
 Out-Line ""
 Out-Line "### Top 10 most-liked replies (both conversations)"
