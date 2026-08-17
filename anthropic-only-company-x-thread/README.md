@@ -13,7 +13,7 @@ Captured 2026-08-16 via the X API v2 (app-only auth, read-only), supplemented by
 
 | File | What it is |
 |------|------------|
-| `thread-highlights.md` (47KB) | **The readable report.** The conversation pruned to high-profile participants, in thread order, full text, with permalinks. Section 4 preserves the browser-captured reaction to Dario, including 11 posts that were absent from the captured JSON. |
+| `thread-highlights.md` (47KB) | **The readable report.** The conversation pruned to high-profile participants, in thread order, full text, with permalinks. Section 4 preserves the browser-captured reaction to Dario, including 3 posts from adjacent conversations that remain browser-only. |
 | `ids/` | The dataset, as post/user IDs only (X Developer Policy hydration model -- see Data & licensing). `_scripts/hydrate.sh` refetches full objects. |
 | `manifest.json` | Run provenance: timestamps, queries, page counts, totals, gaps, interruptions. |
 
@@ -33,20 +33,23 @@ Per the X Developer Policy (see Data & licensing below), the redistributed datas
 | `ids/roots.ids.json` | The 5 root/context post IDs (All-In clip, Sholto root, Gavin reply, Dario 1/2 + 2/2) |
 | `ids/replies_2088463770318516734.ids.json` | Sholto's conversation, complete: 1,112 post IDs (1,111 replies + root) |
 | `ids/replies_2088758816376807762.ids.json` | Dario's conversation, complete: 2,474 post IDs (2,472 replies + his two posts) |
+| `ids/replies_2088367978270142811.ids.json` | The All-In clip's conversation, complete: 292 reply IDs (includes the Sasha de Marigny exchange) |
 | `ids/quotes_2088758816376807762.ids.json` | quote_tweets results for Dario 1/2: 1,445 IDs (604 true quote posts + 841 retweet stubs) |
-| `ids/quotes_2088758819304443967.ids.json` | quote_tweets results for Dario 2/2, **truncated capture**: 999 IDs (153 true quote posts + 846 stubs; see Known gaps) |
-| `ids/users.ids.json` | 4,372 user IDs referenced across the data |
+| `ids/quotes_2088758819304443967.ids.json` | quote_tweets results for Dario 2/2, full window after the Aug 16 gap-fill run: 2,105 IDs (463 true quote posts + 1,642 stubs) |
+| `ids/quotes_2088463770318516734.ids.json` | quote_tweets results for Sholto's root: 87 IDs (63 true quote posts + 24 stubs) |
+| `ids/quotes_2088611616577253502.ids.json` | quote_tweets results for Gavin's reply: 957 IDs (62 true quote posts + 895 stubs) |
+| `ids/users.ids.json` | 6,075 user IDs referenced across the data |
 
 Rehydrate with `_scripts/hydrate.sh <ids-file>` (X API v2 `/2/tweets?ids=`, batches of 100; reads are billed on pay-per-use). Hydrated objects carry full fields: `note_tweet` (full long-form text), `referenced_tweets` (reply/quote structure), `public_metrics`, `entities`, timestamps -- for whatever posts still exist at hydration time. The full-object capture this project was verified against is retained privately by the author.
 
 ## Known gaps
 
-- **Quote capture of Dario 2/2 is substantially incomplete.** The harvest died mid-pagination on the second credits-depleted error: the file covers only Aug 16 08:58-19:13 UTC, missing the first ~10 hours of quote activity. Against the root post's `quote_count` of 500, only 153 true quote posts were captured (~347 missing) -- including Elon Musk's "Interesting exchange" quote, the most-viewed reaction in the event. The high-profile missing quotes are preserved in `thread-highlights.md` section 4 via browser capture, with permalinks.
-- **The quote files mix in retweets.** The `quote_tweets` endpoint returns retweets-of-quote-posts as truncated "RT @..." stubs alongside actual quote posts; 58% (1/2) and 85% (2/2) of the entries are stubs. Counts in this README distinguish the two; roughly $8.50 of the API spend went to reading stubs.
-- **Quote posts of Sholto's root and Gavin's reply were not captured at all** (~64 + ~69 posts per those posts' `quote_count` metrics). Notable members of those sets (Gavin's self-quote, Beff Jezos, Anish Acharya) are in `thread-highlights.md` section 4 via browser capture.
-- Replies to the All-In clip post itself were out of scope; the Sasha de Marigny exchange in section 4 comes from that out-of-scope conversation, via browser.
-- Deleted posts and protected accounts are invisible to the API; on hydration they simply return errors.
-- Metrics quoted in the reports are a snapshot of capture time (run 2 ended ~19:16 UTC Aug 16) and drift from live numbers. `roots.json`-derived headers in the highlights were fetched ~1 hour before the reply capture, so like-counts on the principal posts differ slightly between sources (e.g. Dario 1/2: 7,341 vs 7,435). Both were correct for their fetch times.
+Earlier versions had three capture gaps (a truncated 2/2 quote set, two never-fetched quote sets, and the out-of-scope All-In conversation); the Aug 16 gap-fill run (~21:30 UTC) closed all three. What remains is inherent:
+
+- **The quote endpoints mix in retweets.** `quote_tweets` returns retweets-of-quote-posts as truncated "RT @..." stubs alongside actual quote posts (58-93% of entries depending on the set). Counts in this README distinguish the two; the stubs roughly doubled the API read spend.
+- **True-quote counts run slightly under the posts' `quote_count` metrics** (e.g. 463 captured vs 500 for Dario 2/2): deleted posts, protected accounts, and a small cut-off trickle tail. Deleted/protected posts are invisible to the API; on hydration they simply return errors.
+- Metrics quoted in the reports are snapshots of their fetch times (runs at ~18:20, ~19:10, and ~21:30 UTC Aug 16) and drift from live numbers -- e.g. Elon's quote post grew from 9.7k likes (browser, ~18:00 UTC) to 10,843 (gap-fill capture). Where sources disagree, each was correct when fetched.
+- The adjacent Gerstner-reply and Anthropic-S-1 conversations (three posts in highlights section 4: Gavin's "Yes!", Gary Marcus, Gavin's S-1 reply) remain browser-only -- they sit in separate conversations judged out of scope.
 
 ## Data, licensing, and takedown
 
@@ -64,11 +67,12 @@ Two collection channels were used, with very different economics. Figures below 
 
 | Metric | Value |
 |--------|-------|
-| Posts read (billed) | ~6.02K per the console display (the full capture, retained privately, holds 6,035 unique post objects) |
-| API requests | 97 |
-| **Total cost** | **$30.12** (effective rate ~$5.00 per 1,000 posts read) |
+| Posts read (billed) | ~8.5K across three runs: ~6.02K console-confirmed for runs 1-2, ~2,468 by read count for the gap-fill run. The full capture, retained privately, holds 8,463 unique post objects (8,458 replies/quotes + 5 roots) |
+| API requests | 97 (runs 1-2, console-confirmed) + ~32 (gap-fill) |
+| **Total cost** | **~$42**: $30.12 console-confirmed for runs 1-2 + ~$12.30 for the gap-fill run by read count (effective rate ~$5.00 per 1,000 posts read) |
 | Run 1 wall time | ~3.5 min (18:19-18:22 UTC) -- roots + 1,100 replies, halted by credits-depleted |
 | Run 2 wall time | ~6 min (~19:10-19:16 UTC) -- ~2,500 replies + 2,444 quote_tweets entries, halted by credits-depleted |
+| Run 3 (gap-fill) wall time | ~4 min (~21:30 UTC) -- resumed 2/2 quotes to the full window, Sholto/Gavin quote sets, All-In conversation; ~2,468 reads ≈ $12 by read count |
 | Payments | $5.00 balance (Jul 1) + $25.00 top-up (Aug 16); console-displayed ending balance -$0.13 (straight arithmetic gives -$0.12; the console appears to round a $30.125 spend) |
 
 The API is extremely fast per dollar of engineering time -- the entire 6,000-post corpus took under 10 minutes of wall clock -- but cost scales linearly with volume, and two footguns inflate it: reply counts on the UI understate true conversation size (nested replies), and the `quote_tweets` endpoint trails off into 1-result pages that each bill a full request.

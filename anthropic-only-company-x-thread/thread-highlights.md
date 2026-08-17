@@ -263,7 +263,7 @@ Yann LeCun did not appear in Dario's replies or top quotes as of the Aug 16 brow
 
 ## 4. The high-profile reaction to Dario (browser-captured, Aug 16)
 
-Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~15:00-18:00 UTC and timestamps are approximate (X shows relative times). These entries are kept as browser-captured for provenance: 10 of the 21 posts below were later also captured with full fields by API run 2 (where exact values differ slightly, that capture -- retained privately, redistributed as IDs -- is authoritative); the other 11 -- Elon's quote, Gavin's "Yes!" and self-quote, Beff Jezos, Anish Acharya, the Sasha de Marigny exchange, Gary Marcus, and Gavin's S-1 reply -- exist only in this report, since the 2/2 quote capture is truncated and the Sasha/Marcus material sits in out-of-scope conversations.
+Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~15:00-18:00 UTC and timestamps are approximate (X shows relative times). These entries are kept as browser-captured for provenance: 18 of the 21 posts below were later also captured with full fields by the API (run 2 and the gap-fill run -- where exact values differ, that capture, retained privately and redistributed as IDs, is authoritative; e.g. Elon's quote had grown to 10,843 likes by gap-fill time). The remaining 3 -- Gavin's "Yes!", Gary Marcus, and Gavin's S-1 reply -- exist only in this report; they sit in adjacent conversations judged out of scope.
 
 ### Replies to Dario
 

@@ -20,21 +20,30 @@
       "retweet_stubs": 841
     },
     "quotes_dario_2of2": {
-      "entries": 999,
-      "true_quote_posts": 153,
-      "retweet_stubs": 846,
-      "truncated": true
+      "entries": 2105,
+      "true_quote_posts": 463,
+      "retweet_stubs": 1642,
+      "truncated": false
     },
-    "quotes_sholto_root": 0,
-    "quotes_gavin_reply": 0,
-    "unique_users": 4372
+    "quotes_sholto_root": {
+      "entries": 87,
+      "true_quote_posts": 63,
+      "retweet_stubs": 24
+    },
+    "quotes_gavin_reply": {
+      "entries": 957,
+      "true_quote_posts": 62,
+      "retweet_stubs": 895
+    },
+    "unique_users": 6075,
+    "replies_convC_allin": 292
   },
   "scope_notes": [
     "Conversation 2088367978270142811 (All-In Podcast clip, quoted by Sholto) captured as context root only; its replies were NOT harvested.",
     "Recent search covers ~7 days; posts date from Aug 14-15 2026, harvest ran Aug 16 2026 UTC.",
     "Deleted posts and protected-account replies are invisible to the API and appear as gaps in the reply tree."
   ],
-  "status": "Replies complete for both conversations. Quote capture: 1/2 full-window; 2/2 TRUNCATED (Aug 16 08:58-19:13 UTC only, ~347 of ~500 true quote posts missing); Sholto-root and Gavin-reply quote sets not captured (~133 posts).",
+  "status": "Replies complete for all three conversations (Sholto, Dario, All-In clip). Quote captures: Dario 1/2 full-window; Dario 2/2 full-window after Aug 16 gap-fill run (463 true quote posts of ~500 quote_count; remainder deleted/protected/tail); Sholto root 63/64; Gavin reply 62/69.",
   "second_run_note": "Aug 16 second harvest after credit top-up: convA completed (1,112 entries incl. root), convB completed (2,474 entries incl. Dario 1/2+2/2), quote_tweets results for Dario 1/2 (1,445 entries: 604 quote posts + 841 retweet stubs) and a truncated set for 2/2 (999 entries: 153 quote posts + 846 stubs; harvest died mid-pagination on the second 402 with a live next_token -- see pages-raw.zip p011). quote_tweets pagination also degrades to 1-result pages past the real tail; scripts now cut off at <=2 results/page.",
   "hand_edited_fields": [
     "status",
@@ -42,5 +51,6 @@
     "totals.quotes_* composition breakdown",
     "hand_edited_fields"
   ],
-  "data_reduction": "Aug 16, 2026: full-object JSON, digest, and raw pages removed and purged from git history per X Developer Policy; dataset redistributed as IDs-only in ids/. Totals below describe the private full capture."
+  "data_reduction": "Aug 16, 2026: full-object JSON, digest, and raw pages removed and purged from git history per X Developer Policy; dataset redistributed as IDs-only in ids/. Totals below describe the private full capture.",
+  "gapfill_run_note": "Aug 16 ~21:30 UTC third run after credit top-up: resumed 2/2 quotes from the saved pagination token (pages 12-25, now spanning the full window from Aug 15 22:48 UTC; Elon quote captured), fetched Sholto-root and Gavin-reply quote sets, and captured the All-In clip conversation (292 replies incl. the Sasha de Marigny exchange). ~2,468 post reads, ~$12 by read count."
 }
