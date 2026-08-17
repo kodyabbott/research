@@ -1,5 +1,7 @@
 # Adversarial Review Findings -- anthropic-only-company-x-thread
 
+> **Scope note (added after data reduction):** this review examined the project as first published, including full-object JSON data files (`replies_*.json`, `quotes_*.json`, `users.json`, `roots.json`, `pages-raw.zip`) and `thread-digest.md` that were later removed and purged from history per the X Developer Policy (see README "Data, licensing, and takedown"). File references below describe that reviewed version; the findings were fixed in the commits that followed.
+
 Review conducted 2026-08-16 by the adversarial-reviewer agent (Claude Code, Fable 5). Every claim below was verified against the shipped JSON files with jq, against the raw pages in `pages-raw.zip`, or by decoding post-ID snowflake timestamps. The project is already public, so "fix before publishing" means fix now.
 
 Scoping note: the README's "Known gaps" section documents four gaps honestly. None of the findings below re-litigate those. These are the *undocumented* problems.

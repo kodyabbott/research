@@ -1,5 +1,7 @@
 # Source verification report -- anthropic-only-company-x-thread
 
+> **Scope note (added after data reduction):** this verification ran against the project as first published, including the full-object JSON files later removed per the X Developer Policy (see README "Data, licensing, and takedown"). It is retained as the audit trail showing the reports were verified against the raw capture before the data was reduced to IDs.
+
 Verification conducted 2026-08-16 by the source-verifier agent (Claude Code, Fable 5). Scope: `README.md`, `notes.md`, `thread-highlights.md` verified against the raw JSON archive (roots.json, replies_*.json, quotes_*.json, users.json, manifest.json, pages-raw.zip) plus spot-checks of `thread-digest.md`. Method: a scripted jq verification pass that parsed every post entry in thread-highlights.md (62 post headers) and compared ID, author, permalink username, timestamp, like/view counts, and full text against the JSON. No research files were modified.
 
 ## ✅ Verified claims

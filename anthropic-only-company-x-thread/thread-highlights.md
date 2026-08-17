@@ -1,6 +1,6 @@
 # Highlights: the Anthropic 'only company left' exchange -- high-profile thread
 
-The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured in the raw JSON (see the note in section 4). Full dataset: `ids/` (post IDs; rehydrate via `_scripts/hydrate.sh` -- full-object redistribution is limited by the X Developer Policy).
+The conversation pruned to posts by: Dario Amodei, Gavin Baker, Sholto Douglas, Elon Musk, Yann LeCun, All-In Podcast, roon, kache, Joe Weisenthal, Eric Jang, Anselm Levskaya -- plus parent posts kept for context (37 reply-tree posts of the 1,111 captured replies). Section 4 adds the high-profile reaction to Dario's posts, captured via browser on Aug 16 between the two API runs; most of these posts were later also captured with full fields by API run 2 (see the note in section 4). Full dataset: `ids/` (post IDs; rehydrate via `_scripts/hydrate.sh` -- full-object redistribution is limited by the X Developer Policy).
 
 Timeline: All-In clip (Aug 14) -> Sholto's rebuttal (Aug 15 03:12) -> Gavin's long reply (12:59) -> Sholto's response (15:28) -> Dario's 2-post reply quoting Gavin (22:44).
 
@@ -263,7 +263,7 @@ Yann LeCun did not appear in Dario's replies or top quotes as of the Aug 16 brow
 
 ## 4. The high-profile reaction to Dario (browser-captured, Aug 16)
 
-Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~15:00-18:00 UTC and timestamps are approximate (X shows relative times). These entries are kept as browser-captured for provenance: 10 of the 21 posts below were later also captured with full fields in the raw JSON by API run 2 (where exact values differ slightly, the JSON is authoritative); the other 11 -- Elon's quote, Gavin's "Yes!" and self-quote, Beff Jezos, Anish Acharya, the Sasha de Marigny exchange, Gary Marcus, and Gavin's S-1 reply -- exist only here, since the 2/2 quote capture is truncated and the Sasha/Marcus material sits in out-of-scope conversations.
+Source: X web UI ("Relevant" reply sort + top quotes), so metrics are as displayed Aug 16 ~15:00-18:00 UTC and timestamps are approximate (X shows relative times). These entries are kept as browser-captured for provenance: 10 of the 21 posts below were later also captured with full fields by API run 2 (where exact values differ slightly, that capture -- retained privately, redistributed as IDs -- is authoritative); the other 11 -- Elon's quote, Gavin's "Yes!" and self-quote, Beff Jezos, Anish Acharya, the Sasha de Marigny exchange, Gary Marcus, and Gavin's S-1 reply -- exist only in this report, since the 2/2 quote capture is truncated and the Sasha/Marcus material sits in out-of-scope conversations.
 
 ### Replies to Dario
 
