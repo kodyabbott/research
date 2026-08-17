@@ -5,7 +5,7 @@
 
 # The Anthropic "only company left" exchange (Aug 14-16, 2026)
 
-Full archive of the X conversation sparked by Gavin Baker's All-In Podcast comments claiming Dario Amodei said Anthropic "might be the only private company in the world at some point" -- and the responses from Sholto Douglas, Gavin Baker, Dario Amodei, Elon Musk, Yann LeCun, and others.
+Research archive of the X conversation sparked by Gavin Baker's All-In Podcast comments claiming Dario Amodei said Anthropic "might be the only private company in the world at some point" -- and the responses from Sholto Douglas, Gavin Baker, Dario Amodei, Elon Musk, Yann LeCun, and others. The dataset ships as post IDs per the X Developer Policy; the curated report quotes the public figures in full.
 
 Captured 2026-08-16 via the X API v2 (app-only auth, read-only), supplemented by browser capture where noted. Every post entry links to its live X permalink.
 
@@ -64,7 +64,7 @@ Two collection channels were used, with very different economics. Figures below 
 
 | Metric | Value |
 |--------|-------|
-| Posts read (billed) | ~6.02K per the console display (the archive holds 6,035 unique post objects) |
+| Posts read (billed) | ~6.02K per the console display (the full capture, retained privately, holds 6,035 unique post objects) |
 | API requests | 97 |
 | **Total cost** | **$30.12** (effective rate ~$5.00 per 1,000 posts read) |
 | Run 1 wall time | ~3.5 min (18:19-18:22 UTC) -- roots + 1,100 replies, halted by credits-depleted |
