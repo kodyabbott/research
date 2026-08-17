@@ -27,7 +27,7 @@ Three runs, all Aug 16 (UTC):
 
 Three billing footguns, each found the hard way:
 
-1. **UI reply counters lie about conversation size.** Nested replies run 2-7x the visible number. Estimate from a `conversation_id` search, not the counter.
+1. **UI reply counters lie about conversation size.** In this capture the full nested trees ran 1.4x to 7x the root posts' reply counters. Estimate from a `conversation_id` search, not the counter.
 2. **quote_tweets pagination trails off into 1-result pages** past the real tail -- each one a billed request. The scripts cut off at <=2 results/page.
 3. **`quote_count` predicts true quote posts, not billable entries.** The endpoint returns retweets-of-quote-posts as truncated "RT @..." stubs alongside real quotes -- 58-93% of entries depending on the set. Gavin's reply showed a quote_count of 69 and billed 957 reads. Roughly 40% of the total spend (3,402 stub reads) bought stub text.
 
