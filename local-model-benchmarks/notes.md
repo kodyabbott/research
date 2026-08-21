@@ -104,3 +104,41 @@ automated or it doesn't survive the year.
 - Fit triage for GGUF repos via file-size parsing
 - Decide whether to auto-download; currently discovery is strictly read-only
 - Add a llama.cpp benchmark path so GGUF models aren't Ollama-only
+
+## 2026-08-21 — nightly discovery (automated run)
+
+First scheduled run of the nightly task. Discovery only — no downloads, no battery. The
+auto-download question is still open (see TODO above), so the agent's rule tonight was:
+benchmark only if a new trending model is already installed. None were.
+
+`bench.ps1 -Discover`: 150 trending models across six pipeline tags, **25 new** since the
+2026-08-15 seeding run. New text-generation models that fit this box:
+
+| Model | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|
+| OBLITERATUS/Qwen3.8-27B-OBLITERATED | 27.8B | 51.7 GB | fits-bf16 | 398 | 123,956 |
+| ornith-ai/Ornith-1.5-35B-A3B | 36B | 67 GB | fits-bf16 | 276 | 9,165 |
+| ornith-ai/Ornith-1.5-9B | 9.4B | 17.5 GB | fits-bf16 | 143 | 10,304 |
+| EschaLabs/Qwen3.8-27B-Escha-W2 | 6.3B | 11.8 GB | fits-bf16 | 100 | 561 |
+| tencent/UI-Mate-27B (vision) | 27.4B | 51 GB | fits-bf16 | 67 | 284 |
+| gittensor-model-hub/Qwen3.8-27B-NVFP4-RTX5090 | 15B | 27.9 GB | fits-bf16 | 73 | 75,859 |
+| superwhisper/s1-mini | 0.8B | 1.4 GB | fits-bf16 | 184 | 1,136 |
+
+Also new: `ornith-ai/Ornith-1.5-397B` (396.8B, fits-with-cpu-offload — same territory as the
+DeepSeek-V4-Flash run), and GGUF mirrors of both smaller Ornith models charting with ~115–123K
+downloads each but reporting `unknown` fit — the known GGUF blind spot, again on exactly the
+repos most worth running.
+
+**Observations, unverified beyond the API response:**
+
+- The Ornith-1.5 family (35B-A3B, 9B, 397B, plus GGUF mirrors) is the interesting cluster — a
+  model family new to the trending list occupying four of the top slots. The `-A3B` suffix
+  usually denotes ~3B active params (MoE), which would make the 35B fast here, but I have not
+  verified that against the model card. Strongest benchmark candidate from tonight's crop.
+- EschaLabs/Qwen3.8-27B-Escha-W2 is named 27B but the safetensors index reports 6.3B — a prune
+  or distill, or a mislabeled repo. Worth a model-card read before trusting either number.
+- The NVFP4-RTX5090 repo charts under `image-text-to-text` with 15B reported params against a
+  27B name — quantized multimodal repack; fit arithmetic for it is not reliable.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored). Next action when a
+human is driving: pick from the table above — `ornith-ai/Ornith-1.5-35B-A3B` first.
