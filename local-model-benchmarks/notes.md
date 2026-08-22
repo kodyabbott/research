@@ -142,3 +142,30 @@ repos most worth running.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored). Next action when a
 human is driving: pick from the table above — `ornith-ai/Ornith-1.5-35B-A3B` first.
+
+## 2026-08-21 — nightly discovery, second run (automated)
+
+Second automated run of the same date — the earlier entry above was the run that seeded most of
+today's diff, so tonight only **3 new** models appeared out of 150 trending. Discovery only:
+nothing new is installed in Ollama, and auto-download remains an open TODO, so no battery ran.
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| orcarouter/Qwen3.8-27B-Uncensored | image-text-to-text | 27.8B | 51.7 GB | fits-bf16 | 62 | 5,591 |
+| empero-ai/Qwen3.8-2B-Distill-GGUF | text-generation | unknown | — | unknown | 60 | 35,147 |
+| UntMods/Krea2_Chars_LoRA | text-to-image | unknown | — | unknown | 6 | 0 |
+
+**Observations, unverified beyond the API response:**
+
+- The orcarouter repo shares a base with the installed `qwen3.8:27b-mtp-bf16`, but it is a
+  community finetune, not the same weights — it does not qualify as "already installed" for the
+  benchmark rule. It also charts under `image-text-to-text` despite the name suggesting a text
+  finetune; I have not read the model card to resolve that.
+- empero-ai/Qwen3.8-2B-Distill-GGUF is the GGUF fit-triage blind spot again (no safetensors
+  index, so `paramsB` is null) — third consecutive entry where the most-downloaded runnable repo
+  in the diff reports `unknown`. The file-size-parsing fix in the TODO keeps earning its slot.
+- Krea2_Chars_LoRA trends with 0 downloads and 18 likes — either a very fresh upload or an
+  artifact of how HF computes trending; not investigated. Out of scope for this box's battery
+  (text-to-image LoRA) regardless.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
