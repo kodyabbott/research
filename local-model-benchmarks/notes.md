@@ -169,3 +169,40 @@ nothing new is installed in Ollama, and auto-download remains an open TODO, so n
   (text-to-image LoRA) regardless.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-22 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **9 new** since yesterday's second run. No new
+trending model is installed in Ollama (checked against `ollama list`), and auto-download
+remains an open TODO, so no battery ran.
+
+New models that fit (all non-text pipelines — none are candidates for this harness's battery,
+which is text-generation only):
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| Tongyi-MAI/Z-Image | text-to-image | 6.2B | 11.5 GB | fits-bf16 | 6 | 34,444 |
+| canopylabs/orpheus-3b-0.1-ft | text-to-speech | 3.8B | 7 GB | fits-bf16 | 5 | 83,944 |
+| stabilityai/stable-audio-open-small | text-to-audio | 0.5B | 0.9 GB | fits-bf16 | 2 | 2,059 |
+
+The other six report `unknown` fit: outsourc-e/Qwen3.8-27B-Unleashed-GGUF (text-generation,
+trend 73), guillaume127/MiniMax-Music-3-Turbo-FP8, wikeeyang/Flux2-Klein-9B-True-V2,
+Claquasse/Anima-Control-Pose, vantagewithai/LTX-2.5-GGUF, leejet/MiniMax-H3-GGUF.
+
+**Observations, unverified beyond the API response:**
+
+- The only new text-generation model, Qwen3.8-27B-Unleashed-GGUF, shares a base with the
+  installed `qwen3.8:27b-mtp-bf16` but is a community repack, not the same weights — same
+  ruling as orcarouter's Uncensored variant yesterday: does not qualify as "already
+  installed." It is also the GGUF fit-triage blind spot again (fourth consecutive diff where
+  the top text-gen newcomer reports `unknown`).
+- Three of the six `unknown` verdicts are GGUF/FP8 repos in *non-text* pipelines (LTX-2.5,
+  MiniMax-H3, MiniMax-Music) — the blind spot is not text-specific, though those pipelines
+  are out of scope for the battery anyway.
+- wikeeyang/Flux2-Klein-9B-True-V2 shows 771,909 downloads against trend score 6 and 189
+  likes — downloads wildly out of proportion to engagement. Possibly a default weight in a
+  popular ComfyUI workflow; not investigated.
+- Tonight's crop is entirely image/audio/video aside from the one GGUF repack — first diff
+  since seeding with zero net-new text-generation candidates for the battery.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
