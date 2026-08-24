@@ -207,6 +207,81 @@ Claquasse/Anima-Control-Pose, vantagewithai/LTX-2.5-GGUF, leejet/MiniMax-H3-GGUF
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
 
+## 2026-08-24 — OBLITERATED V3 downloaded and benchmarked (user-requested)
+
+Ad-hoc, not the nightly sweep. Kody asked to download `OBLITERATUS/Qwen3.8-27B-OBLITERATED`,
+test it, and confirm it is V3. First actual download since the harness was built — the
+auto-download TODO is still open for the *nightly* routine, but this was an explicit request.
+
+**V3 confirmed.** The repo has a single `main` branch (no version branches/tags), and the model
+card header is "🆕 V3: Deep Liberation" (iterative refinement on V2, self-reported MMLU 82.3%,
+-2.1pp vs stock Qwen3.8-27B). Pulling `main` gets V3 — there is nothing else to select.
+Apache-2.0, base `Qwen/Qwen3.8-27B`, repo sha `af34629` (lastModified 2026-08-23).
+
+**What was pulled.** `ollama pull hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0` — the Q8_0 GGUF
+(27.1 GB on HF, 29 GB as an Ollama blob). Picked Q8_0 for near-lossless quality with room to
+spare on 96 GB. `ollama show`: arch `qwen35`, 27.3B params, max context **262144**, vision-capable
+(bundled CLIP projector, 460.73M). So this is a multimodal repack, not a text-only model.
+
+**Transient load crash, once.** First battery attempt died with
+`CUDA error: shared object initialization failed` / stack-based buffer overrun from llama-server.
+A known-good model (`gpt-oss:20b`) loaded and answered immediately afterward, so the driver/Ollama
+stack was healthy — the crash did not repeat on retry. Filed as a transient CUDA init race, not a
+model defect. Driver 610.88, Ollama 0.32.13.
+
+**The real finding: default context is the throughput determinant here.** Ollama loaded the model
+at its full **262144** context because neither the harness nor the request pins `num_ctx`. That
+256K KV cache, on top of ~54 GB already held by other apps on this live workstation
+(Discord/Chrome/VS Code/Elgato/etc.), pushed VRAM to **97.1 / 97.9 GB** — right at the ceiling —
+and gen throughput collapsed:
+
+| Context | Model footprint | VRAM total | Gen tok/s | Prompt ingest tok/s |
+|---|---|---|---|---|
+| 262144 (Ollama default) | 45 GB | 97.1 GB (pegged) | **16.5** | 83.5 |
+| 8192 (pinned via Modelfile) | 28 GB | 82.9 GB | **47.6** | **2867.3** |
+
+Same model, same box, ~3x gen and ~34x prompt-ingest difference — entirely a context/KV-cache
+artifact. This is a concrete instance of README known-limitation #3 ("fit triage ignores context
+length, KV cache"): fit arithmetic said 51.7 GB BF16 / this Q8_0 at 29 GB fits comfortably, and it
+does — until the default 256K context is allocated.
+
+**Clean battery — Q8_0, num_ctx 8192, 100% GPU** (via a pinned variant `obliterated-v3-q8-8k`,
+`FROM hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0` + `PARAMETER num_ctx 8192`):
+
+```
+loadMs               143   (warm)
+genTokPerSec          47.6
+tokensFor100Words   2587
+promptTokens        7021
+promptTokPerSec     2867.3
+codeWritten         "1..5 | % { $_ }"
+codeExecutes         true
+```
+
+**Comparison caveat — do not put this next to the 08-15 Qwen3.8-27B row uncritically.** That
+baseline row (87.8 tok/s) is BF16 *and* an MTP (multi-token-prediction) build (`qwen3.8:27b-mtp-bf16`);
+MTP inflates the tok/s figure by emitting multiple tokens per step. A standard Q8_0 at 47.6 tok/s
+is not slower "because Q8_0 is slower than BF16" — if anything Q8_0 should win on bandwidth. The
+gap is MTP vs non-MTP plus the shared-VRAM headroom on this box, not a like-for-like model result.
+Prompt ingest (2867 vs baseline 2555) and reasoning overhead (2587 tokens vs baseline 7034, V3
+defaulting thinking-off) are the more honest cross-model signals.
+
+**Settings caveat.** Ran with Ollama's default template/sampling, not the model card's V3
+recommendations (temp 0, repetition_penalty 1.15, empty system prompt, thinking off, `--jinja`
+with the bundled template). The battery measures throughput and one functional code task, so
+defaults are acceptable — but these numbers are not the card's tuned-optimal configuration.
+
+**Not verified beyond running it:** the model card's liberation/MMLU claims (82.3% MMLU, 20/20 code
+tasks) are self-reported and were not re-measured; only the harness battery above was run. README
+results table left untouched — it is a dated 08-15 snapshot and this is an ad-hoc uncensored-variant
+test, better kept in this log than promoted to the headline table.
+
+### TODO (new)
+
+- **Pin `num_ctx` in `bench.ps1`.** Tonight proved the Ollama default context can be the single
+  biggest throughput variable (3x here). Add a `-NumCtx` parameter (default something honest like
+  8192) so battery rows are comparable and don't silently inherit a model's 256K max.
+
 ## 2026-08-23 — nightly discovery (automated run)
 
 Discovery only: 150 trending models polled, **7 new** since yesterday. Checked against
