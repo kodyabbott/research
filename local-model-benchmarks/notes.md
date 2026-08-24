@@ -206,3 +206,39 @@ Claquasse/Anima-Control-Pose, vantagewithai/LTX-2.5-GGUF, leejet/MiniMax-H3-GGUF
   since seeding with zero net-new text-generation candidates for the battery.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-23 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **7 new** since yesterday. Checked against
+`ollama list` — no new trending model is already installed, and auto-download remains an open
+TODO, so no battery ran.
+
+New models that fit:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| orcarouter/Qwen3.8-27B-Uncensored-NVFP4 | image-text-to-text | 21.2B | 39.5 GB | fits-bf16 | 45 | 16,490 |
+| HeartMuLa/HeartMuLa-oss-3B-happy-new-year | text-to-audio | 3.9B | 7.3 GB | fits-bf16 | 2 | 2,652 |
+| SonexaAI/Sonexa-Music-v0.1-Beta | text-to-audio | 2.4B | 4.5 GB | fits-bf16 | 2 | 17 |
+
+The other four report `unknown` fit: oron1208/OOO_ANIMA-29B-V10 (text-to-image),
+realrebelai/SenseNova-U1.5-8B_GGUFs (text-to-image), ResembleAI/chatterbox-turbo
+(text-to-speech), facebook/musicgen-medium (text-to-audio).
+
+**Observations, unverified beyond the API response:**
+
+- The orcarouter NVFP4 repo is a quant repack of the same Uncensored finetune that charted on
+  08-21. Same ruling as then: shares a base with the installed `qwen3.8:27b-mtp-bf16` but is
+  not the same weights — does not qualify as "already installed." Reported params (21.2B
+  against a 27B name) are quant metadata, so the fit arithmetic is unreliable — same pattern
+  as the gittensor NVFP4 repack on 08-21.
+- realrebelai/SenseNova-U1.5-8B_GGUFs is the GGUF fit-triage blind spot again, and it charts
+  under `text-to-image` despite a name shaped like an LLM. Not investigated.
+- ResembleAI/chatterbox-turbo shows 681 likes against 0 downloads — likely the download
+  counter not tracking for that repo layout rather than a real zero. Not investigated.
+- facebook/musicgen-medium (1.95M downloads, trend score 1) is a 2023-era model surfacing as
+  "new" only because it entered the trending window — a diff artifact, not a new release.
+- Second consecutive night with zero net-new text-generation candidates for the battery —
+  tonight's crop is entirely image/audio aside from the NVFP4 repack.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
