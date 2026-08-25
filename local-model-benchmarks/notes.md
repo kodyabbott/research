@@ -317,3 +317,46 @@ realrebelai/SenseNova-U1.5-8B_GGUFs (text-to-image), ResembleAI/chatterbox-turbo
   tonight's crop is entirely image/audio aside from the NVFP4 repack.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-24 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **11 new** since yesterday. Checked against
+`ollama list` — no new trending model is already installed, and auto-download remains an open
+TODO, so no battery ran. (The OBLITERATED V3 pulled earlier today was the ad-hoc user-requested
+run logged above; it had already been seen by discovery on 08-21 and is not in tonight's diff.)
+
+New models with a known fit verdict — none are text-generation, so none are battery candidates:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| tencent/HunyuanImage-3.0 | text-to-image | 83B | 154.6 GB | fits-quantized | 6 | 13,107 |
+| ideogram-ai/ideogram-4-nf4 | text-to-image | 4.8B | 8.9 GB | fits-bf16 | 6 | 1,924 |
+| pnnbao-ump/VieNeu-TTS-v3-Turbo | text-to-speech | 0.1B | 0.2 GB | fits-bf16 | 5 | 375,394 |
+| stabilityai/stable-video-diffusion-img2vid-xt | image-to-video | 1.5B | 2.8 GB | fits-bf16 | 3 | 146,482 |
+
+The other seven report `unknown` fit: AtomicChat/Ornith-1.5-35B-A3B-GGUF (trend 46),
+peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF (trend 44), AtomicChat/Ornith-1.5-9B-GGUF (trend 41),
+chimingw/Qwen3.8-27B-Uncensored-OrcaRouter-GGUF (trend 39), ethanfel/H3_Cinematic_Multishot_Coverage,
+RuneXX/LTX-2.5-Workflows, QuantStack/Wan2.2-I2V-A14B-GGUF.
+
+**Observations, unverified beyond the API response:**
+
+- The top four newcomers by trend score are all GGUF repos reporting `unknown` fit — the
+  fit-triage blind spot now owns the entire top of the diff. Fifth consecutive night; the
+  file-size-parsing fix in the 08-15 TODO is overdue.
+- AtomicChat's Ornith-1.5 GGUFs look like yet more mirrors of the Ornith family that charted
+  08-21 (a different org's mirrors were noted then). If the pattern from the safetensors
+  originals holds, the 35B-A3B (~67 GB BF16) and 9B (~17.5 GB) both fit this box, but I have
+  not verified AtomicChat's files against the originals.
+- chimingw/Qwen3.8-27B-Uncensored-OrcaRouter-GGUF appears to be a GGUF of the orcarouter
+  Uncensored finetune from 08-21/08-23. Same ruling again: shares a base with installed
+  models (`qwen3.8:27b-mtp-bf16`, the OBLITERATED Q8_0) but is not the same weights — does
+  not qualify as "already installed."
+- All four top GGUFs chart under `image-text-to-text`, including Tiel-Coder-35B whose name
+  suggests a code model — recurring pipeline-tag oddity, not investigated.
+- stable-video-diffusion-img2vid-xt (Nov 2023 release, 3,385 likes) surfacing as "new" is a
+  trending-window diff artifact, same as facebook/musicgen-medium on 08-23.
+- peculiar-ragdoll/Tiel-Coder-35B-A3B-GGUF trends at 44 with 0 downloads — either very fresh
+  or the download counter not tracking; not investigated.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
