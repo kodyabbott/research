@@ -360,3 +360,49 @@ RuneXX/LTX-2.5-Workflows, QuantStack/Wan2.2-I2V-A14B-GGUF.
   or the download counter not tracking; not investigated.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-25 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **13 new** since yesterday. Checked against
+`ollama list` — no new trending model is already installed, and auto-download remains an open
+TODO, so no battery ran.
+
+New models with a known fit verdict:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| apodex/Apodex-1.1-mini | text-generation | 36B | 67 GB | fits-bf16 | 62 | 484 |
+| Jiunsong/SuperQwen3.8-27b-abliterated | image-text-to-text | 27.8B | 51.7 GB | fits-bf16 | 38 | 193 |
+| BreezeBlue/Breeze-TTS-2 | text-to-speech | 3.5B | 6.5 GB | fits-bf16 | 9 | 0 |
+| data-archetype/canter | text-to-image | 2.1B | 3.8 GB | fits-bf16 | 7 | 6,271 |
+| stabilityai/stable-video-diffusion-img2vid | image-to-video | 1.5B | 2.8 GB | fits-bf16 | 2 | 32,127 |
+
+The other eight report `unknown` fit: peculiar-ragdoll/Dirk-Qwen3.8-27B-GGUF (trend 38, 24,168
+downloads), Audio8/audio8-TTS-0.1B-ONNX-INT8, ifmylove2011/girlslike-krea2,
+Beidouqixing/minimax-h3-4step-lora-flashgen, ResembleAI/chatterbox-flash, suno/bark,
+FX-FeiHou/MiniMax-H3-Remix, city96/Wan2.1-I2V-14B-720P-gguf.
+
+**Observations, unverified beyond the API response:**
+
+- apodex/Apodex-1.1-mini is the only net-new text-generation model and tops the diff at trend
+  62 — first genuine battery candidate to chart since 08-21. Not installed, so it did not run.
+  Its reported 36B / 67 GB matches Ornith-1.5-35B-A3B's numbers from 08-21 exactly; whether
+  that is a shared base or coincidence is unchecked (model card not read). "mini" against 36B
+  reported params is also unexplained.
+- Jiunsong/SuperQwen3.8-27b-abliterated shares a base with the installed OBLITERATED Q8_0 and
+  `qwen3.8:27b-mtp-bf16`, but it is a different org's finetune, not the same weights — same
+  ruling as the orcarouter/chimingw variants on 08-21/08-23/08-24: does not qualify as
+  "already installed." Yet another abliteration of the same 27B base charting; that base now
+  accounts for at least five distinct uncensored variants in ten days of diffs.
+- peculiar-ragdoll/Dirk-Qwen3.8-27B-GGUF is the GGUF fit-triage blind spot again — sixth
+  consecutive night the highest-download runnable text-model repo in the diff reports
+  `unknown`. Same org as yesterday's Tiel-Coder GGUF; charts under `image-text-to-text`, the
+  recurring pipeline-tag oddity.
+- suno/bark (2023, 1,559 likes), stable-video-diffusion-img2vid (Nov 2023), and
+  city96/Wan2.1-I2V-14B-720P-gguf are trending-window diff artifacts, not new releases — same
+  pattern as musicgen-medium on 08-23 and img2vid-xt on 08-24.
+- Three repos show 0 downloads against nonzero likes (Audio8, Breeze-TTS-2, chatterbox-flash —
+  the third ResembleAI repo in five nights with this signature); consistent with the download
+  counter not tracking certain repo layouts rather than real zeros. Not investigated.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
