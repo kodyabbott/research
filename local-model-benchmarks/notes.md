@@ -406,3 +406,58 @@ FX-FeiHou/MiniMax-H3-Remix, city96/Wan2.1-I2V-14B-720P-gguf.
   counter not tracking certain repo layouts rather than real zeros. Not investigated.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-26 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **17 new** since yesterday — the biggest diff since
+seeding. Checked against `ollama list` — no new trending model is already installed (the two new
+Qwen3.8-27B community variants are different repos than the installed 27B builds), and
+auto-download remains an open TODO, so no battery ran.
+
+New models with a known fit verdict:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| Qwen/Qwen3.8-Flash-Next | image-text-to-text | 180B | 335.3 GB | fits-quantized | 3617 | 2,551 |
+| zai-org/GLM-5.3-Flash | text-generation | 321.3B | 598.5 GB | fits-with-cpu-offload | 906 | 0 |
+| thomsonreuters/Thomson-1.0-Small | image-text-to-text | 35.1B | 65.4 GB | fits-bf16 | 108 | 214 |
+| Qwen/Qwen3.8-Flash-Next-FP8 | image-text-to-text | 180B | 335.3 GB | fits-quantized | 98 | 451 |
+| ibm-granite/granite-4.2-30b | text-generation | 29.3B | 54.5 GB | fits-bf16 | 70 | 995 |
+| DavidAU/Qwen3.8-27B-Cold-Fable-Fusion-GAIN-V1.1-732-Heretic-Uncensored-stage1 | image-text-to-text | 27.8B | 51.7 GB | fits-bf16 | 44 | 3 |
+| briaai/Fibo-1.5 | text-to-image | 8.3B | 15.4 GB | fits-bf16 | 16 | 370 |
+| HeartMuLa/HeartMuLa-oss-3B | text-to-audio | 3.9B | 7.3 GB | fits-bf16 | 1 | 854 |
+
+The other nine report `unknown` fit: unsloth/Qwen3.8-Flash-Next-GGUF (trend 356),
+unsloth/GLM-5.3-Flash-GGUF (trend 123), jcbtc/Qwen3.8-27B-IU4-Kairic-Edge (trend 43, 2,262
+downloads), mrjackspade/Ideogram4-Natural-Language-Text-Encoder,
+LAXMAYDAY/NOOB2-Project-Character-Reference-Bypass-Injector-Research (text-to-image),
+seedleap/zing-0.5, onnx-community/higgs-audio-v3-tts-4b, declare-lab/mustango,
+appautomaton/openmoss-sound-effect-mlx.
+
+**Observations, unverified beyond the API response:**
+
+- Major-release night: Qwen3.8-Flash-Next tops the diff at trend **3617** — nearly 10x anything
+  seen since seeding — and GLM-5.3-Flash lands at 906 with 0 downloads / 926 likes (fresh-upload
+  signature). Both arrived with same-day unsloth GGUF mirrors, which report `unknown` — the GGUF
+  fit-triage blind spot now on its seventh consecutive night, this time on the two biggest
+  releases in the log. The file-size-parsing fix is overdue.
+- Neither flagship is a battery candidate as-is: Flash-Next (180B, charts multimodal) only fits
+  quantized, and GLM-5.3-Flash at 321.3B is cpu-offload territory — same class as the
+  DeepSeek-V4-Flash run on 08-15, which needed llama.cpp's `--n-cpu-moe`, a path the harness
+  still lacks (open TODO). The FP8 repack's 335.3 GB figure is BF16 arithmetic applied to an
+  FP8 repo, so its fit math is not meaningful — same caveat as earlier NVFP4 repacks.
+- ibm-granite/granite-4.2-30b is the night's one clean battery candidate: text-generation,
+  29.3B / 54.5 GB, fits-bf16, from a first-party org. Not installed, so it did not run.
+- The DavidAU "Heretic-Uncensored" repo is yet another uncensored finetune of the Qwen3.8-27B
+  base (3 downloads, trend 44 — likes-driven). Same ruling as the orcarouter / chimingw /
+  Jiunsong variants: shares a base with installed models but is not the same weights — does not
+  qualify as "already installed." That base is now at least six distinct uncensored variants in
+  eleven days of diffs.
+- jcbtc/Qwen3.8-27B-IU4-Kairic-Edge charts under `text-generation` with real downloads (2,262)
+  but a null param count — name suggests a quant repack (IU4?); not investigated.
+- declare-lab/mustango (3,640 downloads, trend 1) looks like another trending-window diff
+  artifact of an older release, same pattern as musicgen-medium and suno/bark — not verified.
+- HeartMuLa/HeartMuLa-oss-3B is the base repo of the "-happy-new-year" variant that charted
+  08-23; likely the same model family surfacing twice, not checked.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
