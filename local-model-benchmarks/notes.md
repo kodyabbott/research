@@ -461,3 +461,47 @@ appautomaton/openmoss-sound-effect-mlx.
   08-23; likely the same model family surfacing twice, not checked.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-27 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **8 new** since yesterday. Checked against
+`ollama list` — no new trending model is already installed, and auto-download remains an open
+TODO, so no battery ran.
+
+New models with a known fit verdict:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| pipecat-ai/phonellm-alpha-1 | text-generation | 31.6B | 58.8 GB | fits-bf16 | 48 | 64 |
+| ibm-granite/granite-4.2-8b | text-generation | 8.8B | 16.4 GB | fits-bf16 | 47 | 2,604 |
+| ibm-granite/granite-4.2-3b | text-generation | 3.7B | 6.8 GB | fits-bf16 | 47 | 3,069 |
+| RadixArk/Qwen3.8-Flash-Next-NVFP4 | image-text-to-text | 119.6B | 222.8 GB | fits-quantized | 45 | 2,297 |
+| nvidia/Cosmos3-Super-Image2Video | image-to-video | 64.6B | 120.3 GB | fits-quantized | 3 | 75,183 |
+
+The other three report `unknown` fit: Vaelico/Wulver (text-to-image, trend 18),
+jdopensource/JoyAI-Echo (image-to-video, trend 3), GuGai/text_to_speech_G (text-to-audio,
+trend 1).
+
+**Observations, unverified beyond the API response:**
+
+- Three net-new text-generation models that fit in BF16 — the best battery-candidate crop
+  since seeding. The two granite-4.2 repos (8B, 3B) are smaller siblings of
+  ibm-granite/granite-4.2-30b, which charted 08-26 as that night's clean candidate; the 30B
+  remains the more interesting battery target of the family. None are installed, so none ran.
+- pipecat-ai/phonellm-alpha-1 tops the diff at trend 48 with only 64 downloads — likes-driven,
+  fresh-alpha signature. Name suggests a voice/telephony-oriented LLM (pipecat is a voice-agent
+  framework), but the model card was not read.
+- RadixArk/Qwen3.8-Flash-Next-NVFP4 is a community NVFP4 repack of Qwen3.8-Flash-Next, the
+  08-26 flagship (trend 3617 that night). Reported 119.6B against the original's 180B is quant
+  metadata, so the 222.8 GB BF16 arithmetic is not meaningful — same caveat as every NVFP4/FP8
+  repack in this log. Even so, "fits-quantized" is directionally right: an NVFP4 of a 180B
+  model lands roughly in the 90–100 GB range, which is edge-of-VRAM territory on this box.
+- First diff since 08-21 with **zero GGUF repos** — the fit-triage blind spot finally gets a
+  night off, by absence rather than by the overdue file-size fix.
+- Vaelico/Wulver trends at 18 with 0 downloads / 19 likes — fresh-upload signature, same
+  pattern as GLM-5.3-Flash on 08-26 and Krea2_Chars_LoRA on 08-21. Not investigated.
+- nvidia/Cosmos3-Super-Image2Video has the diff's only heavyweight download count (75,183) but
+  trend 3 — an established release drifting into the trending window rather than a launch;
+  out of scope for the battery (image-to-video) regardless.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
