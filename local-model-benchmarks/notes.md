@@ -505,3 +505,54 @@ trend 1).
   out of scope for the battery (image-to-video) regardless.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-08-28 — nightly discovery (automated run)
+
+Discovery only: 150 trending models polled, **14 new** since yesterday. Checked against
+`ollama list` — no new trending model is already installed (the trending
+`orcarouter/Qwen3.8-Flash-Next-Uncensored-GGUF` shares a naming family with installed Qwen3.8
+builds but is a finetune of a different base — Flash-Next, not the 27B — so it does not qualify),
+and auto-download remains an open TODO, so no battery ran.
+
+New models with a known fit verdict:
+
+| Model | Pipeline | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|---|
+| zai-org/GLM-5.3 | text-generation | 753.3B | 1403.2 GB | api-only | 1104 | 0 |
+| tencent/Hy4-preview | text-generation | 780B | 1452.8 GB | api-only | 245 | 0 |
+| incoai/GLM-5.3-Flash-DFlash2 | text-generation | 1.2B | 2.2 GB | fits-bf16 | 80 | 0 |
+| Qwen/Qwen3-TTS-12Hz-0.6B-Base | text-to-speech | 0.9B | 1.7 GB | fits-bf16 | 5 | 482,655 |
+| Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice | text-to-speech | 0.9B | 1.7 GB | fits-bf16 | 5 | 1,229,264 |
+| OpenMOSS-Team/MOSS-TTS-v1.5 | text-to-speech | 8.5B | 15.8 GB | fits-bf16 | 5 | 372,105 |
+| OpenMOSS-Team/MOSS-SoundEffect | text-to-audio | 8.4B | 15.6 GB | fits-bf16 | 1 | 767 |
+
+The other seven report `unknown` fit: orcarouter/Qwen3.8-Flash-Next-Uncensored-GGUF (trend 71),
+unsloth/GLM-5.3-GGUF (trend 49), sakils123/Anima-Control-Pose, RuneXX/Minimax-H3-Workflows,
+Zyphra/ZONOS2, Boombaaa/PORNHUBAI, tencent/HunyuanVideo-Foley.
+
+**Observations, unverified beyond the API response:**
+
+- Second flagship night in three days: zai-org/GLM-5.3 tops the diff at trend 1104 — the full
+  successor to GLM-5.3-Flash, which charted 08-26 at 906. At 753.3B it is api-only for this box,
+  a class above even the cpu-offload tier. 0 downloads / 1,137 likes is the fresh-upload
+  signature. Its same-day unsloth GGUF mirror reports `unknown` — the GGUF fit-triage blind spot,
+  again on the night's biggest release, same as Flash-Next and GLM-5.3-Flash on 08-26.
+- tencent/Hy4-preview (780B, api-only, 0 downloads / 247 likes) is a second frontier-scale fresh
+  upload the same night. Neither flagship is runnable here at any quant that exists today.
+- incoai/GLM-5.3-Flash-DFlash2 is the night's only text-generation model that fits — but at 1.2B
+  with a "DFlash2" suffix it looks like a speculative-decoding draft model for GLM-5.3-Flash
+  (same naming pattern as the installed `muse-glimmer:30b-bf16-dflash`), not a standalone chat
+  model. Model card not read; if that reading is right, benchmarking it alone would be
+  meaningless — it only matters paired with a GLM-5.3-Flash quant this box can't hold in VRAM.
+- orcarouter/Qwen3.8-Flash-Next-Uncensored-GGUF extends orcarouter's uncensored line (27B
+  variants on 08-21/08-23) to the Flash-Next flagship from 08-26. GGUF blind spot again, and it
+  charts under `image-text-to-text`, the recurring pipeline-tag oddity.
+- The two Qwen3-TTS-12Hz repos (1.2M and 482K downloads against trend 5) and likely
+  HunyuanVideo-Foley are established releases drifting into the trending window, not launches —
+  same diff-artifact pattern as musicgen-medium (08-23) and suno/bark (08-25).
+- sakils123/Anima-Control-Pose repeats the exact repo name of Claquasse/Anima-Control-Pose
+  (charted 08-22) under a different user — looks like a re-upload/copy; not investigated.
+- Zero net-new battery candidates tonight once the DFlash2 draft-model reading is applied: the
+  fits-bf16 crop is otherwise entirely TTS/audio, out of scope for the text-generation battery.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
