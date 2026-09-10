@@ -654,3 +654,27 @@ separately from any future autonomous model selection.
 
 
 Validation: 27 offline tests passed, live public metadata admission passed without a download, and the installed qwen3-coder baseline completed three repetitions plus all three exact-output checks. See validation.md and its linked raw run. No new-model download/import was performed during this update.
+
+## 2026-09-10 - Codex and existing Fable 5.1 peer review (proposal)
+
+Kody asked Codex to collaborate with the existing Fable review session until the project is
+adequate. Direct peer messages reached session 68591a9a-964d-4e81-88ff-e4934174c051. The
+review caught disk placement, finite-cache accounting, missing thinking measurements,
+resumption, process lifetime, failed-load retention, and cleanup/status coupling issues.
+
+The proposed implementation is isolated on branch codex/nightly-peer-review; the nightly
+checkout remains on the earlier implementation. 51 offline tests pass under Python 3.12.14,
+including actual Windows detached jobs, file locking, exact process birth identity, deadline
+termination, and a stalled HTTP probe. Fable independently confirmed detached-child survival
+across a Claude Desktop shell tool call. PowerShell 5.1 parsing and Python argument quoting pass.
+
+The proposed limits are 35 GiB per artifact and a 240 GiB private cache on F:. A user-owned
+Python 3.14.7 runtime is proposed. The official installer SHA-256 matches the release page,
+and Windows reports a valid Python Software Foundation signature. The installer has not run.
+Kody's approval of these changes is pending; no live model download/import has been performed
+in this review. See peer-review.md for acceptance criteria and setup-runtime.ps1 for the
+pinned installation source and verification. No novelty claim is made.
+
+The Desktop task update tool does not expose a model field. The saved on-disk task already
+specifies claude-fable-5-1 from the prior update, but its active cached setting is unverified.
+The proposed prompt now states that limit instead of suggesting an unsupported API update.

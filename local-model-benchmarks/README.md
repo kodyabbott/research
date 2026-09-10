@@ -21,15 +21,44 @@ Kody authorized autonomous model selection, downloads, and benchmarks within
 the Claude task instructions. The daily schedule remains 21:00 local; benchmark starts are
 limited to 21:00–05:59. Daytime catch-up runs collect candidates only.
 
-Limits: one candidate attempt per day, 20 GiB per download, 60 GiB of task storage including
-temporary import copies and failed-import reservations, 25 GiB free disk, and a 60-minute
-process deadline. No model-library cleanup is automatic. Busy GPU/Ollama cases defer.
+Limits: one candidate attempt per day, 35 GiB per artifact, 240 GiB of task storage including
+temporary copies and orphaned import blobs, 25 GiB free disk, and a 60-minute worker deadline.
+Partial downloads resume and the complete file is rehashed. Slow runs may take multiple
+nights; the larger cap does not guarantee completion in one night.
+
+The harness starts a private Ollama child on `127.0.0.1:11435` with models and downloads under
+`F:\models\nightly-benchmark`. An unverified pre-existing listener causes a refusal. A recorded
+orphan can be reclaimed only under the operation lock with matching PID, exact OS process
+creation time, executable, and listening port. Imports and eligible
+cache deletions use only that child. The original Ollama server on port 11434 supplies the
+installed baseline; its model library is not moved. Candidate unload and VRAM recovery are
+confirmed before the baseline starts. The child exits at the end, including timeout handling.
+
+The cache retains the two latest eligible completed imports. Eviction requires a matching
+recorded digest, task prefix, completed raw result, and an unloaded secondary server. A verified
+failed import is also removable when a terminal error result pins the same name and digest.
+Environmental, timeout, and baseline interruptions do not trigger failed-model eviction.
+Verified GGUFs survive failed imports so another attempt need not download them again. Deletions
+are journaled and reservations released. Storage admission counts actual directory bytes,
+including failed-import orphan blobs; old reservations do not accumulate into a permanent
+charge after files are removed. Unknown/orphan files are charged and require manual review.
+Busy workloads get a bounded five-minute wait, then the candidate is deferred.
+
+Run mode launches a detached supervisor and returns a run ID immediately, avoiding the
+scheduled agent's shell timeout. `-WaitRun` polls for up to 55 seconds per call; `-StatusRun`
+checks once. The result remains running until bookkeeping and child shutdown finish.
+Cleanup failures are recorded separately and do not erase completed measurements.
 
 Discovery keeps unfinished candidates queued even after they leave the trending window.
+Each invocation allows 100 detail lookups, favors text pipelines while draining legacy IDs,
+and caps stale-revision refresh at 20. Revision changes are detected in detail responses;
+the trending list does not supply a commit SHA. Discovery has an eight-minute request budget
+so it can return partial results before the scheduled shell's ten-minute limit.
 GGUF sizes/hashes come from repository metadata. Pending lookups, failed requests, and
 unavailable metadata are distinguished. Existing `state/seen.json` is preserved and migrated
 to `state/candidates.json` on the first successful discovery. Raw records go in tracked
-`runs/`; queues, daily ledger, import provenance, and temporary downloads stay in ignored `state/`.
+`runs/`; queues, ledgers, import provenance, and child logs stay in ignored `state/`.
+Weights and resumable partial files live on F:.
 
 **The August 15 results below are historical and predate the standardized harness.**
 
@@ -58,8 +87,9 @@ to `state/candidates.json` on the first successful discovery. Raw records go in 
 
 ## What the second column is, and why it matters more than it looks
 
-"Tokens for a 100-word request" is the total the model generated to satisfy a prompt asking for
-roughly 130 tokens of output. Everything above that is reasoning overhead.
+"Tokens for a 100-word request" is the historical total generated for a short request.
+These totals include answer text and, for applicable models, thinking. They do not isolate
+reasoning tokens. The old runs did not use the standardized settings now enforced below.
 
 The spread is the story. `qwen3-coder:30b` answered in 100 tokens. `Qwen3.8-27B` took 7,034 — seventy
 times as many — to answer the same question. At 87.8 tok/s that is about 80 seconds of wall clock,
@@ -69,7 +99,9 @@ So the model that looks three times slower on the headline number is, for a shor
 closer to a hundred and fifty times slower in practice. Throughput alone will mislead you about
 which model feels fast.
 
-**How well-covered is this?** [Artificial Analysis tracks average reasoning tokens per model](https://artificialanalysis.ai/methodology) and prices them into cost-to-run — but only for **hosted API endpoints**. Two 2026 papers ([arXiv 2606.25519](https://arxiv.org/html/2606.25519v1), [arXiv 2606.00206](https://arxiv.org/abs/2606.00206)) show quantization inflates chain-of-thought length by +4.7% to +292%, which means hosted-API figures are **provably not a valid proxy for a local quant** — but both papers ran vLLM on H100s with research quants, not GGUF K-quants on consumer hardware. That specific intersection is the part that appears genuinely uncovered.
+The earlier claim that this measurement is uncovered by other benchmarks is unverified.
+The purpose here is a reproducible local comparison, not a novelty claim. The historical
+cross-model spread is not a controlled measurement of reasoning overhead.
 
 ## Prompt ingest needs a real prompt
 
@@ -86,13 +118,24 @@ little about a 96 GB card running a large MoE at long context.
 ## The current battery
 
 The PowerShell entry point delegates to [nightly.py](nightly.py), using Python 3.10+ and only
-the standard library. The wrapper finds the existing Codex-bundled Python on this machine;
-`NIGHTLY_BENCH_PYTHON` can point to another installed interpreter. No packages are installed.
+the standard library. The wrapper prefers `NIGHTLY_BENCH_PYTHON`, then a standard per-user
+Python installation, then PATH, and finally the Codex cache. Raw runs identify the interpreter
+and flag a cache fallback. A user-owned Python installation avoids depending on Codex updates.
+The scheduled task never installs software or packages.
 
 Each candidate and the installed `qwen3-coder:30b` baseline use an 8192-token context,
 temperature 0, seed 42, 512-token output cap, and three repetitions after warmup. Thinking
 is disabled where supported. Results retain model digest, template hash, parameters,
-runtime/GPU state, raw responses, medians/range, latency, and output truncation.
+runtime/GPU state, raw responses, medians/range, latency, and output truncation. Both runtime
+versions must match. Child performance variables are captured through a small allowlist;
+the primary's environment remains an explicit unknown. Loaded-model metadata records actual
+VRAM allocation and context. This is a local comparison with those limits, not laboratory isolation.
+
+A separate thinking-enabled trial repeats the short prompt with an 8192-token cap and a
+180-second subprocess deadline. It reports total generated tokens, separate thinking/answer
+character counts, raw fields, truncation, and latency relative to the thinking-off median.
+The probe never enters throughput medians. HTTP latency excludes subprocess startup, which is
+also recorded separately. Vision is explicitly unmeasured; projector support remains future work.
 
 The battery measures generation throughput and prompt ingest, then checks exact number
 sequencing, arithmetic, and extraction. It never executes generated code. These are small
@@ -108,6 +151,8 @@ duration, not time to first token. Output tokens are not isolated reasoning toke
 # Fill state/selection.json from selection.example.json using a verified pinned source.
 .\bench.ps1 -ValidateCandidate .\state\selection.json
 .\bench.ps1 -RunCandidate .\state\selection.json
+# Use the runId returned above; repeat WaitRun until a terminal status.
+.\bench.ps1 -WaitRun "YYYYMMDD-HHMMSS-xxxxxxxx"
 
 # Human-driven validation only; not the scheduled admission path.
 .\bench.ps1 -Benchmark "qwen3-coder:30b"
@@ -121,7 +166,7 @@ Hash verification establishes artifact identity, not model quality or runtime se
 Offline regression tests (no downloads or inference):
 
 ```powershell
-& "$env:USERPROFILE\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m unittest -v test_nightly.py
+& "$env:LOCALAPPDATA\Programs\Python\Python314\python.exe" -m unittest -v test_nightly.py
 ```
 
 ## Known limitations
@@ -130,8 +175,16 @@ Offline regression tests (no downloads or inference):
   require a separate decision.
 - File sizes describe weights. Admission reserves 12 GiB of live GPU headroom, but actual
   KV-cache/activation needs still vary by architecture.
-- Failed import reservations stay charged until manually reconciled, accounting conservatively
-  for possible orphaned Ollama blobs. Models are never automatically deleted.
+- A human can run `acceptance.py --fixture state/acceptance-selection.json` for a <=2 GiB
+  plumbing fixture outside the overnight window. It uses the same admission transaction and
+  a separate ledger for up to three distinct fixtures per day, leaving the nightly slot available.
+  `acceptance.py --deadline-smoke` deliberately stalls a worker with that fixture loaded to
+  verify process-tree termination. These are never scheduled task modes.
+- Manual validation and setup entry points are separated by task instructions, not an OS
+  permission boundary. The scheduled agent is forbidden to use them to bypass admission.
+- Work has a one-minute shutdown margin before the one-hour tree-kill deadline. Unload gets
+  a bounded share of that margin. Hard-kill verification may take another 35 seconds.
+  Interrupted imports may leave orphaned blobs; those bytes stay charged until reconciled.
 - Templates and tokenizers differ across models. Three repetitions describe local variability;
   they do not establish a broad leaderboard.
 - Claude's local scheduler requires its app open and the computer awake; catch-up cannot
@@ -141,5 +194,8 @@ Offline regression tests (no downloads or inference):
 
 - [Ollama chat API](https://docs.ollama.com/api/chat): options, thinking, cache and timing fields.
 - [Ollama usage](https://docs.ollama.com/api/usage): load/evaluation timing semantics.
+- [Ollama configuration](https://docs.ollama.com/faq): host, model directory, and keep-alive.
+- [Ollama deletion API](https://docs.ollama.com/api/delete): cache model deletion.
+- [Python 3.14.7 release](https://www.python.org/downloads/release/python-3147/): signed Windows runtime installer and published SHA-256.
 - [Hugging Face Hub API](https://huggingface.co/docs/hub/api): revisions and file metadata.
 - [Claude scheduling](https://code.claude.com/docs/en/desktop-scheduled-tasks): local execution and catch-up.
