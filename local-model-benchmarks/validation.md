@@ -26,3 +26,11 @@ configured for Claude Fable 5.1. Existing documents and task settings were backe
 deployment; the repository history also preserves the original implementation.
 
 Deployment check: the installed wrapper completed a full 150-model discovery with no source or detail failures. It migrated 388 legacy IDs, enriched 40, and retained 348 pending metadata lookups. See runs/20260910-163056-170607ea.json. The deployed task prompt and versioned prompt have matching SHA-256 hashes; the saved task remains enabled at 21:00 and specifies claude-fable-5-1. Claude caches task metadata in memory, so a running app must reload before the saved model/cwd take effect; the prompt also includes a next-run model synchronization instruction.
+
+## Peer-review revision - staged, not yet deployed
+
+51 offline tests pass under Python 3.12.14. This includes real process and local HTTP tests;
+model loading, import, eviction, and the model-loaded deadline test remain live acceptance
+requirements. See peer-review.md. The revised code is on codex/nightly-peer-review and does
+not yet alter the scheduled checkout. Python 3.14.7 installation, the 35 GiB artifact cap,
+and the 240 GiB cache await Kody's approval. Do not read the test count as a live-run sign-off.
