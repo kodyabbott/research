@@ -56,3 +56,19 @@ Fable verified that the current Desktop task update tool does not expose a model
 The staged prompt therefore reports model mismatches for correction in the UI instead of
 requesting an unsupported tool update. The saved on-disk model was already set to Fable 5.1
 in the earlier deployment; active in-memory task selection has not been verified here.
+
+## Final code review, 2026-09-10 17:50 MDT
+
+Fable's conclusion was: "No code blocker remains before the live acceptance sequence."
+It explicitly withheld project acceptance pending live evidence and Kody's approval.
+Fable reran all 51 tests, confirmed the final lifecycle and eviction fixes, and accepted
+the correction about text-retry ordering and the limits of the scheduler-gap evidence.
+
+A final focused offline check also expired the discovery budget after one successful detail
+lookup. The result was partial and the successful lookup remained in the saved registry.
+The existing per-row exception handler already handles that timeout; no further code change
+was needed. Untyped/non-text backlog entries can still wait behind new candidates.
+
+The tested source is preserved in local commit 36a54c6 on codex/nightly-peer-review; the
+review documentation is committed separately. The scheduled checkout remains at dfd44e8.
+Nothing has been pushed, installed, downloaded as model weights, or activated in this round.
