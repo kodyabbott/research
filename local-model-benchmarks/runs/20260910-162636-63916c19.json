@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260910-162636-63916c19",
+  "startedAt": "2026-09-10T16:26:36-06:00",
+  "status": "completed",
+  "mode": "manual-benchmark",
+  "benchmarks": [
+    {
+      "model": "qwen3-coder:30b",
+      "digest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen3moe",
+        "families": [
+          "qwen3moe"
+        ],
+        "parameter_size": "30.5B",
+        "quantization_level": "Q4_K_M"
+      },
+      "modelParameters": "temperature                    0.7\ntop_k                          20\ntop_p                          0.8\nrepeat_penalty                 1.05\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\nstop                           \"<|endoftext|>\"",
+      "capabilities": [
+        "completion",
+        "tools"
+      ],
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "policy": {
+        "schemaVersion": 1,
+        "maxCandidatesPerDay": 1,
+        "maxDownloadGiB": 20,
+        "maxOwnedStorageGiB": 60,
+        "minFreeDiskGiB": 25,
+        "maxRuntimeSeconds": 3600,
+        "benchmarkWindowStartHour": 21,
+        "benchmarkWindowEndHour": 6,
+        "minGpuHeadroomGiB": 12,
+        "maxGpuUtilizationPercent": 25,
+        "numCtx": 8192,
+        "numPredict": 512,
+        "temperature": 0,
+        "seed": 42,
+        "repetitions": 3,
+        "baselineModel": "qwen3-coder:30b",
+        "ollamaModelsDir": "C:\\Users\\kody1\\.ollama\\models",
+        "approvedPublishers": [
+          "Qwen",
+          "microsoft",
+          "google",
+          "nvidia",
+          "meta-llama",
+          "mistralai",
+          "deepseek-ai",
+          "zai-org",
+          "openbmb",
+          "allenai",
+          "ibm-granite",
+          "tiiuae",
+          "ggml-org",
+          "unsloth",
+          "bartowski"
+        ]
+      },
+      "gpuBefore": {
+        "freeGiB": 94.0791015625,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 0.0
+      },
+      "thinking": "not-supported",
+      "loadTiming": "Ollama model-load duration; not time to first token; warmup excluded from medians",
+      "qualityScope": "Small instruction-following checks; no coding-quality claim",
+      "trials": [
+        {
+          "trial": 1,
+          "short": {
+            "genTokPerSec": 284.69,
+            "outputTokens": 132,
+            "promptTokens": 21,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 185.13,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 88.1167,
+            "serverTotalMs": 668.3888,
+            "clientWallMs": 687.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "ingest": {
+            "genTokPerSec": 210.7,
+            "outputTokens": 4,
+            "promptTokens": 7021,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 12014.05,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 87.0609,
+            "serverTotalMs": 709.8327,
+            "clientWallMs": 735.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "shortResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:44.4961558Z",
+            "message": {
+              "role": "assistant",
+              "content": "The Rocky Mountains stretch over 3,000 miles from Canada to New Mexico, forming North America's largest mountain range. Towering peaks like Colorado's Mount Elbert reach elevations above 14,000 feet, crowned with snow year-round. These ancient mountains showcase dramatic landscapes of jagged ridges, deep valleys, and pristine alpine lakes. Dense forests of pine and fir carpet the lower slopes, while rugged terrain supports diverse wildlife including elk, bears, and bighorn sheep. The Rockies offer world-class hiking, skiing, and breathtaking vistas, making them a premier destination for outdoor enthusiasts and nature lovers seeking wilderness adventure."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 668388800,
+            "load_duration": 88116700,
+            "prompt_eval_count": 21,
+            "prompt_eval_duration": 113433000,
+            "eval_count": 132,
+            "eval_duration": 463656000,
+            "clientWallMs": 687.0
+          },
+          "ingestResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:45.2290092Z",
+            "message": {
+              "role": "assistant",
+              "content": "acknowledged"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 709832700,
+            "load_duration": 87060900,
+            "prompt_eval_count": 7021,
+            "prompt_eval_duration": 584399000,
+            "eval_count": 4,
+            "eval_duration": 18984000,
+            "clientWallMs": 735.0
+          }
+        },
+        {
+          "trial": 2,
+          "short": {
+            "genTokPerSec": 288.11,
+            "outputTokens": 132,
+            "promptTokens": 21,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 895.22,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 87.0287,
+            "serverTotalMs": 682.9678,
+            "clientWallMs": 687.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "ingest": {
+            "genTokPerSec": 207.15,
+            "outputTokens": 4,
+            "promptTokens": 7021,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 12035.14,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 88.3254,
+            "serverTotalMs": 704.7864,
+            "clientWallMs": 735.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "shortResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:45.9239548Z",
+            "message": {
+              "role": "assistant",
+              "content": "The Rocky Mountains stretch over 3,000 miles from Canada to New Mexico, forming North America's largest mountain range. Towering peaks like Colorado's Mount Elbert reach elevations above 14,000 feet, crowned with snow year-round. These ancient mountains showcase dramatic landscapes of jagged ridges, deep valleys, and pristine alpine lakes. Dense forests of pine and fir carpet the lower slopes, while rugged terrain supports diverse wildlife including elk, bears, and bighorn sheep. The Rockies offer world-class hiking, skiing, and breathtaking vistas, making them a premier destination for outdoor enthusiasts and nature lovers seeking wilderness adventure."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 682967800,
+            "load_duration": 87028700,
+            "prompt_eval_count": 21,
+            "prompt_eval_duration": 23458000,
+            "eval_count": 132,
+            "eval_duration": 458155000,
+            "clientWallMs": 687.0
+          },
+          "ingestResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:46.6544038Z",
+            "message": {
+              "role": "assistant",
+              "content": "acknowledged"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 704786400,
+            "load_duration": 88325400,
+            "prompt_eval_count": 7021,
+            "prompt_eval_duration": 583375000,
+            "eval_count": 4,
+            "eval_duration": 19310000,
+            "clientWallMs": 735.0
+          }
+        },
+        {
+          "trial": 3,
+          "short": {
+            "genTokPerSec": 310.28,
+            "outputTokens": 132,
+            "promptTokens": 21,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 892.63,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 91.8149,
+            "serverTotalMs": 640.0915,
+            "clientWallMs": 656.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "ingest": {
+            "genTokPerSec": 209.15,
+            "outputTokens": 4,
+            "promptTokens": 7021,
+            "cachedPromptTokens": null,
+            "promptTokPerSec": 12028.5,
+            "promptRateBasis": "reported tokens; cache split unavailable",
+            "loadMs": 87.9986,
+            "serverTotalMs": 706.0033,
+            "clientWallMs": 734.0,
+            "doneReason": "stop",
+            "truncated": false
+          },
+          "shortResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:47.3134661Z",
+            "message": {
+              "role": "assistant",
+              "content": "The Rocky Mountains stretch over 3,000 miles from Canada to New Mexico, forming North America's largest mountain range. Towering peaks like Colorado's Mount Elbert reach elevations above 14,000 feet, crowned with snow year-round. These ancient mountains showcase dramatic landscapes of jagged ridges, deep valleys, and pristine alpine lakes. Dense forests of pine and fir carpet the lower slopes, while rugged terrain supports diverse wildlife including elk, bears, and bighorn sheep. The Rockies offer world-class hiking, skiing, and breathtaking vistas, making them a premier destination for outdoor enthusiasts and nature lovers seeking wilderness adventure."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 640091500,
+            "load_duration": 91814900,
+            "prompt_eval_count": 21,
+            "prompt_eval_duration": 23526000,
+            "eval_count": 132,
+            "eval_duration": 425421000,
+            "clientWallMs": 656.0
+          },
+          "ingestResponse": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:48.0374374Z",
+            "message": {
+              "role": "assistant",
+              "content": "acknowledged"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 706003300,
+            "load_duration": 87998600,
+            "prompt_eval_count": 7021,
+            "prompt_eval_duration": 583697000,
+            "eval_count": 4,
+            "eval_duration": 19125000,
+            "clientWallMs": 734.0
+          }
+        }
+      ],
+      "checks": [
+        {
+          "name": "sequence",
+          "passed": true,
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:48.3058829Z",
+            "message": {
+              "role": "assistant",
+              "content": "1\n2\n3\n4\n5"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 251450100,
+            "load_duration": 87942900,
+            "prompt_eval_count": 25,
+            "prompt_eval_duration": 25210000,
+            "eval_count": 10,
+            "eval_duration": 36628000,
+            "clientWallMs": 266.0
+          }
+        },
+        {
+          "name": "arithmetic",
+          "passed": true,
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:48.4539992Z",
+            "message": {
+              "role": "assistant",
+              "content": "391"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 131905600,
+            "load_duration": 88245700,
+            "prompt_eval_count": 23,
+            "prompt_eval_duration": 23055000,
+            "eval_count": 4,
+            "eval_duration": 16479000,
+            "clientWallMs": 140.0
+          }
+        },
+        {
+          "name": "extraction",
+          "passed": true,
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-10T22:26:48.6230295Z",
+            "message": {
+              "role": "assistant",
+              "content": "AB-204"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 143661800,
+            "load_duration": 86675700,
+            "prompt_eval_count": 36,
+            "prompt_eval_duration": 29824000,
+            "eval_count": 6,
+            "eval_duration": 23297000,
+            "clientWallMs": 172.0
+          }
+        }
+      ],
+      "generatedCodeExecution": "disabled",
+      "warmup": {
+        "model": "qwen3-coder:30b",
+        "created_at": "2026-09-10T22:26:43.7903087Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6651118400,
+        "load_duration": 6487928400,
+        "prompt_eval_count": 13,
+        "prompt_eval_duration": 134802000,
+        "eval_count": 2,
+        "eval_duration": 26941000,
+        "clientWallMs": 6672.0
+      },
+      "loadedModel": [
+        {
+          "name": "qwen3-coder:30b",
+          "model": "qwen3-coder:30b",
+          "size": 19373962034,
+          "digest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3moe",
+            "families": [
+              "qwen3moe"
+            ],
+            "parameter_size": "30.5B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-09-10T16:31:43.7918216-06:00",
+          "size_vram": 19373962034,
+          "context_length": 8192
+        }
+      ],
+      "summary": {
+        "medianGenTokPerSec": 288.11,
+        "minGenTokPerSec": 284.69,
+        "maxGenTokPerSec": 310.28,
+        "medianClientWallMs": 687.0,
+        "checksPassed": 3,
+        "checksTotal": 3,
+        "anyTruncated": false
+      },
+      "status": "completed"
+    }
+  ],
+  "finishedAt": "2026-09-10T16:26:48-06:00",
+  "resultFile": "runs/20260910-162636-63916c19.json",
+  "purpose": "Implementation validation of the already installed baseline; no autonomous candidate download."
+}

@@ -619,3 +619,38 @@ Zyphra/ZONOS2, Boombaaa/PORNHUBAI, tencent/HunyuanVideo-Foley.
   fits-bf16 crop is otherwise entirely TTS/audio, out of scope for the text-generation battery.
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
+## 2026-09-10 — authorized autonomous selection and harness revision
+
+Kody authorized the scheduled task to choose, download, and benchmark models within a fixed
+policy rather than requiring individual approvals. `scheduled-task.md` is the versioned
+task prompt; `policy.json` defines the machine-enforced limits.
+
+Implemented one candidate attempt per local day, 20 GiB per download, 60 GiB task storage
+including transient import copies and conservative failed-import reservations, a 25 GiB
+free-disk reserve, a 60-minute process deadline, overnight starts only, an explicit publisher
+list, pinned GGUF revision/size/SHA-256 verification, task-specific model names, and a fixed
+installed baseline. The existing library is not automatically deleted or retagged.
+
+The PowerShell entry point now delegates to a standard-library Python harness using an
+interpreter already installed on the workstation. First discovery, metadata completion, and
+benchmark completion are separate states. Legacy seen IDs migrate to pending metadata.
+Source failures, deferred lookups, and genuinely unavailable metadata are distinct outcomes.
+
+Correction to the September 10 discovery entry above: raw output contained 43 unknown fits
+among 70 new models, but the script had a 40-detail-lookup cap. The last 30 candidates had
+no detail lookup; 13 unknowns occurred among the first 40. Attributing all 43 unknowns to
+the GGUF blind spot was unsupported.
+
+Context, sampling, and output length are now pinned; thinking is disabled where supported;
+warmup precedes three repetitions; raw responses, digests, template hash, runtime/GPU state,
+truncation, and latency are retained. Generated-PowerShell execution is disabled. The old
+checker accepted duplicated/reversed numbers and extra output, so earlier `codeExecutes: true`
+values do not establish exact-output correctness. New checks compare sequence, arithmetic,
+and extraction answers without executing generated code.
+
+The historical README numbers are preserved. Validation of the revised harness is recorded
+separately from any future autonomous model selection.
+
+
+Validation: 27 offline tests passed, live public metadata admission passed without a download, and the installed qwen3-coder baseline completed three repetitions plus all three exact-output checks. See validation.md and its linked raw run. No new-model download/import was performed during this update.
