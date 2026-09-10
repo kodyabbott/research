@@ -14,6 +14,25 @@ A fixed battery, a fixed machine, and every measurement traceable to a command a
 >
 > What follows is a personal instrument for one machine, kept because same-day numbers on identical hardware are useful to its owner. Treat any framing of it as novel with suspicion.
 
+## Autonomous routine — updated 2026-09-10
+
+Kody authorized autonomous model selection, downloads, and benchmarks within
+[policy.json](policy.json). [scheduled-task.md](scheduled-task.md) is the versioned copy of
+the Claude task instructions. The daily schedule remains 21:00 local; benchmark starts are
+limited to 21:00–05:59. Daytime catch-up runs collect candidates only.
+
+Limits: one candidate attempt per day, 20 GiB per download, 60 GiB of task storage including
+temporary import copies and failed-import reservations, 25 GiB free disk, and a 60-minute
+process deadline. No model-library cleanup is automatic. Busy GPU/Ollama cases defer.
+
+Discovery keeps unfinished candidates queued even after they leave the trending window.
+GGUF sizes/hashes come from repository metadata. Pending lookups, failed requests, and
+unavailable metadata are distinguished. Existing `state/seen.json` is preserved and migrated
+to `state/candidates.json` on the first successful discovery. Raw records go in tracked
+`runs/`; queues, daily ledger, import provenance, and temporary downloads stay in ignored `state/`.
+
+**The August 15 results below are historical and predate the standardized harness.**
+
 ## The machine
 
 | | |
@@ -64,33 +83,63 @@ some time. The problem is convention, not tooling — the canonical hardware tab
 `pp512/tg128` against **Llama 2 7B**, a dense model from 2023 at a 512-token prompt, which says
 little about a 96 GB card running a large MoE at long context.
 
-## The battery
+## The current battery
 
-Five measurements per model, identical every run:
+The PowerShell entry point delegates to [nightly.py](nightly.py), using Python 3.10+ and only
+the standard library. The wrapper finds the existing Codex-bundled Python on this machine;
+`NIGHTLY_BENCH_PYTHON` can point to another installed interpreter. No packages are installed.
 
-1. **Cold load time** from disk to first token
-2. **Generation throughput** on a fixed prompt
-3. **Reasoning overhead** — total tokens spent on that prompt
-4. **Prompt ingest** at ~7K tokens, long enough to be meaningful
-5. **Functional code test** — the model writes a PowerShell one-liner, the harness *executes* it and checks the output. Pass or fail, not a judgement call.
+Each candidate and the installed `qwen3-coder:30b` baseline use an 8192-token context,
+temperature 0, seed 42, 512-token output cap, and three repetitions after warmup. Thinking
+is disabled where supported. Results retain model digest, template hash, parameters,
+runtime/GPU state, raw responses, medians/range, latency, and output truncation.
 
-Vision models additionally get an image described. The file is copied to a neutral name first, because
-a path like `C:\Windows\Web\Wallpaper\...` lets a model infer the answer without looking at the pixels.
+The battery measures generation throughput and prompt ingest, then checks exact number
+sequencing, arithmetic, and extraction. It never executes generated code. These are small
+instruction-following checks, not a coding-quality benchmark. `loadMs` is model-loading
+duration, not time to first token. Output tokens are not isolated reasoning tokens.
 
 ## Running it
 
 ```powershell
-# What's newly trending, and what fits this box
 .\bench.ps1 -Discover
+.\bench.ps1 -Pending
 
-# Full battery against an installed Ollama model
-.\bench.ps1 -Benchmark "qwen3.8:27b-mtp-bf16" -ImagePath .\neutral.jpg
+# Fill state/selection.json from selection.example.json using a verified pinned source.
+.\bench.ps1 -ValidateCandidate .\state\selection.json
+.\bench.ps1 -RunCandidate .\state\selection.json
+
+# Human-driven validation only; not the scheduled admission path.
+.\bench.ps1 -Benchmark "qwen3-coder:30b"
 ```
 
-Discovery is read-only. It never downloads, and never deletes.
+Discovery never downloads weights. The scheduled path enforces publisher, file/hash, daily,
+disk, GPU, and runtime limits. It imports only single-file GGUFs into `nightly-bench-*` names.
+Existing selections pin their current Ollama digest. It never changes existing model tags.
+Hash verification establishes artifact identity, not model quality or runtime security.
+
+Offline regression tests (no downloads or inference):
+
+```powershell
+& "$env:USERPROFILE\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m unittest -v test_nightly.py
+```
 
 ## Known limitations
 
-- **GGUF-only repos report `unknown` fit.** Parameter counts come from the safetensors index, which GGUF repos don't publish. Since GGUF is often the most locally-runnable format, this gets the triage backwards for exactly the repos that matter most.
-- **Ollama only.** llama.cpp models are benchmarked by hand; the harness has no path for them yet.
-- **Fit triage is arithmetic, not reality.** It estimates from parameter count and ignores context length, KV cache, and activation memory, all of which consume real VRAM.
+- Ollama only. Split GGUFs, extra projectors, adapters, custom loaders, and runtime upgrades
+  require a separate decision.
+- File sizes describe weights. Admission reserves 12 GiB of live GPU headroom, but actual
+  KV-cache/activation needs still vary by architecture.
+- Failed import reservations stay charged until manually reconciled, accounting conservatively
+  for possible orphaned Ollama blobs. Models are never automatically deleted.
+- Templates and tokenizers differ across models. Three repetitions describe local variability;
+  they do not establish a broad leaderboard.
+- Claude's local scheduler requires its app open and the computer awake; catch-up cannot
+  reconstruct missed trending snapshots.
+
+## Implementation references
+
+- [Ollama chat API](https://docs.ollama.com/api/chat): options, thinking, cache and timing fields.
+- [Ollama usage](https://docs.ollama.com/api/usage): load/evaluation timing semantics.
+- [Hugging Face Hub API](https://huggingface.co/docs/hub/api): revisions and file metadata.
+- [Claude scheduling](https://code.claude.com/docs/en/desktop-scheduled-tasks): local execution and catch-up.
