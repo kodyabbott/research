@@ -506,6 +506,69 @@ trend 1).
 
 Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
 
+## 2026-09-10 — nightly discovery (automated run)
+
+First logged run since 08-28 — a 13-day gap (why the schedule skipped is not determinable from
+this session), so the diff is inflated accordingly: 150 trending models polled, **70 new**, by
+far the biggest diff in the log. Checked against `ollama list` — no new trending model is
+already installed, and auto-download remains an open TODO, so no battery ran.
+
+New text-generation models that fit — the best battery-candidate crop since seeding
+(11 candidates; excludes trending-window artifacts, see observations):
+
+| Model | Params | BF16 | Verdict | Trend | Downloads |
+|---|---|---|---|---|---|
+| openbmb/MiniCPM5-2B | 2.5B | 4.7 GB | fits-bf16 | 915 | 42,289 |
+| XHToken/Spark-X2.5-4B | 4.1B | 7.7 GB | fits-bf16 | 738 | 15,930 |
+| nex-agi/Nex-N2.5-mini | 35.1B | 65.4 GB | fits-bf16 | 497 | 2,444 |
+| IFM/K2-Horizon-MoVA-36B-A4B | 37.4B | 69.7 GB | fits-bf16 | 193 | 4,488 |
+| IFM/K2-Horizon-7B | 9B | 16.8 GB | fits-bf16 | 75 | 4,313 |
+| TokenRhythm/NeoHorse-1-4B | 4.2B | 7.8 GB | fits-bf16 | 69 | 5,329 |
+| nvidia/Qwen3.8-27B-NVFP4 | 18.2B | 33.8 GB | fits-bf16 | 64 | 10,488 |
+| XHToken/Spark-X2.5-1.7B | 1.7B | 3.2 GB | fits-bf16 | 62 | 4,362 |
+| medismera/Qwen3.8-27B-OBLITERATED-Mythos-Class-Agentic | 27.8B | 51.7 GB | fits-bf16 | 54 | 2,177 |
+| Edge0/Edge0-35B-A3B-preview | 34.7B | 64.6 GB | fits-bf16 | 49 | 329 |
+| IFM/K2-Horizon-0.9B | 1.1B | 2 GB | fits-bf16 | 45 | 11,955 |
+
+Also new with known verdicts, outside the battery's scope: deepseek-ai/DeepSeek-V4.1-Flash
+(763.2B, api-only, trend **1228** — the night's flagship, 6 downloads / 1,277 likes),
+deepseek-ai/DeepSeek-V4-Flash-Vision-Exp (304.6B, fits-with-cpu-offload, 400,892 downloads),
+dealignai/GLM-5.3-CYBERSECURITY-FP8 (753.3B, api-only), nvidia NVFP4 repacks of
+Qwen3.8-Flash-Next and GLM-5.3-Flash (both fits-quantized), inclusionAI's Ling-3.0-flash pair
+(both fits-quantized), Jackrong/Qwopus3.8-27B-Flash (27.8B fits-bf16 but charts
+`image-text-to-text`), Qwen/Qwen-Drive-1.0-4B (vision), and a spread of TTS/audio/image models.
+
+**Observations, unverified beyond the API response:**
+
+- 43 of the 70 new entries report `unknown` fit — the GGUF blind spot now owns the majority of
+  a large diff, and tonight includes its two biggest-download cases yet:
+  ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF (trend 532, **614,850** downloads) and DavidAU's
+  TURBO-Fable-Cold-Fusion MTP GGUF (trend 287, 517,644 downloads). The file-size-parsing fix
+  from the 08-15 TODO remains the single highest-value harness improvement.
+- medismera/Qwen3.8-27B-OBLITERATED-Mythos-Class-Agentic reuses OBLITERATUS's exact
+  "OBLITERATED" branding on the same 27B base that is installed here as the Q8_0 — but it is a
+  different org's repo, not the same weights. Same ruling as every prior variant: does not
+  qualify as "already installed." That 27B base is now at least eight distinct
+  uncensored/agentic variants across the log.
+- DeepSeek-V4.1-Flash has the fresh-upload signature (6 downloads / 1,277 likes) and charts
+  under `image-text-to-text`. Its Vision-Exp sibling at 304.6B is the same cpu-offload class as
+  the 08-15 DeepSeek-V4-Flash run, which needed llama.cpp `--n-cpu-moe` — a path the harness
+  still lacks (open TODO).
+- Three new model families cluster the diff: IFM's K2-Horizon (four repos: 36B-A4B MoE + GGUF,
+  7B, 0.9B), XHToken's Spark-X2.5 (4B, 1.7B, + GGUF), and inclusionAI's Ling/LLaDA line (six
+  repos). The K2-Horizon MoVA 36B-A4B (~4B active, if the A4B suffix reads like Ornith's A3B
+  did) plus MiniCPM5-2B at trend 915 / 42K downloads look like the strongest battery targets.
+- The 13-day gap pulls established repos into the diff as trending-window artifacts:
+  openai-community/gpt2 (14.98M downloads), meta-llama/Llama-3.1-8B-Instruct (5.6M),
+  RunDiffusion/Juggernaut-XL-v9 (851K), cagliostrolab/animagine-xl-4.0 (329K), and
+  stable-video-diffusion-img2vid-xt-1-1. None are new releases; all excluded from the
+  candidate table.
+- dealignai/GLM-5.3-CYBERSECURITY-FP8 is a full-size (753.3B) GLM-5.3 repack with a
+  domain-specific name and 24,303 downloads. Model card not read; api-only for this box
+  regardless.
+
+Nothing pulled, nothing benchmarked, `state/seen.json` updated (gitignored).
+
 ## 2026-08-28 — nightly discovery (automated run)
 
 Discovery only: 150 trending models polled, **14 new** since yesterday. Checked against
