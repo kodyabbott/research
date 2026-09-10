@@ -5,12 +5,18 @@ import io
 import json
 from pathlib import Path
 import subprocess
+import socket
+import http.server
+import threading
 import tempfile
 import time
 import unittest
 from unittest.mock import patch
 
 import nightly
+import owned_runtime
+import background
+from contextlib import contextmanager
 
 
 class HarnessTests(unittest.TestCase):
@@ -20,6 +26,10 @@ class HarnessTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.policy = json.loads(Path(__file__).with_name('policy.json').read_text())
         self.policy['ollamaModelsDir'] = str(self.root / 'ollama')
+        self.policy['taskStorageRoot'] = str(self.root / 'cache')
+        self.policy['ollamaModelsDir'] = str(self.root / 'cache' / 'ollama')
+        self.policy['downloadDir'] = str(self.root / 'cache' / 'downloads')
+        self.policy['idleWaitSeconds'] = 0
         (self.root / 'policy.json').write_text(json.dumps(self.policy))
         self.h = nightly.Harness(self.root)
         self.h.state.mkdir()
@@ -32,7 +42,7 @@ class HarnessTests(unittest.TestCase):
             'siblings': [{'rfilename': self.selection['filename'], 'size': len(self.contents),
                           'lfs': {'sha256': self.sha, 'size': len(self.contents)}}]}
         self.h.installed = lambda: {}
-        self.h.storage_check = lambda size, models: None
+        self.h.storage_check = lambda *args: None
         self.h.request = lambda *args, **kwargs: copy.deepcopy(self.detail)
 
     def test_deferred_details_survive_and_retry_after_leaving_trending(self):
@@ -122,7 +132,7 @@ class HarnessTests(unittest.TestCase):
                 self.h.validate_candidate(self.selection | change)
 
     def test_oversize_download_rejected(self):
-        self.detail['siblings'][0]['size'] = 21 * nightly.GIB
+        self.detail['siblings'][0]['size'] = (self.policy['maxDownloadGiB'] + 1) * nightly.GIB
         with self.assertRaisesRegex(ValueError, 'download budget'):
             self.h.validate_candidate(self.selection)
 
@@ -166,9 +176,15 @@ class HarnessTests(unittest.TestCase):
 
     def test_owned_budget_accounts_for_failed_imports(self):
         self.h.storage_check = nightly.Harness.storage_check.__get__(self.h)
-        nightly.atomic_json(self.h.state / 'nightly-ledger.json', {'days': {'2026-09-01': [
-            {'model': 'nightly-bench-old', 'reservedBytes': 59 * nightly.GIB}]}})
-        with self.assertRaisesRegex(RuntimeError, 'storage budget'):
+        with patch('nightly.tree_bytes', side_effect=[0, 239 * nightly.GIB]):
+            with self.assertRaisesRegex(RuntimeError, 'storage budget'):
+                self.h.storage_check(nightly.GIB, {})
+
+    def test_old_reservations_do_not_charge_deleted_bytes(self):
+        self.h.storage_check = nightly.Harness.storage_check.__get__(self.h)
+        nightly.atomic_json(self.h.ledger_path, {'days': {'2026-09-01': [
+            {'model': 'nightly-bench-old', 'reservedBytes': 1000 * nightly.GIB}]}})
+        with patch('nightly.shutil.disk_usage', return_value=type('Disk', (), {'free': 100 * nightly.GIB})()):
             self.h.storage_check(nightly.GIB, {})
 
     def test_busy_gpu_or_ollama_skips_without_unloading(self):
@@ -187,11 +203,11 @@ class HarnessTests(unittest.TestCase):
             path = self.h.download(plan)
         self.assertEqual(path.read_bytes(), self.contents)
         path.unlink()
-        with patch('nightly.urllib.request.urlopen', return_value=io.BytesIO(b'GGUFwrong')), \
+        with patch('nightly.urllib.request.urlopen', return_value=io.BytesIO(b'GGUF' + b'x' * (len(self.contents) - 4))), \
              patch('nightly.shutil.disk_usage', return_value=type('Disk', (), {'free': 100 * nightly.GIB})()):
             with self.assertRaisesRegex(ValueError, 'size or SHA-256'):
                 self.h.download(plan)
-        self.assertEqual(list((self.h.state / 'downloads').iterdir()), [])
+        self.assertEqual(list(self.h.download_dir.iterdir()), [])
 
     def test_download_rejects_bytes_beyond_declared_size(self):
         plan = self.h.validate_candidate(self.selection)
@@ -260,6 +276,7 @@ class HarnessTests(unittest.TestCase):
     def test_supervisor_stops_worker_at_hard_deadline(self):
         source = Path(__file__).with_name('nightly.py')
         (self.root / 'nightly.py').write_bytes(source.read_bytes())
+        (self.root / 'owned_runtime.py').write_bytes(source.with_name('owned_runtime.py').read_bytes())
         policy = self.policy | {'maxRuntimeSeconds': 0.001}
         (self.root / 'policy.json').write_text(json.dumps(policy))
         result = subprocess.run([nightly.sys.executable, str(self.root / 'nightly.py'), '--pending'],
@@ -270,10 +287,332 @@ class HarnessTests(unittest.TestCase):
     def test_supervisor_forwards_json_to_calling_shell(self):
         source = Path(__file__).with_name('nightly.py')
         (self.root / 'nightly.py').write_bytes(source.read_bytes())
+        (self.root / 'owned_runtime.py').write_bytes(source.with_name('owned_runtime.py').read_bytes())
         result = subprocess.run([nightly.sys.executable, str(self.root / 'nightly.py'), '--pending'],
             capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)['status'], 'ok')
+
+    def test_revision_refresh_works_without_sha_in_trending(self):
+        nightly.atomic_json(self.h.state / 'candidates.json', {'schemaVersion': 2, 'models': {
+            'test/model': {'modelId': 'test/model', 'pipeline': 'text-generation',
+                'detailStatus': 'ready', 'detailCheckedAt': '2026-01-01T00:00:00+00:00',
+                'revision': 'a' * 40, 'benchmarkStatus': 'completed'}}})
+        self.h.request = lambda url: ([{'id': 'test/model', 'pipeline_tag': 'text-generation'}]
+            if '/api/models?' in url else {'sha': 'b' * 40, 'pipeline_tag': 'text-generation'})
+        self.h.discover()
+        row = self.h.registry()['models']['test/model']
+        self.assertEqual(row['revision'], 'b' * 40)
+        self.assertEqual(row['benchmarkStatus'], 'not-run')
+
+    def test_stale_port_defers_without_spawning_or_killing(self):
+        with socket.socket() as listener:
+            listener.bind(('127.0.0.1', 0))
+            listener.listen()
+            self.h.policy['secondaryPort'] = listener.getsockname()[1]
+            with patch('owned_runtime.subprocess.Popen', side_effect=AssertionError('must not start')), \
+                 patch('owned_runtime.stop_tree', side_effect=AssertionError('must not stop')):
+                with self.assertRaisesRegex(owned_runtime.RuntimeBusy, 'occupied'):
+                    with owned_runtime.secondary(self.h):
+                        self.fail('must refuse an occupied port')
+            self.assertTrue(owned_runtime.port_open(self.h.policy['secondaryPort']))
+
+    def test_cleanup_cannot_target_primary(self):
+        with self.assertRaisesRegex(RuntimeError, 'secondary'):
+            self.h.cleanup()
+
+    def test_resume_rehashes_partial_and_requests_exact_range(self):
+        plan = self.h.validate_candidate(self.selection)
+        self.h.download_dir.mkdir(parents=True)
+        partial = self.h.download_dir / (plan['sha256'] + '.part')
+        partial.write_bytes(self.contents[:10])
+        response = io.BytesIO(self.contents[10:])
+        response.status = 206
+        response.headers = {'Content-Range': f'bytes 10-{len(self.contents)-1}/{len(self.contents)}'}
+        with patch('nightly.urllib.request.urlopen', return_value=response) as request:
+            path = self.h.download(plan)
+        self.assertEqual(request.call_args.args[0].get_header('Range'), 'bytes=10-')
+        self.assertEqual(path.read_bytes(), self.contents)
+        self.assertEqual(self.h.report['download']['resumedFromBytes'], 10)
+
+    def test_short_network_response_keeps_partial_for_next_night(self):
+        plan = self.h.validate_candidate(self.selection)
+        with patch('nightly.urllib.request.urlopen', return_value=io.BytesIO(self.contents[:10])):
+            with self.assertRaisesRegex(OSError, 'retained'):
+                self.h.download(plan)
+        self.assertEqual((self.h.download_dir / (plan['sha256'] + '.part')).read_bytes(), self.contents[:10])
+
+    def test_ignored_range_restarts_instead_of_appending(self):
+        plan = self.h.validate_candidate(self.selection)
+        self.h.download_dir.mkdir(parents=True)
+        (self.h.download_dir / (plan['sha256'] + '.part')).write_bytes(self.contents[:10])
+        with patch('nightly.urllib.request.urlopen', return_value=io.BytesIO(self.contents)):
+            path = self.h.download(plan)
+        self.assertEqual(path.read_bytes(), self.contents)
+        self.assertTrue(self.h.report['download']['rangeIgnoredRestarted'])
+
+    def test_unload_waits_for_empty_server_and_vram_recovery(self):
+        self.h.api = lambda *args, **kwargs: {'models': []}
+        snapshots = iter([{'freeGiB': 50}, {'freeGiB': 90}])
+        self.h.gpu = lambda: next(snapshots)
+        with patch('nightly.time.sleep'):
+            self.h.confirm_unloaded('example:latest', 90)
+        self.assertEqual(self.h.report['unloads'][0]['gpuAfter']['freeGiB'], 90)
+
+    def test_thinking_probe_is_separate_and_preserves_answer_lengths(self):
+        self.h.chat = lambda *args, **kwargs: {'done': True, 'message': {'thinking': 'abc', 'content': 'defg'},
+            'clientWallMs': 200, 'eval_count': 10, 'eval_duration': 100000000, 'done_reason': 'stop'}
+        probe = self.h.thinking_probe('example:latest', True, {'medianClientWallMs': 100})
+        self.assertFalse(probe['includedInThroughputMedians'])
+        self.assertEqual((probe['thinkingCharacters'], probe['answerCharacters']), (3, 4))
+        self.assertEqual(probe['wallTimeRatioToThinkingOffMedian'], 2)
+
+    def test_cleanup_three_completed_imports_deletes_only_oldest_and_releases_reservation(self):
+        self.h.endpoint = 'http://127.0.0.1:11435'
+        self.h.secondary_process = object()
+        imports, installed, entries = {}, {}, []
+        for i in range(3):
+            name = f'nightly-bench-{i}:latest'
+            digest = str(i) * 64
+            run_id = f'20260910-12000{i}-abcdef01'
+            imports[name] = {'digest': digest, 'completedRun': run_id, 'completedAt': str(i)}
+            installed[name] = {'digest': digest, 'size': 100}
+            entries.append({'model': name, 'reservedBytes': 100})
+            nightly.atomic_json(self.root / 'runs' / (run_id + '.json'), {'status': 'completed',
+                'benchmarks': [{'model': name, 'digest': digest, 'status': 'completed'}]})
+        installed['personal:latest'] = {'digest': 'x' * 64, 'size': 999}
+        nightly.atomic_json(self.h.state / 'imports.json', imports)
+        nightly.atomic_json(self.h.ledger_path, {'days': {'2026-09-10': entries}})
+        self.h.installed = lambda: copy.deepcopy(installed)
+        self.h.api = lambda *args: {'models': []}
+        def delete(request, **kwargs):
+            self.assertEqual(request.full_url, self.h.endpoint + '/api/delete')
+            self.assertEqual(request.method, 'DELETE')
+            self.assertEqual(nightly.read_json(self.h.ledger_path)['deletions'][-1]['status'], 'requested')
+            installed.pop(json.loads(request.data)['model'])
+            return io.BytesIO(b'')
+        with patch('nightly.urllib.request.urlopen', side_effect=delete):
+            self.h.cleanup()
+        self.assertEqual(set(installed), {'nightly-bench-1:latest', 'nightly-bench-2:latest', 'personal:latest'})
+        ledger = nightly.read_json(self.h.ledger_path)
+        self.assertEqual(ledger['days']['2026-09-10'][0]['reservedBytes'], 0)
+        self.assertEqual(len(ledger['deletions']), 1)
+
+    def test_mismatched_versions_refused_before_reservation(self):
+        self.h.installed = lambda: {'candidate:latest': {'digest': 'b' * 64, 'size': 100},
+            self.policy['baselineModel']: {'digest': 'c' * 64, 'size': 100}}
+        self.h.wait_idle = lambda *args: {}
+        versions = iter([{'version': '1'}, {'version': '2'}])
+        self.h.api = lambda *args: next(versions)
+        result = self.h.run_candidate({'kind': 'installed', 'model': 'candidate:latest',
+            'expectedDigest': 'b' * 64, 'rationale': self.selection['rationale']}, acceptance_validation=True)
+        self.assertEqual(result['status'], 'deferred')
+        self.assertFalse(result['runtimeVersions']['match'])
+        self.assertFalse(self.h.ledger_path.exists())
+
+    def test_refresh_budget_leaves_room_for_new_text_candidates(self):
+        models = {f'test/old{i}': {'modelId': f'test/old{i}', 'pipeline': 'text-generation',
+            'revision': 'a' * 40, 'detailStatus': 'ready', 'detailCheckedAt': '2026-01-01T00:00:00+00:00'} for i in range(30)}
+        nightly.atomic_json(self.h.state / 'candidates.json', {'schemaVersion': 2, 'models': models})
+        calls = []
+        def request(url):
+            if '/api/models?' in url:
+                return [{'id': f'test/new{i}', 'pipeline_tag': 'text-generation'} for i in range(20)]
+            calls.append(url)
+            return {'sha': 'b' * 40, 'pipeline_tag': 'text-generation'}
+        self.h.request = request
+        self.h.discover(detail_cap=10)
+        self.assertEqual(sum('/test/old' in url for url in calls), 2)
+        self.assertEqual(sum('/test/new' in url for url in calls), 8)
+
+    def test_known_text_retry_is_not_starved_by_untyped_legacy_entries(self):
+        models = {f'test/legacy{i}': {'modelId': f'test/legacy{i}', 'detailStatus': 'pending',
+            'detailAttempts': 0} for i in range(238)}
+        models['test/retry'] = {'modelId': 'test/retry', 'pipeline': 'text-generation',
+            'detailStatus': 'failed', 'detailAttempts': 1, 'trendingScore': 100}
+        nightly.atomic_json(self.h.state / 'candidates.json', {'schemaVersion': 2, 'models': models})
+        calls = []
+        def request(url):
+            if '/api/models?' in url:
+                return [{'id': f'test/new{i}', 'pipeline_tag': 'text-generation'} for i in range(20)]
+            calls.append(url)
+            return {'sha': 'b' * 40, 'pipeline_tag': 'text-generation'}
+        self.h.request = request
+        self.h.discover()
+        self.assertTrue(any('/test/retry?' in url for url in calls))
+
+    def test_thinking_probe_kills_stalled_http_child_at_its_own_deadline(self):
+        requested = threading.Event()
+        class Stalled(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                requested.set()
+                time.sleep(2)
+            def log_message(self, *args):
+                pass
+        server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), Stalled)
+        server.daemon_threads = True
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            self.h.endpoint = f'http://127.0.0.1:{server.server_port}'
+            self.h.policy['thinkingProbeSeconds'] = 0.6
+            started = time.monotonic()
+            result = self.h.thinking_probe('example:latest', True, {'medianClientWallMs': 100})
+            self.assertTrue(requested.is_set())
+            self.assertEqual(result['status'], 'error')
+            self.assertLess(time.monotonic() - started, 1.5)
+            self.assertGreater(self.h.remaining(), 100)
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_cleanup_failure_preserves_completed_benchmark(self):
+        model = nightly.OWNED_PREFIX + self.sha[:16] + ':latest'
+        digest = 'b' * 64
+        nightly.atomic_json(self.h.state / 'imports.json', {model: {'sha256': self.sha, 'digest': digest}})
+        self.h.installed = lambda: ({self.policy['baselineModel']: {'digest': 'c' * 64, 'size': 100}}
+            if self.h.endpoint == nightly.OLLAMA else {model: {'digest': digest, 'size': 100}})
+        @contextmanager
+        def runtime(selection):
+            self.h.endpoint = 'http://127.0.0.1:11435'
+            self.h.secondary_process = object()
+            try:
+                yield
+            finally:
+                self.h.endpoint = nightly.OLLAMA
+                self.h.secondary_process = None
+        self.h.candidate_runtime = runtime
+        self.h.wait_idle = lambda *args: {}
+        self.h.api = lambda *args: {'version': 'test'}
+        self.h.benchmark = lambda name: {'model': name, 'status': 'completed', 'summary': {'anyTruncated': False}}
+        self.h.cleanup = lambda: (_ for _ in ()).throw(RuntimeError('cleanup failure fixture'))
+        result = self.h.run_candidate(self.selection, acceptance_validation=True)
+        self.assertEqual(result['status'], 'completed')
+        self.assertEqual(result['cleanupError'], 'cleanup failure fixture')
+        entry = next(iter(nightly.read_json(self.h.ledger_path)['days'].values()))[0]
+        self.assertEqual(entry['status'], 'completed')
+
+    def test_failed_verified_import_is_evicted(self):
+        name, digest = 'nightly-bench-failed:latest', 'a' * 64
+        run_id = '20260910-120000-abcdef01'
+        self.h.endpoint, self.h.secondary_process = 'http://127.0.0.1:11435', object()
+        installed = {name: {'digest': digest}}
+        self.h.installed = lambda: dict(installed)
+        self.h.api = lambda *args: {'models': []}
+        nightly.atomic_json(self.h.state / 'imports.json', {name: {'digest': digest, 'runId': run_id}})
+        nightly.atomic_json(self.root / 'runs' / (run_id + '.json'), {'status': 'error',
+            'admission': {'model': name, 'digest': digest}, 'error': 'unsupported architecture'})
+        def delete(*args, **kwargs):
+            installed.pop(name)
+            return io.BytesIO(b'')
+        with patch('nightly.urllib.request.urlopen', side_effect=delete):
+            self.h.cleanup()
+        self.assertFalse(installed)
+
+    def test_environment_and_timeout_aborts_do_not_evict_models(self):
+        name, digest = 'nightly-bench-interrupted:latest', 'a' * 64
+        run_id = '20260910-120000-abcdef01'
+        self.h.endpoint, self.h.secondary_process = 'http://127.0.0.1:11435', object()
+        self.h.installed = lambda: {name: {'digest': digest}}
+        self.h.api = lambda *args: {'models': []}
+        nightly.atomic_json(self.h.state / 'imports.json', {name: {'digest': digest, 'runId': run_id}})
+        for kind in ('environment', 'timeout', 'baseline'):
+            nightly.atomic_json(self.root / 'runs' / (run_id + '.json'), {'status': 'error',
+                'admission': {'model': name, 'digest': digest}, 'failureKind': kind, 'error': 'interrupted fixture'})
+            with patch('nightly.urllib.request.urlopen', side_effect=AssertionError('must not delete')):
+                self.h.cleanup()
+        self.assertIn(name, nightly.read_json(self.h.state / 'imports.json'))
+
+    def test_expired_work_budget_still_allows_bounded_unload(self):
+        self.h.deadline = time.monotonic() - 1
+        self.h.hard_deadline = time.monotonic() + 5
+        with self.h.cleanup_window():
+            self.assertGreater(self.h.remaining(), 0)
+            self.assertLessEqual(self.h.remaining(), 5)
+        with self.assertRaises(TimeoutError):
+            self.h.remaining()
+
+    def test_launch_reports_active_operation_without_spawning(self):
+        output = io.StringIO()
+        with nightly.state_lock(self.h.state / 'operation.lock'), patch('nightly.Harness', return_value=self.h), \
+             patch('background.subprocess.Popen', side_effect=AssertionError('must not launch')), \
+             nightly.contextlib.redirect_stdout(output):
+            background.launch(self.root / 'not-needed.json')
+        self.assertEqual(json.loads(output.getvalue())['status'], 'deferred')
+
+    def test_missing_drive_refuses_instead_of_looping_at_root(self):
+        self.h.storage_check = nightly.Harness.storage_check.__get__(self.h)
+        with patch('nightly.tree_bytes', return_value=0), patch.object(Path, 'exists', return_value=False):
+            with self.assertRaisesRegex(owned_runtime.RuntimeBusy, 'drive is unavailable'):
+                self.h.storage_check(100, {})
+
+    def test_original_load_error_survives_unload_failure(self):
+        self.h.installed = lambda: {'fixture:latest': {'digest': 'a' * 64, 'size': 100}}
+        self.h.wait_idle = lambda *args: {'freeGiB': 90}
+        def api(path, *args, **kwargs):
+            if path == 'generate':
+                raise RuntimeError('unload failure fixture')
+            return {}
+        self.h.api = api
+        self.h.chat = lambda *args: (_ for _ in ()).throw(RuntimeError('original load failure'))
+        with self.assertRaisesRegex(RuntimeError, 'original load failure'):
+            self.h.benchmark('fixture:latest')
+        self.assertIn('unload failure', self.h.report['benchmarks'][0]['unloadWarning'])
+
+    def test_unload_does_not_wait_for_another_primary_model(self):
+        self.h.api = lambda *args: {'models': [{'name': 'someone-elses-model'}]}
+        self.h.gpu = lambda: {'freeGiB': 10}
+        self.h.confirm_unloaded('our-model', 90)
+        self.assertEqual(self.h.report['unloads'][0]['otherWorkloadLoaded'], ['someone-elses-model'])
+        self.assertIsNone(self.h.report['unloads'][0]['vramRecovered'])
+
+    @unittest.skipUnless(nightly.os.name == 'nt', 'Windows ownership APIs')
+    def test_orphan_reclaim_requires_exact_process_birth_identity(self):
+        process = subprocess.Popen([nightly.sys.executable, '-c',
+            'import socket,time; s=socket.socket(); s.bind(("127.0.0.1",0)); s.listen(); print(s.getsockname()[1],flush=True); time.sleep(30)'],
+            stdout=subprocess.PIPE, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+        try:
+            port = int(process.stdout.readline())
+            identity = owned_runtime.process_identity(process.pid)
+            self.assertIsNotNone(identity)
+            record = {'pid': process.pid, 'host': f'127.0.0.1:{port}', 'processIdentity':
+                identity | {'creationFileTime': str(int(identity['creationFileTime']) + 1)}}
+            nightly.atomic_json(self.h.state / 'secondary-process.json', record)
+            self.assertFalse(owned_runtime.reclaim_orphan(self.h, port, nightly.sys.executable))
+            self.assertIsNone(process.poll())
+            record['processIdentity'] = identity
+            nightly.atomic_json(self.h.state / 'secondary-process.json', record)
+            self.assertTrue(owned_runtime.reclaim_orphan(self.h, port, nightly.sys.executable))
+            process.wait(timeout=5)
+        finally:
+            owned_runtime.stop_tree(process)
+            process.stdout.close()
+
+    def test_detached_run_survives_launcher_exit_and_can_be_polled(self):
+        source = Path(__file__).parent
+        for filename in ('nightly.py', 'owned_runtime.py', 'background.py'):
+            data = (source / filename).read_text()
+            if filename == 'nightly.py':
+                data = data.replace('        self.report.update(mode=\'nightly\', selection=selection)',
+                                    '        time.sleep(1)\n        self.report.update(mode=\'nightly\', selection=selection)')
+            (self.root / filename).write_text(data)
+        hour = nightly.dt.datetime.now().hour
+        self.policy.update(benchmarkWindowStartHour=(hour + 1) % 24, benchmarkWindowEndHour=(hour + 2) % 24)
+        (self.root / 'policy.json').write_text(json.dumps(self.policy))
+        selection = self.root / 'selection.json'
+        selection.write_text(json.dumps(self.selection))
+        started = time.monotonic()
+        launch = subprocess.run([nightly.sys.executable, str(self.root / 'nightly.py'), '--launch-candidate', str(selection)],
+                                capture_output=True, text=True, timeout=10)
+        self.assertEqual(launch.returncode, 0, launch.stderr)
+        self.assertLess(time.monotonic() - started, 1)
+        job = json.loads(launch.stdout)
+        result = subprocess.run([nightly.sys.executable, str(self.root / 'nightly.py'), '--wait-run', job['runId']],
+                                capture_output=True, text=True, timeout=10)
+        self.assertEqual(json.loads(result.stdout)['status'], 'deferred', result.stderr)
+        until = time.monotonic() + 5
+        while owned_runtime.process_identity(job['pid']) == job['processIdentity'] and time.monotonic() < until:
+            time.sleep(0.05)
 
 
 if __name__ == '__main__':
