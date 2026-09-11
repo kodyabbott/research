@@ -135,11 +135,20 @@ versions must match. Child performance variables are captured through a small al
 the primary's environment remains an explicit unknown. Loaded-model metadata records actual
 VRAM allocation and context. This is a local comparison with those limits, not laboratory isolation.
 
+Thinking capability metadata is not treated as proof of response behavior. The harness checks
+warmup, timed trials, and exact-output checks for nonempty returned `message.thinking` text.
+`thinkingControl` records advertised support, the requested setting, and the affected responses
+with raw thinking/answer character counts. Unexpected thinking in either model invalidates the
+comparison even when no output was truncated. This detects exposed thinking text; it cannot
+establish whether a model performed unexposed internal reasoning.
+
 A separate thinking-enabled trial repeats the short prompt with an 8192-token cap and a
 180-second subprocess deadline. It reports total generated tokens, separate thinking/answer
 character counts, raw fields, truncation, and latency relative to the thinking-off median.
 The probe never enters throughput medians. HTTP latency excludes subprocess startup, which is
 also recorded separately. Vision is explicitly unmeasured; projector support remains future work.
+If ordinary responses already contain thinking, the separate probe is skipped with a reason
+because a thinking-off reference was not established. Historical raw run files are preserved.
 
 The battery measures generation throughput and prompt ingest, then checks exact number
 sequencing, arithmetic, and extraction. It never executes generated code. These are small

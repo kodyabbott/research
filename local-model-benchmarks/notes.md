@@ -925,3 +925,37 @@ results. Next improvement: detect returned thinking even when capabilities omit 
 mark that mismatch explicitly. Confirm this import's thinking controls before a future
 comparison; increasing only its token allowance would change the standardized protocol.
 No additional inference was run after this single authorized attempt.
+
+## 2026-09-10 - Guard comparisons against unadvertised thinking
+
+After Kody asked to continue, Codex addressed the response/capability mismatch observed in
+`runs/20260910-215014-a3642e7d.json`. This change does not rerun or rewrite that experiment.
+`nightly.py` now records `thinkingControl` separately from advertised capabilities: the
+requested setting and the phase plus thinking/answer character counts for any unexpected
+thinking returned during warmup, timed short/ingest trials, or exact-output checks. The
+`thinking` label distinguishes `requested-off`, `not-advertised`, and `unexpected-output`.
+Absent capability metadata is no longer labeled proof that thinking is unsupported.
+
+`summary.unexpectedThinking` invalidates the candidate/baseline comparison independently of
+truncation. Either model can trigger it, including one whose advertised thinking capability
+caused a `think: false` request. Ordinary thinking also skips the separate thinking probe
+with an explicit reason, because a thinking-off reference was not established. This avoids
+reporting an overhead ratio against a contaminated reference. Empty/whitespace thinking
+fields do not trigger a mismatch. The check observes returned text only; it cannot prove
+absence of unexposed internal reasoning. Raw measurements and responses remain available.
+
+Validation: three focused regressions reproduced the missing behavior before the patch.
+After the change, all 69 offline tests passed in 8.619 seconds with Python 3.14.7. Seven new
+tests replay the saved Muse and coder responses through the actual chat/battery code, cover
+each ordinary response stage, ignored `think: false`, whitespace fields, nontruncated
+candidate/baseline mismatches, and suppression of an invalid thinking-overhead probe. Existing
+runtime, cleanup, admission, and deadline tests also passed. No model inference or downloads
+were performed for this fix. `test_nightly.py` contains the reproducible regression cases.
+
+The tested files were installed under the operation lock with source-hash checks against
+concurrent edits. The versioned and deployed task instructions now have identical SHA-256
+`13522bdcd19c26618e172755fc35fdacc62e77dfdb4f3b7badb03570c0764c14`.
+`policy.json` retains its original hash and daily limit of one. Historical run JSON and README
+measurements remain unchanged; the README's methodology now describes the new guard. This
+fix detects invalid conditions and reports them; the bare Muse Q8 import's thinking controls
+still need compatibility work before a future fair comparison.
