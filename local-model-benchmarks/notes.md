@@ -678,3 +678,34 @@ pinned installation source and verification. No novelty claim is made.
 The Desktop task update tool does not expose a model field. The saved on-disk task already
 specifies claude-fable-5-1 from the prior update, but its active cached setting is unverified.
 The proposed prompt now states that limit instead of suggesting an unsupported API update.
+
+## 2026-09-10 - Approved deployment and live acceptance
+
+Kody approved the reviewed setup. The scheduled checkout now uses the private F: Ollama cache,
+35 GiB artifact cap, 240 GiB actual-byte budget, and two-model retention. Python 3.14.7 is
+installed per user and visible from ordinary Windows, Codex, and the existing Fable session.
+The final suite has 58 passing tests. Claude's routine editor shows Fable 5.1, the research
+folder, Active status, and daily 9 PM scheduling. The deployed prompt matches the versioned
+copy (SHA-256 2DF302576BC235AD1E1CD8FD02E3CD765C679BA2B6F30E75A235FA86A2E6704D).
+
+Three small real fixtures completed download/import and candidate-to-baseline transactions.
+The first Qwen Q8 and SmolLM Q8 comparisons are valid; SmolLM Q4_K_M is invalid because an ingest
+trial reached the output cap. These are plumbing fixtures, not daily-use recommendations.
+The coder baseline passed all three exact checks in every transaction. The Qwen thinking
+trial is separate from throughput medians. Exact-output grading is deliberately whitespace-strict.
+
+Live retention evicted only the oldest Qwen fixture and released its reservation. Duplicate
+admission and an unrelated listener on 11435 were refused without unintended side effects.
+A deadline reporting race was found and fixed; the final model-loaded retest confirms process
+exit, port release, VRAM recovery, and recorded shutdown. Fable also identified two unreferenced
+uploaded blobs left by Ollama's GGUF rewrite. Reviewed cleanup rechecks all private manifest
+references and the full source hash, then journals deletion. Live reconciliation removed exactly
+250,265,792 bytes with no model digest changes or errors. Admission now reserves all three
+possible import copies. Pre-reservation errors are explicitly admission failures, and invalid
+comparisons now include a reason.
+
+The cache holds two tiny SmolLM fixtures and charges 250,267,778 bytes. The primary's seven
+model digests remain unchanged, its model list is unloaded, and no nightly candidate quota
+was used. The discovery sweep tried 100 lookups, preserved four HTTP 429 failures as partial,
+and left 253 pending entries. See validation.md for every raw evidence link. Final Fable
+acceptance is pending this committed evidence review. No changes have been pushed.
