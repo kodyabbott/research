@@ -69,8 +69,8 @@ while keeping booleans distinct from numbers. It never executes generated code. 
 not coding-task execution, a production agent evaluation, or a general intelligence score.
 No confidence intervals or broad ranking are inferred from 16 items.
 
-The main sweep uses `overnight-screen-v2`, which explicitly states the required JSON value
-type for every case. The first v1 comparison is retained as a pilot: two baseline answers
+The main sweep uses `overnight-screen-v2`, which states the required JSON value types,
+except that the missing-evidence case retains its conditional null instruction. The first v1 comparison is retained as a pilot: two baseline answers
 encoded correct arrays as strings, exposing ambiguity in the original prompts. V1 and v2
 quality scores must not be pooled. The installed Qwen3.8 build is queued again for v2.
 
