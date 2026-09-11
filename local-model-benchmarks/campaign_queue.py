@@ -21,7 +21,11 @@ def advance(root=ROOT, launch=None, inspect=None):
     root = Path(root)
     launch = launch or campaign.launch
     inspect = inspect or background.status
-    with state_lock(root / 'state/campaign-20260910-queue.lock'):
+    with contextlib.ExitStack() as locks:
+        try:
+            locks.enter_context(state_lock(root / 'state/campaign-20260910-queue.lock'))
+        except RuntimeError as exc:
+            return {'status': 'busy', 'reason': 'Queue update in progress: ' + str(exc)}
         path = root / 'state' / QUEUE
         queue = read_json(path)
         active = [x for x in queue['items'] if x['status'] == 'running']

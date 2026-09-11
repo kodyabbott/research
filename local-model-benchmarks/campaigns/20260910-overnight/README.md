@@ -87,8 +87,9 @@ JSON grading, persistence, and partial/contaminated screens. No live result is i
 The local [queue controller](../../campaign_queue.py) advances the reviewed queue as each
 run finishes, so it does not wait for a thread heartbeat between models. It records failures
 and continues to the next selection, refuses overlapping supervisors, and stops launching
-after authorization expires. Four controller tests cover active-run exclusion, failed-run
-progression, expired authorization, and busy-launcher retention. The combined 16 campaign
+after authorization expires. Six controller tests cover active-run exclusion, failed-run
+progression, expired authorization, busy-launcher retention, queue-lock contention retry, and
+fatal handling of conflicting active entries. The combined 16 campaign
 and controller tests passed in 0.141 seconds after this addition.
 
 The thread heartbeat checks progress every 20 minutes and expires on the morning of September

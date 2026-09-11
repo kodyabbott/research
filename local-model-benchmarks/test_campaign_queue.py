@@ -46,6 +46,16 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(result['status'],'busy')
         self.assertEqual(read_json(self.path)['items'][1]['status'],'pending')
 
+    def test_queue_lock_contention_is_retryable(self):
+        with patch.object(q,'state_lock',side_effect=RuntimeError('lock held')):
+            result=q.advance(self.root)
+        self.assertEqual(result['status'],'busy')
+
+    def test_multiple_active_entries_remain_a_fatal_invariant(self):
+        self.data['items'][1].update(status='running',runId='run-b'); atomic_json(self.path,self.data)
+        with self.assertRaisesRegex(RuntimeError,'Multiple active'):
+            q.advance(self.root)
+
 
 if __name__=='__main__':
     unittest.main()

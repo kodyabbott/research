@@ -985,3 +985,6 @@ Added campaign_queue.py to advance the reviewed selections immediately after eac
 
 
 V2 prompt audit: the missing-evidence item omits the inferred type hint, since declaring its expected type as null would disclose its answer. Its original instruction still says to use null only when the supplied record does not establish the year. No v2 model request had run before this correction.
+
+
+Controller review correction: acquiring a busy queue lock previously terminated the controller. Acquisition contention now returns a retryable busy result, while multiple-active-entry invariants still stop the controller. Six focused controller tests pass in0.031s. The identified controller process was stopped alone under the queue lock and restarted with the correction; the detached active model supervisor was left running and its runId remains in the queue.
