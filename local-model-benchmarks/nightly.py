@@ -947,10 +947,13 @@ def supervised(argv, worker_command=None, timeout=None, run_id=None):
                     until = time.monotonic() + 30
                     while True:
                         gpu = harness.gpu()
-                        if before is None or gpu['freeGiB'] >= before - harness.policy.get('vramRecoveryToleranceGiB', 2) or time.monotonic() >= until:
+                        # taskkill can return before a descendant releases its listening socket.
+                        # Poll both resources within the same bounded recovery window.
+                        recovery.update(portFree=not port_open(harness.policy['secondaryPort']),
+                            gpuAfter=gpu, vramRecovered=(gpu['freeGiB'] >= before - harness.policy.get('vramRecoveryToleranceGiB', 2)) if before is not None else None)
+                        if (recovery['portFree'] and (before is None or recovery['vramRecovered'])) or time.monotonic() >= until:
                             break
-                        time.sleep(1)
-                    recovery.update(gpuAfter=gpu, vramRecovered=(gpu['freeGiB'] >= before - harness.policy.get('vramRecoveryToleranceGiB', 2)) if before is not None else None)
+                        time.sleep(0.25)
                 except Exception as exc:
                     recovery['verificationError'] = str(exc)
                 harness.report['deadlineRecovery'] = recovery
