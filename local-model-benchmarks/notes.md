@@ -904,6 +904,10 @@ passing 3/3 establishes only the limited exact-output checks; it does not establ
 quality or successful thinking-disabled behavior. The existing customized BF16+DFlash tag
 advertises thinking support, so its configuration is not equivalent to this bare Q8 import.
 Evidence: candidate responses/capabilities in the run JSON and `nightly.py` `benchmark`/`chat`.
+A later read-only snapshot at 22:04:36 in
+`runs/20260910-215014-a3642e7d-verification.json` preserves the existing BF16 tag's advertised
+capabilities, the restored policy, both completed ledger entries, and the same final store
+byte count and Muse manifest observed in the independent filesystem check below.
 
 **Cleanup and resources**: both models unloaded, recovering 94.0068 GiB free VRAM. Reported
 loaded VRAM was 26.65 GiB for Muse and 18.04 GiB for the baseline. The private child stopped
