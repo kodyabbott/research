@@ -3,7 +3,7 @@ import json
 import math
 import time
 
-VERSION = 'overnight-screen-v1'
+VERSION = 'overnight-screen-v2'
 CASES = [
     ('python-aliasing', 'code-comprehension',
      'In Python 3: a = [[0]] * 3; a[0].append(1). What is a?', [[0, 1], [0, 1], [0, 1]]),
@@ -91,7 +91,10 @@ def run(harness, model, thinking_capable, summary):
         if harness.remaining() < 60:
             result.update(status='incomplete', reason='Insufficient time before the shared run deadline.')
             break
-        request_prompt = prompt + '\nReturn exactly one JSON object with the single key "answer". No markdown or explanation.'
+        answer_type = {list: 'array', dict: 'object', str: 'string', int: 'number', float: 'number',
+                       bool: 'boolean', type(None): 'null'}[type(expected)]
+        request_prompt = (prompt + '\nReturn exactly one JSON object with the single key "answer". '
+                          'The value of "answer" must have JSON type ' + answer_type + '. No markdown or explanation.')
         deadline = harness.deadline
         harness.deadline = min(deadline, time.monotonic() + result['maxCaseSeconds'])
         try:

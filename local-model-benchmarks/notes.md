@@ -976,3 +976,6 @@ Campaign grading correction: the original strict Python-type comparison rejected
 
 
 Final preflight grader review: a 400-digit JSON integer triggered float-conversion overflow. Finite checks now apply only to floats, so extreme incorrect integers fail their case without interrupting the screen. Null thinking fields are also treated consistently with the base battery. A focused regression covers the overflow and infinite-exponent cases; the successful screen fixture includes null thinking. All 81 offline tests passed in 8.736 seconds before live inference.
+
+
+Pilot 20260910-225905-c6df53d6 completed with valid standardized throughput (Qwen3.8 BF16/MTP43.24tok/s, coder287.38tok/s),3/3 exact checks each, and v1 screen14/16 versus10/16. Two coder misses returned correct array text inside JSON strings; the prompt had not explicitly required the answer value type. Before the main sweep, v2 now specifies JSON array/string/number/etc. for each case. Historical pilot responses remain untouched and v1/v2 scores will not be pooled. Queue a fresh v2 Qwen comparison. This change clarifies the input contract without changing answer keys or grading. The campaign+controller test set passes16tests in0.141s; the unchanged base harness previously passed its69tests.
