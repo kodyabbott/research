@@ -97,10 +97,14 @@ try:
         if empty:writer.writerow(['sampledAt','activeRun','utilizationPercent','memoryUsedMiB','temperatureC','powerWatts','clockEventReasons'])
         writer.writerow([data['updatedAt'],','.join(x['runId'] for x in active),*data['gpuSample'].values()])
 except Exception as exc:data['gpuSampleError']=str(exc)
+data['queueStatus']=queue.get('status')
+data['queueCounts']={status:sum(x['status']==status for x in queue['items']) for status in sorted({x['status'] for x in queue['items']})}
+data['completion']=read_json(folder/'completion.json',{})
+data['wrapUp']=queue.get('wrapUp',{})
 atomic_json(folder/'workload-results.json',data);atomic_json(out/'benchmark-progress.json',data)
 lines=['# RTX PRO 6000 benchmark progress','', 'Updated: '+data['updatedAt'], '',
  'September 11 campaign status: '+queue.get('status','unknown')+'. Results below are measured locally; scores from different reasoning budgets are separate.', '',
- 'Running: '+(', '.join(x['id'] for x in active) or 'between jobs')+'. Pending queue entries: '+str(data['pending'])+'.', '',
+ 'Running: '+(', '.join(x['id'] for x in active) or ('none; campaign closed' if queue.get('status')=='completed' else 'between jobs'))+'. Pending queue entries: '+str(data['pending'])+'.', '',
  'Tested model artifacts or installed configurations: '+str(len(coverage))+'. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.', '',
  '## Broader workload results','',
  'The deterministic 96-case suite covers ledger replay, event-state reconstruction, dependency scheduling, SQL, shortest paths, record extraction, Python tracing, and retrieval. Completed blocks are accumulated below. In this JSON-answer suite, model-generated code is never executed. These are authored workload checks, not a standardized coding benchmark.', '',
@@ -110,7 +114,7 @@ for r in results:
 lines+=['','Thinking-off jobs allow 2,048 output tokens; reasoning jobs allow 8,192. All use an 8,192-token context. Raw answers, runtime versions, model digests, and exact prompts are preserved in the research repository. Partial totals should not be read as a final ranking. Rows marked unexpected thinking violate their requested mode and must not be used as valid thinking-off comparisons.','','## Initial candidate screens','',
  '- GPT-OSS 20B: 15/16 on the separate low-reasoning v2 screen. It followed an instruction embedded inside a data field on the failed extraction case.',
  '- LFM2.5 2.6B BF16: downloaded and hash-verified, imported, and tested. Its ordinary responses returned unexpected thinking and hit the token cap, so the ordinary throughput comparison is invalid. This is a protocol compatibility finding, not an overall model-quality verdict.',
- '- Nex-N2.5-mini Q6: a newly found Bartowski mirror was verified and added to the queue. Text-only evaluation will not test its advertised computer-use or vision capabilities.', '',
+ '- Nex-N2.5-mini Q6: a newly found Bartowski mirror was verified and added to the queue. The text-only evaluation did not test its advertised computer-use or vision capabilities.', '',
  '## Background model downloads','']
 lines[-2:]=[]
 lines+=['## Function-writing results','','Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Generated functions execute only inside an isolated QuickJS WebAssembly guest, with no host functions or module loader. This is a small function-writing screen, not a standardized coding leaderboard or repository agent evaluation.','',
@@ -155,6 +159,8 @@ if failed:
         reason=('Request exceeded '+str(round(float(timeout.group(1))))+' seconds' if timeout else error.replace('\n',' ')[:350])
         lines.append('- '+row['id']+' ('+row['runId']+'): '+reason+'.')
     lines.append('')
+if data['completion']:
+    lines[4:4]=['Verified shutdown: controller and owned workers exited; private port 11435 closed; no primary model loaded; all seven personal model digests preserved. Campaign authorization is revoked. The additional sweep was deferred at the user request.', '']
 text='\n'.join(lines)
 (out/'benchmark-progress.md').write_text(text,encoding='utf-8');(folder/'progress.md').write_text(text,encoding='utf-8')
 print(json.dumps({'active':active,'terminalCount':len(terminal),'pending':data['pending'],'workloadResults':[{k:r[k] for k in ('model','thinking','passed','total','medianWallMs')} for r in results]}))

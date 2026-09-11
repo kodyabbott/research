@@ -7,11 +7,15 @@
 
 The user explicitly requested sustained daytime GPU benchmarking, including worthwhile historical candidates and newly discovered models, until stopped or Codex usage is exhausted. This is a fresh campaign. The canceled September 10 authorization, queue and results remain preserved.
 
+**Completed September 11 at 15:47 MDT.** At the user’s request, the campaign finished the current Granite checks, Nemotron, stock Qwen3.8 Q8, and Apodex, then stopped. There were 130 completed queue entries across 13 tested artifacts/configurations, three incomplete attempts, and 25 deferred entries (23 deferred for wrap-up and two invalid-mode follow-ups). Installed-model public coding sweeps therefore stop at 100 tasks, while the KAT, Nex, Ornith, and Gemma sweeps cover all 163 supported tasks.
+
+[Shutdown verification](completion.json) confirms that the controller and owned workers exited, port 11435 closed, no primary model remained loaded, and all seven personal model digests were unchanged. Campaign authorization is revoked and supervision is closed. The GPU returned to its unloaded desktop baseline. The fixed finish line is recorded in [the wrap-up request](wrap-up-request.json).
+
 Read [current progress](progress.md), [standardized screens](results.md), and [aggregated workload results](workload-results.json). Raw run IDs link each observation to saved prompts, responses, runtime metadata, model digests and cleanup evidence.
 
 ## Authorization and controls
 
-[authorization.json](authorization.json) permits daytime starts and multiple candidates in a separate campaign ledger. The original policy file and nightly scheduler are unchanged. The present start cutoff is 22:58 MDT and expiry is 23:59 MDT, leaving the original hour-long worker deadline plus cleanup margin. Explicit cancellation takes precedence over those times.
+[authorization.json](authorization.json) permits daytime starts and multiple candidates in a separate campaign ledger. The original policy file and nightly scheduler are unchanged. The authorized start cutoff was 22:58 MDT and expiry was 23:59 MDT, leaving the original hour-long worker deadline plus cleanup margin. Explicit cancellation takes precedence over those times.
 
 The 35 GiB artifact, 240 GiB task storage, 25 GiB disk reserve and 12 GiB GPU headroom checks remain. There is one GPU job at a time. A separately supervised prefetch may download a pinned GGUF while an installed-model job runs, but imports wait for prefetch completion. Every complete artifact is hash-checked, and partial files remain resumable. Only task-owned cache artifacts can be removed.
 
