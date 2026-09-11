@@ -988,3 +988,6 @@ V2 prompt audit: the missing-evidence item omits the inferred type hint, since d
 
 
 Controller review correction: acquiring a busy queue lock previously terminated the controller. Acquisition contention now returns a retryable busy result, while multiple-active-entry invariants still stop the controller. Six focused controller tests pass in0.031s. The identified controller process was stopped alone under the queue lock and restarted with the correction; the detached active model supervisor was left running and its runId remains in the queue.
+
+
+GPT-OSS is worth testing but cannot enter the thinking-off comparison honestly: Ollama0.32.13 documents that boolean thinking values are ignored. Added a separate low-reasoning screen for the installed digest-pinned model, using16 unchanged v2 cases,8192-token output cap and45-second case deadlines under the existing one-hour supervisor and expiring campaign authorization. It has no throughput/baseline comparison. All92 offline tests passed in8.771seconds, including separate-protocol admission/unload/failure tests. Normal v2 prompts and512-token budget remain unchanged.
