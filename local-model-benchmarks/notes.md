@@ -960,3 +960,10 @@ concurrent edits. The versioned and deployed task instructions now have identica
 measurements remain unchanged; the README's methodology now describes the new guard. This
 fix detects invalid conditions and reports them; the bare Muse Q8 import's thinking controls
 still need compatibility work before a future fair comparison.
+
+
+## 2026-09-10 - User-authorized overnight campaign
+
+Kody requested a full review of past nightly discoveries and as many worthwhile tests as possible before morning, with quality before quantity and no further input. The plan and source shortlist are in [campaigns/20260910-overnight/README.md](campaigns/20260910-overnight/README.md); the historical raw-record inventory and initial personal-model digests are in its history-audit.json. The expiring authorization permits only the candidate-count exception through this human campaign entry point. Normal policy bytes and the 20:15 Fable schedule remain unchanged.
+
+Added campaign.py and quality_screen.py. Existing supervised admission and guaranteed unload remain authoritative. Each campaign comparison adds the same 16 authored answer-quality cases to candidate and baseline, separately from throughput and without executing generated code. All 78 offline tests passed in 8.770 seconds before installation. Source review verified eight useful approved GGUF mirrors and held unresolved/non-text/oversized targets. Runtime compatibility and actual answer quality remain live questions. The thread heartbeat checks progress every 20 minutes until the morning; new GPU work is refused at 04:58 MDT with final expiry at 06:00.
