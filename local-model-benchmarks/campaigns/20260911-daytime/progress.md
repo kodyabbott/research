@@ -1,10 +1,10 @@
 # RTX PRO 6000 benchmark progress
 
-Updated: 2026-09-11T13:46:53.536349-06:00
+Updated: 2026-09-11T14:15:43.795742-06:00
 
 September 11 campaign status: active. Results below are measured locally; scores from different reasoning budgets are separate.
 
-Running: coding-qwen35-think-16k-output. Pending queue entries: 59.
+Running: humaneval-chat-qwen38-think-part4. Pending queue entries: 40.
 
 Tested model artifacts or installed configurations: 9. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.
 
@@ -90,6 +90,7 @@ Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Gener
 | bartowski/Ornith-1.5-35B-A3B-GGUF | False / greedy-v1 | 16384 / 4096 | 4/8 | 72/99 | 1.62 | none |
 | unsloth/gemma-4-31B-it-GGUF | False / greedy-v1 | 16384 / 4096 | 7/8 | 98/99 | 5.39 | none |
 | unsloth/gemma-4-31B-it-GGUF | True / greedy-v1 | 16384 / 8192 | 6/8 | 74/99 | 61.52 | 2 truncated |
+| qwen3.5:122b | True / greedy-v1 | 32768 / 16384 | 5/8 | 72/99 | 64.38 | 2 truncated |
 
 Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.
 
@@ -100,13 +101,17 @@ One greedy sample per task from the [published dataset](https://huggingface.co/d
 | Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Total generation minutes | Truncated | Protocol note |
 |---|---|---|---:|---:|---:|---:|---|
 | qwen3-coder:30b | continuation | False | 6/20 | 0.51 | 0.17 | 0 | none |
-| qwen3-coder:30b | full-program | False | 20/20 | 0.53 | 0.19 | 0 | none |
+| qwen3-coder:30b | full-program | False | 77/80 | 0.58 | 0.81 | 0 | none |
 | bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | True | 15/20 | 0.76 | 0.25 | 0 | none |
 | bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | False | 136/163 | 0.79 | 2.26 | 0 | none |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF | full-program | True | 129/163 | 2.21 | 19.21 | 21 | none |
 | bartowski/Ornith-1.5-35B-A3B-GGUF | full-program | implicit | 148/163 | 3.31 | 13.81 | 2 | none |
 | bartowski/Ornith-1.5-35B-A3B-GGUF | full-program | False | 17/20 | 0.75 | 0.27 | 0 | none |
 | unsloth/gemma-4-31B-it-GGUF | full-program | False | 19/20 | 2.55 | 0.95 | 0 | none |
+| gpt-oss:20b | full-program | low | 78/80 | 0.91 | 1.34 | 0 | none |
+| qwen3.8:27b-mtp-bf16 | full-program | False | 79/80 | 1.57 | 2.31 | 0 | none |
+| qwen3.5:122b | full-program | False | 77/80 | 1.33 | 1.77 | 0 | none |
+| qwen3.8:27b-mtp-bf16 | full-program | True | 59/60 | 5.70 | 7.35 | 0 | none |
 
 These HumanEval-X runs use 16384 context and 4096 output tokens with thinking off or 8192 with reasoning. Partial totals cover completed blocks only. Total generation time sums task response times, including failed and truncated attempts, and excludes model import, load, warmup, grading and between-block overhead. Source data, transformations, reference validation, prompts, raw continuations, and test outcomes are saved.
 
@@ -117,7 +122,9 @@ These HumanEval-X runs use 16384 context and 4096 output tokens with thinking of
 - bartowski/Ornith-1.5-35B-A3B-GGUF: completed; 30.53 / 30.53 GB; complete-file hash verified: True.
 - unsloth/gemma-4-31B-it-GGUF: completed; 32.64 / 32.64 GB; complete-file hash verified: True.
 - bartowski/granite-4.2-30b-GGUF: completed; 31.11 / 31.11 GB; complete-file hash verified: True.
-- unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF: running; 17.91 / 35.00 GB; complete-file hash verified: False.
+- unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF: completed; 35.00 / 35.00 GB; complete-file hash verified: True.
+- ggml-org/Qwen3.8-27B-GGUF: completed; 28.60 / 28.60 GB; complete-file hash verified: True.
+- bartowski/apodex_Apodex-1.1-mini-GGUF: running; 19.00 / 30.53 GB; complete-file hash verified: False.
 
 ## Resource and stop behavior
 
@@ -130,3 +137,4 @@ The workstation thermal state is not held constant. Downloads, report generation
 These attempts produced no complete score and are excluded from aggregate accuracy tables. Full error details and any partial responses remain in the raw records.
 
 - workload-gemma-think-pilot (20260911-131310-ae09b0ba): Request exceeded 120 seconds.
+- humaneval-chat-gptoss-low-part4 (20260911-141203-d02cec45): [WinError 5] Access is denied: 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'.

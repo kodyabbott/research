@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T13:46:53-06:00
+Updated: 2026-09-11T14:15:44-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -99,7 +99,8 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-133000-59803f3f.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-133431-07b70f65.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-133911-de908887.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
-| qwen3.5:122b | running | — | — | — |
+| [qwen3.5:122b](../../runs/20260911-134401-18652c59.json) | code-writing screen | — | 5/8 tasks; 72/99 tests (separate) | — |
+| [gpt-oss:20b](../../runs/20260911-141423-0053c3d9.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
@@ -112,25 +113,25 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf | pending | — | — | — |
 | ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf | pending | — | — | — |
 | bartowski/apodex_Apodex-1.1-mini-GGUF<br>apodex_Apodex-1.1-mini-Q6_K.gguf | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
+| [gpt-oss:20b](../../runs/20260911-135442-425b76a7.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-135512-ef48cf11.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3.5:122b](../../runs/20260911-135612-0aff4070.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-135712-6e548658.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [qwen3-coder:30b](../../runs/20260911-135932-c387cc59.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [gpt-oss:20b](../../runs/20260911-140002-6b51c426.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-140032-d4d5e9bd.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3.5:122b](../../runs/20260911-140132-52033235.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-140232-4a7b047e.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3-coder:30b](../../runs/20260911-140603-09ed4016.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [gpt-oss:20b](../../runs/20260911-140633-b6af27c1.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-140703-053a96a7.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3.5:122b](../../runs/20260911-140753-d3e8e3d9.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-140843-68ae026a.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3-coder:30b](../../runs/20260911-141133-b52b3ec8.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [gpt-oss:20b](../../runs/20260911-141203-d02cec45.json) | error | — | — | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-141233-e85f5ec4.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [qwen3.5:122b](../../runs/20260911-141323-2fcf4c2f.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| qwen3.8:27b-mtp-bf16 | running | — | — | — |
 | qwen3-coder:30b | pending | — | — | — |
 | gpt-oss:20b | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
@@ -551,6 +552,87 @@ Personal model digests unchanged: True.
 Personal model digests unchanged: True.
 
 ### workload-qwen38-think-part4
+
+Personal model digests unchanged: True.
+
+### coding-qwen35-think-16k-output
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part4-retry1
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part1
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-off-part1
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen35-off-part1
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-think-part1
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-coder-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-off-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen35-off-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-think-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-coder-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-off-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen35-off-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-think-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-coder-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part4
+
+Run issue: [WinError 5] Access is denied: 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-off-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen35-off-part4
 
 Personal model digests unchanged: True.
 

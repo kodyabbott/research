@@ -1,0 +1,1074 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-135712-6e548658",
+  "startedAt": "2026-09-11T13:57:12-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 94,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T13:57:12-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-humanevalx-screen",
+  "selection": {
+    "kind": "installed",
+    "model": "qwen3.8:27b-mtp-bf16",
+    "expectedDigest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+    "campaignProtocol": "humaneval-x-js-chat-v2",
+    "thinking": true,
+    "rationale": "Compare the pinned 163-task supported HumanEval-X JavaScript set using the validated full-program chat prompt. One greedy sample per task; all prompt styles and reasoning budgets remain separate.",
+    "caseOffset": 0,
+    "caseCount": 20
+  },
+  "admission": {
+    "kind": "installed",
+    "model": "qwen3.8:27b-mtp-bf16",
+    "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+    "bytes": 55588891672,
+    "selection": {
+      "kind": "installed",
+      "model": "qwen3.8:27b-mtp-bf16",
+      "expectedDigest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "campaignProtocol": "humaneval-x-js-chat-v2",
+      "thinking": true,
+      "rationale": "Compare the pinned 163-task supported HumanEval-X JavaScript set using the validated full-program chat prompt. One greedy sample per task; all prompt styles and reasoning budgets remain separate.",
+      "caseOffset": 0,
+      "caseCount": 20
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 94.0322265625,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 1.0
+  },
+  "protocol": {
+    "name": "humaneval-x-js-wasm-chat-v2",
+    "suiteSha256": "da29da61ddd7af9dc26810172ab09b8aa5317ae36678fdc98b2a9682c17941c9",
+    "thinking": true,
+    "context": 16384,
+    "outputCap": 8192,
+    "maxGenerationSeconds": 240,
+    "tasks": 20,
+    "hiddenTests": 20,
+    "temperature": 0,
+    "topP": 1,
+    "topK": 40,
+    "repeatPenalty": 1.0,
+    "samplingProfile": "greedy-v1",
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Adapted HumanEval-X JavaScript screen; one greedy sample per task, not the original 200-sample leaderboard protocol.",
+    "promptStyle": "full-program",
+    "upstream": "https://huggingface.co/datasets/zai-org/humaneval-x",
+    "datasetRevision": "62c78627f3072a1454fa0cb0184737cafe5e4198",
+    "datasetSha256": "1ffbb18b60d36c50c8a7d1230b7fbb82e5dd838d341242aab1caa2f8d7b598eb",
+    "supportedTasks": 163,
+    "upstreamTasks": 164,
+    "caseOffset": 0,
+    "caseCount": 20,
+    "excludedTasks": {
+      "JavaScript/162": "Reference requires the Node crypto module, unavailable in this WASM guest."
+    },
+    "testInvocationRepairs": [
+      "JavaScript/119",
+      "JavaScript/151",
+      "JavaScript/32"
+    ],
+    "randomSeed": 42,
+    "randomAlgorithm": "xorshift32",
+    "guestDeadlineMs": 2000,
+    "contaminationCaveat": "This longstanding public benchmark may be represented in model training data; scores do not establish unseen-task or repository-agent performance."
+  },
+  "benchmarks": [
+    {
+      "model": "qwen3.8:27b-mtp-bf16",
+      "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "endpoint": "http://127.0.0.1:11434",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "qwen3.8:27b-bf16",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "27.3B",
+        "quantization_level": "BF16"
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ],
+      "modelParameters": "presence_penalty               0\nrepeat_penalty                 1\ntemperature                    1\ntop_k                          20\ntop_p                          0.95\ndraft_num_predict              4\nmin_p                          0",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "JavaScript/0",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Check if in given list of numbers, are any two numbers closer to each other than\n  given threshold.\n  >>> hasCloseElements([1.0, 2.0, 3.0], 0.5)\n  false\n  >>> hasCloseElements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n  true\n  */\nconst hasCloseElements = (numbers, threshold) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:57:37.134323Z",
+            "message": {
+              "role": "assistant",
+              "content": "const hasCloseElements = (numbers, threshold) => {\n  for (let i = 0; i < numbers.length; i++) {\n    for (let j = i + 1; j < numbers.length; j++) {\n      if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n        return true;\n      }\n    }\n  }\n  return false;\n};",
+              "thinking": "The function needs to check if any two numbers in the list are closer to each other than the given threshold.\n\nI need to compare every pair of numbers and check if the absolute difference between any pair is less than the threshold.\n\nLet me write this:\n\n```javascript\nconst hasCloseElements = (numbers, threshold) => {\n  for (let i = 0; i < numbers.length; i++) {\n    for (let j = i + 1; j < numbers.length; j++) {\n      if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n        return true;\n      }\n    }\n  }\n  return false;\n};\n```\n\nLet me verify with the examples:\n- [1.0, 2.0, 3.0], 0.5: differences are 1.0, 2.0, 1.0 - none less than 0.5 → false ✓\n- [1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3: 2.8 and 3.0 have difference 0.2 < 0.3 → true ✓\n\nThis looks correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4674205900,
+            "load_duration": 148748700,
+            "prompt_eval_count": 171,
+            "prompt_eval_duration": 190486000,
+            "eval_count": 360,
+            "eval_duration": 4263969000,
+            "clientWallMs": 4686.6,
+            "supervisedWallMs": 4784.3
+          },
+          "code": "const hasCloseElements = (numbers, threshold) => {\n  for (let i = 0; i < numbers.length; i++) {\n    for (let j = i + 1; j < numbers.length; j++) {\n      if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n        return true;\n      }\n    }\n  }\n  return false;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4784.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/0",
+                "passed": true,
+                "count": 7,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/1",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n  separate those group into separate strings and return the list of those.\n  Separate groups are balanced (each open brace is properly closed) and not nested within each other\n  Ignore any spaces in the input string.\n  >>> separateParenGroups('( ) (( )) (( )( ))')\n  ['()', '(())', '(()())']\n  */\nconst separateParenGroups = (paren_string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:57:47.1742703Z",
+            "message": {
+              "role": "assistant",
+              "content": "const separateParenGroups = (paren_string) => {\n    const s = paren_string.replace(/ /g, '');\n    const result = [];\n    let depth = 0;\n    let current = '';\n\n    for (const ch of s) {\n        if (ch === '(') {\n            depth++;\n            current += ch;\n        } else if (ch === ')') {\n            depth--;\n            current += ch;\n            if (depth === 0) {\n                result.push(current);\n                current = '';\n            }\n        }\n    }\n\n    return result;\n};",
+              "thinking": "The function needs to:\n1. Take a string with multiple groups of nested parentheses\n2. Ignore spaces\n3. Separate the groups into individual strings\n4. Return an array of those strings\n\nAlgorithm:\n- Remove all spaces from the input\n- Track depth of nesting\n- When depth goes from 0 to 1, we start a new group\n- When depth goes from 1 to 0, we end the current group\n- Collect each group as a string\n\nLet me trace through the example:\n- Input: '( ) (( )) (( )( ))'\n- After removing spaces: '()((()))(())()' wait no...\n- Let me re-read: '( ) (( )) (( )( ))'\n- Remove spaces: '()(())(())()' wait...\n- '( )' -> '()'\n- '(( ))' -> '(())'\n- '(( )( ))' -> '(()())'\n\nSo after removing spaces: '()(())(()())'\n\nLet me trace:\n- '(' depth 0->1, start group, group = '('\n- ')' depth 1->0, end group, group = '()', push to result\n- '(' depth 0->1, start group, group = '('\n- '(' depth 1->2, group = '(('\n- ')' depth 2->1, group = '(()'\n- ')' depth 1->0, end group, group = '(())', push to result\n- '(' depth 0->1, start group, group = '('\n- '(' depth 1->2, group = '(('\n- ')' depth 2->1, group = '(()'\n- '(' depth 1->2, group = '(()('\n- ')' depth 2->1, group = '(()()'\n- ')' depth 1->0, end group, group = '(()())', push to result\n\nResult: ['()', '(())', '(()())'] ✓\n\nNow let me write the code:\n\n```javascript\nconst separateParenGroups = (paren_string) => {\n    const s = paren_string.replace(/ /g, '');\n    const result = [];\n    let depth = 0;\n    let current = '';\n    \n    for (const ch of s) {\n        if (ch === '(') {\n            depth++;\n            current += ch;\n        } else if (ch === ')') {\n            depth--;\n            current += ch;\n            if (depth === 0) {\n                result.push(current);\n                current = '';\n            }\n        }\n    }\n    \n    return result;\n};\n```\n\nThis looks correct. Let me make sure it handles edge cases - empty string would return empty array, which seems fine."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 9808959100,
+            "load_duration": 142093300,
+            "prompt_eval_count": 163,
+            "prompt_eval_duration": 182750000,
+            "eval_count": 715,
+            "eval_duration": 9400934000,
+            "clientWallMs": 9842.3,
+            "supervisedWallMs": 9939.1
+          },
+          "code": "const separateParenGroups = (paren_string) => {\n    const s = paren_string.replace(/ /g, '');\n    const result = [];\n    let depth = 0;\n    let current = '';\n\n    for (const ch of s) {\n        if (ch === '(') {\n            depth++;\n            current += ch;\n        } else if (ch === ')') {\n            depth--;\n            current += ch;\n            if (depth === 0) {\n                result.push(current);\n                current = '';\n            }\n        }\n    }\n\n    return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 9939.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/1",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/2",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Given a positive floating point number, it can be decomposed into\n  and integer part (largest integer smaller than given number) and decimals\n  (leftover part always smaller than 1).\n\n  Return the decimal part of the number.\n  >>> truncateNumber(3.5)\n  0.5\n  */\nconst truncateNumber = (number) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:57:51.973352Z",
+            "message": {
+              "role": "assistant",
+              "content": "const truncateNumber = (number) => {\n  return number - Math.floor(number);\n};",
+              "thinking": "The user wants me to implement a JavaScript function that returns the decimal part of a positive floating point number.\n\nThe decimal part is the number minus its integer part (floor).\n\nFor example:\n- truncateNumber(3.5) should return 0.5\n- truncateNumber(1.0) should return 0\n- truncateNumber(7.89) should return 0.89\n\nThe implementation is straightforward: `number - Math.floor(number)`\n\nHowever, there's a floating point precision issue. For example, `0.3 - Math.floor(0.3)` might give `0.29999999999999998` instead of `0.3`. But looking at the problem statement, it just says \"Return the decimal part of the number\" and the example shows `truncateNumber(3.5)` returns `0.5`. \n\nLet me think about whether I need to handle floating point precision. The simple approach `number - Math.floor(number)` should work for most cases. Let me just go with that simple approach since the problem doesn't mention precision issues.\n\nThe function should be:\n```javascript\nconst truncateNumber = (number) => {\n  return number - Math.floor(number);\n};\n```\n\nThis is clean and simple. Let me return just the code."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4586071200,
+            "load_duration": 149336600,
+            "prompt_eval_count": 140,
+            "prompt_eval_duration": 177677000,
+            "eval_count": 307,
+            "eval_duration": 4173143000,
+            "clientWallMs": 4596.4,
+            "supervisedWallMs": 4694.9
+          },
+          "code": "const truncateNumber = (number) => {\n  return number - Math.floor(number);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4694.9,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/2",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/3",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* You're given a list of deposit and withdrawal operations on a bank account that starts with\n  zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n  at that point function should return true. Otherwise it should return false.\n  >>> belowZero([1, 2, 3])\n  false\n  >>> belowZero([1, 2, -4, 5])\n  true\n  */\nconst belowZero = (operations) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:57:55.0964134Z",
+            "message": {
+              "role": "assistant",
+              "content": "const belowZero = (operations) => {\n  let balance = 0;\n  for (const op of operations) {\n    balance += op;\n    if (balance < 0) {\n      return true;\n    }\n  }\n  return false;\n};",
+              "thinking": "The user wants me to implement a JavaScript function called `belowZero` that takes an array of operations (deposits and withdrawals) and returns true if at any point the balance falls below zero, otherwise false.\n\nLet me implement this:\n- Start with balance = 0\n- Iterate through each operation\n- Add the operation to the balance\n- If balance < 0, return true\n- If we finish all operations without balance going below zero, return false\n\nThe function declaration is already given: `const belowZero = (operations) => {`\n\nI need to complete the body and close the brace."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2913016000,
+            "load_duration": 146155900,
+            "prompt_eval_count": 167,
+            "prompt_eval_duration": 178210000,
+            "eval_count": 192,
+            "eval_duration": 2508167000,
+            "clientWallMs": 2939.1,
+            "supervisedWallMs": 3037.5
+          },
+          "code": "const belowZero = (operations) => {\n  let balance = 0;\n  for (const op of operations) {\n    balance += op;\n    if (balance < 0) {\n      return true;\n    }\n  }\n  return false;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3037.5,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/3",
+                "passed": true,
+                "count": 6,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/4",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* For a given list of input numbers, calculate Mean Absolute Deviation\n  around the mean of this dataset.\n  Mean Absolute Deviation is the average absolute difference between each\n  element and a centerpoint (mean in this case):\n  MAD = average | x - x_mean |\n  >>> meanAbsoluteDeviation([1.0, 2.0, 3.0, 4.0])\n  1.0\n  */\nconst meanAbsoluteDeviation = (numbers) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:00.8220594Z",
+            "message": {
+              "role": "assistant",
+              "content": "const meanAbsoluteDeviation = (numbers) => {\n    const mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;\n    const absoluteDeviations = numbers.map(num => Math.abs(num - mean));\n    const mad = absoluteDeviations.reduce((sum, dev) => sum + dev, 0) / absoluteDeviations.length;\n    return mad;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that calculates the Mean Absolute Deviation (MAD) around the mean of a dataset.\n\nMAD = average of |x_i - mean| for all elements in the dataset.\n\nSteps:\n1. Calculate the mean of the numbers\n2. Calculate the absolute difference between each number and the mean\n3. Calculate the average of those absolute differences\n\nLet me implement this:\n\n```javascript\nconst meanAbsoluteDeviation = (numbers) => {\n    const mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;\n    const absoluteDeviations = numbers.map(num => Math.abs(num - mean));\n    const mad = absoluteDeviations.reduce((sum, dev) => sum + dev, 0) / absoluteDeviations.length;\n    return mad;\n};\n```\n\nLet me verify with the example:\n- numbers = [1.0, 2.0, 3.0, 4.0]\n- mean = (1+2+3+4)/4 = 10/4 = 2.5\n- absolute deviations = |1-2.5|, |2-2.5|, |3-2.5|, |4-2.5| = 1.5, 0.5, 0.5, 1.5\n- MAD = (1.5+0.5+0.5+1.5)/4 = 4/4 = 1.0 ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5496780500,
+            "load_duration": 147286800,
+            "prompt_eval_count": 167,
+            "prompt_eval_duration": 175521000,
+            "eval_count": 436,
+            "eval_duration": 5091951000,
+            "clientWallMs": 5529.9,
+            "supervisedWallMs": 5625.0
+          },
+          "code": "const meanAbsoluteDeviation = (numbers) => {\n    const mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;\n    const absoluteDeviations = numbers.map(num => Math.abs(num - mean));\n    const mad = absoluteDeviations.reduce((sum, dev) => sum + dev, 0) / absoluteDeviations.length;\n    return mad;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5625.0,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/4",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/5",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n  >>> intersperse([], 4)\n  []\n  >>> intersperse([1, 2, 3], 4)\n  [1, 4, 2, 4, 3]\n  */\nconst intersperse = (numbers, delimeter) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:06.8735311Z",
+            "message": {
+              "role": "assistant",
+              "content": "const intersperse = (numbers, delimeter) => {\n  const result = [];\n  for (let i = 0; i < numbers.length; i++) {\n    result.push(numbers[i]);\n    if (i < numbers.length - 1) {\n      result.push(delimeter);\n    }\n  }\n  return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that inserts a delimiter between every two consecutive elements of an input list.\n\nLet me think about this:\n- If the list is empty, return an empty list\n- If the list has one element, return that element (no delimiter needed)\n- If the list has multiple elements, insert the delimiter between each pair\n\nFor example:\n- intersperse([], 4) → []\n- intersperse([1, 2, 3], 4) → [1, 4, 2, 4, 3]\n\nImplementation approach:\n- I can iterate through the array and build a result array\n- For each element, push it, and if it's not the last element, push the delimiter\n\nLet me write this:\n\n```javascript\nconst intersperse = (numbers, delimeter) => {\n  const result = [];\n  for (let i = 0; i < numbers.length; i++) {\n    result.push(numbers[i]);\n    if (i < numbers.length - 1) {\n      result.push(delimeter);\n    }\n  }\n  return result;\n};\n```\n\nThis should work correctly. Let me verify:\n- intersperse([], 4): loop doesn't execute, returns []\n- intersperse([1, 2, 3], 4): \n  - i=0: push 1, push 4\n  - i=1: push 2, push 4\n  - i=2: push 3 (no delimiter since i === length-1)\n  - Result: [1, 4, 2, 4, 3] ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5811740500,
+            "load_duration": 146568400,
+            "prompt_eval_count": 140,
+            "prompt_eval_duration": 178009000,
+            "eval_count": 449,
+            "eval_duration": 5400841000,
+            "clientWallMs": 5846.2,
+            "supervisedWallMs": 5946.8
+          },
+          "code": "const intersperse = (numbers, delimeter) => {\n  const result = [];\n  for (let i = 0; i < numbers.length; i++) {\n    result.push(numbers[i]);\n    if (i < numbers.length - 1) {\n      result.push(delimeter);\n    }\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5946.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/5",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/6",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n  For each of the group, output the deepest level of nesting of parentheses.\n  E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n  >>> parseNestedParens('(()()) ((())) () ((())()())')\n  [2, 3, 1, 3]\n  */\nconst parseNestedParens = (paren_string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:14.7742493Z",
+            "message": {
+              "role": "assistant",
+              "content": "const parseNestedParens = (paren_string) => {\n    const groups = paren_string.split(' ');\n    const result = [];\n    for (const group of groups) {\n        let currentDepth = 0;\n        let maxDepth = 0;\n        for (const char of group) {\n            if (char === '(') {\n                currentDepth++;\n                if (currentDepth > maxDepth) {\n                    maxDepth = currentDepth;\n                }\n            } else if (char === ')') {\n                currentDepth--;\n            }\n        }\n        result.push(maxDepth);\n    }\n    return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that parses a string of nested parentheses groups separated by spaces, and for each group, returns the maximum depth of nesting.\n\nLet me think about the approach:\n1. Split the input string by spaces to get individual groups\n2. For each group, track the current depth and maximum depth\n3. When we see '(', increment current depth\n4. When we see ')', decrement current depth\n5. Track the maximum depth seen\n6. Return an array of maximum depths for each group\n\nLet me write this:\n\n```javascript\nconst parseNestedParens = (paren_string) => {\n    const groups = paren_string.split(' ');\n    const result = [];\n    for (const group of groups) {\n        let currentDepth = 0;\n        let maxDepth = 0;\n        for (const char of group) {\n            if (char === '(') {\n                currentDepth++;\n                if (currentDepth > maxDepth) {\n                    maxDepth = currentDepth;\n                }\n            } else if (char === ')') {\n                currentDepth--;\n            }\n        }\n        result.push(maxDepth);\n    }\n    return result;\n};\n```\n\nLet me verify with the example:\n- '(()())': ( -> 1, ( -> 2, ) -> 1, ( -> 2, ) -> 1, ) -> 0. Max = 2 ✓\n- '((()))': ( -> 1, ( -> 2, ( -> 3, ) -> 2, ) -> 1, ) -> 0. Max = 3 ✓\n- '()': ( -> 1, ) -> 0. Max = 1 ✓\n- '((())()())': ( -> 1, ( -> 2, ( -> 3, ) -> 2, ) -> 1, ( -> 2, ) -> 1, ( -> 2, ) -> 1, ) -> 0. Max = 3 ✓\n\nResult: [2, 3, 1, 3] ✓\n\nI need to return code only without markdown."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 7684857600,
+            "load_duration": 145294600,
+            "prompt_eval_count": 163,
+            "prompt_eval_duration": 179257000,
+            "eval_count": 607,
+            "eval_duration": 7276899000,
+            "clientWallMs": 7696.6,
+            "supervisedWallMs": 7798.3
+          },
+          "code": "const parseNestedParens = (paren_string) => {\n    const groups = paren_string.split(' ');\n    const result = [];\n    for (const group of groups) {\n        let currentDepth = 0;\n        let maxDepth = 0;\n        for (const char of group) {\n            if (char === '(') {\n                currentDepth++;\n                if (currentDepth > maxDepth) {\n                    maxDepth = currentDepth;\n                }\n            } else if (char === ')') {\n                currentDepth--;\n            }\n        }\n        result.push(maxDepth);\n    }\n    return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 7798.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/6",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/7",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Filter an input list of strings only for ones that contain given substring\n  >>> filterBySubstring([], 'a')\n  []\n  >>> filterBySubstring(['abc', 'bacd', 'cde', 'array'], 'a')\n  ['abc', 'bacd', 'array']\n  */\nconst filterBySubstring = (strings, substring) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:18.6148896Z",
+            "message": {
+              "role": "assistant",
+              "content": "const filterBySubstring = (strings, substring) => {\n  return strings.filter(s => s.includes(substring));\n};",
+              "thinking": "The user wants me to complete a JavaScript function that filters an array of strings, returning only those that contain a given substring.\n\nThe function signature is:\n```\nconst filterBySubstring = (strings, substring) => {\n```\n\nI need to:\n1. Filter the `strings` array\n2. Keep only strings that contain `substring`\n3. Return the filtered array\n\nThis is straightforward - I can use `Array.prototype.filter` with `String.prototype.includes`.\n\n```javascript\nconst filterBySubstring = (strings, substring) => {\n  return strings.filter(s => s.includes(substring));\n};\n```\n\nLet me verify with the examples:\n- `filterBySubstring([], 'a')` → `[]` ✓ (filtering empty array gives empty array)\n- `filterBySubstring(['abc', 'bacd', 'cde', 'array'], 'a')` → `['abc', 'bacd', 'array']` ✓ ('cde' doesn't contain 'a')\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3617029200,
+            "load_duration": 147754700,
+            "prompt_eval_count": 137,
+            "prompt_eval_duration": 177491000,
+            "eval_count": 255,
+            "eval_duration": 3199043000,
+            "clientWallMs": 3644.0,
+            "supervisedWallMs": 3742.6
+          },
+          "code": "const filterBySubstring = (strings, substring) => {\n  return strings.filter(s => s.includes(substring));\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3742.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/7",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/8",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n  Empty sum should be equal to 0 and empty product should be equal to 1.\n  >>> sumProduct([])\n  (0, 1)\n  >>> sumProduct([1, 2, 3, 4])\n  (10, 24)\n  */\nconst sumProduct = (numbers, int) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:25.0294816Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sumProduct = (numbers, int) => {\n    const sum = numbers.reduce((a, b) => a + b, 0);\n    const product = numbers.reduce((a, b) => a * b, 1);\n    return [sum, product];\n};",
+              "thinking": "The user wants me to implement a JavaScript function called `sumProduct` that takes a list of integers and returns a tuple (array) consisting of the sum and product of all integers in the list.\n\n- Empty sum = 0\n- Empty product = 1\n- For [1, 2, 3, 4], sum = 10, product = 24\n\nThe function signature is `const sumProduct = (numbers, int) => {`\n\nWait, there's an `int` parameter that seems odd. Looking at the signature, it seems like it might be a leftover or typo. But I need to work with what's given. Let me just implement it with the `numbers` parameter and ignore `int` or use it minimally.\n\nActually, looking more carefully, the signature has `(numbers, int)` - this might be a mistake in the problem, but I'll keep the signature as given and just use `numbers`.\n\nLet me implement:\n- sum: reduce with addition, starting from 0\n- product: reduce with multiplication, starting from 1\n- return [sum, product]\n\n```javascript\nconst sumProduct = (numbers, int) => {\n    const sum = numbers.reduce((a, b) => a + b, 0);\n    const product = numbers.reduce((a, b) => a * b, 1);\n    return [sum, product];\n};\n```\n\nThis handles empty arrays correctly since reduce with initial value 0 for sum and 1 for product will return those values for empty arrays.\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 6217527700,
+            "load_duration": 144731300,
+            "prompt_eval_count": 162,
+            "prompt_eval_duration": 173183000,
+            "eval_count": 409,
+            "eval_duration": 5808846000,
+            "clientWallMs": 6230.7,
+            "supervisedWallMs": 6327.7
+          },
+          "code": "const sumProduct = (numbers, int) => {\n    const sum = numbers.reduce((a, b) => a + b, 0);\n    const product = numbers.reduce((a, b) => a * b, 1);\n    return [sum, product];\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 6327.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/8",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/9",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* From a given list of integers, generate a list of rolling maximum element found until given moment\n  in the sequence.\n  >>> rollingMax([1, 2, 3, 2, 3, 4, 2])\n  [1, 2, 3, 3, 3, 4, 4]\n  */\nconst rollingMax = (numbers) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:31.5384867Z",
+            "message": {
+              "role": "assistant",
+              "content": "const rollingMax = (numbers) => {\n    const result = [];\n    let max = -Infinity;\n    for (const num of numbers) {\n        if (num > max) {\n            max = num;\n        }\n        result.push(max);\n    }\n    return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function called `rollingMax` that takes a list of integers and returns a list where each element is the maximum value seen so far (up to and including that position).\n\nFor example:\n- Input: [1, 2, 3, 2, 3, 4, 2]\n- Output: [1, 2, 3, 3, 3, 4, 4]\n\nThe logic is straightforward:\n- Iterate through the array\n- Keep track of the current maximum\n- At each position, update the max if the current element is larger\n- Push the current max to the result array\n\nLet me write this:\n\n```javascript\nconst rollingMax = (numbers) => {\n    const result = [];\n    let max = -Infinity;\n    for (const num of numbers) {\n        if (num > max) {\n            max = num;\n        }\n        result.push(max);\n    }\n    return result;\n};\n```\n\nThis should work. Let me verify with the example:\n- 1: max = 1, result = [1]\n- 2: max = 2, result = [1, 2]\n- 3: max = 3, result = [1, 2, 3]\n- 2: max = 3, result = [1, 2, 3, 3]\n- 3: max = 3, result = [1, 2, 3, 3, 3]\n- 4: max = 4, result = [1, 2, 3, 3, 3, 4]\n- 2: max = 4, result = [1, 2, 3, 3, 3, 4, 4]\n\nMatches the expected output. I'll return just the code without markdown."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 6267302000,
+            "load_duration": 146986700,
+            "prompt_eval_count": 146,
+            "prompt_eval_duration": 189038000,
+            "eval_count": 486,
+            "eval_duration": 5842697000,
+            "clientWallMs": 6300.2,
+            "supervisedWallMs": 6401.8
+          },
+          "code": "const rollingMax = (numbers) => {\n    const result = [];\n    let max = -Infinity;\n    for (const num of numbers) {\n        if (num > max) {\n            max = num;\n        }\n        result.push(max);\n    }\n    return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 6401.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/9",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/10",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Test if gniven strig is a palindrome */\nconst isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\n/* Find the shortest palindrome that begins with a supplied string.\n  Algorithm idea is simple:\n  - Find the longest postfix of supplied string that is a palindrome.\n  - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n  >>> makePalindrome('')\n  ''\n  >>> makePalindrome('cat')\n  'catac'\n  >>> makePalindrome('cata')\n  'catac'\n  */\nconst makePalindrome = (string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:39.2540341Z",
+            "message": {
+              "role": "assistant",
+              "content": "const isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\nconst makePalindrome = (string) => {\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.slice(i);\n    if (isPalindrome(suffix)) {\n      const prefix = string.slice(0, i);\n      return string + prefix.split('').reverse().join('');\n    }\n  }\n  return string;\n}",
+              "thinking": "The user wants me to implement the `makePalindrome` function. Let me think about the algorithm:\n\n1. Find the longest suffix of the string that is a palindrome.\n2. Take the prefix that comes before that palindromic suffix.\n3. Reverse that prefix and append it to the end of the string.\n\nFor example:\n- 'cat' → longest palindromic suffix is 't' (just the last char), prefix is 'ca', reverse is 'ac', result is 'cat' + 'ac' = 'catac'\n- 'cata' → longest palindromic suffix is 'ata', prefix is 'c', reverse is 'c', result is 'cata' + 'c' = 'catac'\n- '' → longest palindromic suffix is '', prefix is '', result is ''\n\nLet me implement this:\n\n```javascript\nconst makePalindrome = (string) => {\n  // Find the longest suffix that is a palindrome\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.slice(i);\n    if (isPalindrome(suffix)) {\n      const prefix = string.slice(0, i);\n      return string + prefix.split('').reverse().join('');\n    }\n  }\n  return string;\n}\n```\n\nWait, let me verify:\n- 'cat': i=0, suffix='cat', not palindrome. i=1, suffix='at', not palindrome. i=2, suffix='t', palindrome. prefix='ca', reversed='ac'. Result: 'cat'+'ac' = 'catac'. ✓\n- 'cata': i=0, suffix='cata', not palindrome. i=1, suffix='ata', palindrome. prefix='c', reversed='c'. Result: 'cata'+'c' = 'catac'. ✓\n- '': i=0, suffix='', isPalindrome('') → '' == '' → true. prefix='', reversed=''. Result: ''+'' = ''. ✓\n\nThis looks correct. Let me write the complete program."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 7490916900,
+            "load_duration": 143894100,
+            "prompt_eval_count": 206,
+            "prompt_eval_duration": 188855000,
+            "eval_count": 553,
+            "eval_duration": 7070820000,
+            "clientWallMs": 7512.2,
+            "supervisedWallMs": 7610.3
+          },
+          "code": "const isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\nconst makePalindrome = (string) => {\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.slice(i);\n    if (isPalindrome(suffix)) {\n      const prefix = string.slice(0, i);\n      return string + prefix.split('').reverse().join('');\n    }\n  }\n  return string;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 7610.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/10",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/11",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input are two strings a and b consisting only of 1s and 0s.\n  Perform binary XOR on these inputs and return result also as a string.\n  >>> stringXor('010', '110')\n  '100'\n  */\nconst stringXor = (a, b) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:44.326856Z",
+            "message": {
+              "role": "assistant",
+              "content": "const stringXor = (a, b) => {\n  let result = '';\n  for (let i = 0; i < a.length; i++) {\n    result += (a[i] === b[i]) ? '0' : '1';\n  }\n  return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that performs binary XOR on two strings of 0s and 1s.\n\nThe XOR operation:\n- 0 XOR 0 = 0\n- 0 XOR 1 = 1\n- 1 XOR 0 = 1\n- 1 XOR 1 = 0\n\nI need to iterate through both strings character by character, XOR each pair of bits, and build the result string.\n\nLet me write this:\n\n```javascript\nconst stringXor = (a, b) => {\n  let result = '';\n  for (let i = 0; i < a.length; i++) {\n    result += (a[i] === b[i]) ? '0' : '1';\n  }\n  return result;\n};\n```\n\nThis assumes both strings are the same length, which is implied by the problem statement (binary XOR on two inputs). The example shows '010' XOR '110' = '100', which confirms same-length strings.\n\nLet me verify: \n- 0 XOR 1 = 1\n- 1 XOR 1 = 0\n- 0 XOR 0 = 0\nResult: '100' ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4859565600,
+            "load_duration": 147871900,
+            "prompt_eval_count": 133,
+            "prompt_eval_duration": 175978000,
+            "eval_count": 349,
+            "eval_duration": 4445179000,
+            "clientWallMs": 4870.8,
+            "supervisedWallMs": 4969.4
+          },
+          "code": "const stringXor = (a, b) => {\n  let result = '';\n  for (let i = 0; i < a.length; i++) {\n    result += (a[i] === b[i]) ? '0' : '1';\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4969.4,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/11",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/12",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Out of list of strings, return the longest one. Return the first one in case of multiple\n  strings of the same length. Return null in case the input list is empty.\n  >>> longest([])\n\n  >>> longest(['a', 'b', 'c'])\n  'a'\n  >>> longest(['a', 'bb', 'ccc'])\n  'ccc'\n  */\nconst longest = (strings) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:48.3702435Z",
+            "message": {
+              "role": "assistant",
+              "content": "const longest = (strings) => {\n  if (strings.length === 0) return null;\n  let result = strings[0];\n  for (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > result.length) {\n      result = strings[i];\n    }\n  }\n  return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that:\n1. Takes a list of strings\n2. Returns the longest one\n3. Returns the first one in case of multiple strings of the same length\n4. Returns null if the input list is empty\n\nLet me write this:\n\n```javascript\nconst longest = (strings) => {\n  if (strings.length === 0) return null;\n  let result = strings[0];\n  for (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > result.length) {\n      result = strings[i];\n    }\n  }\n  return result;\n};\n```\n\nThis handles all cases:\n- Empty list → null\n- Multiple same length → first one (since we only update on strictly greater)\n- Normal case → longest string\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3833761600,
+            "load_duration": 147539600,
+            "prompt_eval_count": 151,
+            "prompt_eval_duration": 185662000,
+            "eval_count": 280,
+            "eval_duration": 3409014000,
+            "clientWallMs": 3845.1,
+            "supervisedWallMs": 3944.6
+          },
+          "code": "const longest = (strings) => {\n  if (strings.length === 0) return null;\n  let result = strings[0];\n  for (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > result.length) {\n      result = strings[i];\n    }\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3944.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/12",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/13",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return a greatest common divisor of two integers a and b\n  >>> greatestCommonDivisor(3, 5)\n  1\n  >>> greatestCommonDivisor(25, 15)\n  5\n  */\nconst greatestCommonDivisor = (a, b) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:53.7491627Z",
+            "message": {
+              "role": "assistant",
+              "content": "const greatestCommonDivisor = (a, b) => {\n  a = Math.abs(a);\n  b = Math.abs(b);\n  while (b !== 0) {\n    let temp = b;\n    b = a % b;\n    a = temp;\n  }\n  return a;\n};",
+              "thinking": "The user wants me to implement a greatestCommonDivisor function in JavaScript. This is a classic GCD problem that can be solved using the Euclidean algorithm.\n\nThe Euclidean algorithm:\n- If b is 0, return a\n- Otherwise, return gcd(b, a % b)\n\nI need to handle the case where a or b might be negative (take absolute values), and the case where one of them is 0.\n\nLet me write the complete function:\n\n```javascript\nconst greatestCommonDivisor = (a, b) => {\n  a = Math.abs(a);\n  b = Math.abs(b);\n  while (b !== 0) {\n    let temp = b;\n    b = a % b;\n    a = temp;\n  }\n  return a;\n};\n```\n\nOr using recursion:\n```javascript\nconst greatestCommonDivisor = (a, b) => {\n  a = Math.abs(a);\n  b = Math.abs(b);\n  if (b === 0) return a;\n  return greatestCommonDivisor(b, a % b);\n};\n```\n\nBoth work. Let me go with the iterative version to avoid stack overflow for large numbers. Actually, either is fine. Let me use the iterative one.\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5172251200,
+            "load_duration": 142679600,
+            "prompt_eval_count": 124,
+            "prompt_eval_duration": 165127000,
+            "eval_count": 360,
+            "eval_duration": 4774090000,
+            "clientWallMs": 5195.2,
+            "supervisedWallMs": 5296.3
+          },
+          "code": "const greatestCommonDivisor = (a, b) => {\n  a = Math.abs(a);\n  b = Math.abs(b);\n  while (b !== 0) {\n    let temp = b;\n    b = a % b;\n    a = temp;\n  }\n  return a;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5296.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/13",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/14",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return list of all prefixes from shortest to longest of the input string\n  >>> allPrefixes('abc')\n  ['a', 'ab', 'abc']\n  */\nconst allPrefixes = (string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:58:57.5226452Z",
+            "message": {
+              "role": "assistant",
+              "content": "const allPrefixes = (string) => {\n  const result = [];\n  for (let i = 1; i <= string.length; i++) {\n    result.push(string.substring(0, i));\n  }\n  return result;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that returns all prefixes of a string from shortest to longest.\n\nFor 'abc', the prefixes are:\n- 'a' (length 1)\n- 'ab' (length 2)\n- 'abc' (length 3)\n\nI need to return a complete JavaScript program with just the function, no markdown, no explanations.\n\nLet me write this:\n\n```javascript\nconst allPrefixes = (string) => {\n  const result = [];\n  for (let i = 1; i <= string.length; i++) {\n    result.push(string.substring(0, i));\n  }\n  return result;\n};\n```\n\nThis is straightforward. Let me make sure it handles edge cases - empty string would return an empty array, which makes sense.\n\nThe user said \"Return code only, without Markdown, explanations, tests, or host APIs.\" So I should just return the raw code."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3546838500,
+            "load_duration": 143420500,
+            "prompt_eval_count": 107,
+            "prompt_eval_duration": 161035000,
+            "eval_count": 261,
+            "eval_duration": 3162736000,
+            "clientWallMs": 3583.4,
+            "supervisedWallMs": 3685.8
+          },
+          "code": "const allPrefixes = (string) => {\n  const result = [];\n  for (let i = 1; i <= string.length; i++) {\n    result.push(string.substring(0, i));\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3685.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/14",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/15",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n  >>> stringSequence(0)\n  '0'\n  >>> stringSequence(5)\n  '0 1 2 3 4 5'\n  */\nconst stringSequence = (n) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:59:01.6265736Z",
+            "message": {
+              "role": "assistant",
+              "content": "const stringSequence = (n) => {\n  return Array.from({ length: n + 1 }, (_, i) => i).join(' ');\n};",
+              "thinking": "The user wants me to complete a JavaScript function that returns a space-delimited string of numbers from 0 to n inclusive.\n\nFor example:\n- stringSequence(0) → '0'\n- stringSequence(5) → '0 1 2 3 4 5'\n\nI can implement this using Array.from or a simple loop, then join with spaces.\n\nLet me write the complete function:\n\n```javascript\nconst stringSequence = (n) => {\n  return Array.from({length: n + 1}, (_, i) => i).join(' ');\n};\n```\n\nThis creates an array of length n+1, maps each index to itself (0 through n), and joins with spaces.\n\nLet me verify:\n- n=0: Array of length 1 → [0] → '0' ✓\n- n=5: Array of length 6 → [0,1,2,3,4,5] → '0 1 2 3 4 5' ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3873495300,
+            "load_duration": 143235900,
+            "prompt_eval_count": 125,
+            "prompt_eval_duration": 162664000,
+            "eval_count": 267,
+            "eval_duration": 3495880000,
+            "clientWallMs": 3903.9,
+            "supervisedWallMs": 3998.8
+          },
+          "code": "const stringSequence = (n) => {\n  return Array.from({ length: n + 1 }, (_, i) => i).join(' ');\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3998.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/15",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/16",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Given a string, find out how many distinct characters (regardless of case) does it consist of\n  >>> countDistinctCharacters('xyzXYZ')\n  3\n  >>> countDistinctCharacters('Jerry')\n  4\n  */\nconst countDistinctCharacters = (string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:59:05.5670711Z",
+            "message": {
+              "role": "assistant",
+              "content": "const countDistinctCharacters = (string) => {\n  return new Set(string.toLowerCase()).size;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that counts distinct characters in a string, regardless of case.\n\nLet me think about this:\n- 'xyzXYZ' → lowercase: 'xyzxyz' → distinct: x, y, z → 3\n- 'Jerry' → lowercase: 'jerry' → distinct: j, e, r, y → 4\n\nSo I need to:\n1. Convert the string to lowercase (or uppercase)\n2. Get the set of unique characters\n3. Return the size of that set\n\nSimple implementation:\n```javascript\nconst countDistinctCharacters = (string) => {\n  return new Set(string.toLowerCase()).size;\n};\n```\n\nThis should work. Let me verify:\n- 'xyzXYZ'.toLowerCase() = 'xyzxyz' → Set: {'x','y','z'} → size 3 ✓\n- 'Jerry'.toLowerCase() = 'jerry' → Set: {'j','e','r','y'} → size 4 ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3733885300,
+            "load_duration": 148595400,
+            "prompt_eval_count": 121,
+            "prompt_eval_duration": 158399000,
+            "eval_count": 250,
+            "eval_duration": 3354456000,
+            "clientWallMs": 3756.4,
+            "supervisedWallMs": 3855.0
+          },
+          "code": "const countDistinctCharacters = (string) => {\n  return new Set(string.toLowerCase()).size;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3855.0,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/16",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/17",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string representing musical notes in a special ASCII format.\n  Your task is to parse this string and return list of integers corresponding to how many beats does each\n  not last.\n\n  Here is a legend:\n  'o' - whole note, lasts four beats\n  'o|' - half note, lasts two beats\n  '.|' - quater note, lasts one beat\n\n  >>> parseMusic('o o| .| o| o| .| .| .| .| o o')\n  [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n  */\nconst parseMusic = (music_string) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:59:11.3196347Z",
+            "message": {
+              "role": "assistant",
+              "content": "const parseMusic = (music_string) => {\n  return music_string.split(' ').map(note => {\n    if (note === 'o') return 4;\n    if (note === 'o|') return 2;\n    if (note === '.|') return 1;\n  });\n};",
+              "thinking": "The user wants me to implement a JavaScript function that parses a string of musical notes and returns an array of beat values.\n\nThe legend:\n- 'o' - whole note, 4 beats\n- 'o|' - half note, 2 beats\n- '.|' - quarter note, 1 beat\n\nThe notes are separated by spaces.\n\nLet me think about the parsing:\n- Split the string by spaces\n- For each token:\n  - If it's 'o', return 4\n  - If it's 'o|', return 2\n  - If it's '.|', return 1\n\nLet me verify with the example:\n' o o| .| o| o| .| .| .| .| o o'\nSplit by space: ['o', 'o|', '.|', 'o|', 'o|', '.|', '.|', '.|', '.|', 'o', 'o']\nMap: [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4] ✓\n\nSimple implementation:\n\n```javascript\nconst parseMusic = (music_string) => {\n  return music_string.split(' ').map(note => {\n    if (note === 'o') return 4;\n    if (note === 'o|') return 2;\n    if (note === '.|') return 1;\n  });\n};\n```\n\nThis should work. Let me make sure I return just the code without markdown."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5540894800,
+            "load_duration": 145493000,
+            "prompt_eval_count": 222,
+            "prompt_eval_duration": 189546000,
+            "eval_count": 404,
+            "eval_duration": 5137066000,
+            "clientWallMs": 5571.9,
+            "supervisedWallMs": 5668.6
+          },
+          "code": "const parseMusic = (music_string) => {\n  return music_string.split(' ').map(note => {\n    if (note === 'o') return 4;\n    if (note === 'o|') return 2;\n    if (note === '.|') return 1;\n  });\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5668.6,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/17",
+                "passed": false,
+                "count": 5,
+                "failed": 1
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/18",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Find how many times a given substring can be found in the original string. Count overlaping cases.\n  >>> howManyTimes('', 'a')\n  0\n  >>> howManyTimes('aaa', 'a')\n  3\n  >>> howManyTimes('aaaa', 'aa')\n  3\n  */\nconst howManyTimes = (string, substring) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:59:17.8307753Z",
+            "message": {
+              "role": "assistant",
+              "content": "const howManyTimes = (string, substring) => {\n  if (substring === '') return 0;\n  let count = 0;\n  let idx = 0;\n  while ((idx = string.indexOf(substring, idx)) !== -1) {\n    count++;\n    idx++;\n  }\n  return count;\n};",
+              "thinking": "The user wants me to implement a JavaScript function that counts how many times a substring appears in a string, including overlapping occurrences.\n\nLet me think about the approach:\n- If substring is empty, return 0\n- Iterate through the string, at each position check if the substring starts there\n- If it does, increment count and move to next position (not skip the substring length, to allow overlaps)\n\nFor example:\n- 'aaa' with 'a': positions 0, 1, 2 → 3\n- 'aaaa' with 'aa': positions 0, 1, 2 → 3\n\nLet me write the implementation:\n\n```javascript\nconst howManyTimes = (string, substring) => {\n  if (substring === '') return 0;\n  let count = 0;\n  let idx = 0;\n  while ((idx = string.indexOf(substring, idx)) !== -1) {\n    count++;\n    idx++;\n  }\n  return count;\n};\n```\n\nThis uses indexOf with a starting position. Each time we find a match, we increment count and move the search position by just 1 (to allow overlapping matches).\n\nLet me verify:\n- howManyTimes('', 'a'): indexOf('a', 0) in '' → -1, count = 0 ✓\n- howManyTimes('aaa', 'a'): finds at 0, 1, 2 → count = 3 ✓\n- howManyTimes('aaaa', 'aa'): finds at 0, 1, 2 → count = 3 ✓\n\nThis looks correct. Let me return just the code."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 6281378200,
+            "load_duration": 147264500,
+            "prompt_eval_count": 142,
+            "prompt_eval_duration": 178485000,
+            "eval_count": 428,
+            "eval_duration": 5865161000,
+            "clientWallMs": 6308.8,
+            "supervisedWallMs": 6409.4
+          },
+          "code": "const howManyTimes = (string, substring) => {\n  if (substring === '') return 0;\n  let count = 0;\n  let idx = 0;\n  while ((idx = string.indexOf(substring, idx)) !== -1) {\n    count++;\n    idx++;\n  }\n  return count;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 6409.4,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/18",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/19",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input is a space-delimited string of numberals from 'zero' to 'nine'.\n  Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n  Return the string with numbers sorted from smallest to largest\n  >>> sortNumbers('three one five')\n  'one three five'\n  */\nconst sortNumbers = (numbers) => {\n",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T19:59:23.8570474Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sortNumbers = (numbers) => {\n  const wordToNum = {\n    'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4,\n    'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9\n  };\n\n  return numbers.split(' ')\n    .sort((a, b) => wordToNum[a] - wordToNum[b])\n    .join(' ');\n};",
+              "thinking": "The user wants me to implement a JavaScript function that:\n1. Takes a space-delimited string of number words ('zero' through 'nine')\n2. Sorts them from smallest to largest\n3. Returns the sorted string\n\nLet me implement this:\n\n1. Split the string by spaces\n2. Map each word to its numeric value\n3. Sort by numeric value\n4. Join back with spaces\n\nLet me write the complete function:\n\n```javascript\nconst sortNumbers = (numbers) => {\n  const wordToNum = {\n    'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4,\n    'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9\n  };\n  \n  return numbers.split(' ')\n    .sort((a, b) => wordToNum[a] - wordToNum[b])\n    .join(' ');\n};\n```\n\nThis should work. Let me verify with the example:\n- 'three one five' → split → ['three', 'one', 'five'] → sort by value (3,1,5) → ['one', 'three', 'five'] → 'one three five' ✓\n\nThe user wants code only, no markdown, no explanations."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5805064900,
+            "load_duration": 145030800,
+            "prompt_eval_count": 156,
+            "prompt_eval_duration": 186094000,
+            "eval_count": 414,
+            "eval_duration": 5388887000,
+            "clientWallMs": 5827.8,
+            "supervisedWallMs": 5926.3
+          },
+          "code": "const sortNumbers = (numbers) => {\n  const wordToNum = {\n    'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4,\n    'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9\n  };\n\n  return numbers.split(' ')\n    .sort((a, b) => wordToNum[a] - wordToNum[b])\n    .join(' ');\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5926.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/19",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "qwen3.8:27b-mtp-bf16",
+        "created_at": "2026-09-11T19:57:32.3361822Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready",
+          "thinking": "The user wants me to reply with exactly the word \"ready\". This is a simple, direct instruction. I should respond with just that word and nothing else."
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 19501208600,
+        "load_duration": 18561769400,
+        "prompt_eval_count": 15,
+        "prompt_eval_duration": 199238000,
+        "eval_count": 37,
+        "eval_duration": 737829000,
+        "clientWallMs": 19523.3,
+        "supervisedWallMs": 19620.4
+      },
+      "loadedModel": [
+        {
+          "name": "qwen3.8:27b-mtp-bf16",
+          "model": "qwen3.8:27b-mtp-bf16",
+          "size": 53454789671,
+          "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "27.3B",
+            "quantization_level": "BF16"
+          },
+          "expires_at": "2026-09-11T14:02:32.3361822-06:00",
+          "size_vram": 53454789671,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 19,
+        "tasksAttempted": 20,
+        "tasksTotal": 20,
+        "testsPassed": 19,
+        "testsTotal": 20,
+        "medianWallMs": 5460.65,
+        "totalWallMs": 109662.5,
+        "truncated": 0,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "updatedAt": "2026-09-11T13:59:25-06:00",
+  "resultFile": "runs/20260911-135712-6e548658.json",
+  "unloads": [
+    {
+      "model": "qwen3.8:27b-mtp-bf16",
+      "endpoint": "http://127.0.0.1:11434",
+      "confirmedAt": "2026-09-11T13:59:25-06:00",
+      "gpuAfter": {
+        "freeGiB": 93.8271484375,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 2.0
+      },
+      "freeBeforeGiB": 94.0322265625
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T13:59:25-06:00"
+}
