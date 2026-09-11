@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T13:24:33-06:00
+Updated: 2026-09-11T13:46:53-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -95,11 +95,11 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131040-78f92dff.json) | code-writing screen | — | 7/8 tasks; 98/99 tests (separate) | — |
 | [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131150-5076dcd2.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
 | [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131310-ae09b0ba.json) | error | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | running | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131530-e0cf9a30.json) | code-writing screen | — | 6/8 tasks; 74/99 tests (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-133000-59803f3f.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-133431-07b70f65.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-133911-de908887.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
+| qwen3.5:122b | running | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
@@ -108,6 +108,10 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
+| unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf | pending | — | — | — |
+| ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf | pending | — | — | — |
+| bartowski/apodex_Apodex-1.1-mini-GGUF<br>apodex_Apodex-1.1-mini-Q6_K.gguf | pending | — | — | — |
 | gpt-oss:20b | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
 | qwen3.5:122b | pending | — | — | — |
@@ -155,10 +159,6 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | qwen3.5:122b | pending | — | — | — |
 | qwen3.5:122b | pending | — | — | — |
 | muse-glimmer:30b-bf16-dflash | pending | — | — | — |
-| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
-| unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf | pending | — | — | — |
-| ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf | pending | — | — | — |
-| bartowski/apodex_Apodex-1.1-mini-GGUF<br>apodex_Apodex-1.1-mini-Q6_K.gguf | pending | — | — | — |
 
 ## Limits and failed cases
 
@@ -536,6 +536,22 @@ Personal model digests unchanged: True.
 ### workload-gemma-think-pilot
 
 Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.99934490000305 seconds
+Personal model digests unchanged: True.
+
+### coding-gemma-think-pilot
+
+Personal model digests unchanged: True.
+
+### workload-qwen38-think-part2
+
+Personal model digests unchanged: True.
+
+### workload-qwen38-think-part3
+
+Personal model digests unchanged: True.
+
+### workload-qwen38-think-part4
+
 Personal model digests unchanged: True.
 
 Public publishing remains pending the specific approval requested in this thread. Local reports and commits continue independently.

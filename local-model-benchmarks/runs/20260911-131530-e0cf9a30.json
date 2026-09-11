@@ -1,0 +1,3144 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-131530-e0cf9a30",
+  "startedAt": "2026-09-11T13:15:30-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 86,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T13:15:33-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-coding-screen",
+  "selection": {
+    "kind": "huggingface",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "rationale": "Gemma completed a valid 14/16 initial screen and advertises thinking support. Run a small separate reasoning diagnostic at the fixed existing protocol budget; do not pool it with thinking-off results.",
+    "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+    "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+    "expectedBytes": 32635677632,
+    "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "campaignProtocol": "javascript-coding-hf-v1",
+    "thinking": true
+  },
+  "secondaryRuntime": {
+    "host": "127.0.0.1:11435",
+    "modelsDir": "F:\\models\\nightly-benchmark\\ollama",
+    "downloadDir": "F:\\models\\nightly-benchmark\\downloads",
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.EXE",
+    "environmentOverrides": {
+      "OLLAMA_HOST": "127.0.0.1:11435",
+      "OLLAMA_MODELS": "F:\\models\\nightly-benchmark\\ollama"
+    },
+    "performanceEnvironment": {
+      "OLLAMA_FLASH_ATTENTION": null,
+      "OLLAMA_KV_CACHE_TYPE": null,
+      "OLLAMA_NUM_PARALLEL": null,
+      "OLLAMA_MAX_LOADED_MODELS": null,
+      "OLLAMA_CONTEXT_LENGTH": null,
+      "OLLAMA_GPU_OVERHEAD": null,
+      "CUDA_VISIBLE_DEVICES": null,
+      "GGML_CUDA_ENABLE_UNIFIED_MEMORY": null
+    },
+    "primaryPerformanceEnvironment": "unknown; primary is an independently started server",
+    "logFile": "C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\state\\ollama-20260911-131530-e0cf9a30.log",
+    "startedAt": "2026-09-11T13:15:31-06:00",
+    "pid": 23608,
+    "processIdentity": {
+      "imagePath": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "creationFileTime": "134336277310219701"
+    },
+    "version": {
+      "version": "0.32.13"
+    },
+    "stoppedAt": "2026-09-11T13:29:55-06:00",
+    "childExitCode": 1,
+    "portFree": true
+  },
+  "updatedAt": "2026-09-11T13:29:55-06:00",
+  "resultFile": "runs/20260911-131530-e0cf9a30.json",
+  "admission": {
+    "kind": "huggingface",
+    "model": "nightly-bench-d5808e5874e660a8:latest",
+    "bytes": 32635677632,
+    "sha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "alreadyImported": true,
+    "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+    "selection": {
+      "kind": "huggingface",
+      "repoId": "unsloth/gemma-4-31B-it-GGUF",
+      "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+      "filename": "gemma-4-31B-it-Q8_0.gguf",
+      "rationale": "Gemma completed a valid 14/16 initial screen and advertises thinking support. Run a small separate reasoning diagnostic at the fixed existing protocol budget; do not pool it with thinking-off results.",
+      "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+      "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+      "expectedBytes": 32635677632,
+      "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+      "campaignProtocol": "javascript-coding-hf-v1",
+      "thinking": true
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 94.02734375,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 8.0
+  },
+  "protocol": {
+    "name": "javascript-functions-v1",
+    "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+    "thinking": true,
+    "context": 16384,
+    "outputCap": 8192,
+    "maxGenerationSeconds": 240,
+    "tasks": 8,
+    "hiddenTests": 99,
+    "temperature": 0,
+    "topP": 1,
+    "topK": 40,
+    "repeatPenalty": 1.0,
+    "samplingProfile": "greedy-v1",
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+  },
+  "benchmarks": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "endpoint": "http://127.0.0.1:11435",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "30.7B",
+        "quantization_level": "Q8_0"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "thinking"
+      ],
+      "modelParameters": "stop                           \"<turn|>\"",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {eventId, account, delta}. Duplicate eventId records are identical duplicate deliveries; count each eventId once. Sum integer delta per account. Return [[account,balance],...] sorted by account using ordinary lexicographic string order. Accounts can be any strings, including object prototype names.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:16:13.2896228Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const seenEvents = new Set();\n  const balances = new Map();\n\n  for (const { eventId, account, delta } of input) {\n    if (!seenEvents.has(eventId)) {\n      seenEvents.add(eventId);\n      const current = balances.get(account) || 0;\n      balances.set(account, current + delta);\n    }\n  }\n\n  return Array.from(balances.entries()).sort((a, b) => {\n    if (a[0] < b[0]) return -1;\n    if (a[0] > b[0]) return 1;\n    return 0;\n  });\n}\n```",
+              "thinking": "*   Input: An array of objects `{ eventId, account, delta }`.\n    *   Constraint 1: Do not mutate input.\n    *   Constraint 2: No external libraries or host APIs.\n    *   Constraint 3: Return JavaScript code only.\n    *   Constraint 4: Handle duplicate `eventId`s (count each unique `eventId` once).\n    *   Constraint 5: Sum `delta` per `account`.\n    *   Constraint 6: Return an array of `[account, balance]` pairs.\n    *   Constraint 7: Sort by `account` lexicographically.\n    *   Constraint 8: Accounts can be any string, including prototype names (e.g., \"toString\").\n\n    *   To handle duplicate `eventId`s, I need a way to track which IDs have been seen. A `Set` is ideal for this.\n    *   To sum `delta` per `account`, I need a map. Since accounts can be prototype names, using a plain object `{}` as a map is risky (e.g., `obj['toString']` exists). A `Map` object is the correct choice here.\n    *   Iterate through the input array.\n    *   For each item:\n        *   Check if `eventId` is in the `Set`.\n        *   If not, add `eventId` to the `Set` and add `delta` to the `Map` for that `account`.\n    *   Convert the `Map` entries to an array.\n    *   Sort the array by the first element (the account string).\n    *   Return the sorted array.\n\n    ```javascript\n    function solve(input) {\n      const seenEvents = new Set();\n      const balances = new Map();\n\n      for (const { eventId, account, delta } of input) {\n        if (!seenEvents.has(eventId)) {\n          seenEvents.add(eventId);\n          const currentBalance = balances.get(account) || 0;\n          balances.set(account, currentBalance + delta);\n        }\n      }\n\n      return Array.from(balances.entries()).sort((a, b) => {\n        if (a[0] < b[0]) return -1;\n        if (a[0] > b[0]) return 1;\n        return 0;\n      });\n    }\n    ```\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation of input? Yes (iterating over it doesn't mutate it).\n    *   No external libraries/host APIs? Yes.\n    *   Duplicate `eventId` handled? Yes.\n    *   Sum `delta` per account? Yes.\n    *   Return `[[account, balance], ...]`? Yes.\n    *   Sorted by account lexicographically? Yes.\n    *   Handle prototype names? Yes (using `Map`).\n\n    *   `Array.from(balances.entries())` is fine.\n    *   `.sort((a, b) => a[0].localeCompare(b[0]))` is common, but the prompt says \"ordinary lexicographic string order\". `a[0] < b[0]` is the standard way to implement this in JS.\n\n    ```javascript\n    function solve(input) {\n      const seen = new Set();\n      const totals = new Map();\n\n      for (const item of input) {\n        if (!seen.has(item.eventId)) {\n          seen.add(item.eventId);\n          totals.set(item.account, (totals.get(item.account) || 0) + item.delta);\n        }\n      }\n\n      return Array.from(totals.entries()).sort((a, b) => {\n        if (a[0] < b[0]) return -1;\n        if (a[0] > b[0]) return 1;\n        return 0;\n      });\n    }\n    ```\n\n    Wait, the prompt says \"Return JavaScript code only; no explanation.\"\n\n    One final check on \"ordinary lexicographic string order\". In JS, `sort()` without a comparator sorts strings lexicographically. However, `totals.entries()` returns an array of arrays. `[account, balance].sort()` would convert the inner arrays to strings. I must provide a custom comparator to sort by the first element of the inner array.\n\n    `a[0] < b[0] ? -1 : (a[0] > b[0] ? 1 : 0)` is the safest way to ensure lexicographical order for strings."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 30941393900,
+            "load_duration": 235554000,
+            "prompt_eval_count": 113,
+            "prompt_eval_duration": 94675000,
+            "eval_count": 1187,
+            "eval_duration": 30595703000,
+            "clientWallMs": 30952.7,
+            "supervisedWallMs": 31047.8
+          },
+          "code": "function solve(input) {\n  const seenEvents = new Set();\n  const balances = new Map();\n\n  for (const { eventId, account, delta } of input) {\n    if (!seenEvents.has(eventId)) {\n      seenEvents.add(eventId);\n      const current = balances.get(account) || 0;\n      balances.set(account, current + delta);\n    }\n  }\n\n  return Array.from(balances.entries()).sort((a, b) => {\n    if (a[0] < b[0]) return -1;\n    if (a[0] > b[0]) return 1;\n    return 0;\n  });\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 31047.8,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "versioned-state",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {key,version,op,value}, arriving out of order. Versions are unique nonnegative integers. For each key choose the greatest version. op=\"delete\" removes that key; op=\"set\" sets its value, including null/false/0. Return a JSON-compatible object of final keys to values. Keys may include __proto__ or constructor.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:17:15.3665208Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const latest = new Map();\n\n  for (const item of input) {\n    const { key, version } = item;\n    const current = latest.get(key);\n    if (current === undefined || version > current.version) {\n      latest.set(key, item);\n    }\n  }\n\n  const result = Object.create(null);\n  for (const [key, item] of latest) {\n    if (item.op === 'set') {\n      result[key] = item.value;\n    }\n  }\n\n  return result;\n}\n```",
+              "thinking": "*   Input: An array of objects `{key, version, op, value}`.\n    *   Constraint: Do not mutate input.\n    *   Constraint: No external libraries or host APIs.\n    *   Constraint: Synchronous JS ES2020.\n    *   Goal: For each unique key, find the object with the highest version.\n    *   Operation:\n        *   If `op === \"set\"`, the value is the `value` property.\n        *   If `op === \"delete\"`, the key is removed.\n    *   Edge cases:\n        *   `value` can be `null`, `false`, `0`.\n        *   Keys can be `__proto__` or `constructor` (avoid prototype pollution).\n    *   Output: A JSON-compatible object.\n\n    *   Need a way to track the latest version for each key.\n    *   A `Map` is ideal because it handles any key type and avoids prototype pollution issues associated with plain objects.\n    *   Iterate through the input array.\n    *   For each item:\n        *   Check if the key already exists in the map.\n        *   If it doesn't exist OR the current item's version is greater than the stored version, update the map with the current item.\n    *   After processing all items, iterate through the map and build the final result object.\n    *   Since the result must be a JSON-compatible object and keys like `__proto__` are possible, I should use `Object.create(null)` or just a plain object and be careful. However, the prompt asks for a \"JSON-compatible object\". A plain object `{}` is standard. To avoid prototype pollution when *setting* keys like `__proto__`, I should use `Object.defineProperty` or simply assign to a null-prototype object and then convert it if necessary, but standard assignment `obj[key] = value` on a null-prototype object is safe. Wait, the prompt says \"Return a JSON-compatible object\". A null-prototype object is generally compatible with `JSON.stringify`.\n\n    *   `const latest = new Map();`\n    *   `for (const item of input) { ... }`\n    *   `const result = Object.create(null);`\n    *   `for (const [key, item] of latest) { if (item.op === 'set') result[key] = item.value; }`\n    *   Wait, if the latest op is \"delete\", the key shouldn't be in the final object.\n\n    *   `input = [{key: 'a', version: 1, op: 'set', value: 10}, {key: 'a', version: 2, op: 'delete'}]` -> `{}`\n    *   `input = [{key: 'a', version: 2, op: 'delete'}, {key: 'a', version: 1, op: 'set', value: 10}]` -> `{}`\n    *   `input = [{key: '__proto__', version: 1, op: 'set', value: 'foo'}]` -> `{'__proto__': 'foo'}`\n\n    *   `Object.create(null)` creates an object with no prototype.\n    *   Assigning `obj['__proto__'] = 'foo'` to a null-prototype object does *not* change the prototype of the object; it just sets a property named `__proto__`.\n    *   `JSON.stringify` works fine with null-prototype objects.\n\n    ```javascript\n    function solve(input) {\n      const latest = new Map();\n      for (const item of input) {\n        const { key, version } = item;\n        if (!latest.has(key) || version > latest.get(key).version) {\n          latest.set(key, item);\n        }\n      }\n      const result = Object.create(null);\n      for (const [key, item] of latest) {\n        if (item.op === 'set') {\n          result[key] = item.value;\n        }\n      }\n      return result;\n    }\n    ```\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation of input? Yes.\n    *   No external libraries/host APIs? Yes.\n    *   Return JS code only? Yes.\n    *   Handle `__proto__`/`constructor`? Yes (via `Map` and `Object.create(null)`).\n    *   Handle `null`/`false`/`0`? Yes.\n    *   Greatest version? Yes.\n    *   `op=\"delete\"` removes key? Yes.\n\n    Wait, if the result is `Object.create(null)`, is it \"JSON-compatible\"? Yes, `JSON.stringify` handles it. However, some environments might expect a plain object `{}`. But a plain object `{}` is vulnerable to `__proto__` if I just do `res[key] = value`.\n    Actually, `res['__proto__'] = value` on a plain object `{}` *does* change the prototype in some JS engines or behaves unexpectedly.\n    To be safe and return a standard object:\n    `const result = {};`\n    `Object.defineProperty(result, key, { value: item.value, enumerable: true, configurable: true, writable: true });`\n    Or just use `Object.create(null)` and if the user wants a \"plain\" object, they can `JSON.parse(JSON.stringify(result))`. But `Object.create(null)` is the cleanest way to handle arbitrary keys.\n\n    Let's double check: `const a = {}; a['__proto__'] = 1;`\n    In modern JS, `a.__proto__` is a setter. Setting it changes the prototype.\n    `const a = Object.create(null); a['__proto__'] = 1;`\n    Here, `a.__proto__` is just a property.\n\n    Is `Object.create(null)` \"JSON-compatible\"?\n    `JSON.stringify(Object.create(null))` works.\n    `JSON.parse` returns a plain object.\n    The prompt asks for a \"JSON-compatible object\". A null-prototype object fits this description.\n\n    One more check: \"Versions are unique nonnegative integers.\"\n    This simplifies things; no need to handle ties.\n\n    ```javascript\n    function solve(input) {\n      const latest = new Map();\n      for (const item of input) {\n        const { key, version } = item;\n        const current = latest.get(key);\n        if (current === undefined || version > current.version) {\n          latest.set(key, item);\n        }\n      }\n      const result = Object.create(null);\n      for (const [key, item] of latest) {\n        if (item.op === 'set') {\n          result[key] = item.value;\n        }\n      }\n      return result;\n    }\n    ```\n\n    Wait, if the result must be a \"JSON-compatible object\", and I return `Object.create(null)`, it's technically an object. If the evaluator checks `result instanceof Object`, it will be `false`.\n    To be absolutely safe regarding the \"JSON-compatible\" and \"prototype pollution\" requirements:\n    1. Use `Map` to find latest.\n    2. Use `Object.create(null)` to build.\n    3. If I must return a plain object, I can't use `result[key] = value` for `__proto__`.\n    But `Object.create(null)` is the standard way to implement a dictionary in JS.\n\n    Let's refine the loop for performance/conciseness.\n\n    ```javascript\n    function solve(input) {\n      const latest = new Map();\n      for (const item of input) {\n        if (!latest.has(item.key) || item.version > latest.get(item.key).version) {\n          latest.set(item.key, item);\n        }\n      }\n      const result = Object.create(null);\n      for (const [key, item] of latest) {\n        if (item.op === 'set') {\n          result[key] = item.value;\n        }\n      }\n      return result;\n    }\n    ```\n\n    Wait, one detail: \"Return JavaScript code only; no explanation.\"\n\n    Final check on `Object.create(null)` vs `{}`:\n    If the test case does `result.__proto__`, and I returned `Object.create(null)`, it's `undefined`. If I returned `{}`, it's `Object.prototype`.\n    If the test case does `JSON.stringify(result)`, both are identical.\n    Given the \"Keys may include __proto__ or constructor\" warning, the author is specifically testing for prototype pollution. `Object.create(null)` is the correct defense.\n\n    One last check: `input` is an array of `{key, version, op, value}`.\n    `op=\"delete\"` removes that key.\n    If the highest version is a \"delete\", the key is gone.\n    If the highest version is a \"set\", the key is there.\n    My logic:\n    1. Find the item with the max version for each key.\n    2. If that item's op is 'set', add to result.\n    3. If that item's op is 'delete', do nothing (effectively removing it).\n    This is correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 61849035600,
+            "load_duration": 271757000,
+            "prompt_eval_count": 129,
+            "prompt_eval_duration": 105673000,
+            "eval_count": 2292,
+            "eval_duration": 61317655000,
+            "clientWallMs": 61880.1,
+            "supervisedWallMs": 61975.9
+          },
+          "code": "function solve(input) {\n  const latest = new Map();\n\n  for (const item of input) {\n    const { key, version } = item;\n    const current = latest.get(key);\n    if (current === undefined || version > current.version) {\n      latest.set(key, item);\n    }\n  }\n\n  const result = Object.create(null);\n  for (const [key, item] of latest) {\n    if (item.op === 'set') {\n      result[key] = item.value;\n    }\n  }\n\n  return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 61975.9,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {},
+                "mutated": false,
+                "passed": true,
+                "expected": {}
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "b": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": false
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "constructor": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "constructor": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "a": 0,
+                  "__proto__": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": 0
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": 17,
+                  "constructor": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": 17,
+                  "__proto__": false,
+                  "constructor": 17
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": false,
+                  "constructor": null,
+                  "b": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": false,
+                  "constructor": null,
+                  "b": "x",
+                  "a": false
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": null
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "a": null,
+                  "b": false,
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": null,
+                  "c": null,
+                  "b": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "a": "x",
+                  "b": "x",
+                  "__proto__": "x",
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": "x",
+                  "c": null,
+                  "a": "x",
+                  "b": "x"
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "a": false,
+                  "b": 17,
+                  "__proto__": null,
+                  "c": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": false,
+                  "__proto__": null,
+                  "c": 17,
+                  "b": 17
+                }
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "merge-intervals",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of closed integer intervals [start,end], with start<=end. Merge intervals that overlap or touch, and return intervals sorted by start then end. Preserve the original input and its inner arrays. Example [[7,9],[1,4],[4,6]] -> [[1,6],[7,9]].",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:17:38.6608433Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  if (input.length === 0) return [];\n\n  const sorted = [...input].sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const merged = [];\n\n  for (const interval of sorted) {\n    if (merged.length === 0) {\n      merged.push([...interval]);\n    } else {\n      const last = merged[merged.length - 1];\n      if (interval[0] <= last[1]) {\n        last[1] = Math.max(last[1], interval[1]);\n      } else {\n        merged.push([...interval]);\n      }\n    }\n  }\n\n  return merged;\n}\n```",
+              "thinking": "*   Input: An array of closed integer intervals `[start, end]`.\n    *   Constraint: `start <= end`.\n    *   Goal: Merge overlapping or touching intervals.\n    *   Output: Sorted array of merged intervals (sorted by start, then end).\n    *   Requirements:\n        *   Synchronous JS ES2020.\n        *   Do not mutate input.\n        *   No external libraries or host APIs.\n        *   Return JS code only.\n        *   Preserve original input and inner arrays.\n\n    *   Input: `[[7,9],[1,4],[4,6]]`\n    *   Sorted: `[[1,4],[4,6],[7,9]]`\n    *   Merge `[1,4]` and `[4,6]` (they touch at 4) -> `[1,6]`\n    *   Result: `[[1,6],[7,9]]`\n\n    1.  Create a shallow copy of the input array to avoid mutation.\n    2.  Sort the copied array based on the start value (primary) and end value (secondary).\n    3.  Initialize an empty array `merged`.\n    4.  Iterate through the sorted intervals:\n        *   If `merged` is empty or the current interval's start is greater than the last merged interval's end, push the current interval (as a new array to avoid mutation).\n        *   Otherwise, the current interval overlaps or touches the last merged interval. Update the end of the last merged interval to be the maximum of its current end and the current interval's end.\n    5.  Return `merged`.\n\n    *   `input.slice().sort(...)` creates a copy and sorts it.\n    *   `[...interval]` or `interval.slice()` ensures inner arrays aren't mutated.\n\n    ```javascript\n    function solve(input) {\n      if (input.length === 0) return [];\n\n      const sorted = [...input].sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n      const merged = [];\n\n      for (const interval of sorted) {\n        if (merged.length === 0) {\n          merged.push([...interval]);\n        } else {\n          const last = merged[merged.length - 1];\n          if (interval[0] <= last[1]) {\n            last[1] = Math.max(last[1], interval[1]);\n          } else {\n            merged.push([...interval]);\n          }\n        }\n      }\n\n      return merged;\n    }\n    ```\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation of input? Yes (`[...input]` and `[...interval]`).\n    *   No external libraries? Yes.\n    *   Sorted by start then end? Yes.\n    *   Merge overlapping or touching? Yes (`interval[0] <= last[1]`).\n    *   Return JS code only? Yes."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 23055062000,
+            "load_duration": 235974800,
+            "prompt_eval_count": 119,
+            "prompt_eval_duration": 106811000,
+            "eval_count": 864,
+            "eval_duration": 22545516000,
+            "clientWallMs": 23078.5,
+            "supervisedWallMs": 23174.8
+          },
+          "code": "function solve(input) {\n  if (input.length === 0) return [];\n\n  const sorted = [...input].sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const merged = [];\n\n  for (const interval of sorted) {\n    if (merged.length === 0) {\n      merged.push([...interval]);\n    } else {\n      const last = merged[merged.length - 1];\n      if (interval[0] <= last[1]) {\n        last[1] = Math.max(last[1], interval[1]);\n      } else {\n        merged.push([...interval]);\n      }\n    }\n  }\n\n  return merged;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 23174.8,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    1
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    4
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    4
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "topological-order",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {nodes,edges}. nodes is an array of unique strings; every edge [u,v] means u must precede v, and both nodes exist. Ignore duplicate edges. Return a topological order, always choosing the lexicographically smallest currently available node. Return null if any cycle exists, including a self-loop.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:21:19.8516054Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "*   Input: `{nodes, edges}`.\n    *   `nodes`: Array of unique strings.\n    *   `edges`: Array of `[u, v]` pairs (u must precede v).\n    *   Constraint: No mutation of input.\n    *   Constraint: No external libraries or host APIs.\n    *   Goal: Topological sort.\n    *   Specific requirement: Lexicographically smallest available node first (Kahn's algorithm with a priority queue/sorted list).\n    *   Cycle detection: Return `null` if a cycle exists.\n    *   Output: Array of strings (topological order) or `null`.\n\n    *   Kahn's algorithm is ideal for this because it naturally handles the \"available nodes\" (nodes with in-degree 0).\n    *   To ensure the lexicographically smallest node is chosen, we need to maintain the set of nodes with in-degree 0 in a sorted manner.\n\n    *   Step 1: Initialize `inDegree` map for all nodes to 0.\n    *   Step 2: Initialize `adj` (adjacency list) map.\n    *   Step 3: Process `edges`:\n        *   Ignore duplicate edges.\n        *   For each edge `[u, v]`:\n            *   Add `v` to `adj[u]`.\n            *   Increment `inDegree[v]`.\n    *   Step 4: Find all nodes with `inDegree === 0` and put them in a list `queue`.\n    *   Step 5: Sort `queue` (or maintain it sorted).\n    *   Step 6: While `queue` is not empty:\n        *   Remove the smallest element `u` from `queue`.\n        *   Add `u` to the `result` list.\n        *   For each neighbor `v` of `u`:\n            *   Decrement `inDegree[v]`.\n            *   If `inDegree[v] === 0`, add `v` to `queue`.\n        *   Re-sort `queue` (or insert in sorted order).\n    *   Step 7: If `result.length` is less than `nodes.length`, a cycle exists. Return `null`.\n    *   Step 8: Return `result`.\n\n    *   `nodes` = `[\"B\", \"A\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `{A: 0, B: 1, C: 1}`\n    *   `adj`: `{A: [\"B\", \"C\"]}`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree` becomes `{B: 0, C: 0}`, `queue` becomes `[\"B\", \"C\"]`.\n    *   Pop `B` (smallest): `result = [\"A\", \"B\"]`, `queue` becomes `[\"C\"]`.\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`, `queue` becomes `[]`.\n    *   Return `[\"A\", \"B\", \"C\"]`.\n\n    *   `nodes` = `[\"A\", \"B\"]`, `edges` = `[[\"A\", \"B\"], [\"B\", \"A\"]]`\n    *   `inDegree`: `{A: 1, B: 1}`\n    *   `adj`: `{A: [\"B\"], B: [\"A\"]}`\n    *   `queue`: `[]`\n    *   `result.length` (0) < `nodes.length` (2). Return `null`.\n\n    *   `nodes` = `[\"A\"]`, `edges` = `[[\"A\", \"A\"]]`\n    *   `inDegree`: `{A: 1}`\n    *   `adj`: `{A: [\"A\"]}`\n    *   `queue`: `[]`\n    *   `result.length` (0) < `nodes.length` (1). Return `null`.\n\n    *   Use `Map` for `adj` and `inDegree`.\n    *   Use a simple array for the `queue` and sort it every time we add elements or just sort it once and use `shift()` and `sort()` again. Since the number of nodes is likely small enough, `sort()` inside the loop is acceptable, but for better performance, we can use a binary search insertion or just sort the queue after adding new nodes.\n    *   Wait, the requirement is \"lexicographically smallest currently available node\".\n    *   Correct logic:\n        1.  Initial queue: all nodes with in-degree 0, sorted.\n        2.  While queue not empty:\n            a.  `u = queue.shift()` (smallest).\n            b.  For each neighbor `v`:\n                i.  `inDegree[v]--`\n                ii. If `inDegree[v] == 0`, push `v` to queue.\n            c.  `queue.sort()`\n\n    *   Wait, `queue.sort()` should be done *after* adding all new 0-in-degree nodes to ensure the next `shift()` gets the smallest.\n\n    *   `nodes` is an array of unique strings.\n    *   `edges` is an array of `[u, v]`.\n    *   Ignore duplicate edges: Use a `Set` or check if `v` is already in `adj[u]`.\n\n    ```javascript\n    function solve({ nodes, edges }) {\n        const adj = new Map();\n        const inDegree = new Map();\n\n        for (const node of nodes) {\n            adj.set(node, []);\n            inDegree.set(node, 0);\n        }\n\n        const seenEdges = new Set();\n        for (const [u, v] of edges) {\n            const edgeKey = `${u}->${v}`;\n            if (!seenEdges.has(edgeKey)) {\n                seenEdges.add(edgeKey);\n                adj.get(u).push(v);\n                inDegree.set(v, inDegree.get(v) + 1);\n            }\n        }\n\n        const queue = [];\n        for (const node of nodes) {\n            if (inDegree.get(node) === 0) {\n                queue.push(node);\n            }\n        }\n        queue.sort();\n\n        const result = [];\n        while (queue.length > 0) {\n            const u = queue.shift();\n            result.push(u);\n\n            for (const v of adj.get(u)) {\n                inDegree.set(v, inDegree.get(v) - 1);\n                if (inDegree.get(v) === 0) {\n                    queue.push(v);\n                }\n            }\n            queue.sort();\n        }\n\n        return result.length === nodes.length ? result : null;\n    }\n    ```\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation of input? Yes (created new Maps and arrays).\n    *   No external libraries/host APIs? Yes.\n    *   Lexicographically smallest? Yes (`queue.sort()`).\n    *   Cycle detection? Yes (`result.length === nodes.length`).\n    *   Self-loop? Yes (handled by `inDegree` and `result.length`).\n    *   Duplicate edges? Yes (`seenEdges` Set).\n\n    *   `seenEdges` key: `${u}->${v}` might be problematic if node names contain `->`. A safer way is to use a nested Map or a combined key with a character that cannot be in the node name, but since node names are just strings, maybe a `Set` of `u + '\\0' + v` is safer. Or just check `adj.get(u).includes(v)`.\n    *   Wait, `adj.get(u).includes(v)` is $O(E)$ per edge, making it $O(E^2)$. A `Set` for each adjacency list is better.\n\n    ```javascript\n    const adj = new Map();\n    const inDegree = new Map();\n    for (const node of nodes) {\n        adj.set(node, new Set());\n        inDegree.set(node, 0);\n    }\n    for (const [u, v] of edges) {\n        if (!adj.get(u).has(v)) {\n            adj.get(u).add(v);\n            inDegree.set(v, inDegree.get(v) + 1);\n        }\n    }\n    ```\n\n    *   `nodes` = `[\"A\", \"B\"]`, `edges` = `[[\"A\", \"A\"]]`\n    *   `adj`: `A -> {A}`\n    *   `inDegree`: `A: 1`\n    *   `queue`: `[]`\n    *   `result`: `[]`\n    *   `result.length` (0) !== `nodes.length` (1) -> returns `null`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\"]`, `edges` = `[[\"A\", \"B\"], [\"B\", \"A\"]]`\n    *   `adj`: `A -> {B}, B -> {A}`\n    *   `inDegree`: `A: 1, B: 1`\n    *   `queue`: `[]`\n    *   `result`: `[]`\n    *   `result.length` (0) !== `nodes.length` (2) -> returns `null`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"B\", \"C\"]]`\n    *   `adj`: `A -> {C}, B -> {C}, C -> {}`\n    *   `inDegree`: `A: 0, B: 0, C: 2`\n    *   `queue`: `[\"A\", \"B\"]` (sorted)\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[C] = 1`, `queue = [\"B\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `inDegree[C] = 0`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`, `queue = []`\n    *   Return `[\"A\", \"B\", \"C\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"B\", \"C\"], [\"A\", \"C\"]]`\n    *   `adj`: `B -> {C}, A -> {C}, C -> {}`\n    *   `inDegree`: `B: 0, A: 0, C: 2`\n    *   `queue`: `[\"A\", \"B\"]` (sorted)\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[C] = 1`, `queue = [\"B\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `inDegree[C] = 0`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`, `queue = []`\n    *   Return `[\"A\", \"B\", \"C\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"C\", \"B\"], [\"C\", \"A\"]]`\n    *   `adj`: `C -> {B, A}, B -> {}, A -> {}`\n    *   `inDegree`: `C: 0, B: 1, A: 1`\n    *   `queue`: `[\"C\"]`\n    *   Pop `C`: `result = [\"C\"]`, `inDegree[B] = 0, inDegree[A] = 0`, `queue = [\"B\", \"A\"]`\n    *   `queue.sort()` -> `[\"A\", \"B\"]`\n    *   Pop `A`: `result = [\"C\", \"A\"]`, `queue = [\"B\"]`\n    *   Pop `B`: `result = [\"C\", \"A\", \"B\"]`, `queue = []`\n    *   Return `[\"C\", \"A\", \"B\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"B\"]]`\n    *   `adj`: `A -> {B}` (Set handles duplicates)\n    *   `inDegree`: `A: 0, B: 1, C: 0`\n    *   `queue`: `[\"A\", \"C\"]` (sorted)\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0`, `queue = [\"C\", \"B\"]`\n    *   `queue.sort()` -> `[\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`, `queue = []`\n    *   Return `[\"A\", \"B\", \"C\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"B\"]]`\n    *   Wait, if `nodes` = `[\"A\", \"B\", \"C\"]` and `edges` = `[[\"A\", \"B\"], [\"A\", \"B\"]]`, the available nodes are `A` and `C`.\n    *   `queue` = `[\"A\", \"C\"]`.\n    *   Pop `A` -> `result = [\"A\"]`, `B` becomes available. `queue` = `[\"C\", \"B\"]`.\n    *   Sort `queue` -> `[\"B\", \"C\"]`.\n    *   Pop `B` -> `result = [\"A\", \"B\"]`, `queue` = `[\"C\"]`.\n    *   Pop `C` -> `result = [\"A\", \"B\", \"C\"]`.\n    *   Wait, if `A` and `C` are both available, `A` is smaller than `C`. So `A` is picked. Then `B` and `C` are available. `B` is smaller than `C`. So `B` is picked. Then `C` is picked.\n    *   Result: `[\"A\", \"B\", \"C\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 0`\n    *   `queue`: `[\"A\", \"C\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0`, `queue = [\"C\", \"B\"]`\n    *   Sort `queue`: `[\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Wait, if `A` and `C` are both available, `A` is smaller. Then `B` and `C` are available, `B` is smaller.\n    *   Is this correct? \"always choosing the lexicographically smallest currently available node\".\n    *   Available nodes at start: `A, C`. Smallest is `A`.\n    *   Available nodes after `A`: `B, C`. Smallest is `B`.\n    *   Available nodes after `B`: `C`. Smallest is `C`.\n    *   Yes, `[\"A\", \"B\", \"C\"]` is correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[]`\n    *   `inDegree`: `A: 0, B: 0, C: 0`\n    *   `queue`: `[\"A\", \"B\", \"C\"]`\n    *   Pop `A`, `B`, `C` in order.\n    *   Result: `[\"A\", \"B\", \"C\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"C\", \"B\"], [\"C\", \"A\"]]`\n    *   `inDegree`: `C: 0, B: 1, A: 1`\n    *   `queue`: `[\"C\"]`\n    *   Pop `C`: `result = [\"C\"]`, `inDegree[B] = 0, inDegree[A] = 0`, `queue = [\"B\", \"A\"]`\n    *   Sort `queue`: `[\"A\", \"B\"]`\n    *   Pop `A`: `result = [\"C\", \"A\"]`, `queue = [\"B\"]`\n    *   Pop `B`: `result = [\"C\", \"A\", \"B\"]`\n    *   Result: `[\"C\", \"A\", \"B\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"B\", \"A\"], [\"C\", \"A\"]]`\n    *   `inDegree`: `B: 0, C: 0, A: 2`\n    *   `queue`: `[\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"B\"]`, `inDegree[A] = 1`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"B\", \"C\"]`, `inDegree[A] = 0`, `queue = [\"A\"]`\n    *   Pop `A`: `result = [\"B\", \"C\", \"A\"]`\n    *   Result: `[\"B\", \"C\", \"A\"]`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"B\", \"A\"], [\"C\", \"A\"]]`\n    *   Wait, if `B` and `C` are both available, `B` is smaller than `C`.\n    *   `queue` = `[\"B\", \"C\"]`.\n    *   Pop `B` -> `result = [\"B\"]`, `queue = [\"C\"]`.\n    *   Pop `C` -> `result = [\"B\", \"C\"]`, `A` becomes available. `queue = [\"A\"]`.\n    *   Pop `A` -> `result = [\"B\", \"C\", \"A\"]`.\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"C\", \"A\"], [\"B\", \"A\"]]`\n    *   `inDegree`: `C: 0, B: 0, A: 2`\n    *   `queue`: `[\"B\", \"C\"]` (sorted)\n    *   Pop `B`: `result = [\"B\"]`, `inDegree[A] = 1`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"B\", \"C\"]`, `inDegree[A] = 0`, `queue = [\"A\"]`\n    *   Pop `A`: `result = [\"B\", \"C\", \"A\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"B\", \"C\"], [\"C\", \"A\"]]`\n    *   `inDegree`: `A: 1, B: 1, C: 1`\n    *   `queue`: `[]`\n    *   `result`: `[]`\n    *   `result.length` (0) !== `nodes.length` (3) -> returns `null`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"A\"]]`\n    *   `inDegree`: `A: 1, B: 0, C: 0`\n    *   `queue`: `[\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"B\", \"C\"]`, `queue = []`\n    *   `result.length` (2) !== `nodes.length` (3) -> returns `null`. Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"C\"], [\"A\", \"B\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result = [\"A\"]`, `inDegree[B] = 0, inDegree[C] = 0`, `queue = [\"B\", \"C\"]`\n    *   Pop `B`: `result = [\"A\", \"B\"]`, `queue = [\"C\"]`\n    *   Pop `C`: `result = [\"A\", \"B\", \"C\"]`\n    *   Correct.\n\n    *   `nodes` = `[\"A\", \"B\", \"C\"]`, `edges` = `[[\"A\", \"B\"], [\"A\", \"C\"]]`\n    *   `inDegree`: `A: 0, B: 1, C: 1`\n    *   `queue`: `[\"A\"]`\n    *   Pop `A`: `result ="
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 220966441000,
+            "load_duration": 235971300,
+            "prompt_eval_count": 117,
+            "prompt_eval_duration": 104095000,
+            "eval_count": 8192,
+            "eval_duration": 220448787000,
+            "clientWallMs": 220978.2,
+            "supervisedWallMs": 221071.1
+          },
+          "code": "",
+          "markdownFenceRemoved": false,
+          "truncated": true,
+          "unexpectedThinking": false,
+          "wallMs": 221071.1,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 13,
+            "reason": "Empty or truncated code response"
+          }
+        },
+        {
+          "id": "ttl-cache",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nSimulate a cache from operations in input order. Timestamps t are nondecreasing integers. put has {t,op:\"put\",key,value,ttl}; it replaces a key and expires exactly at t+ttl, so ttl=0 expires immediately. get has {t,op:\"get\",key} and returns the current value or null if absent/expired. delete removes a key. Return an array of get results only. Same-timestamp operations obey input order.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:21:52.6281527Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    const { t, key } = op;\n\n    if (op.op === 'put') {\n      cache.set(key, {\n        value: op.value,\n        expiry: t + op.ttl\n      });\n    } else if (op.op === 'get') {\n      const entry = cache.get(key);\n      if (entry && t < entry.expiry) {\n        results.push(entry.value);\n      } else {\n        if (entry) {\n          cache.delete(key);\n        }\n        results.push(null);\n      }\n    } else if (op.op === 'delete') {\n      cache.delete(key);\n    }\n  }\n\n  return results;\n}\n```",
+              "thinking": "*   Input: An array of operations (`input`).\n    *   Operations:\n        *   `put`: `{t, op: \"put\", key, value, ttl}`.\n            *   Sets `key` to `value`.\n            *   Expires at `t + ttl`.\n            *   `ttl = 0` means it expires immediately.\n        *   `get`: `{t, op: \"get\", key}`.\n            *   Returns `value` if present and not expired.\n            *   Returns `null` if absent or expired.\n        *   `delete`: `{t, op: \"delete\", key}`.\n            *   Removes the key.\n    *   Constraints:\n        *   Synchronous JS ES2020.\n        *   Do not mutate input.\n        *   No external libraries or host APIs.\n        *   Return only the results of `get` operations in an array.\n        *   Timestamps `t` are non-decreasing.\n        *   Same-timestamp operations follow input order.\n        *   Expiration: A key expires *exactly* at `t + ttl`. This means if a `get` happens at time `T`, and the key expires at `T`, is it still valid?\n            *   \"expires exactly at t+ttl\". Usually, in cache simulations, if `currentTime >= expiryTime`, it's expired. Let's check: \"ttl=0 expires immediately\". If `t=1, ttl=0`, expiry is `1`. If a `get` happens at `t=1`, and it expires immediately, it should be `null`. So, if `t >= expiryTime`, it's expired.\n\n    *   A `Map` to store the cache.\n    *   The map key will be the `key` from the operation.\n    *   The map value will be an object containing `{value, expiry}`.\n    *   `expiry = t + ttl`.\n\n    *   `put(t, key, value, ttl)`:\n        *   `cache.set(key, { value, expiry: t + ttl })`\n    *   `get(t, key)`:\n        *   Check if `key` exists in `cache`.\n        *   If it exists, check if `t < expiry`.\n        *   If `t < expiry`, return `value`.\n        *   Otherwise, remove the key (optional but cleaner) and return `null`.\n    *   `delete(t, key)`:\n        *   `cache.delete(key)`\n\n    *   `put` at $t=1, ttl=0 \\implies expiry = 1$.\n    *   `get` at $t=1 \\implies 1 < 1$ is false $\\implies$ expired. Correct.\n    *   `put` at $t=1, ttl=1 \\implies expiry = 2$.\n    *   `get` at $t=1 \\implies 1 < 2$ is true $\\implies$ valid.\n    *   `get` at $t=2 \\implies 2 < 2$ is false $\\implies$ expired. Correct.\n\n    ```javascript\n    function solve(input) {\n      const cache = new Map();\n      const results = [];\n\n      for (const op of input) {\n        const { t, key } = op;\n        if (op.op === 'put') {\n          cache.set(key, { value: op.value, expiry: t + op.ttl });\n        } else if (op.op === 'get') {\n          const entry = cache.get(key);\n          if (entry && t < entry.expiry) {\n            results.push(entry.value);\n          } else {\n            if (entry) cache.delete(key);\n            results.push(null);\n          }\n        } else if (op.op === 'delete') {\n          cache.delete(key);\n        }\n      }\n      return results;\n    }\n    ```\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation of input? Yes (iterating over it, not changing it).\n    *   No external libraries? Yes.\n    *   Return JS code only? Yes.\n    *   Return array of get results? Yes.\n    *   Timestamps non-decreasing? Handled.\n    *   Same-timestamp order? Handled by loop.\n    *   `ttl=0` expires immediately? $t < t+0$ is false, so it returns null. Correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 32636301300,
+            "load_duration": 237695200,
+            "prompt_eval_count": 148,
+            "prompt_eval_duration": 118089000,
+            "eval_count": 1229,
+            "eval_duration": 32041435000,
+            "clientWallMs": 32661.4,
+            "supervisedWallMs": 32756.3
+          },
+          "code": "function solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    const { t, key } = op;\n\n    if (op.op === 'put') {\n      cache.set(key, {\n        value: op.value,\n        expiry: t + op.ttl\n      });\n    } else if (op.op === 'get') {\n      const entry = cache.get(key);\n      if (entry && t < entry.expiry) {\n        results.push(entry.value);\n      } else {\n        if (entry) {\n          cache.delete(key);\n        }\n        results.push(null);\n      }\n    } else if (op.op === 'delete') {\n      cache.delete(key);\n    }\n  }\n\n  return results;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 32756.3,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "json-pointer",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {document,pointer}. Resolve a JSON Pointer: empty pointer selects the whole document; otherwise split after the leading slash, decode ~1 to / then ~0 to ~. Use only own object properties. Array indexes must be canonical nonnegative decimal integers (0 valid; 01 and - invalid). Return {found:true,value:...} if found, otherwise {found:false}. Null is a real found value.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:22:53.8197112Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve({ document: doc, pointer }) {\n  if (pointer === \"\") {\n    return { found: true, value: doc };\n  }\n\n  if (pointer[0] !== \"/\") {\n    return { found: false };\n  }\n\n  const segments = pointer.slice(1).split(\"/\");\n  let current = doc;\n\n  for (let i = 0; i < segments.length; i++) {\n    const segment = segments[i];\n    const key = segment.replace(/~1/g, \"/\").replace(/~0/g, \"~\");\n\n    if (Array.isArray(current)) {\n      if (/^(0|[1-9][0-9]*)$/.test(key)) {\n        const index = Number(key);\n        if (index >= 0 && index < current.length) {\n          current = current[index];\n        } else {\n          return { found: false };\n        }\n      } else {\n        return { found: false };\n      }\n    } else if (current !== null && typeof current === \"object\") {\n      if (Object.prototype.hasOwnProperty.call(current, key)) {\n        current = current[key];\n      } else {\n        return { found: false };\n      }\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}\n```",
+              "thinking": "*   Function name: `solve(input)`\n    *   Input: `{document, pointer}`\n    *   Output: `{found: true, value: ...}` or `{found: false}`\n    *   Constraints:\n        *   Synchronous.\n        *   ES2020.\n        *   No mutation of input.\n        *   No external libraries or host APIs.\n        *   Return JS code only.\n        *   JSON Pointer logic:\n            *   Empty pointer (`\"\"`) -> whole document.\n            *   Leading slash (`/`) -> split after it.\n            *   Decoding: `~1` -> `/`, `~0` -> `~`.\n            *   Array indexes: Must be canonical nonnegative decimal integers (no leading zeros unless the value is 0, no signs).\n            *   Null is a valid value.\n\n    *   If `pointer === \"\"`, return `{found: true, value: document}`.\n    *   If `pointer` doesn't start with `/`, it's technically invalid according to RFC 6901, but the prompt says \"split after the leading slash\", implying it should start with one. Let's assume it does or handle it.\n    *   Split the pointer by `/`. Since it starts with `/`, the first element of the split array will be empty.\n    *   Iterate through the segments:\n        *   Decode `~1` to `/` and `~0` to `~`.\n        *   Check if the current target is an array.\n        *   If it's an array:\n            *   Check if the segment is a canonical integer.\n            *   Canonical integer check:\n                *   Must be digits only.\n                *   No leading zeros unless the string is exactly \"0\".\n                *   Must not be empty.\n            *   If valid and within bounds, move to that index.\n            *   Otherwise, return `{found: false}`.\n        *   If it's an object:\n            *   Check if the property exists using `Object.prototype.hasOwnProperty.call(target, key)` or `key in target`. The prompt says \"Use only own object properties\", so `hasOwnProperty` is safer.\n            *   If it exists, move to that property.\n            *   Otherwise, return `{found: false}`.\n        *   If it's neither (primitive), return `{found: false}`.\n\n    *   `~1` -> `/`\n    *   `~0` -> `~`\n    *   Order matters: `~1` first, then `~0`.\n\n    *   Regex for canonical integer: `/^(0|[1-9][0-9]*)$/`\n\n    ```javascript\n    function solve({ document: doc, pointer }) {\n      if (pointer === \"\") {\n        return { found: true, value: doc };\n      }\n\n      if (!pointer.startsWith(\"/\")) {\n        return { found: false };\n      }\n\n      const segments = pointer.slice(1).split(\"/\");\n      let current = doc;\n\n      for (const segment of segments) {\n        const key = segment.replace(/~1/g, \"/\").replace(/~0/g, \"~\");\n\n        if (Array.isArray(current)) {\n          if (/^(0|[1-9][0-9]*)$/.test(key)) {\n            const index = parseInt(key, 10);\n            if (index >= 0 && index < current.length) {\n              current = current[index];\n            } else {\n              return { found: false };\n            }\n          } else {\n            return { found: false };\n          }\n        } else if (current !== null && typeof current === \"object\") {\n          if (Object.prototype.hasOwnProperty.call(current, key)) {\n            current = current[key];\n          } else {\n            return { found: false };\n          }\n        } else {\n          return { found: false };\n        }\n      }\n\n      return { found: true, value: current };\n    }\n    ```\n\n    *   `pointer = \"\"` -> `found: true, value: doc`. Correct.\n    *   `pointer = \"/a/b\"` -> segments `[\"a\", \"b\"]`. Correct.\n    *   `pointer = \"/~1\"` -> key `/`. Correct.\n    *   `pointer = \"/~0\"` -> key `~`. Correct.\n    *   Array index `0` -> valid.\n    *   Array index `01` -> invalid.\n    *   Array index `-1` -> invalid.\n    *   `current` is `null` -> `typeof null === \"object\"`, but `hasOwnProperty` fails. Added `current !== null`.\n    *   `current` is primitive -> `typeof current === \"object\"` is false. Correct.\n    *   \"Use only own object properties\" -> `Object.prototype.hasOwnProperty.call`. Correct.\n\n    *   ES2020? Yes.\n    *   No mutation? Yes.\n    *   No external libraries? Yes.\n    *   No host APIs? Yes.\n    *   Return JS code only? Yes.\n\n    Wait, the prompt says \"split after the leading slash\".\n    If `pointer` is `/`, `pointer.slice(1).split(\"/\")` results in `[\"\"]`.\n    If `pointer` is `/a`, `pointer.slice(1).split(\"/\")` results in `[\"a\"]`.\n    If `pointer` is `/a/`, `pointer.slice(1).split(\"/\")` results in `[\"a\", \"\"]`.\n    This is correct behavior for JSON Pointer.\n\n    One detail: \"Array indexes must be canonical nonnegative decimal integers\".\n    My regex `/^(0|[1-9][0-9]*)$/` handles this.\n\n    Final check on `hasOwnProperty`:\n    `Object.prototype.hasOwnProperty.call(current, key)` is the safest way to check own properties.\n\n    Wait, if `current` is an array, `hasOwnProperty` also works for indices, but the spec for JSON Pointer treats arrays specifically (canonical integers). My logic handles arrays first, then objects. This is correct.\n\n    One edge case: `pointer = \"/\"`\n    `segments = [\"\"]`.\n    `key = \"\"`.\n    If `doc = {\"\": 1}`, it should find `1`.\n    If `doc = [1]`, it should fail because `\"\"` is not a canonical integer.\n    This matches the spec.\n\n    ```javascript\n    function solve({ document: doc, pointer }) {\n      if (pointer === \"\") return { found: true, value: doc };\n      if (pointer[0] !== \"/\") return { found: false };\n\n      const segments = pointer.slice(1).split(\"/\");\n      let current = doc;\n\n      for (let i = 0; i < segments.length; i++) {\n        const segment = segments[i];\n        const key = segment.replace(/~1/g, \"/\").replace(/~0/g, \"~\");\n\n        if (Array.isArray(current)) {\n          if (/^(0|[1-9][0-9]*)$/.test(key)) {\n            const idx = Number(key);\n            if (idx >= 0 && idx < current.length) {\n              current = current[idx];\n            } else {\n              return { found: false };\n            }\n          } else {\n            return { found: false };\n          }\n        } else if (current !== null && typeof current === \"object\") {\n          if (Object.prototype.hasOwnProperty.call(current, key)) {\n            current = current[key];\n          } else {\n            return { found: false };\n          }\n        } else {\n          return { found: false };\n        }\n      }\n\n      return { found: true, value: current };\n    }\n    ```\n\n    Wait, the prompt says \"split after the leading slash\".\n    If `pointer` is `/`, `pointer.slice(1)` is `\"\"`. `\"\".split(\"/\")` is `[\"\"]`.\n    If `pointer` is `/a`, `pointer.slice(1)` is `\"a\"`. `\"a\".split(\"/\")` is `[\"a\"]`.\n    This is correct.\n\n    One more check: \"Use only own object properties\".\n    `Object.prototype.hasOwnProperty.call(current, key)` is correct.\n\n    Final check on \"canonical nonnegative decimal integers\":\n    - `0`: matches `0`\n    - `123`: matches `[1-9][0-9]*`\n    - `01`: does not match\n    - `-1`: does not match\n    - ` `: does not match\n    - `\"\"`: does not match\n    Correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 60966126700,
+            "load_duration": 236474800,
+            "prompt_eval_count": 138,
+            "prompt_eval_duration": 115689000,
+            "eval_count": 2284,
+            "eval_duration": 60463754000,
+            "clientWallMs": 60978.5,
+            "supervisedWallMs": 61073.9
+          },
+          "code": "function solve({ document: doc, pointer }) {\n  if (pointer === \"\") {\n    return { found: true, value: doc };\n  }\n\n  if (pointer[0] !== \"/\") {\n    return { found: false };\n  }\n\n  const segments = pointer.slice(1).split(\"/\");\n  let current = doc;\n\n  for (let i = 0; i < segments.length; i++) {\n    const segment = segments[i];\n    const key = segment.replace(/~1/g, \"/\").replace(/~0/g, \"~\");\n\n    if (Array.isArray(current)) {\n      if (/^(0|[1-9][0-9]*)$/.test(key)) {\n        const index = Number(key);\n        if (index >= 0 && index < current.length) {\n          current = current[index];\n        } else {\n          return { found: false };\n        }\n      } else {\n        return { found: false };\n      }\n    } else if (current !== null && typeof current === \"object\") {\n      if (Object.prototype.hasOwnProperty.call(current, key)) {\n        current = current[key];\n      } else {\n        return { found: false };\n      }\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 61073.9,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                }
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": null
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": false
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "ok"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "ok"
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 7
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 7
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "data"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "data"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "object key"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "object key"
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "12",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "13",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              }
+            ],
+            "passed": 14,
+            "total": 14
+          }
+        },
+        {
+          "id": "csv-parser",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is a valid CSV string. Return an array of rows (arrays of strings). Handle commas, quoted fields, doubled quote escapes, newlines inside quoted fields, and LF or CRLF row endings. Preserve embedded newlines inside quotes. Empty input returns []; a final row terminator must not create an extra row. An empty line is one empty field.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:26:14.0281724Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  if (input === \"\") return [];\n  const result = [];\n  let row = [];\n  let field = \"\";\n  let inQuotes = false;\n\n  for (let i = 0; i < input.length; i++) {\n    const char = input[i];\n    const next = input[i + 1];\n\n    if (inQuotes) {\n      if (char === '\"') {\n        if (next === '\"') {\n          field += '\"';\n          i++;\n        } else {\n          inQuotes = false;\n        }\n      } else {\n        field += char;\n      }\n    } else {\n      if (char === '\"') {\n        inQuotes = true;\n      } else if (char === ',') {\n        row.push(field);\n        field = \"\";\n      } else if (char === '\\n') {\n        row.push(field);\n        result.push(row);\n        row = [];\n        field = \"\";\n      } else if (char === '\\r') {\n        if (next === '\\n') {\n          i++;\n        }\n        row.push(field);\n        result.push(row);\n        row = [];\n        field = \"\";\n      } else {\n        field += char;\n      }\n    }\n  }\n\n  if (\n    row.length > 0 ||\n    field !== \"\" ||\n    (input.length > 0 &&\n      input[input.length - 1] !== '\\n' &&\n      input[input.length - 1] !== '\\r')\n  ) {\n    row.push(field);\n    result.push(row);\n  }\n\n  return result;\n}\n```",
+              "thinking": "*   Input: A valid CSV string.\n    *   Output: An array of rows (each row is an array of strings).\n    *   Constraints:\n        *   Synchronous JS ES2020.\n        *   No mutation of input.\n        *   No external libraries or host APIs.\n        *   Handle commas (delimiter).\n        *   Handle quoted fields (fields enclosed in `\"`).\n        *   Handle doubled quote escapes (`\"\"` inside quotes becomes `\"`).\n        *   Handle newlines inside quoted fields.\n        *   Handle LF (`\\n`) or CRLF (`\\r\\n`) row endings.\n        *   Preserve embedded newlines inside quotes.\n        *   Empty input returns `[]`.\n        *   Final row terminator should not create an extra row.\n        *   An empty line is one empty field (i.e., `\\n` results in `[ [\"\"] ]`).\n\n    *   Iterate through the string character by character.\n    *   Maintain a state: `inQuotes` (boolean).\n    *   Accumulate characters for the current field.\n    *   Accumulate fields for the current row.\n    *   Accumulate rows for the final result.\n\n    *   `i` = current index.\n    *   `char` = `input[i]`.\n    *   `field` = current field string.\n    *   `row` = current row array.\n    *   `result` = final array of rows.\n    *   `inQuotes` = boolean.\n\n    *   If `char` is `\"`:\n        *   If `!inQuotes`:\n            *   Start of a quoted field. Set `inQuotes = true`.\n        *   Else (`inQuotes` is true):\n            *   Check next char `input[i+1]`.\n            *   If `input[i+1]` is `\"`:\n                *   Escaped quote. Append `\"` to `field`, increment `i` to skip the second quote.\n            *   Else:\n                *   End of quoted field. Set `inQuotes = false`.\n    *   Else if `char` is `,` and `!inQuotes`:\n        *   End of field. Push `field` to `row`, reset `field = \"\"`.\n    *   Else if `char` is `\\n` and `!inQuotes`:\n        *   End of row. Push `field` to `row`, push `row` to `result`, reset `row = []`, `field = \"\"`.\n    *   Else if `char` is `\\r` and `!inQuotes`:\n        *   Check next char `input[i+1]`.\n        *   If `input[i+1]` is `\\n`:\n            *   CRLF. Skip `\\r` (or handle as row end).\n            *   Actually, the simplest way to handle `\\r\\n` and `\\n` is to treat `\\n` as the primary delimiter and ignore `\\r` if it immediately precedes `\\n`.\n    *   Else:\n        *   Append `char` to `field`.\n\n    *   *Empty Input:* `if (!input) return [];`\n    *   *Trailing Newline:* If the string ends with a newline, we shouldn't add an extra empty row.\n    *   *Empty Line:* A line with just `\\n` should result in `[\"\"]`.\n    *   *Last Row:* After the loop, if there's a pending `row` or `field`, push them.\n\n    *   If `char === '\\r'`:\n        *   If `!inQuotes`:\n            *   If `input[i+1] === '\\n'`, just skip the `\\r` and let the `\\n` logic handle the row break.\n            *   If `input[i+1] !== '\\n'`, treat `\\r` as a row break (legacy Mac style, though not explicitly requested, it's safer).\n\n    *   Wait, the prompt says \"LF or CRLF row endings\".\n    *   If `char === '\\n'`, it's a row end.\n    *   If `char === '\\r'`, and `input[i+1] === '\\n'`, skip `\\r`.\n\n    *   `input = \"a,b\\nc,d\\n\"`\n    *   `i=0: 'a'`, field='a'\n    *   `i=1: ','`, row=['a'], field=''\n    *   `i=2: 'b'`, field='b'\n    *   `i=3: '\\n'`, row=['a', 'b'], result=[['a', 'b']], row=[], field=''\n    *   `i=4: 'c'`, field='c'\n    *   `i=5: ','`, row=['c'], field=''\n    *   `i=6: 'd'`, field='d'\n    *   `i=7: '\\n'`, row=['c', 'd'], result=[['a', 'b'], ['c', 'd']], row=[], field=''\n    *   Loop ends.\n    *   Check if we have a trailing empty row. If the last char was a newline, we don't want to add another row.\n\n    *   `input = \"\"` -> `[]`\n    *   `input = \"\\n\"` -> `[[\"\"]]`\n    *   `input = \"a,b\\n\"` -> `[[\"a\", \"b\"]]`\n    *   `input = \"a,b\"` -> `[[\"a\", \"b\"]]`\n    *   `input = \"\\\"a,b\\\",c\"` -> `[[\"a,b\", \"c\"]]`\n    *   `input = \"\\\"a\\\"\\\"b\\\",c\"` -> `[[\"a\"b\", \"c\"]]`\n    *   `input = \"\\\"a\\nb\\\",c\"` -> `[[\"a\\nb\", \"c\"]]`\n\n    ```javascript\n    function solve(input) {\n        if (input === \"\") return [];\n        const result = [];\n        let row = [];\n        let field = \"\";\n        let inQuotes = false;\n\n        for (let i = 0; i < input.length; i++) {\n            const char = input[i];\n            const next = input[i + 1];\n\n            if (inQuotes) {\n                if (char === '\"') {\n                    if (next === '\"') {\n                        field += '\"';\n                        i++;\n                    } else {\n                        inQuotes = false;\n                    }\n                } else {\n                    field += char;\n                }\n            } else {\n                if (char === '\"') {\n                    inQuotes = true;\n                } else if (char === ',') {\n                    row.push(field);\n                    field = \"\";\n                } else if (char === '\\n') {\n                    row.push(field);\n                    result.push(row);\n                    row = [];\n                    field = \"\";\n                } else if (char === '\\r') {\n                    if (next === '\\n') {\n                        i++; // skip \\r, let \\n handle it\n                        row.push(field);\n                        result.push(row);\n                        row = [];\n                        field = \"\";\n                    } else {\n                        // Treat single \\r as newline\n                        row.push(field);\n                        result.push(row);\n                        row = [];\n                        field = \"\";\n                    }\n                } else {\n                    field += char;\n                }\n            }\n        }\n\n        // Handle the last row if it didn't end with a newline\n        // But wait, if the input ends with a newline, we've already pushed the row.\n        // If it doesn't, we need to push the current field and row.\n        // Special case: if the input ends with a newline, the loop finishes and we don't want to add an extra empty row.\n        // However, if the input is just \"\\n\", we want [[\"\"]].\n        \n        // Let's refine the trailing logic.\n        // If the loop ends and we are not at the end of a newline, we have a pending row.\n        // But how to know if the last char was a newline?\n    }\n    ```\n\n    If the string is `a,b\\n`, the loop processes `\\n`, pushes `['a', 'b']` to `result`, and resets `row` and `field`.\n    If the string is `a,b`, the loop finishes, `row` is `[]`, `field` is `b`. We need to push `b` to `row` and `row` to `result`.\n\n    Wait, if the string is `a,b\\n`, the loop ends. `row` is `[]`, `field` is `\"\"`.\n    If the string is `a,b\\n\\n`, the loop processes the first `\\n` (pushes `['a', 'b']`), then the second `\\n` (pushes `['']`).\n\n    Correct logic for the end:\n    If the loop finishes and the last character processed was NOT a newline, we must push the remaining `field` and `row`.\n    Actually, a simpler way:\n    Always track if we are \"in a row\".\n    Or, just check if the loop ended and `field` is not empty OR `row` is not empty OR the last char was not a newline.\n\n    Let's trace `input = \"a,b\\n\"`:\n    - `i=0 'a'`: field='a'\n    - `i=1 ','`: row=['a'], field=''\n    - `i=2 'b'`: field='b'\n    - `i=3 '\\n'`: row=['a', 'b'], result=[['a', 'b']], row=[], field=''\n    - Loop ends.\n    - `row` is empty, `field` is empty. Result is `[['a', 'b']]`. Correct.\n\n    Trace `input = \"a,b\"`:\n    - `i=0 'a'`: field='a'\n    - `i=1 ','`: row=['a'], field=''\n    - `i=2 'b'`: field='b'\n    - Loop ends.\n    - `row` is `['a']`, `field` is `'b'`.\n    - We need to push `field` to `row` and `row` to `result`. Result: `[['a', 'b']]`. Correct.\n\n    Trace `input = \"\\n\"`:\n    - `i=0 '\\n'`: row=[''], result=[['']], row=[], field=''\n    - Loop ends.\n    - Result: `[['']]`. Correct.\n\n    Trace `input = \"\"`:\n    - Returns `[]`. Correct.\n\n    Trace `input = \"a,b\\n\\n\"`:\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 '\\n'`: result=[['a', 'b']], row=[], field=''\n    - `i=4 '\\n'`: row=[''], result=[['a', 'b'], ['']], row=[], field=''\n    - Loop ends.\n    - Result: `[['a', 'b'], ['']]`. Correct.\n\n    Trace `input = \"a,b\\r\\n\"`:\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 '\\r'`: next is `\\n`, so `i++` (i=4), row=['a', 'b'], result=[['a', 'b']], row=[], field=''\n    - Loop ends.\n    - Result: `[['a', 'b']]`. Correct.\n\n    Wait, if `input = \"a,b\\r\"`, the `\\r` logic should also trigger a row end.\n    - `i=3 '\\r'`: next is undefined, row=['a', 'b'], result=[['a', 'b']], row=[], field=''\n    - Loop ends.\n    - Result: `[['a', 'b']]`. Correct.\n\n    One more: `input = \"a,b,\"`\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 ','`: row=['a', 'b'], field=''\n    - Loop ends.\n    - `row` is `['a', 'b']`, `field` is `''`.\n    - Push `field` to `row`, push `row` to `result`.\n    - Result: `[['a', 'b', '']]`. Correct.\n\n    ```javascript\n    if (row.length > 0 || field !== \"\" || (input.length > 0 && input[input.length - 1] !== '\\n' && input[input.length - 1] !== '\\r')) {\n        row.push(field);\n        result.push(row);\n    }\n    ```\n    Wait, if `input = \"a,b\\n\"`, the last char is `\\n`. The condition `input[input.length-1] !== '\\n'` is false. `row` is `[]`, `field` is `\"\"`. The block is skipped. Correct.\n    If `input = \"a,b\"`, the last char is `b`. The condition `input[input.length-1] !== '\\n'` is true. `row` is `['a']`, `field` is `'b'`. The block runs. Correct.\n    If `input = \"\\n\"`, the last char is `\\n`. The block is skipped. Correct.\n    If `input = \",\"`, the last char is `,`. `row` is `['']`, `field` is `''`. The block runs. Result `[['', '']]`. Correct.\n\n    Wait, what if `input = \" \"` (a single space)?\n    - `i=0 ' '`: field=' '\n    - Loop ends.\n    - `field` is `\" \"`. Block runs. Result `[[' ']]`. Correct.\n\n    What if `input = \"\"`?\n    - Handled at start: `return []`. Correct.\n\n    What if `input = \"\\r\\n\"`?\n    - `i=0 '\\r'`: next is `\\n`, `i++`, row=[''], result=[['']], row=[], field=''\n    - Loop ends.\n    - Result `[['']]`. Correct.\n\n    What if `input = \"a,b\\r\\n\\r\\n\"`?\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 '\\r'`: next `\\n`, `i++`, result=[['a', 'b']], row=[], field=''\n    - `i=5 '\\r'`: next `\\n`, `i++`, result=[['a', 'b'], ['']], row=[], field=''\n    - Loop ends.\n    - Result `[['a', 'b'], ['']]`. Correct.\n\n    Wait, the `\\r\\n` logic:\n    ```javascript\n    } else if (char === '\\r') {\n        if (next === '\\n') {\n            i++; \n        }\n        row.push(field);\n        result.push(row);\n        row = [];\n        field = \"\";\n    }\n    ```\n    This handles both `\\r\\n` and `\\r`.\n\n    One edge case: `input = \"a,b\\n \"` (trailing space after newline)\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 '\\n'`: result=[['a', 'b']], row=[], field=''\n    - `i=4 ' '`: field=' '\n    - Loop ends.\n    - `field` is `' '`. Block runs. Result `[['a', 'b'], [' ']]`. Correct.\n\n    One edge case: `input = \"a,b\\n\\r\"` (newline then carriage return)\n    - `i=0..2`: row=['a'], field='b'\n    - `i=3 '\\n'`: result=[['a', 'b']], row=[], field=''\n    - `i=4 '\\r'`: next is undefined, row=[''], result=[['a', 'b'], ['']], row=[], field=''\n    - Loop ends.\n    - Result `[['a', 'b'], ['']]`. Correct.\n\n    Wait, the condition `(input.length > 0 && input[input.length - 1] !== '\\n' && input[input.length - 1] !== '\\r')` might be too simple.\n    If `input = \"a,b\\r\\n\"`, the last char is `\\n`. The condition is false.\n    If `input = \"a,b\\n\"`, the last char is `\\n`. The condition is false.\n    If `input = \"a,b\\r\"`, the last char is `\\r`. The condition is false.\n    This seems correct.\n\n    Let's double check the \"empty line is one empty field\" requirement.\n    `input = \"\\n\"`\n    - `i=0 '\\n'`: `row.push(\"\")` -> `row = [\"\"]`, `result.push([\"\"])`, `row = []`, `field = \"\"`\n    - Loop ends.\n    - Result: `[[\"\"]]`. Correct.\n\n    `input = \"\\n\\n\"`\n    - `i=0 '\\n'`: `result = [[\"\"]]`, `row = []`, `field = \"\"`\n    - `i=1 '\\n'`: `row.push(\"\")` -> `row = [\"\"]`, `result.push([\"\"])`, `row = []`, `field = \"\"`\n    - Loop ends.\n    - Result: `[[\"\"], [\"\"]]`. Correct.\n\n    `input = \"a,b\\n\\n\"`\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - `i=3 '\\n'`: `result = [[\"a\", \"b\"]]`, `row = []`, `field = \"\"`\n    - `i=4 '\\n'`: `row.push(\"\")` -> `row = [\"\"]`, `result.push([\"\"])`, `row = []`, `field = \"\"`\n    - Loop ends.\n    - Result: `[[\"a\", \"b\"], [\"\"]]`. Correct.\n\n    Wait, what if the input is just a comma? `input = \",\"`\n    - `i=0 ','`: `row = [\"\"]`, `field = \"\"`\n    - Loop ends.\n    - `row.length` is 1. Block runs.\n    - `row.push(\"\")` -> `row = [\"\", \"\"]`, `result.push([\"\", \"\"])`.\n    - Result: `[[\"\", \"\"]]`. Correct.\n\n    What if the input is just a quote? `input = \"\\\"\"`\n    - `i=0 '\"'`: `inQuotes = true`\n    - Loop ends.\n    - `inQuotes` is true. The prompt says \"valid CSV string\", so we can assume quotes are balanced. But if they aren't, we should still handle it.\n    - `field` is `\"\"`, `row` is `[]`.\n    - `input[input.length-1]` is `\"`, which is not `\\n` or `\\r`.\n    - Block runs: `row.push(\"\")`, `result.push([\"\"])`.\n    - Result: `[[\"\"]]`. (Actually, if the quote was not closed, the field is just empty).\n\n    Wait, if `input = \"\\\"a\\\"\"`, the loop:\n    - `i=0 '\"'`: `inQuotes = true`\n    - `i=1 'a'`: `field = \"a\"`\n    - `i=2 '\"'`: `inQuotes = false`\n    - Loop ends.\n    - `row` is `[]`, `field` is `\"a\"`.\n    - `input[input.length-1]` is `\"`.\n    - Block runs: `row.push(\"a\")`, `result.push([\"a\"])`.\n    - Result: `[[\"a\"]]`. Correct.\n\n    One more: `input = \"\\\"a\\\",\\\"b\\\"\"`\n    - `i=0 '\"'`: `inQuotes = true`\n    - `i=1 'a'`: `field = \"a\"`\n    - `i=2 '\"'`: `inQuotes = false`\n    - `i=3 ','`: `row = [\"a\"]`, `field = \"\"`\n    - `i=4 '\"'`: `inQuotes = true`\n    - `i=5 'b'`: `field = \"b\"`\n    - `i=6 '\"'`: `inQuotes = false`\n    - Loop ends.\n    - `row` is `[\"a\"]`, `field` is `\"b\"`.\n    - Block runs: `row.push(\"b\")`, `result.push([\"a\", \"b\"])`.\n    - Result: `[[\"a\", \"b\"]]`. Correct.\n\n    *   `solve(input)`\n    *   No mutation of `input`.\n    *   No external libraries.\n    *   ES2020.\n    *   Return JavaScript code only.\n\n    ```javascript\n    function solve(input) {\n        if (input === \"\") return [];\n        const result = [];\n        let row = [];\n        let field = \"\";\n        let inQuotes = false;\n\n        for (let i = 0; i < input.length; i++) {\n            const char = input[i];\n            const next = input[i + 1];\n\n            if (inQuotes) {\n                if (char === '\"') {\n                    if (next === '\"') {\n                        field += '\"';\n                        i++;\n                    } else {\n                        inQuotes = false;\n                    }\n                } else {\n                    field += char;\n                }\n            } else {\n                if (char === '\"') {\n                    inQuotes = true;\n                } else if (char === ',') {\n                    row.push(field);\n                    field = \"\";\n                } else if (char === '\\n') {\n                    row.push(field);\n                    result.push(row);\n                    row = [];\n                    field = \"\";\n                } else if (char === '\\r') {\n                    if (next === '\\n') {\n                        i++;\n                    }\n                    row.push(field);\n                    result.push(row);\n                    row = [];\n                    field = \"\";\n                } else {\n                    field += char;\n                }\n            }\n        }\n\n        if (row.length > 0 || field !== \"\" || (input.length > 0 && input[input.length - 1] !== '\\n' && input[input.length - 1] !== '\\r')) {\n            row.push(field);\n            result.push(row);\n        }\n\n        return result;\n    }\n    ```\n\n    Wait, let's re-verify the `input = \"\\n\"` case.\n    - `input.length` is 1.\n    - `i=0`: `char` is `\\n`. `row.push(\"\")` -> `row = [\"\"]`, `result.push([\"\"])`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `row.length` is 0.\n    - `field` is `\"\"`.\n    - `input[input.length-1]` is `\\n`.\n    - The `if` condition: `0 > 0 || \"\" !== \"\" || (1 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')`\n    - `false || false || (true && false && true)` -> `false`.\n    - Result: `[[\"\"]]`. Correct.\n\n    Wait, what if `input = \"a,b\\n\"`?\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - `i=3`: `char` is `\\n`. `row.push(\"b\")` -> `row = [\"a\", \"b\"]`, `result.push([\"a\", \"b\"])`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (4 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')` -> `false`.\n    - Result: `[[\"a\", \"b\"]]`. Correct.\n\n    What if `input = \"a,b\\r\\n\"`?\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - `i=3`: `char` is `\\r`, `next` is `\\n`. `i++` (i=4), `row.push(\"b\")` -> `row = [\"a\", \"b\"]`, `result.push([\"a\", \"b\"])`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (5 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')` -> `false`.\n    - Result: `[[\"a\", \"b\"]]`. Correct.\n\n    What if `input = \"a,b\\r\"`?\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - `i=3`: `char` is `\\r`, `next` is `undefined`. `row.push(\"b\")` -> `row = [\"a\", \"b\"]`, `result.push([\"a\", \"b\"])`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (4 > 0 && '\\r' !== '\\n' && '\\r' !== '\\r')` -> `false`.\n    - Result: `[[\"a\", \"b\"]]`. Correct.\n\n    What if `input = \"a,b\"`?\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - Loop ends.\n    - `if` condition: `1 > 0 || \"b\" !== \"\" || (3 > 0 && 'b' !== '\\n' && 'b' !== '\\r')` -> `true`.\n    - `row.push(\"b\")` -> `row = [\"a\", \"b\"]`, `result.push([\"a\", \"b\"])`.\n    - Result: `[[\"a\", \"b\"]]`. Correct.\n\n    What if `input = \" \"`?\n    - `i=0`: `field = \" \"`\n    - Loop ends.\n    - `if` condition: `0 > 0 || \" \" !== \"\" || (1 > 0 && ' ' !== '\\n' && ' ' !== '\\r')` -> `true`.\n    - `row.push(\" \")` -> `row = [\" \"]`, `result.push([\" \"])`.\n    - Result: `[[\" \"]]`. Correct.\n\n    What if `input = \",\"`?\n    - `i=0`: `row = [\"\"]`, `field = \"\"`\n    - Loop ends.\n    - `if` condition: `1 > 0 || \"\" !== \"\" || (1 > 0 && ',' !== '\\n' && ',' !== '\\r')` -> `true`.\n    - `row.push(\"\")` -> `row = [\"\", \"\"]`, `result.push([\"\", \"\"])`.\n    - Result: `[[\"\", \"\"]]`. Correct.\n\n    Wait, one more: `input = \"\\n\\n\"`\n    - `i=0`: `char = \\n`. `row = [\"\"]`, `result = [[\"\"]]`, `row = []`, `field = \"\"`\n    - `i=1`: `char = \\n`. `row = [\"\"]`, `result = [[\"\"], [\"\"]]`, `row = []`, `field = \"\"`\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (2 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')` -> `false`.\n    - Result: `[[\"\"], [\"\"]]`. Correct.\n\n    Wait, what if `input = \"a,b\\n\\n\"`?\n    - `i=0..2`: `row = [\"a\"]`, `field = \"b\"`\n    - `i=3`: `char = \\n`. `row = [\"a\", \"b\"]`, `result = [[\"a\", \"b\"]]`, `row = []`, `field = \"\"`\n    - `i=4`: `char = \\n`. `row = [\"\"]`, `result = [[\"a\", \"b\"], [\"\"]]`, `row = []`, `field = \"\"`\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (5 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')` -> `false`.\n    - Result: `[[\"a\", \"b\"], [\"\"]]`. Correct.\n\n    The logic seems very robust.\n\n    *   `const` and `let` are ES6.\n    *   `for` loop is standard.\n    *   `Array.push` is standard.\n    *   No `async/await` or `Promise` needed.\n    *   No `Map`, `Set`, or other ES2015+ features that might be problematic (though ES2020 is allowed).\n    *   The `input[i]` access is standard.\n\n    Wait, the prompt says \"Return JavaScript code only; no explanation.\"\n\n    One last check on the \"empty line is one empty field\" requirement.\n    If `input = \"\\n\"`, the result is `[[\"\"]]`.\n    If `input = \"a,b\\n\\n\"`, the result is `[[\"a\", \"b\"], [\"\"]]`.\n    This matches the requirement.\n\n    Wait, what if the input is just `\\r`?\n    - `i=0`: `char = \\r`, `next = undefined`. `row = [\"\"]`, `result = [[\"\"]]`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (1 > 0 && '\\r' !== '\\n' && '\\r' !== '\\r')` -> `false`.\n    - Result: `[[\"\"]]`. Correct.\n\n    What if the input is `\\r\\n`?\n    - `i=0`: `char = \\r`, `next = \\n`. `i++` (i=1), `row = [\"\"]`, `result = [[\"\"]]`, `row = []`, `field = \"\"`.\n    - Loop ends.\n    - `if` condition: `0 > 0 || \"\" !== \"\" || (2 > 0 && '\\n' !== '\\n' && '\\n' !== '\\r')` -> `false`.\n    - Result: `[[\"\"]]`. Correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 199974259300,
+            "load_duration": 236817500,
+            "prompt_eval_count": 123,
+            "prompt_eval_duration": 101964000,
+            "eval_count": 7414,
+            "eval_duration": 199470546000,
+            "clientWallMs": 199985.9,
+            "supervisedWallMs": 200084.4
+          },
+          "code": "function solve(input) {\n  if (input === \"\") return [];\n  const result = [];\n  let row = [];\n  let field = \"\";\n  let inQuotes = false;\n\n  for (let i = 0; i < input.length; i++) {\n    const char = input[i];\n    const next = input[i + 1];\n\n    if (inQuotes) {\n      if (char === '\"') {\n        if (next === '\"') {\n          field += '\"';\n          i++;\n        } else {\n          inQuotes = false;\n        }\n      } else {\n        field += char;\n      }\n    } else {\n      if (char === '\"') {\n        inQuotes = true;\n      } else if (char === ',') {\n        row.push(field);\n        field = \"\";\n      } else if (char === '\\n') {\n        row.push(field);\n        result.push(row);\n        row = [];\n        field = \"\";\n      } else if (char === '\\r') {\n        if (next === '\\n') {\n          i++;\n        }\n        row.push(field);\n        result.push(row);\n        row = [];\n        field = \"\";\n      } else {\n        field += char;\n      }\n    }\n  }\n\n  if (\n    row.length > 0 ||\n    field !== \"\" ||\n    (input.length > 0 &&\n      input[input.length - 1] !== '\\n' &&\n      input[input.length - 1] !== '\\r')\n  ) {\n    row.push(field);\n    result.push(row);\n  }\n\n  return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 200084.4,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    ""
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    "b"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    ""
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "",
+                    "a"
+                  ],
+                  [
+                    "line\nbreak",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "",
+                    "a"
+                  ],
+                  [
+                    "line\nbreak",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "",
+                    "\"quoted\"",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    ""
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "",
+                    "\"quoted\"",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "b,c",
+                    "line\nbreak",
+                    "a"
+                  ],
+                  [
+                    "",
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "a",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "b,c",
+                    "line\nbreak",
+                    "a"
+                  ],
+                  [
+                    "",
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "a",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ],
+                  [
+                    ""
+                  ],
+                  [
+                    "0",
+                    "line\nbreak"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ],
+                  [
+                    ""
+                  ],
+                  [
+                    "0",
+                    "line\nbreak"
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "b,c"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny",
+                    "line\nbreak"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "b,c",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "\"quoted\"",
+                    ""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "a",
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "",
+                    "x\r\ny"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "b,c"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny",
+                    "line\nbreak"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "b,c",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "\"quoted\"",
+                    ""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "a",
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "",
+                    "x\r\ny"
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "x\r\ny",
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "b,c",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "0"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "a",
+                    "a"
+                  ],
+                  [
+                    "0",
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "",
+                    "x\r\ny",
+                    "line\nbreak",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "a"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "x\r\ny",
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "b,c",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "0"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "a",
+                    "a"
+                  ],
+                  [
+                    "0",
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "",
+                    "x\r\ny",
+                    "line\nbreak",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "a"
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "b,c",
+                    "a"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "line\nbreak",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "line\nbreak",
+                    "x\r\ny",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "a"
+                  ],
+                  [
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "a",
+                    "0"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "b,c",
+                    "a"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "line\nbreak",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "line\nbreak",
+                    "x\r\ny",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "a"
+                  ],
+                  [
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "a",
+                    "0"
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "recursive-redaction",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nReturn a deep copy of a JSON-compatible input value. In every object, replace values of keys equal to password, token, or secret (case-insensitive) with \"[REDACTED]\". Recursively process all other values, including objects inside arrays. Preserve every key (including __proto__), array order, null, and primitive values. Do not mutate input.",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:29:54.8190592Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "*   Function name: `solve(input)`.\n    *   Input: JSON-compatible value.\n    *   Output: Deep copy of the input.\n    *   Requirement 1: Replace values of keys `password`, `token`, or `secret` (case-insensitive) with `\"[REDACTED]\"`.\n    *   Requirement 2: Recursively process objects and arrays.\n    *   Requirement 3: Do not mutate input.\n    *   Requirement 4: Preserve all keys (including `__proto__` - though JSON-compatible usually means plain objects, the prompt explicitly mentions `__proto__`).\n    *   Requirement 5: Preserve array order, null, and primitive values.\n    *   Constraint: Synchronous, ES2020, no external libraries, no host APIs, return JS code only.\n\n    *   If `input` is not an object or is `null`, return it (primitive).\n    *   If `input` is an array:\n        *   Map over the array and call `solve` recursively on each element.\n    *   If `input` is an object:\n        *   Create a new object.\n        *   Iterate over all keys (including non-enumerable or inherited? The prompt says \"Preserve every key (including `__proto__`)\").\n        *   Wait, `__proto__` is a special property. In a standard JSON-compatible object, `__proto__` is usually the prototype. If the input is a plain object, `Object.keys` or `for...in` won't typically find `__proto__` as an own property unless it was explicitly set.\n        *   However, the prompt says \"Preserve every key (including `__proto__`)\". This suggests that if the input object has a property named `__proto__`, it should be copied.\n        *   Standard `JSON.parse(JSON.stringify(obj))` doesn't handle `__proto__` as a key.\n        *   To handle `__proto__` specifically as a key, I should use `Object.getOwnPropertyNames` or a loop that handles it. But `__proto__` is often a getter/setter on `Object.prototype`.\n        *   Actually, for \"JSON-compatible\", we usually deal with plain objects. If someone passed `{ \"__proto__\": { \"a\": 1 } }`, `Object.keys` wouldn't see it.\n        *   Let's look at the redaction logic:\n            *   Keys to redact: `password`, `token`, `secret` (case-insensitive).\n            *   Check: `key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret'`.\n\n    *   `Object.create(null)` is a good way to start a clean object to avoid prototype pollution or interference, but the prompt says \"Preserve every key (including `__proto__`)\".\n    *   If the input is an object, I should iterate through its keys.\n    *   `Object.entries` or `Object.keys` only get enumerable own properties.\n    *   To get `__proto__` if it's an own property, `Object.getOwnPropertyNames` is better.\n    *   Wait, if I use `obj[key] = value` and `key` is `__proto__`, I might change the prototype of the new object rather than setting a property named `__proto__`.\n    *   To set a property named `__proto__` without changing the prototype, I must use `Object.defineProperty`.\n\n    ```javascript\n    function solve(input) {\n      if (input === null || typeof input !== 'object') {\n        return input;\n      }\n\n      if (Array.isArray(input)) {\n        return input.map(item => solve(item));\n      }\n\n      const result = {};\n      const keys = Object.getOwnPropertyNames(input);\n      const redactKeys = ['password', 'token', 'secret'];\n\n      for (const key of keys) {\n        const value = input[key];\n        if (redactKeys.includes(key.toLowerCase())) {\n          Object.defineProperty(result, key, {\n            value: '[REDACTED]',\n            enumerable: true,\n            configurable: true,\n            writable: true\n          });\n        } else {\n          Object.defineProperty(result, key, {\n            value: solve(value),\n            enumerable: true,\n            configurable: true,\n            writable: true\n          });\n        }\n      }\n      return result;\n    }\n    ```\n\n    *   `Object.getOwnPropertyNames` gets all own properties (enumerable or not).\n    *   `Object.defineProperty` ensures that if `key` is `__proto__`, it's treated as a property, not a prototype setter.\n    *   Case-insensitive check: `key.toLowerCase()`.\n    *   Deep copy: Recursive call `solve(value)`.\n    *   JSON-compatible: Handles null, arrays, objects, primitives.\n    *   No mutation: New object/array created.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `const`, `let` are ES6.\n    *   `toLowerCase()` is standard.\n    *   `Object.defineProperty` is ES5.\n    *   Everything is within ES2020.\n\n    *   If the input is `null`, `typeof null` is `'object'`, so the first check `input === null` is necessary.\n    *   If the input is an array, `Array.isArray` is correct.\n    *   If the input is a plain object, `Object.getOwnPropertyNames` will get the keys.\n    *   The prompt says \"Preserve every key (including `__proto__`)\". If `__proto__` is an own property, `getOwnPropertyNames` finds it. If it's the actual prototype, it's not an \"own property\". However, in the context of \"JSON-compatible\", `__proto__` usually refers to the key string.\n\n    *   `password`, `token`, `secret` (case-insensitive).\n    *   `['password', 'token', 'secret'].includes(key.toLowerCase())`.\n\n    *   `Object.defineProperty` is the safest way to handle the `__proto__` key.\n    *   Wait, if I use `Object.create(null)`, I avoid the inherited `__proto__` getter/setter, but the prompt says \"Preserve every key\". If the input object has a specific prototype, should that be preserved?\n    *   \"Return a deep copy of a JSON-compatible input value.\"\n    *   JSON-compatible values (the result of `JSON.parse`) are always plain objects (prototype is `Object.prototype`).\n    *   So `const result = {}` is fine.\n\n    *   `solve({ \"Password\": \"123\" })` -> `{ \"Password\": \"[REDACTED]\" }`\n    *   `solve({ \"a\": { \"token\": \"abc\" } })` -> `{ \"a\": { \"token\": \"[REDACTED]\" } }`\n    *   `solve([ { \"secret\": \"xyz\" } ])` -> `[ { \"secret\": \"[REDACTED]\" } ]`\n    *   `solve({ \"__proto__\": \"something\" })` -> `{ \"__proto__\": \"something\" }` (using `defineProperty`)\n\n    *   `Object.getOwnPropertyNames` returns an array of all own properties.\n    *   `Object.defineProperty` is used to avoid the `__proto__` setter.\n    *   The logic seems robust.\n\n    *   Synchronous? Yes.\n    *   ES2020? Yes.\n    *   No mutation? Yes.\n    *   No external libraries/host APIs? Yes.\n    *   Deep copy? Yes.\n    *   Redact password, token, secret (case-insensitive)? Yes.\n    *   Recursive? Yes.\n    *   Preserve keys (including `__proto__`), array order, null, primitives? Yes.\n\n    *   `Object.getOwnPropertyNames` only gets \"own\" properties. If the input is \"JSON-compatible\", it shouldn't have inherited properties that need to be copied as \"own\" properties.\n    *   The prompt says \"Preserve every key (including `__proto__`)\". If `__proto__` is an own property, `getOwnPropertyNames` gets it. If it's the prototype, it's not a \"key\" in the JSON sense.\n\n    ```javascript\n    function solve(input) {\n      if (input === null || typeof input !== 'object') {\n        return input;\n      }\n\n      if (Array.isArray(input)) {\n        return input.map(item => solve(item));\n      }\n\n      const result = {};\n      const keys = Object.getOwnPropertyNames(input);\n      const redactList = ['password', 'token', 'secret'];\n\n      for (const key of keys) {\n        const value = input[key];\n        const shouldRedact = redactList.includes(key.toLowerCase());\n        const finalValue = shouldRedact ? '[REDACTED]' : solve(value);\n        \n        Object.defineProperty(result, key, {\n          value: finalValue,\n          enumerable: true,\n          configurable: true,\n          writable: true\n        });\n      }\n\n      return result;\n    }\n    ```\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `const`/`let` is ES6.\n    *   `for...of` is ES6.\n    *   `Array.prototype.includes` is ES2016.\n    *   All are ES2020.\n\n    *   If `input` is `null`, `typeof input` is `'object'`.\n    *   `if (input === null || typeof input !== 'object')` handles this.\n    *   If `input` is an array, `Array.isArray(input)` handles this.\n    *   If `input` is an object, `Object.getOwnPropertyNames(input)` handles this.\n\n    *   `Object.defineProperty(result, '__proto__', { value: '...' })` actually sets the property `__proto__` on the object `result` without changing the prototype of `result` (because `result` is a plain object and `__proto__` is a property on `Object.prototype`, but `defineProperty` bypasses the setter).\n    *   Wait, actually, `Object.defineProperty` on `__proto__` *does* work to set the property.\n\n    *   `Object.getOwnPropertyNames` returns all own properties, including non-enumerable ones.\n    *   JSON-compatible objects usually only have enumerable properties.\n    *   The prompt says \"Preserve every key\". This implies all own properties.\n\n    *   `solve({ \"password\": \"123\" })` -> `key.toLowerCase()` is `\"password\"`, `redactList.includes(\"password\")` is true, value becomes `\"[REDACTED]\"`. Correct.\n    *   `solve({ \"TOKEN\": \"abc\" })` -> `key.toLowerCase()` is `\"token\"`, `redactList.includes(\"token\")` is true, value becomes `\"[REDACTED]\"`. Correct.\n\n    *   `solve([1, { \"secret\": \"shh\" }, 3])` -> `[1, { \"secret\": \"[REDACTED]\" }, 3]`. Correct.\n\n    *   `solve({ \"a\": { \"b\": { \"token\": \"xyz\" } } })` -> `{ \"a\": { \"b\": { \"token\": \"[REDACTED]\" } } }`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })` -> `Object.getOwnPropertyNames` finds `\"__proto__\"`. `Object.defineProperty` sets it. Correct.\n\n    *   `solve(null)` -> `null`. Correct.\n    *   `solve(undefined)` -> `undefined`. Correct.\n    *   `solve(42)` -> `42`. Correct.\n    *   `solve(\"hello\")` -> `\"hello\"`. Correct.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Array.prototype.includes` is ES2016.\n    *   `for...of` is ES6.\n    *   `const`/`let` is ES6.\n    *   `Array.isArray` is ES5.\n    *   `Object.defineProperty` is ES5.\n    *   All are ES2020.\n\n    *   `Object.getOwnPropertyNames` returns an array of strings.\n    *   `key.toLowerCase()` is safe.\n    *   `redactList.includes(...)` is safe.\n    *   `Object.defineProperty` is safe.\n\n    *   `Object.getOwnPropertyNames` returns all own properties.\n    *   `Object.keys` returns only enumerable own properties.\n    *   The prompt says \"Preserve every key\". `getOwnPropertyNames` is more comprehensive.\n\n    *   `Object.defineProperty(result, key, { value: ..., enumerable: true, configurable: true, writable: true })`\n    *   This mimics a standard assignment `result[key] = value` but avoids the `__proto__` setter.\n\n    *   `solve({ \"password\": \"123\" })`\n    *   `keys = [\"password\"]`\n    *   `key = \"password\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"password\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"password\": \"[REDACTED]\" }`\n\n    *   `solve({ \"token\": { \"inner\": \"val\" } })`\n    *   `keys = [\"token\"]`\n    *   `key = \"token\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"token\": \"[REDACTED]\" }`\n    *   Wait, if the key is `token`, the value should be redacted *regardless* of whether the value is an object or a primitive. The prompt says \"replace values of keys equal to password, token, or secret... with '[REDACTED]'\". This means the recursive call `solve(value)` should *not* happen if the key is one of the redacted ones. My code does `const finalValue = shouldRedact ? '[REDACTED]' : solve(value);`. This is correct.\n\n    *   `solve({ \"a\": { \"token\": \"123\" } })`\n    *   `keys = [\"a\"]`\n    *   `key = \"a\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve({ \"token\": \"123\" })`\n    *   Inside recursive call:\n        *   `keys = [\"token\"]`\n        *   `key = \"token\"`\n        *   `shouldRedact = true`\n        *   `finalValue = \"[REDACTED]\"`\n        *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n        *   Returns `{ \"token\": \"[REDACTED]\" }`\n    *   Back in outer call:\n        *   `Object.defineProperty(result, \"a\", { value: { \"token\": \"[REDACTED]\" }, ... })`\n    *   Result: `{ \"a\": { \"token\": \"[REDACTED]\" } }`. Correct.\n\n    *   `solve([ { \"token\": \"123\" } ])`\n    *   `Array.isArray` is true.\n    *   `input.map(item => solve(item))`\n    *   `solve({ \"token\": \"123\" })` returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `[ { \"token\": \"[REDACTED]\" } ]`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })`\n    *   `keys = [\"__proto__\"]`\n    *   `key = \"__proto__\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve(\"foo\")` -> `\"foo\"`\n    *   `Object.defineProperty(result, \"__proto__\", { value: \"foo\", ... })`\n    *   Result: `{ \"__proto__\": \"foo\" }`. Correct.\n\n    *   `solve({ \"SECRET\": \"shh\" })`\n    *   `key.toLowerCase()` is `\"secret\"`.\n    *   `redactList.includes(\"secret\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"secret_key\": \"shh\" })`\n    *   `key.toLowerCase()` is `\"secret_key\"`.\n    *   `redactList.includes(\"secret_key\")` is false.\n    *   `finalValue = solve(\"shh\")` -> `\"shh\"`. Correct. (The prompt says \"keys equal to password, token, or secret\", not \"containing\").\n\n    *   `solve({ \"password\": \"123\", \"token\": \"456\", \"secret\": \"789\" })`\n    *   All three will be redacted. Correct.\n\n    *   `solve({ \"a\": 1, \"b\": 2 })`\n    *   `keys = [\"a\", \"b\"]`\n    *   `result` will have `a: 1` and `b: 2`. Correct.\n\n    *   `solve([1, 2, 3])`\n    *   `input.map` will return `[1, 2, 3]`. Correct.\n\n    *   `solve(null)` -> `null`. Correct.\n    *   `solve(undefined)` -> `undefined`. Correct.\n\n    *   `solve({ \"a\": { \"b\": 1 } })`\n    *   `result` is a new object `{}`.\n    *   `result.a` is a new object `{}`.\n    *   No mutation of `input`. Correct.\n\n    *   `solve([ { \"a\": 1 } ])`\n    *   `input.map` returns a new array.\n    *   `solve({ \"a\": 1 })` returns a new object.\n    *   No mutation of `input`. Correct.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Object.defineProperty` is ES5.\n    *   `Array.isArray` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `Array.prototype.includes` is ES2016.\n    *   `const`, `let` are ES6.\n    *   `for...of` is ES6.\n    *   All are ES2020.\n\n    *   `Object.getOwnPropertyNames` returns all own properties.\n    *   `Object.defineProperty` with `enumerable: true` ensures they remain enumerable.\n    *   `configurable: true` and `writable: true` ensure they behave like normal properties.\n\n    *   `solve({ \"password\": \"123\" })`\n    *   `key = \"password\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"password\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"password\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"token\": { \"a\": 1 } })`\n    *   `key = \"token\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"token\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"a\": { \"token\": \"123\" } })`\n    *   `key = \"a\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve({ \"token\": \"123\" })`\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `{ \"a\": { \"token\": \"[REDACTED]\" } }`. Correct.\n\n    *   `solve([ { \"token\": \"123\" } ])`\n    *   `input.map` calls `solve({ \"token\": \"123\" })`.\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `[ { \"token\": \"[REDACTED]\" } ]`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })`\n    *   `keys = [\"__proto__\"]`\n    *   `key = \"__proto__\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve(\"foo\")` -> `\"foo\"`\n    *   `Object.defineProperty(result, \"__proto__\", { value: \"foo\", ... })`\n    *   Result: `{ \"__proto__\": \"foo\" }`. Correct.\n\n    *   `solve({ \"Password\": \"123\" })`\n    *   `key.toLowerCase()` is `\"password\"`.\n    *   `redactList.includes(\"password\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"TOKEN\": \"456\" })`\n    *   `key.toLowerCase()` is `\"token\"`.\n    *   `redactList.includes(\"token\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"Secret\": \"789\" })`\n    *   `key.toLowerCase()` is `\"secret\"`.\n    *   `redactList.includes(\"secret\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"a\": 1, \"b\": 2 })`\n    *   `keys = [\"a\", \"b\"]`\n    *   `result` will have `a: 1` and `b: 2`. Correct.\n\n    *   `solve([1, 2, 3])`\n    *   `input.map` will return `[1, 2, 3]`. Correct.\n\n    *   `solve(null)` -> `null`. Correct.\n    *   `solve(undefined)` -> `undefined`. Correct.\n\n    *   `solve({ \"a\": { \"b\": 1 } })`\n    *   `result` is a new object `{}`.\n    *   `result.a` is a new object `{}`.\n    *   No mutation of `input`. Correct.\n\n    *   `solve([ { \"a\": 1 } ])`\n    *   `input.map` returns a new array.\n    *   `solve({ \"a\": 1 })` returns a new object.\n    *   No mutation of `input`. Correct.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Object.defineProperty` is ES5.\n    *   `Array.isArray` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `Array.prototype.includes` is ES2016.\n    *   `const`, `let` are ES6.\n    *   `for...of` is ES6.\n    *   All are ES2020.\n\n    *   `Object.getOwnPropertyNames` returns all own properties.\n    *   `Object.defineProperty` with `enumerable: true` ensures they remain enumerable.\n    *   `configurable: true` and `writable: true` ensure they behave like normal properties.\n\n    *   `solve({ \"password\": \"123\" })`\n    *   `key = \"password\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"password\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"password\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"token\": { \"a\": 1 } })`\n    *   `key = \"token\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"token\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"a\": { \"token\": \"123\" } })`\n    *   `key = \"a\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve({ \"token\": \"123\" })`\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `{ \"a\": { \"token\": \"[REDACTED]\" } }`. Correct.\n\n    *   `solve([ { \"token\": \"123\" } ])`\n    *   `input.map` calls `solve({ \"token\": \"123\" })`.\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `[ { \"token\": \"[REDACTED]\" } ]`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })`\n    *   `keys = [\"__proto__\"]`\n    *   `key = \"__proto__\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve(\"foo\")` -> `\"foo\"`\n    *   `Object.defineProperty(result, \"__proto__\", { value: \"foo\", ... })`\n    *   Result: `{ \"__proto__\": \"foo\" }`. Correct.\n\n    *   `solve({ \"Password\": \"123\" })`\n    *   `key.toLowerCase()` is `\"password\"`.\n    *   `redactList.includes(\"password\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"TOKEN\": \"456\" })`\n    *   `key.toLowerCase()` is `\"token\"`.\n    *   `redactList.includes(\"token\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"Secret\": \"789\" })`\n    *   `key.toLowerCase()` is `\"secret\"`.\n    *   `redactList.includes(\"secret\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"a\": 1, \"b\": 2 })`\n    *   `keys = [\"a\", \"b\"]`\n    *   `result` will have `a: 1` and `b: 2`. Correct.\n\n    *   `solve([1, 2, 3])`\n    *   `input.map` will return `[1, 2, 3]`. Correct.\n\n    *   `solve(null)` -> `null`. Correct.\n    *   `solve(undefined)` -> `undefined`. Correct.\n\n    *   `solve({ \"a\": { \"b\": 1 } })`\n    *   `result` is a new object `{}`.\n    *   `result.a` is a new object `{}`.\n    *   No mutation of `input`. Correct.\n\n    *   `solve([ { \"a\": 1 } ])`\n    *   `input.map` returns a new array.\n    *   `solve({ \"a\": 1 })` returns a new object.\n    *   No mutation of `input`. Correct.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Object.defineProperty` is ES5.\n    *   `Array.isArray` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `Array.prototype.includes` is ES2016.\n    *   `const`, `let` are ES6.\n    *   `for...of` is ES6.\n    *   All are ES2020.\n\n    *   `Object.getOwnPropertyNames` returns all own properties.\n    *   `Object.defineProperty` with `enumerable: true` ensures they remain enumerable.\n    *   `configurable: true` and `writable: true` ensure they behave like normal properties.\n\n    *   `solve({ \"password\": \"123\" })`\n    *   `key = \"password\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"password\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"password\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"token\": { \"a\": 1 } })`\n    *   `key = \"token\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"token\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"a\": { \"token\": \"123\" } })`\n    *   `key = \"a\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve({ \"token\": \"123\" })`\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `{ \"a\": { \"token\": \"[REDACTED]\" } }`. Correct.\n\n    *   `solve([ { \"token\": \"123\" } ])`\n    *   `input.map` calls `solve({ \"token\": \"123\" })`.\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `[ { \"token\": \"[REDACTED]\" } ]`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })`\n    *   `keys = [\"__proto__\"]`\n    *   `key = \"__proto__\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve(\"foo\")` -> `\"foo\"`\n    *   `Object.defineProperty(result, \"__proto__\", { value: \"foo\", ... })`\n    *   Result: `{ \"__proto__\": \"foo\" }`. Correct.\n\n    *   `solve({ \"Password\": \"123\" })`\n    *   `key.toLowerCase()` is `\"password\"`.\n    *   `redactList.includes(\"password\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"TOKEN\": \"456\" })`\n    *   `key.toLowerCase()` is `\"token\"`.\n    *   `redactList.includes(\"token\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"Secret\": \"789\" })`\n    *   `key.toLowerCase()` is `\"secret\"`.\n    *   `redactList.includes(\"secret\")` is true.\n    *   `finalValue = \"[REDACTED]\"`. Correct.\n\n    *   `solve({ \"a\": 1, \"b\": 2 })`\n    *   `keys = [\"a\", \"b\"]`\n    *   `result` will have `a: 1` and `b: 2`. Correct.\n\n    *   `solve([1, 2, 3])`\n    *   `input.map` will return `[1, 2, 3]`. Correct.\n\n    *   `solve(null)` -> `null`. Correct.\n    *   `solve(undefined)` -> `undefined`. Correct.\n\n    *   `solve({ \"a\": { \"b\": 1 } })`\n    *   `result` is a new object `{}`.\n    *   `result.a` is a new object `{}`.\n    *   No mutation of `input`. Correct.\n\n    *   `solve([ { \"a\": 1 } ])`\n    *   `input.map` returns a new array.\n    *   `solve({ \"a\": 1 })` returns a new object.\n    *   No mutation of `input`. Correct.\n\n    *   `Object.getOwnPropertyNames` is ES5.\n    *   `Object.defineProperty` is ES5.\n    *   `Array.isArray` is ES5.\n    *   `Array.prototype.map` is ES5.\n    *   `Array.prototype.includes` is ES2016.\n    *   `const`, `let` are ES6.\n    *   `for...of` is ES6.\n    *   All are ES2020.\n\n    *   `Object.getOwnPropertyNames` returns all own properties.\n    *   `Object.defineProperty` with `enumerable: true` ensures they remain enumerable.\n    *   `configurable: true` and `writable: true` ensure they behave like normal properties.\n\n    *   `solve({ \"password\": \"123\" })`\n    *   `key = \"password\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"password\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"password\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"token\": { \"a\": 1 } })`\n    *   `key = \"token\"`\n    *   `shouldRedact = true`\n    *   `finalValue = \"[REDACTED]\"`\n    *   `Object.defineProperty(result, \"token\", { value: \"[REDACTED]\", ... })`\n    *   Result: `{ \"token\": \"[REDACTED]\" }`. Correct.\n\n    *   `solve({ \"a\": { \"token\": \"123\" } })`\n    *   `key = \"a\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve({ \"token\": \"123\" })`\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `{ \"a\": { \"token\": \"[REDACTED]\" } }`. Correct.\n\n    *   `solve([ { \"token\": \"123\" } ])`\n    *   `input.map` calls `solve({ \"token\": \"123\" })`.\n    *   Recursive call returns `{ \"token\": \"[REDACTED]\" }`.\n    *   Result: `[ { \"token\": \"[REDACTED]\" } ]`. Correct.\n\n    *   `solve({ \"__proto__\": \"foo\" })`\n    *   `keys = [\"__proto__\"]`\n    *   `key = \"__proto__\"`\n    *   `shouldRedact = false`\n    *   `finalValue = solve(\"foo\")` -> `\"foo\"`\n    *   `Object.defineProperty(result, \"__proto__\", { value: \"foo\", ..."
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 220562427600,
+            "load_duration": 236276400,
+            "prompt_eval_count": 126,
+            "prompt_eval_duration": 102319000,
+            "eval_count": 8192,
+            "eval_duration": 220005538000,
+            "clientWallMs": 220589.8,
+            "supervisedWallMs": 220682.1
+          },
+          "code": "",
+          "markdownFenceRemoved": false,
+          "truncated": true,
+          "unexpectedThinking": false,
+          "wallMs": 220682.1,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 12,
+            "reason": "Empty or truncated code response"
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "nightly-bench-d5808e5874e660a8:latest",
+        "created_at": "2026-09-11T19:15:42.2396178Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready",
+          "thinking": "The user wants me to reply with exactly one word: \"ready\".\n\n    *   Constraint: \"exactly: ready\"\n    *   Expected output: \"ready\""
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7986645400,
+        "load_duration": 6868311700,
+        "prompt_eval_count": 21,
+        "prompt_eval_duration": 107966000,
+        "eval_count": 41,
+        "eval_duration": 1008839000,
+        "clientWallMs": 8017.6,
+        "supervisedWallMs": 8117.7
+      },
+      "loadedModel": [
+        {
+          "name": "nightly-bench-d5808e5874e660a8:latest",
+          "model": "nightly-bench-d5808e5874e660a8:latest",
+          "size": 34710864527,
+          "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "gemma4",
+            "families": [
+              "gemma4"
+            ],
+            "parameter_size": "30.7B",
+            "quantization_level": "Q8_0"
+          },
+          "expires_at": "2026-09-11T13:20:42.2396178-06:00",
+          "size_vram": 34710864527,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 6,
+        "tasksAttempted": 8,
+        "tasksTotal": 8,
+        "testsPassed": 74,
+        "testsTotal": 99,
+        "medianWallMs": 61524.9,
+        "totalWallMs": 851866.3,
+        "truncated": 2,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "unloads": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "endpoint": "http://127.0.0.1:11435",
+      "confirmedAt": "2026-09-11T13:29:55-06:00",
+      "gpuAfter": {
+        "freeGiB": 94.03125,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 0.0
+      },
+      "freeBeforeGiB": 94.02734375
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T13:29:55-06:00"
+}

@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-09-11T13:24:33.622408-06:00",
+  "updatedAt": "2026-09-11T13:46:53.536349-06:00",
   "campaignId": "20260911-daytime",
   "active": [
     {
-      "id": "coding-gemma-think-pilot",
-      "runId": "20260911-131530-e0cf9a30"
+      "id": "coding-qwen35-think-16k-output",
+      "runId": "20260911-134401-18652c59"
     }
   ],
   "terminal": [
@@ -523,9 +523,33 @@
       "runId": "20260911-131310-ae09b0ba",
       "status": "error",
       "error": "Command '['C:\\\\Users\\\\kody1\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe', 'C:\\\\Users\\\\kody1\\\\repos\\\\research\\\\local-model-benchmarks\\\\api_probe.py']' timed out after 119.99934490000305 seconds"
+    },
+    {
+      "id": "coding-gemma-think-pilot",
+      "runId": "20260911-131530-e0cf9a30",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "workload-qwen38-think-part2",
+      "runId": "20260911-133000-59803f3f",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "workload-qwen38-think-part3",
+      "runId": "20260911-133431-07b70f65",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "workload-qwen38-think-part4",
+      "runId": "20260911-133911-de908887",
+      "status": "completed",
+      "error": null
     }
   ],
-  "pending": 63,
+  "pending": 59,
   "modelCoverage": [
     {
       "model": "gpt-oss:20b",
@@ -618,7 +642,10 @@
         "20260911-103236-31e0e759",
         "20260911-105852-8da350a1",
         "20260911-111102-51d22ad9",
-        "20260911-104941-c75692e6"
+        "20260911-104941-c75692e6",
+        "20260911-133000-59803f3f",
+        "20260911-133431-07b70f65",
+        "20260911-133911-de908887"
       ],
       "protocols": [
         "practical-json-v1",
@@ -731,7 +758,8 @@
         "20260911-130439-1c5fbf86",
         "20260911-130939-8525ec43",
         "20260911-131040-78f92dff",
-        "20260911-131150-5076dcd2"
+        "20260911-131150-5076dcd2",
+        "20260911-131530-e0cf9a30"
       ],
       "protocols": [
         "nightly",
@@ -1393,47 +1421,50 @@
       "protocol": "practical-json-v1",
       "suiteSha256": "d262c79327a282d2d3366d1290ea5b407cd5da4d9a61c3722a1a39ef284fdfb7",
       "runs": [
-        "20260911-104941-c75692e6"
+        "20260911-104941-c75692e6",
+        "20260911-133000-59803f3f",
+        "20260911-133431-07b70f65",
+        "20260911-133911-de908887"
       ],
       "repeatedCases": 0,
-      "passed": 24,
-      "total": 24,
-      "medianWallMs": 11772.0,
-      "totalWallMs": 264223.6,
+      "passed": 96,
+      "total": 96,
+      "medianWallMs": 11153.25,
+      "totalWallMs": 1045962.0,
       "truncated": 0,
       "unexpectedThinking": false,
       "categories": {
         "ledger-replay": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "event-state": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "dependency-scheduling": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "sql-analysis": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "shortest-path": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "record-extraction": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "python-trace": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         },
         "record-retrieval": {
-          "passed": 3,
-          "total": 3
+          "passed": 12,
+          "total": 12
         }
       }
     },
@@ -2909,6 +2940,91 @@
           "testsTotal": 12
         }
       ]
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF",
+      "artifact": "gemma-4-31B-it-Q8_0.gguf",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "runId": "20260911-131530-e0cf9a30",
+      "protocol": {
+        "name": "javascript-functions-v1",
+        "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+        "thinking": true,
+        "context": 16384,
+        "outputCap": 8192,
+        "maxGenerationSeconds": 240,
+        "tasks": 8,
+        "hiddenTests": 99,
+        "temperature": 0,
+        "topP": 1,
+        "topK": 40,
+        "repeatPenalty": 1.0,
+        "samplingProfile": "greedy-v1",
+        "seed": 42,
+        "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+        "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+        "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+      },
+      "tasksPassed": 6,
+      "tasksAttempted": 8,
+      "tasksTotal": 8,
+      "testsPassed": 74,
+      "testsTotal": 99,
+      "medianWallMs": 61524.9,
+      "totalWallMs": 851866.3,
+      "truncated": 2,
+      "unexpectedThinking": false,
+      "protocolValid": true,
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "versioned-state",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "merge-intervals",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "topological-order",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 13
+        },
+        {
+          "id": "ttl-cache",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "json-pointer",
+          "passed": true,
+          "testsPassed": 14,
+          "testsTotal": 14
+        },
+        {
+          "id": "csv-parser",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "recursive-redaction",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        }
+      ]
     }
   ],
   "humanEvalResults": [
@@ -3267,20 +3383,36 @@
       "bytesDownloaded": 32635677632,
       "expectedBytes": 32635677632,
       "runId": "20260911-111600-26dfc6ac"
+    },
+    {
+      "model": "bartowski/granite-4.2-30b-GGUF",
+      "status": "completed",
+      "verified": true,
+      "bytesDownloaded": 31111705632,
+      "expectedBytes": 31111705632,
+      "runId": "20260911-133018-47e30b89"
+    },
+    {
+      "model": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "status": "running",
+      "verified": false,
+      "bytesDownloaded": 17906218647,
+      "expectedBytes": 35004643392,
+      "runId": "20260911-134123-96974066"
     }
   ],
   "supervision": {
     "status": "active",
-    "checkedAt": "2026-09-11T13:14:10.432187-06:00",
-    "leaseExpiresAt": "2026-09-11T13:44:10.432187-06:00",
-    "usageRemainingPercent": 62.0,
+    "checkedAt": "2026-09-11T13:32:02.425492-06:00",
+    "leaseExpiresAt": "2026-09-11T14:02:02.425492-06:00",
+    "usageRemainingPercent": 55.0,
     "meaning": "Agent renewed after reading current Codex usage. New work stops if this lease expires. Already authorized workers keep their hard deadline and cleanup."
   },
   "gpuSample": {
-    "utilizationPercent": "98",
-    "memoryUsedMiB": "36112",
-    "temperatureC": "84",
-    "powerWatts": "300.15",
+    "utilizationPercent": "96",
+    "memoryUsedMiB": "79023",
+    "temperatureC": "87",
+    "powerWatts": "300.14",
     "clockEventReasons": "0x0000000000000004"
   }
 }
