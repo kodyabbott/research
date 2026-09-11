@@ -1,0 +1,1101 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-131150-5076dcd2",
+  "startedAt": "2026-09-11T13:11:50-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 84,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T13:11:53-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-humanevalx-screen",
+  "selection": {
+    "kind": "huggingface",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "rationale": "Run actual workload and isolated generated-code pilots immediately after the initial candidate screen, while the verified model remains cached. Preserve this mode and budget as a separate configuration.",
+    "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+    "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+    "expectedBytes": 32635677632,
+    "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "campaignProtocol": "humaneval-x-js-hf-chat-v2",
+    "thinking": false,
+    "caseOffset": 0,
+    "caseCount": 20
+  },
+  "secondaryRuntime": {
+    "host": "127.0.0.1:11435",
+    "modelsDir": "F:\\models\\nightly-benchmark\\ollama",
+    "downloadDir": "F:\\models\\nightly-benchmark\\downloads",
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.EXE",
+    "environmentOverrides": {
+      "OLLAMA_HOST": "127.0.0.1:11435",
+      "OLLAMA_MODELS": "F:\\models\\nightly-benchmark\\ollama"
+    },
+    "performanceEnvironment": {
+      "OLLAMA_FLASH_ATTENTION": null,
+      "OLLAMA_KV_CACHE_TYPE": null,
+      "OLLAMA_NUM_PARALLEL": null,
+      "OLLAMA_MAX_LOADED_MODELS": null,
+      "OLLAMA_CONTEXT_LENGTH": null,
+      "OLLAMA_GPU_OVERHEAD": null,
+      "CUDA_VISIBLE_DEVICES": null,
+      "GGML_CUDA_ENABLE_UNIFIED_MEMORY": null
+    },
+    "primaryPerformanceEnvironment": "unknown; primary is an independently started server",
+    "logFile": "C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\state\\ollama-20260911-131150-5076dcd2.log",
+    "startedAt": "2026-09-11T13:11:50-06:00",
+    "pid": 33072,
+    "processIdentity": {
+      "imagePath": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "creationFileTime": "134336275107747759"
+    },
+    "version": {
+      "version": "0.32.13"
+    },
+    "stoppedAt": "2026-09-11T13:13:00-06:00",
+    "childExitCode": 1,
+    "portFree": true
+  },
+  "updatedAt": "2026-09-11T13:13:00-06:00",
+  "resultFile": "runs/20260911-131150-5076dcd2.json",
+  "admission": {
+    "kind": "huggingface",
+    "model": "nightly-bench-d5808e5874e660a8:latest",
+    "bytes": 32635677632,
+    "sha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "alreadyImported": true,
+    "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+    "selection": {
+      "kind": "huggingface",
+      "repoId": "unsloth/gemma-4-31B-it-GGUF",
+      "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+      "filename": "gemma-4-31B-it-Q8_0.gguf",
+      "rationale": "Run actual workload and isolated generated-code pilots immediately after the initial candidate screen, while the verified model remains cached. Preserve this mode and budget as a separate configuration.",
+      "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+      "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+      "expectedBytes": 32635677632,
+      "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+      "campaignProtocol": "humaneval-x-js-hf-chat-v2",
+      "thinking": false,
+      "caseOffset": 0,
+      "caseCount": 20
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 94.02734375,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 2.0
+  },
+  "protocol": {
+    "name": "humaneval-x-js-wasm-chat-v2",
+    "suiteSha256": "da29da61ddd7af9dc26810172ab09b8aa5317ae36678fdc98b2a9682c17941c9",
+    "thinking": false,
+    "context": 16384,
+    "outputCap": 4096,
+    "maxGenerationSeconds": 240,
+    "tasks": 20,
+    "hiddenTests": 20,
+    "temperature": 0,
+    "topP": 1,
+    "topK": 40,
+    "repeatPenalty": 1.0,
+    "samplingProfile": "greedy-v1",
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Adapted HumanEval-X JavaScript screen; one greedy sample per task, not the original 200-sample leaderboard protocol.",
+    "promptStyle": "full-program",
+    "upstream": "https://huggingface.co/datasets/zai-org/humaneval-x",
+    "datasetRevision": "62c78627f3072a1454fa0cb0184737cafe5e4198",
+    "datasetSha256": "1ffbb18b60d36c50c8a7d1230b7fbb82e5dd838d341242aab1caa2f8d7b598eb",
+    "supportedTasks": 163,
+    "upstreamTasks": 164,
+    "caseOffset": 0,
+    "caseCount": 20,
+    "excludedTasks": {
+      "JavaScript/162": "Reference requires the Node crypto module, unavailable in this WASM guest."
+    },
+    "testInvocationRepairs": [
+      "JavaScript/119",
+      "JavaScript/151",
+      "JavaScript/32"
+    ],
+    "randomSeed": 42,
+    "randomAlgorithm": "xorshift32",
+    "guestDeadlineMs": 2000,
+    "contaminationCaveat": "This longstanding public benchmark may be represented in model training data; scores do not establish unseen-task or repository-agent performance."
+  },
+  "benchmarks": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "endpoint": "http://127.0.0.1:11435",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "30.7B",
+        "quantization_level": "Q8_0"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "thinking"
+      ],
+      "modelParameters": "stop                           \"<turn|>\"",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "JavaScript/0",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Check if in given list of numbers, are any two numbers closer to each other than\n  given threshold.\n  >>> hasCloseElements([1.0, 2.0, 3.0], 0.5)\n  false\n  >>> hasCloseElements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n  true\n  */\nconst hasCloseElements = (numbers, threshold) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:03.96837Z",
+            "message": {
+              "role": "assistant",
+              "content": "const hasCloseElements = (numbers, threshold) => {\n  for (let i = 0; i < numbers.length; i++) {\n    for (let j = i + 1; j < numbers.length; j++) {\n      if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n        return true;\n      }\n    }\n  }\n  return false;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2793776100,
+            "load_duration": 232103400,
+            "prompt_eval_count": 174,
+            "prompt_eval_duration": 138827000,
+            "eval_count": 95,
+            "eval_duration": 2412673000,
+            "clientWallMs": 2816.6,
+            "supervisedWallMs": 2911.7
+          },
+          "code": "const hasCloseElements = (numbers, threshold) => {\n  for (let i = 0; i < numbers.length; i++) {\n    for (let j = i + 1; j < numbers.length; j++) {\n      if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n        return true;\n      }\n    }\n  }\n  return false;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2911.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/0",
+                "passed": true,
+                "count": 7,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/1",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n  separate those group into separate strings and return the list of those.\n  Separate groups are balanced (each open brace is properly closed) and not nested within each other\n  Ignore any spaces in the input string.\n  >>> separateParenGroups('( ) (( )) (( )( ))')\n  ['()', '(())', '(()())']\n  */\nconst separateParenGroups = (paren_string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:08.2993518Z",
+            "message": {
+              "role": "assistant",
+              "content": "const separateParenGroups = (paren_string) => {\n  const result = [];\n  let currentGroup = '';\n  let balance = 0;\n  const cleaned = paren_string.replace(/\\s+/g, '');\n\n  for (let char of cleaned) {\n    currentGroup += char;\n    if (char === '(') {\n      balance++;\n    } else if (char === ')') {\n      balance--;\n    }\n\n    if (balance === 0 && currentGroup.length > 0) {\n      result.push(currentGroup);\n      currentGroup = '';\n    }\n  }\n\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4100626900,
+            "load_duration": 238420400,
+            "prompt_eval_count": 170,
+            "prompt_eval_duration": 127965000,
+            "eval_count": 144,
+            "eval_duration": 3672416000,
+            "clientWallMs": 4129.3,
+            "supervisedWallMs": 4221.3
+          },
+          "code": "const separateParenGroups = (paren_string) => {\n  const result = [];\n  let currentGroup = '';\n  let balance = 0;\n  const cleaned = paren_string.replace(/\\s+/g, '');\n\n  for (let char of cleaned) {\n    currentGroup += char;\n    if (char === '(') {\n      balance++;\n    } else if (char === ')') {\n      balance--;\n    }\n\n    if (balance === 0 && currentGroup.length > 0) {\n      result.push(currentGroup);\n      currentGroup = '';\n    }\n  }\n\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4221.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/1",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/2",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Given a positive floating point number, it can be decomposed into\n  and integer part (largest integer smaller than given number) and decimals\n  (leftover part always smaller than 1).\n\n  Return the decimal part of the number.\n  >>> truncateNumber(3.5)\n  0.5\n  */\nconst truncateNumber = (number) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:09.4919224Z",
+            "message": {
+              "role": "assistant",
+              "content": "const truncateNumber = (number) => {\n  return number - Math.floor(number);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 977578300,
+            "load_duration": 233847200,
+            "prompt_eval_count": 140,
+            "prompt_eval_duration": 118233000,
+            "eval_count": 23,
+            "eval_duration": 563481000,
+            "clientWallMs": 1006.4,
+            "supervisedWallMs": 1099.0
+          },
+          "code": "const truncateNumber = (number) => {\n  return number - Math.floor(number);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1099.0,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/2",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/3",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* You're given a list of deposit and withdrawal operations on a bank account that starts with\n  zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n  at that point function should return true. Otherwise it should return false.\n  >>> belowZero([1, 2, 3])\n  false\n  >>> belowZero([1, 2, -4, 5])\n  true\n  */\nconst belowZero = (operations) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:11.6349632Z",
+            "message": {
+              "role": "assistant",
+              "content": "const belowZero = (operations) => {\n  let balance = 0;\n  for (let op of operations) {\n    balance += op;\n    if (balance < 0) {\n      return true;\n    }\n  }\n  return false;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1952848500,
+            "load_duration": 235760200,
+            "prompt_eval_count": 171,
+            "prompt_eval_duration": 125994000,
+            "eval_count": 62,
+            "eval_duration": 1550614000,
+            "clientWallMs": 1964.0,
+            "supervisedWallMs": 2054.8
+          },
+          "code": "const belowZero = (operations) => {\n  let balance = 0;\n  for (let op of operations) {\n    balance += op;\n    if (balance < 0) {\n      return true;\n    }\n  }\n  return false;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2054.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/3",
+                "passed": true,
+                "count": 6,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/4",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* For a given list of input numbers, calculate Mean Absolute Deviation\n  around the mean of this dataset.\n  Mean Absolute Deviation is the average absolute difference between each\n  element and a centerpoint (mean in this case):\n  MAD = average | x - x_mean |\n  >>> meanAbsoluteDeviation([1.0, 2.0, 3.0, 4.0])\n  1.0\n  */\nconst meanAbsoluteDeviation = (numbers) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:14.9591785Z",
+            "message": {
+              "role": "assistant",
+              "content": "const meanAbsoluteDeviation = (numbers) => {\n  if (numbers.length === 0) return 0;\n  const mean = numbers.reduce((acc, val) => acc + val, 0) / numbers.length;\n  const absoluteDifferences = numbers.map(val => Math.abs(val - mean));\n  const mad = absoluteDifferences.reduce((acc, val) => acc + val, 0) / numbers.length;\n  return mad;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3093927800,
+            "load_duration": 230754000,
+            "prompt_eval_count": 166,
+            "prompt_eval_duration": 124666000,
+            "eval_count": 106,
+            "eval_duration": 2687212000,
+            "clientWallMs": 3121.0,
+            "supervisedWallMs": 3215.2
+          },
+          "code": "const meanAbsoluteDeviation = (numbers) => {\n  if (numbers.length === 0) return 0;\n  const mean = numbers.reduce((acc, val) => acc + val, 0) / numbers.length;\n  const absoluteDifferences = numbers.map(val => Math.abs(val - mean));\n  const mad = absoluteDifferences.reduce((acc, val) => acc + val, 0) / numbers.length;\n  return mad;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3215.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/4",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/5",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n  >>> intersperse([], 4)\n  []\n  >>> intersperse([1, 2, 3], 4)\n  [1, 4, 2, 4, 3]\n  */\nconst intersperse = (numbers, delimeter) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:18.0704897Z",
+            "message": {
+              "role": "assistant",
+              "content": "const intersperse = (numbers, delimeter) => {\n  if (numbers.length === 0) return [];\n  const result = [];\n  for (let i = 0; i < numbers.length; i++) {\n    result.push(numbers[i]);\n    if (i < numbers.length - 1) {\n      result.push(delimeter);\n    }\n  }\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2891830400,
+            "load_duration": 236370100,
+            "prompt_eval_count": 146,
+            "prompt_eval_duration": 115506000,
+            "eval_count": 98,
+            "eval_duration": 2485430000,
+            "clientWallMs": 2904.1,
+            "supervisedWallMs": 2996.7
+          },
+          "code": "const intersperse = (numbers, delimeter) => {\n  if (numbers.length === 0) return [];\n  const result = [];\n  for (let i = 0; i < numbers.length; i++) {\n    result.push(numbers[i]);\n    if (i < numbers.length - 1) {\n      result.push(delimeter);\n    }\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2996.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/5",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/6",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n  For each of the group, output the deepest level of nesting of parentheses.\n  E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n  >>> parseNestedParens('(()()) ((())) () ((())()())')\n  [2, 3, 1, 3]\n  */\nconst parseNestedParens = (paren_string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:22.4195506Z",
+            "message": {
+              "role": "assistant",
+              "content": "const parseNestedParens = (paren_string) => {\n  const groups = paren_string.split(' ');\n  const results = [];\n\n  for (const group of groups) {\n    let maxDepth = 0;\n    let currentDepth = 0;\n    for (const char of group) {\n      if (char === '(') {\n        currentDepth++;\n        if (currentDepth > maxDepth) {\n          maxDepth = currentDepth;\n        }\n      } else if (char === ')') {\n        currentDepth--;\n      }\n    }\n    results.push(maxDepth);\n  }\n\n  return results;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4131434600,
+            "load_duration": 235589700,
+            "prompt_eval_count": 166,
+            "prompt_eval_duration": 124136000,
+            "eval_count": 146,
+            "eval_duration": 3720801000,
+            "clientWallMs": 4161.8,
+            "supervisedWallMs": 4256.2
+          },
+          "code": "const parseNestedParens = (paren_string) => {\n  const groups = paren_string.split(' ');\n  const results = [];\n\n  for (const group of groups) {\n    let maxDepth = 0;\n    let currentDepth = 0;\n    for (const char of group) {\n      if (char === '(') {\n        currentDepth++;\n        if (currentDepth > maxDepth) {\n          maxDepth = currentDepth;\n        }\n      } else if (char === ')') {\n        currentDepth--;\n      }\n    }\n    results.push(maxDepth);\n  }\n\n  return results;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4256.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/6",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/7",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Filter an input list of strings only for ones that contain given substring\n  >>> filterBySubstring([], 'a')\n  []\n  >>> filterBySubstring(['abc', 'bacd', 'cde', 'array'], 'a')\n  ['abc', 'bacd', 'array']\n  */\nconst filterBySubstring = (strings, substring) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:23.7735978Z",
+            "message": {
+              "role": "assistant",
+              "content": "const filterBySubstring = (strings, substring) => {\n  return strings.filter(str => str.includes(substring));\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1148217400,
+            "load_duration": 235025700,
+            "prompt_eval_count": 140,
+            "prompt_eval_duration": 115862000,
+            "eval_count": 30,
+            "eval_duration": 738755000,
+            "clientWallMs": 1161.6,
+            "supervisedWallMs": 1254.1
+          },
+          "code": "const filterBySubstring = (strings, substring) => {\n  return strings.filter(str => str.includes(substring));\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1254.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/7",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/8",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n  Empty sum should be equal to 0 and empty product should be equal to 1.\n  >>> sumProduct([])\n  (0, 1)\n  >>> sumProduct([1, 2, 3, 4])\n  (10, 24)\n  */\nconst sumProduct = (numbers, int) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:25.9180429Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sumProduct = (numbers) => {\n  let sum = 0;\n  let product = 1;\n  for (let num of numbers) {\n    sum += num;\n    product *= num;\n  }\n  return [sum, product];\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1947691600,
+            "load_duration": 232096900,
+            "prompt_eval_count": 164,
+            "prompt_eval_duration": 120641000,
+            "eval_count": 61,
+            "eval_duration": 1555031000,
+            "clientWallMs": 1973.5,
+            "supervisedWallMs": 2062.9
+          },
+          "code": "const sumProduct = (numbers) => {\n  let sum = 0;\n  let product = 1;\n  for (let num of numbers) {\n    sum += num;\n    product *= num;\n  }\n  return [sum, product];\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2062.9,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/8",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/9",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* From a given list of integers, generate a list of rolling maximum element found until given moment\n  in the sequence.\n  >>> rollingMax([1, 2, 3, 2, 3, 4, 2])\n  [1, 2, 3, 3, 3, 4, 4]\n  */\nconst rollingMax = (numbers) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:29.1333452Z",
+            "message": {
+              "role": "assistant",
+              "content": "const rollingMax = (numbers) => {\n  if (numbers.length === 0) return [];\n  const result = [];\n  let currentMax = numbers[0];\n  for (let i = 0; i < numbers.length; i++) {\n    if (numbers[i] > currentMax) {\n      currentMax = numbers[i];\n    }\n    result.push(currentMax);\n  }\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3019893300,
+            "load_duration": 238428200,
+            "prompt_eval_count": 149,
+            "prompt_eval_duration": 117731000,
+            "eval_count": 102,
+            "eval_duration": 2609232000,
+            "clientWallMs": 3031.0,
+            "supervisedWallMs": 3122.6
+          },
+          "code": "const rollingMax = (numbers) => {\n  if (numbers.length === 0) return [];\n  const result = [];\n  let currentMax = numbers[0];\n  for (let i = 0; i < numbers.length; i++) {\n    if (numbers[i] > currentMax) {\n      currentMax = numbers[i];\n    }\n    result.push(currentMax);\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3122.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/9",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/10",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Test if gniven strig is a palindrome */\nconst isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\n/* Find the shortest palindrome that begins with a supplied string.\n  Algorithm idea is simple:\n  - Find the longest postfix of supplied string that is a palindrome.\n  - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n  >>> makePalindrome('')\n  ''\n  >>> makePalindrome('cat')\n  'catac'\n  >>> makePalindrome('cata')\n  'catac'\n  */\nconst makePalindrome = (string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:36.0520267Z",
+            "message": {
+              "role": "assistant",
+              "content": "/* Test if gniven strig is a palindrome */\nconst isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\n/* Find the shortest palindrome that begins with a supplied string.\n  Algorithm idea is simple:\n  - Find the longest postfix of supplied string that is a palindrome.\n  - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n  >>> makePalindrome('')\n  ''\n  >>> makePalindrome('cat')\n  'catac'\n  >>> makePalindrome('cata')\n  'catac'\n  */\nconst makePalindrome = (string) => {\n  if (string === '') return '';\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.slice(i);\n    if (isPalindrome(suffix)) {\n      const prefix = string.slice(0, i);\n      const reversedPrefix = prefix.split('').reverse().join('');\n      return string + reversedPrefix;\n    }\n  }\n  return string;\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 6691199700,
+            "load_duration": 239845200,
+            "prompt_eval_count": 207,
+            "prompt_eval_duration": 139296000,
+            "eval_count": 243,
+            "eval_duration": 6253899000,
+            "clientWallMs": 6712.9,
+            "supervisedWallMs": 6809.7
+          },
+          "code": "/* Test if gniven strig is a palindrome */\nconst isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\n/* Find the shortest palindrome that begins with a supplied string.\n  Algorithm idea is simple:\n  - Find the longest postfix of supplied string that is a palindrome.\n  - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n  >>> makePalindrome('')\n  ''\n  >>> makePalindrome('cat')\n  'catac'\n  >>> makePalindrome('cata')\n  'catac'\n  */\nconst makePalindrome = (string) => {\n  if (string === '') return '';\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.slice(i);\n    if (isPalindrome(suffix)) {\n      const prefix = string.slice(0, i);\n      const reversedPrefix = prefix.split('').reverse().join('');\n      return string + reversedPrefix;\n    }\n  }\n  return string;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 6809.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/10",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/11",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input are two strings a and b consisting only of 1s and 0s.\n  Perform binary XOR on these inputs and return result also as a string.\n  >>> stringXor('010', '110')\n  '100'\n  */\nconst stringXor = (a, b) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:38.4516937Z",
+            "message": {
+              "role": "assistant",
+              "content": "const stringXor = (a, b) => {\n  let result = '';\n  for (let i = 0; i < a.length; i++) {\n    result += a[i] === b[i] ? '0' : '1';\n  }\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2189667400,
+            "load_duration": 233917400,
+            "prompt_eval_count": 136,
+            "prompt_eval_duration": 115054000,
+            "eval_count": 69,
+            "eval_duration": 1760388000,
+            "clientWallMs": 2200.7,
+            "supervisedWallMs": 2294.8
+          },
+          "code": "const stringXor = (a, b) => {\n  let result = '';\n  for (let i = 0; i < a.length; i++) {\n    result += a[i] === b[i] ? '0' : '1';\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2294.8,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/11",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/12",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Out of list of strings, return the longest one. Return the first one in case of multiple\n  strings of the same length. Return null in case the input list is empty.\n  >>> longest([])\n\n  >>> longest(['a', 'b', 'c'])\n  'a'\n  >>> longest(['a', 'bb', 'ccc'])\n  'ccc'\n  */\nconst longest = (strings) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:41.5285445Z",
+            "message": {
+              "role": "assistant",
+              "content": "const longest = (strings) => {\n  if (strings.length === 0) {\n    return null;\n  }\n  let longestStr = strings[0];\n  for (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > longestStr.length) {\n      longestStr = strings[i];\n    }\n  }\n  return longestStr;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2871693100,
+            "load_duration": 233799800,
+            "prompt_eval_count": 153,
+            "prompt_eval_duration": 117644000,
+            "eval_count": 97,
+            "eval_duration": 2476893000,
+            "clientWallMs": 2883.9,
+            "supervisedWallMs": 2982.5
+          },
+          "code": "const longest = (strings) => {\n  if (strings.length === 0) {\n    return null;\n  }\n  let longestStr = strings[0];\n  for (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > longestStr.length) {\n      longestStr = strings[i];\n    }\n  }\n  return longestStr;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2982.5,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/12",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/13",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return a greatest common divisor of two integers a and b\n  >>> greatestCommonDivisor(3, 5)\n  1\n  >>> greatestCommonDivisor(25, 15)\n  5\n  */\nconst greatestCommonDivisor = (a, b) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:43.3956514Z",
+            "message": {
+              "role": "assistant",
+              "content": "const greatestCommonDivisor = (a, b) => {\n  while (b) {\n    a %= b;\n    [a, b] = [b, a];\n  }\n  return a;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1649877500,
+            "load_duration": 234863600,
+            "prompt_eval_count": 125,
+            "prompt_eval_duration": 103574000,
+            "eval_count": 50,
+            "eval_duration": 1260678000,
+            "clientWallMs": 1675.9,
+            "supervisedWallMs": 1769.2
+          },
+          "code": "const greatestCommonDivisor = (a, b) => {\n  while (b) {\n    a %= b;\n    [a, b] = [b, a];\n  }\n  return a;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1769.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/13",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/14",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return list of all prefixes from shortest to longest of the input string\n  >>> allPrefixes('abc')\n  ['a', 'ab', 'abc']\n  */\nconst allPrefixes = (string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:45.4928513Z",
+            "message": {
+              "role": "assistant",
+              "content": "const allPrefixes = (string) => {\n  const prefixes = [];\n  for (let i = 1; i <= string.length; i++) {\n    prefixes.push(string.substring(0, i));\n  }\n  return prefixes;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1898574900,
+            "load_duration": 236762500,
+            "prompt_eval_count": 110,
+            "prompt_eval_duration": 100870000,
+            "eval_count": 60,
+            "eval_duration": 1521635000,
+            "clientWallMs": 1909.1,
+            "supervisedWallMs": 2002.1
+          },
+          "code": "const allPrefixes = (string) => {\n  const prefixes = [];\n  for (let i = 1; i <= string.length; i++) {\n    prefixes.push(string.substring(0, i));\n  }\n  return prefixes;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2002.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/14",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/15",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n  >>> stringSequence(0)\n  '0'\n  >>> stringSequence(5)\n  '0 1 2 3 4 5'\n  */\nconst stringSequence = (n) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:47.5397606Z",
+            "message": {
+              "role": "assistant",
+              "content": "const stringSequence = (n) => {\n  let result = [];\n  for (let i = 0; i <= n; i++) {\n    result.push(i);\n  }\n  return result.join(' ');\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1815680900,
+            "load_duration": 287020800,
+            "prompt_eval_count": 129,
+            "prompt_eval_duration": 106575000,
+            "eval_count": 54,
+            "eval_duration": 1384659000,
+            "clientWallMs": 1843.2,
+            "supervisedWallMs": 1936.1
+          },
+          "code": "const stringSequence = (n) => {\n  let result = [];\n  for (let i = 0; i <= n; i++) {\n    result.push(i);\n  }\n  return result.join(' ');\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1936.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/15",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/16",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Given a string, find out how many distinct characters (regardless of case) does it consist of\n  >>> countDistinctCharacters('xyzXYZ')\n  3\n  >>> countDistinctCharacters('Jerry')\n  4\n  */\nconst countDistinctCharacters = (string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:49.2833322Z",
+            "message": {
+              "role": "assistant",
+              "content": "const countDistinctCharacters = (string) => {\n  const lowerString = string.toLowerCase();\n  const distinctChars = new Set(lowerString);\n  return distinctChars.size;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1521923000,
+            "load_duration": 258476300,
+            "prompt_eval_count": 121,
+            "prompt_eval_duration": 110491000,
+            "eval_count": 43,
+            "eval_duration": 1088417000,
+            "clientWallMs": 1552.4,
+            "supervisedWallMs": 1648.4
+          },
+          "code": "const countDistinctCharacters = (string) => {\n  const lowerString = string.toLowerCase();\n  const distinctChars = new Set(lowerString);\n  return distinctChars.size;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1648.4,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/16",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/17",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string representing musical notes in a special ASCII format.\n  Your task is to parse this string and return list of integers corresponding to how many beats does each\n  not last.\n\n  Here is a legend:\n  'o' - whole note, lasts four beats\n  'o|' - half note, lasts two beats\n  '.|' - quater note, lasts one beat\n\n  >>> parseMusic('o o| .| o| o| .| .| .| .| o o')\n  [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n  */\nconst parseMusic = (music_string) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:51.802004Z",
+            "message": {
+              "role": "assistant",
+              "content": "const parseMusic = (music_string) => {\n  const notes = music_string.split(' ');\n  const beatsMap = {\n    'o': 4,\n    'o|': 2,\n    '.|': 1\n  };\n  return notes.map(note => beatsMap[note]);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2304787500,
+            "load_duration": 231925500,
+            "prompt_eval_count": 226,
+            "prompt_eval_duration": 138985000,
+            "eval_count": 74,
+            "eval_duration": 1895529000,
+            "clientWallMs": 2333.2,
+            "supervisedWallMs": 2425.9
+          },
+          "code": "const parseMusic = (music_string) => {\n  const notes = music_string.split(' ');\n  const beatsMap = {\n    'o': 4,\n    'o|': 2,\n    '.|': 1\n  };\n  return notes.map(note => beatsMap[note]);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2425.9,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/17",
+                "passed": false,
+                "count": 5,
+                "failed": 1
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/18",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Find how many times a given substring can be found in the original string. Count overlaping cases.\n  >>> howManyTimes('', 'a')\n  0\n  >>> howManyTimes('aaa', 'a')\n  3\n  >>> howManyTimes('aaaa', 'aa')\n  3\n  */\nconst howManyTimes = (string, substring) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:54.5925564Z",
+            "message": {
+              "role": "assistant",
+              "content": "const howManyTimes = (string, substring) => {\n  if (substring.length === 0) return 0;\n  let count = 0;\n  let pos = 0;\n  while ((pos = string.indexOf(substring, pos)) !== -1) {\n    count++;\n    pos++;\n  }\n  return count;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2564431500,
+            "load_duration": 300230100,
+            "prompt_eval_count": 142,
+            "prompt_eval_duration": 122082000,
+            "eval_count": 81,
+            "eval_duration": 2077610999,
+            "clientWallMs": 2587.0,
+            "supervisedWallMs": 2682.7
+          },
+          "code": "const howManyTimes = (string, substring) => {\n  if (substring.length === 0) return 0;\n  let count = 0;\n  let pos = 0;\n  while ((pos = string.indexOf(substring, pos)) !== -1) {\n    count++;\n    pos++;\n  }\n  return count;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2682.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/18",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/19",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Input is a space-delimited string of numberals from 'zero' to 'nine'.\n  Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n  Return the string with numbers sorted from smallest to largest\n  >>> sortNumbers('three one five')\n  'one three five'\n  */\nconst sortNumbers = (numbers) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T19:12:59.6998831Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sortNumbers = (numbers) => {\n  const map = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n  };\n  const reverseMap = Object.fromEntries(Object.entries(map).map(([k, v]) => [v, k]));\n  \n  const sortedArray = numbers.split(' ')\n    .sort((a, b) => map[a] - map[b]);\n    \n  return sortedArray.join(' ');\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4868225600,
+            "load_duration": 236813400,
+            "prompt_eval_count": 160,
+            "prompt_eval_duration": 118243000,
+            "eval_count": 172,
+            "eval_duration": 4443868000,
+            "clientWallMs": 4894.6,
+            "supervisedWallMs": 4989.1
+          },
+          "code": "const sortNumbers = (numbers) => {\n  const map = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n  };\n  const reverseMap = Object.fromEntries(Object.entries(map).map(([k, v]) => [v, k]));\n  \n  const sortedArray = numbers.split(' ')\n    .sort((a, b) => map[a] - map[b]);\n    \n  return sortedArray.join(' ');\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4989.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/19",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "nightly-bench-d5808e5874e660a8:latest",
+        "created_at": "2026-09-11T19:12:01.0253593Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7031840600,
+        "load_duration": 6878360600,
+        "prompt_eval_count": 18,
+        "prompt_eval_duration": 109382000,
+        "eval_count": 2,
+        "eval_duration": 41390000,
+        "clientWallMs": 7042.4,
+        "supervisedWallMs": 7138.1
+      },
+      "loadedModel": [
+        {
+          "name": "nightly-bench-d5808e5874e660a8:latest",
+          "model": "nightly-bench-d5808e5874e660a8:latest",
+          "size": 34710864527,
+          "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "gemma4",
+            "families": [
+              "gemma4"
+            ],
+            "parameter_size": "30.7B",
+            "quantization_level": "Q8_0"
+          },
+          "expires_at": "2026-09-11T13:17:01.0260569-06:00",
+          "size_vram": 34710864527,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 19,
+        "tasksAttempted": 20,
+        "tasksTotal": 20,
+        "testsPassed": 19,
+        "testsTotal": 20,
+        "medianWallMs": 2554.3,
+        "totalWallMs": 56735.0,
+        "truncated": 0,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "unloads": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "endpoint": "http://127.0.0.1:11435",
+      "confirmedAt": "2026-09-11T13:13:00-06:00",
+      "gpuAfter": {
+        "freeGiB": 94.02734375,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 2.0
+      },
+      "freeBeforeGiB": 94.02734375
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T13:13:00-06:00"
+}

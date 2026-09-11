@@ -1,10 +1,10 @@
 {
-  "updatedAt": "2026-09-11T12:58:56.959647-06:00",
+  "updatedAt": "2026-09-11T13:24:33.622408-06:00",
   "campaignId": "20260911-daytime",
   "active": [
     {
-      "id": "humaneval-chat-ornith-implicit-part7",
-      "runId": "20260911-125819-23884aba"
+      "id": "coding-gemma-think-pilot",
+      "runId": "20260911-131530-e0cf9a30"
     }
   ],
   "terminal": [
@@ -475,9 +475,57 @@
       "runId": "20260911-125619-d200815e",
       "status": "completed",
       "error": null
+    },
+    {
+      "id": "humaneval-chat-ornith-implicit-part7",
+      "runId": "20260911-125819-23884aba",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "humaneval-chat-ornith-implicit-part8",
+      "runId": "20260911-130109-f9c9bb94",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "humaneval-chat-ornith-implicit-part9",
+      "runId": "20260911-130339-c49db6d9",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "gemma31-q8",
+      "runId": "20260911-130439-1c5fbf86",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "workload-gemma-pilot",
+      "runId": "20260911-130939-8525ec43",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "coding-gemma-pilot",
+      "runId": "20260911-131040-78f92dff",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "humaneval-chat-gemma-pilot",
+      "runId": "20260911-131150-5076dcd2",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "workload-gemma-think-pilot",
+      "runId": "20260911-131310-ae09b0ba",
+      "status": "error",
+      "error": "Command '['C:\\\\Users\\\\kody1\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe', 'C:\\\\Users\\\\kody1\\\\repos\\\\research\\\\local-model-benchmarks\\\\api_probe.py']' timed out after 119.99934490000305 seconds"
     }
   ],
-  "pending": 61,
+  "pending": 63,
   "modelCoverage": [
     {
       "model": "gpt-oss:20b",
@@ -661,7 +709,29 @@
         "20260911-125048-9723b122",
         "20260911-125238-aecaf43d",
         "20260911-125358-15438ab5",
-        "20260911-125619-d200815e"
+        "20260911-125619-d200815e",
+        "20260911-125819-23884aba",
+        "20260911-130109-f9c9bb94",
+        "20260911-130339-c49db6d9"
+      ],
+      "protocols": [
+        "nightly",
+        "practical-json-v1",
+        "javascript-functions-v1",
+        "humaneval-x-js-wasm-chat-v2"
+      ]
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF",
+      "artifact": "gemma-4-31B-it-Q8_0.gguf",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+      "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+      "runs": [
+        "20260911-130439-1c5fbf86",
+        "20260911-130939-8525ec43",
+        "20260911-131040-78f92dff",
+        "20260911-131150-5076dcd2"
       ],
       "protocols": [
         "nightly",
@@ -747,6 +817,27 @@
         "version": "overnight-screen-v2",
         "status": "completed",
         "passed": 12,
+        "total": 16
+      },
+      "baselineQuality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 12,
+        "total": 16
+      }
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF",
+      "artifact": "gemma-4-31B-it-Q8_0.gguf",
+      "runId": "20260911-130439-1c5fbf86",
+      "valid": true,
+      "reason": null,
+      "candidateTokensPerSecond": 40.47,
+      "baselineTokensPerSecond": 302.25,
+      "quality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 14,
         "total": 16
       },
       "baselineQuality": {
@@ -1452,6 +1543,58 @@
           "total": 3
         }
       }
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF / gemma-4-31B-it-Q8_0.gguf",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "thinking": false,
+      "context": 8192,
+      "protocol": "practical-json-v1",
+      "suiteSha256": "d262c79327a282d2d3366d1290ea5b407cd5da4d9a61c3722a1a39ef284fdfb7",
+      "runs": [
+        "20260911-130939-8525ec43"
+      ],
+      "repeatedCases": 0,
+      "passed": 10,
+      "total": 24,
+      "medianWallMs": 1856.35,
+      "totalWallMs": 44845.4,
+      "truncated": 0,
+      "unexpectedThinking": false,
+      "categories": {
+        "ledger-replay": {
+          "passed": 0,
+          "total": 3
+        },
+        "event-state": {
+          "passed": 0,
+          "total": 3
+        },
+        "dependency-scheduling": {
+          "passed": 1,
+          "total": 3
+        },
+        "sql-analysis": {
+          "passed": 0,
+          "total": 3
+        },
+        "shortest-path": {
+          "passed": 3,
+          "total": 3
+        },
+        "record-extraction": {
+          "passed": 3,
+          "total": 3
+        },
+        "python-trace": {
+          "passed": 0,
+          "total": 3
+        },
+        "record-retrieval": {
+          "passed": 3,
+          "total": 3
+        }
+      }
     }
   ],
   "common24Results": [
@@ -1596,6 +1739,18 @@
       "passed": 4,
       "total": 24,
       "medianWallMs": 604.5,
+      "truncated": 0,
+      "unexpectedThinking": false
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF / gemma-4-31B-it-Q8_0.gguf",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "thinking": false,
+      "context": 8192,
+      "suiteSha256": "d262c79327a282d2d3366d1290ea5b407cd5da4d9a61c3722a1a39ef284fdfb7",
+      "passed": 10,
+      "total": 24,
+      "medianWallMs": 1856.35,
       "truncated": 0,
       "unexpectedThinking": false
     }
@@ -2669,6 +2824,91 @@
           "testsTotal": 12
         }
       ]
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF",
+      "artifact": "gemma-4-31B-it-Q8_0.gguf",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "runId": "20260911-131040-78f92dff",
+      "protocol": {
+        "name": "javascript-functions-v1",
+        "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+        "thinking": false,
+        "context": 16384,
+        "outputCap": 4096,
+        "maxGenerationSeconds": 240,
+        "tasks": 8,
+        "hiddenTests": 99,
+        "temperature": 0,
+        "topP": 1,
+        "topK": 40,
+        "repeatPenalty": 1.0,
+        "samplingProfile": "greedy-v1",
+        "seed": 42,
+        "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+        "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+        "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+      },
+      "tasksPassed": 7,
+      "tasksAttempted": 8,
+      "tasksTotal": 8,
+      "testsPassed": 98,
+      "testsTotal": 99,
+      "medianWallMs": 5392.25,
+      "totalWallMs": 54372.0,
+      "truncated": 0,
+      "unexpectedThinking": false,
+      "protocolValid": true,
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "versioned-state",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "merge-intervals",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "topological-order",
+          "passed": true,
+          "testsPassed": 13,
+          "testsTotal": 13
+        },
+        {
+          "id": "ttl-cache",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "json-pointer",
+          "passed": true,
+          "testsPassed": 14,
+          "testsTotal": 14
+        },
+        {
+          "id": "csv-parser",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "recursive-redaction",
+          "passed": false,
+          "testsPassed": 11,
+          "testsTotal": 12
+        }
+      ]
     }
   ],
   "humanEvalResults": [
@@ -2908,15 +3148,18 @@
         "20260911-125048-9723b122",
         "20260911-125238-aecaf43d",
         "20260911-125358-15438ab5",
-        "20260911-125619-d200815e"
+        "20260911-125619-d200815e",
+        "20260911-125819-23884aba",
+        "20260911-130109-f9c9bb94",
+        "20260911-130339-c49db6d9"
       ],
-      "passed": 110,
-      "total": 120,
+      "passed": 148,
+      "total": 163,
       "supportedTasks": 163,
       "repeatedTasks": 0,
-      "medianWallMs": 3252.8,
-      "totalWallMs": 503035.3,
-      "meanWallMs": 4191.9608333333335,
+      "medianWallMs": 3310.7,
+      "totalWallMs": 828411.6,
+      "meanWallMs": 5082.279754601227,
       "truncated": 2,
       "unexpectedThinking": false,
       "failedTasks": [
@@ -2929,7 +3172,12 @@
         "JavaScript/103",
         "JavaScript/107",
         "JavaScript/113",
-        "JavaScript/118"
+        "JavaScript/118",
+        "JavaScript/129",
+        "JavaScript/136",
+        "JavaScript/145",
+        "JavaScript/155",
+        "JavaScript/156"
       ]
     },
     {
@@ -2958,6 +3206,32 @@
         "JavaScript/2",
         "JavaScript/5",
         "JavaScript/13"
+      ]
+    },
+    {
+      "model": "unsloth/gemma-4-31B-it-GGUF",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "thinking": false,
+      "context": 16384,
+      "outputCap": 4096,
+      "suiteSha256": "da29da61ddd7af9dc26810172ab09b8aa5317ae36678fdc98b2a9682c17941c9",
+      "protocol": "humaneval-x-js-wasm-chat-v2",
+      "samplingProfile": "greedy-v1",
+      "promptStyle": "full-program",
+      "runs": [
+        "20260911-131150-5076dcd2"
+      ],
+      "passed": 19,
+      "total": 20,
+      "supportedTasks": 163,
+      "repeatedTasks": 0,
+      "medianWallMs": 2554.3,
+      "totalWallMs": 56735.0,
+      "meanWallMs": 2836.75,
+      "truncated": 0,
+      "unexpectedThinking": false,
+      "failedTasks": [
+        "JavaScript/17"
       ]
     }
   ],
@@ -2997,16 +3271,16 @@
   ],
   "supervision": {
     "status": "active",
-    "checkedAt": "2026-09-11T12:54:40.558775-06:00",
-    "leaseExpiresAt": "2026-09-11T13:24:40.558775-06:00",
-    "usageRemainingPercent": 69.0,
+    "checkedAt": "2026-09-11T13:14:10.432187-06:00",
+    "leaseExpiresAt": "2026-09-11T13:44:10.432187-06:00",
+    "usageRemainingPercent": 62.0,
     "meaning": "Agent renewed after reading current Codex usage. New work stops if this lease expires. Already authorized workers keep their hard deadline and cleanup."
   },
   "gpuSample": {
-    "utilizationPercent": "92",
-    "memoryUsedMiB": "30563",
-    "temperatureC": "85",
-    "powerWatts": "300.72",
+    "utilizationPercent": "98",
+    "memoryUsedMiB": "36112",
+    "temperatureC": "84",
+    "powerWatts": "300.15",
     "clockEventReasons": "0x0000000000000004"
   }
 }

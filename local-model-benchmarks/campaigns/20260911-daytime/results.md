@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T12:58:57-06:00
+Updated: 2026-09-11T13:24:33-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -87,17 +87,27 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125238-aecaf43d.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
 | [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125358-15438ab5.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
 | [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125619-d200815e.json) | HumanEval-X adapted screen | — | 16/20 tasks (separate) | — |
-| bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | running | — | — | — |
-| bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | pending | — | — | — |
-| bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125819-23884aba.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-130109-f9c9bb94.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-130339-c49db6d9.json) | HumanEval-X adapted screen | — | 3/3 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-130439-1c5fbf86.json) | valid comparison | 40.47 / 302.25 | 14/16 / 12/16 | 3/3 / 3/3 |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-130939-8525ec43.json) | workload screen | — | 10/24 (practical-json-v1, separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131040-78f92dff.json) | code-writing screen | — | 7/8 tasks; 98/99 tests (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131150-5076dcd2.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-131310-ae09b0ba.json) | error | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | running | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
 | qwen3.5:122b | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
 | gpt-oss:20b | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
 | qwen3.5:122b | pending | — | — | — |
@@ -489,6 +499,43 @@ Personal model digests unchanged: True.
 
 ### humaneval-chat-ornith-implicit-part6
 
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part7
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part8
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part9
+
+Personal model digests unchanged: True.
+
+### gemma31-q8
+
+Candidate: overnight-screen-v2, 14/16. Failed cases: python-boundary, capacity.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 12.66x. Thinking characters: 5499; answer characters: 630.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
+Personal model digests unchanged: True.
+
+### workload-gemma-pilot
+
+Personal model digests unchanged: True.
+
+### coding-gemma-pilot
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-pilot
+
+Personal model digests unchanged: True.
+
+### workload-gemma-think-pilot
+
+Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.99934490000305 seconds
 Personal model digests unchanged: True.
 
 Public publishing remains pending the specific approval requested in this thread. Local reports and commits continue independently.
