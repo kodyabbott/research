@@ -531,9 +531,9 @@ class Harness:
             ('num_ctx', 'numCtx'), ('num_predict', 'numPredict'), ('temperature', 'temperature'), ('seed', 'seed'))}
         options.update(top_p=1, top_k=40, repeat_penalty=1.0)
         if sampling_profile is not None:
-            if sampling_profile != 'nex-recommended-v1':
+            if sampling_profile not in ('nex-recommended-v1', 't1-p95-k40-v1'):
                 raise ValueError('Unsupported sampling profile')
-            options.update(temperature=0.7, top_p=0.95, top_k=40)
+            options.update(temperature=0.7 if sampling_profile == 'nex-recommended-v1' else 1.0, top_p=0.95, top_k=40)
         if num_predict is not None:
             options['num_predict'] = num_predict
         body = {'model': model, 'messages': [{'role': 'user', 'content': prompt}],
