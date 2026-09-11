@@ -1,10 +1,10 @@
 # RTX PRO 6000 benchmark progress
 
-Updated: 2026-09-11T13:24:33.622408-06:00
+Updated: 2026-09-11T13:46:53.536349-06:00
 
 September 11 campaign status: active. Results below are measured locally; scores from different reasoning budgets are separate.
 
-Running: coding-gemma-think-pilot. Pending queue entries: 63.
+Running: coding-qwen35-think-16k-output. Pending queue entries: 59.
 
 Tested model artifacts or installed configurations: 9. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.
 
@@ -44,7 +44,7 @@ The deterministic 96-case suite covers ledger replay, event-state reconstruction
 | bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF / Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf | True | 8192 | 6/24 | 3.11 | 0 | none |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | False | 8192 | 22/24 | 2.40 | 0 | unexpected thinking |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | True | 8192 | 86/96 | 2.45 | 0 | none |
-| qwen3.8:27b-mtp-bf16 | True | 8192 | 24/24 | 11.77 | 0 | none |
+| qwen3.8:27b-mtp-bf16 | True | 8192 | 96/96 | 11.15 | 0 | none |
 | bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | implicit | 8192 | 89/96 | 5.18 | 0 | none |
 | bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | False | 8192 | 4/24 | 0.60 | 0 | none |
 | unsloth/gemma-4-31B-it-GGUF / gemma-4-31B-it-Q8_0.gguf | False | 8192 | 10/24 | 1.86 | 0 | none |
@@ -89,6 +89,7 @@ Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Gener
 | bartowski/Ornith-1.5-35B-A3B-GGUF | implicit / greedy-v1 | 16384 / 8192 | 7/8 | 87/99 | 17.80 | 1 truncated |
 | bartowski/Ornith-1.5-35B-A3B-GGUF | False / greedy-v1 | 16384 / 4096 | 4/8 | 72/99 | 1.62 | none |
 | unsloth/gemma-4-31B-it-GGUF | False / greedy-v1 | 16384 / 4096 | 7/8 | 98/99 | 5.39 | none |
+| unsloth/gemma-4-31B-it-GGUF | True / greedy-v1 | 16384 / 8192 | 6/8 | 74/99 | 61.52 | 2 truncated |
 
 Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.
 
@@ -115,6 +116,8 @@ These HumanEval-X runs use 16384 context and 4096 output tokens with thinking of
 - bartowski/nex-agi_Nex-N2.5-mini-GGUF: completed; 29.37 / 29.37 GB; complete-file hash verified: True.
 - bartowski/Ornith-1.5-35B-A3B-GGUF: completed; 30.53 / 30.53 GB; complete-file hash verified: True.
 - unsloth/gemma-4-31B-it-GGUF: completed; 32.64 / 32.64 GB; complete-file hash verified: True.
+- bartowski/granite-4.2-30b-GGUF: completed; 31.11 / 31.11 GB; complete-file hash verified: True.
+- unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF: running; 17.91 / 35.00 GB; complete-file hash verified: False.
 
 ## Resource and stop behavior
 
