@@ -34,12 +34,14 @@ if (Test-Path -LiteralPath $runtimeExe) {
 }
 & $runtimeExe -c "import ssl, json, subprocess, platform; assert platform.python_version() == '3.14.7'; print(platform.python_version())"
 if ($LASTEXITCODE -ne 0) { throw 'Installed Python validation failed.' }
-Push-Location $PSScriptRoot
-try {
-    & $runtimeExe -m unittest -q test_nightly.py
-    if ($LASTEXITCODE -ne 0) { throw 'Regression tests failed under the new runtime; the interpreter setting was not changed.' }
-} finally {
-    Pop-Location
-}
+# unittest writes its successful summary to stderr. Avoid PowerShell 5.1 turning
+# that into NativeCommandError when the caller captures this setup script's output.
+$testStdout=Join-Path $setupFolder 'runtime-tests.stdout.log'
+$testStderr=Join-Path $setupFolder 'runtime-tests.stderr.log'
+$testProcess=Start-Process -FilePath $runtimeExe -ArgumentList @('-m','unittest','-q','test_nightly.py') `
+    -WorkingDirectory $PSScriptRoot -WindowStyle Hidden -Wait -PassThru `
+    -RedirectStandardOutput $testStdout -RedirectStandardError $testStderr
+Get-Content -LiteralPath $testStdout,$testStderr
+if ($testProcess.ExitCode -ne 0) { throw 'Regression tests failed under the new runtime; the interpreter setting was not changed.' }
 [Environment]::SetEnvironmentVariable('NIGHTLY_BENCH_PYTHON',$runtimeExe,'User')
 Write-Output "NIGHTLY_BENCH_PYTHON=$runtimeExe"
