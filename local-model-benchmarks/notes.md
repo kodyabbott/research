@@ -994,3 +994,7 @@ GPT-OSS is worth testing but cannot enter the thinking-off comparison honestly: 
 
 
 The Muse BF16/DFlash memory anomaly is explained by runtime accounting, not evidence of wrong weights. Bounded startup logs show 53/53 main layers and a 50,566.42 MiB CUDA buffer; the draft loads separately. Replaying the 0.32.13 parser entries exactly reproduces the 2,464,656,915-byte API figure because matching draft allocation keys replace main entries. The snapshot and source references are in campaigns/20260910-overnight/compatibility.md and muse-memory-evidence.json. Truncated short responses and unusual answer/token counts remain separate unresolved behavior. No inference or runtime change was required for this audit.
+
+### Report review correction
+
+Adversarial review found that the progress-report builder omitted uploaded-blob cleanup warnings and per-model thinking probes, even though these can fail independently of the throughput result. The report now preserves both, renders probe errors and skip reasons, shows completed probe overhead, and states the separate GPT-OSS 8192-versus-512-token budget directly. A temporary saved-record fixture verified all warning paths and retained invalid-speed suppression without running inference. The source and URL reviews confirmed the first five result rows and local artifact references; the URL reviewer could not independently retrieve the GPT-OSS source page because of browser cache errors, while the source verifier had already checked the exact-version documentation.

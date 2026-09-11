@@ -34,11 +34,11 @@ def build():
             'runId':item.get('runId'), 'resultFile':report.get('resultFile'),
             'startedAt':report.get('startedAt'), 'finishedAt':report.get('finishedAt'),
             'comparison':report.get('comparison'),
-            'candidate':{k:candidate.get(k) for k in ('model','digest','details','summary','qualityScreen','unloadConfirmed')},
-            'baseline':{k:baseline.get(k) for k in ('model','digest','summary','qualityScreen','unloadConfirmed')},
+            'candidate':{k:candidate.get(k) for k in ('model','digest','details','summary','qualityScreen','thinkingProbe','unloadConfirmed')},
+            'baseline':{k:baseline.get(k) for k in ('model','digest','summary','qualityScreen','thinkingProbe','unloadConfirmed')},
             'primaryDigestsUnchanged':report.get('primaryIntegrity',{}).get('modelDigestsUnchanged'),
             'error':report.get('error') or report.get('reason'),
-            'cleanupErrors':{k:report[k] for k in ('cleanupError','preflightCleanupError','importBookkeepingError','postProcessingError') if k in report}})
+            'cleanupErrors':{k:report[k] for k in ('cleanupError','preflightCleanupError','uploadedBlobCleanupErrors','importBookkeepingError','postProcessingError') if k in report}})
     data={'campaignId':queue['campaignId'],'generatedAt':now(),'rows':rows,
           'scope':'Paired standardized text battery and small authored quality screen. Not a coding-task execution benchmark.'}
     atomic_json(FOLDER/'results.json',data)
@@ -72,7 +72,8 @@ def build():
         lines.append(f'| {label} | {status} | {speed} | {quality} | {checks} |')
     lines += ['', '## Limits and failed cases', '',
               'The 16-item screen measures exact structured answers, code comprehension, small reasoning problems and evidence handling. It does not execute generated code or test a production coding agent. One item changes the score by 6.25 percentage points; differences are descriptive and have no statistical significance claim. V1 pilot and V2 main-sweep scores are not pooled.', '',
-              'A valid throughput comparison does not certify model quality. A completed quality screen is reported separately when throughput is invalid; truncation counts as a failed screen case, and unexpected returned thinking is explicitly marked. Stored BF16/MTP/DFlash configurations include custom settings and cannot isolate quantization effects.', '']
+              'A valid throughput comparison does not certify model quality. A completed quality screen is reported separately when throughput is invalid; truncation counts as a failed screen case, and unexpected returned thinking is explicitly marked. Stored BF16/MTP/DFlash configurations include custom settings and cannot isolate quantization effects.', '',
+              'The separate GPT-OSS low-reasoning screen allows 8192 generated tokens per case versus 512 in the main sweep. It is unpaired and is not an equal-budget quality ranking. Thinking probes below are single exploratory trials excluded from throughput medians; ratios against an invalid ordinary comparison are diagnostic only.', '']
     for row in rows:
         if row['status'] not in ('completed','error','deferred'):
             continue
@@ -88,6 +89,20 @@ def build():
             failed=[x['name'] for x in q.get('cases',[]) if not x['passed']]
             if q:
                 lines.append(side.capitalize()+': '+q.get('version','unknown')+', '+screen_text(q)+'. Failed cases: '+(', '.join(failed) if failed else 'none recorded')+'.')
+                if q.get('error') or q.get('reason'):
+                    lines.append(side.capitalize()+' quality screen issue: '+str(q.get('error') or q.get('reason')))
+            probe=row[side].get('thinkingProbe') or {}
+            if probe:
+                line=side.capitalize()+' thinking probe: '+probe.get('status','unknown')+'.'
+                if probe.get('error') or probe.get('reason'):
+                    line+=' '+str(probe.get('error') or probe.get('reason'))
+                if probe.get('status')=='completed':
+                    ratio=probe.get('wallTimeRatioToThinkingOffMedian')
+                    line+=' Wall-time ratio to ordinary median: '+(f'{ratio:.2f}x' if isinstance(ratio,(int,float)) else 'unavailable')+'.'
+                    line+=' Thinking characters: '+str(probe.get('thinkingCharacters'))+'; answer characters: '+str(probe.get('answerCharacters'))+'.'
+                    if probe.get('response',{}).get('done_reason')=='length':
+                        line+=' Output reached the token cap.'
+                lines.append(line)
         lines.append('Personal model digests unchanged: '+str(row.get('primaryDigestsUnchanged'))+'.')
         if row.get('cleanupErrors'):
             lines.append('Cleanup/postprocessing issue: '+json.dumps(row['cleanupErrors']))
