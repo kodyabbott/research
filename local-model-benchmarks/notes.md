@@ -707,5 +707,6 @@ comparisons now include a reason.
 The cache holds two tiny SmolLM fixtures and charges 250,267,778 bytes. The primary's seven
 model digests remain unchanged, its model list is unloaded, and no nightly candidate quota
 was used. The discovery sweep tried 100 lookups, preserved four HTTP 429 failures as partial,
-and left 253 pending entries. See validation.md for every raw evidence link. Final Fable
-acceptance is pending this committed evidence review. No changes have been pushed.
+and left 253 pending entries. See validation.md for every raw evidence link. Fable accepted the final
+evidence at 19:11 MDT, agreeing it is adequate for the authorized bounded nightly experiment.
+See peer-review.md for the recorded verdict and limits. No changes have been pushed.
