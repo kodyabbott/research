@@ -1,0 +1,1101 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-143045-56e187f1",
+  "startedAt": "2026-09-11T14:30:45-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 120,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T14:30:48-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-humanevalx-screen",
+  "selection": {
+    "kind": "huggingface",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "rationale": "Extend the 19/20 Gemma direct-answer coding pilot to all 163 supported tasks, preserving settings. Scheduled after installed reasoning work to allow background downloads before returning to the cached Gemma model.",
+    "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+    "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+    "expectedBytes": 32635677632,
+    "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "campaignProtocol": "humaneval-x-js-hf-chat-v2",
+    "thinking": false,
+    "caseOffset": 100,
+    "caseCount": 20
+  },
+  "secondaryRuntime": {
+    "host": "127.0.0.1:11435",
+    "modelsDir": "F:\\models\\nightly-benchmark\\ollama",
+    "downloadDir": "F:\\models\\nightly-benchmark\\downloads",
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.EXE",
+    "environmentOverrides": {
+      "OLLAMA_HOST": "127.0.0.1:11435",
+      "OLLAMA_MODELS": "F:\\models\\nightly-benchmark\\ollama"
+    },
+    "performanceEnvironment": {
+      "OLLAMA_FLASH_ATTENTION": null,
+      "OLLAMA_KV_CACHE_TYPE": null,
+      "OLLAMA_NUM_PARALLEL": null,
+      "OLLAMA_MAX_LOADED_MODELS": null,
+      "OLLAMA_CONTEXT_LENGTH": null,
+      "OLLAMA_GPU_OVERHEAD": null,
+      "CUDA_VISIBLE_DEVICES": null,
+      "GGML_CUDA_ENABLE_UNIFIED_MEMORY": null
+    },
+    "primaryPerformanceEnvironment": "unknown; primary is an independently started server",
+    "logFile": "C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\state\\ollama-20260911-143045-56e187f1.log",
+    "startedAt": "2026-09-11T14:30:45-06:00",
+    "pid": 43032,
+    "processIdentity": {
+      "imagePath": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "creationFileTime": "134336322458487788"
+    },
+    "version": {
+      "version": "0.32.13"
+    },
+    "stoppedAt": "2026-09-11T14:32:11-06:00",
+    "childExitCode": 1,
+    "portFree": true
+  },
+  "updatedAt": "2026-09-11T14:32:11-06:00",
+  "resultFile": "runs/20260911-143045-56e187f1.json",
+  "admission": {
+    "kind": "huggingface",
+    "model": "nightly-bench-d5808e5874e660a8:latest",
+    "bytes": 32635677632,
+    "sha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+    "repoId": "unsloth/gemma-4-31B-it-GGUF",
+    "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+    "filename": "gemma-4-31B-it-Q8_0.gguf",
+    "alreadyImported": true,
+    "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+    "selection": {
+      "kind": "huggingface",
+      "repoId": "unsloth/gemma-4-31B-it-GGUF",
+      "revision": "c1ac76e99d5513b141e8adde7288b85c3f9c32ec",
+      "filename": "gemma-4-31B-it-Q8_0.gguf",
+      "rationale": "Extend the 19/20 Gemma direct-answer coding pilot to all 163 supported tasks, preserving settings. Scheduled after installed reasoning work to allow background downloads before returning to the cached Gemma model.",
+      "modelCardUrl": "https://huggingface.co/unsloth/gemma-4-31B-it-GGUF",
+      "upstreamUrl": "https://huggingface.co/google/gemma-4-31B-it",
+      "expectedBytes": 32635677632,
+      "expectedSha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67",
+      "campaignProtocol": "humaneval-x-js-hf-chat-v2",
+      "thinking": false,
+      "caseOffset": 100,
+      "caseCount": 20
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 94.02734375,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 2.0
+  },
+  "protocol": {
+    "name": "humaneval-x-js-wasm-chat-v2",
+    "suiteSha256": "da29da61ddd7af9dc26810172ab09b8aa5317ae36678fdc98b2a9682c17941c9",
+    "thinking": false,
+    "context": 16384,
+    "outputCap": 4096,
+    "maxGenerationSeconds": 240,
+    "tasks": 20,
+    "hiddenTests": 20,
+    "temperature": 0,
+    "topP": 1,
+    "topK": 40,
+    "repeatPenalty": 1.0,
+    "samplingProfile": "greedy-v1",
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Adapted HumanEval-X JavaScript screen; one greedy sample per task, not the original 200-sample leaderboard protocol.",
+    "promptStyle": "full-program",
+    "upstream": "https://huggingface.co/datasets/zai-org/humaneval-x",
+    "datasetRevision": "62c78627f3072a1454fa0cb0184737cafe5e4198",
+    "datasetSha256": "1ffbb18b60d36c50c8a7d1230b7fbb82e5dd838d341242aab1caa2f8d7b598eb",
+    "supportedTasks": 163,
+    "upstreamTasks": 164,
+    "caseOffset": 100,
+    "caseCount": 20,
+    "excludedTasks": {
+      "JavaScript/162": "Reference requires the Node crypto module, unavailable in this WASM guest."
+    },
+    "testInvocationRepairs": [
+      "JavaScript/119",
+      "JavaScript/151",
+      "JavaScript/32"
+    ],
+    "randomSeed": 42,
+    "randomAlgorithm": "xorshift32",
+    "guestDeadlineMs": 2000,
+    "contaminationCaveat": "This longstanding public benchmark may be represented in model training data; scores do not establish unseen-task or repository-agent performance."
+  },
+  "benchmarks": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+      "endpoint": "http://127.0.0.1:11435",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "gemma4",
+        "families": [
+          "gemma4"
+        ],
+        "parameter_size": "30.7B",
+        "quantization_level": "Q8_0"
+      },
+      "capabilities": [
+        "completion",
+        "tools",
+        "thinking"
+      ],
+      "modelParameters": "stop                           \"<turn|>\"",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "JavaScript/100",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  Given a positive integer n, you have to make a pile of n levels of stones.\n  The first level has n stones.\n  The number of stones in the next level is:\n      - the next odd number if n is odd.\n      - the next even number if n is even.\n  Return the number of stones in each level in a list, where element at index\n  i represents the number of stones in the level (i+1).\n\n  Examples:\n  >>> makeAPile(3)\n  [3, 5, 7]\n  */\nconst makeAPile = (n) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:30:58.1509503Z",
+            "message": {
+              "role": "assistant",
+              "content": "const makeAPile = (n) => {\n  const result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(n + (i * 2));\n  }\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1845838200,
+            "load_duration": 234796800,
+            "prompt_eval_count": 200,
+            "prompt_eval_duration": 144873000,
+            "eval_count": 58,
+            "eval_duration": 1456784000,
+            "clientWallMs": 1873.4,
+            "supervisedWallMs": 1966.9
+          },
+          "code": "const makeAPile = (n) => {\n  const result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(n + (i * 2));\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1966.9,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/100",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/101",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  You will be given a string of words separated by commas or spaces. Your task is\n  to split the string into words and return an array of the words.\n  \n  For example:\n  wordsString(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n  wordsString(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n  */\nconst wordsString = (s) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:30:59.6342612Z",
+            "message": {
+              "role": "assistant",
+              "content": "const wordsString = (s) => {\n  return s.split(/[,\\s]+/).filter(word => word.length > 0);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1259115700,
+            "load_duration": 227609200,
+            "prompt_eval_count": 182,
+            "prompt_eval_duration": 127751000,
+            "eval_count": 34,
+            "eval_duration": 848559000,
+            "clientWallMs": 1293.4,
+            "supervisedWallMs": 1385.9
+          },
+          "code": "const wordsString = (s) => {\n  return s.split(/[,\\s]+/).filter(word => word.length > 0);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1385.9,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/101",
+                "passed": true,
+                "count": 6,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/102",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*This function takes two positive numbers x and y and returns the\n  biggest even integer number that is in the range [x, y] inclusive. If \n  there's no such number, then the function should return -1.\n\n  For example:\n  chooseNum(12, 15) = 14\n  chooseNum(13, 12) = -1\n  */\nconst chooseNum = (x, y) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:02.4794794Z",
+            "message": {
+              "role": "assistant",
+              "content": "const chooseNum = (x, y) => {\n  if (x > y) return -1;\n  let maxEven = -1;\n  for (let i = y; i >= x; i--) {\n    if (i % 2 === 0) {\n      maxEven = i;\n      break;\n    }\n  }\n  return maxEven;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2622318300,
+            "load_duration": 236218900,
+            "prompt_eval_count": 163,
+            "prompt_eval_duration": 122434000,
+            "eval_count": 87,
+            "eval_duration": 2202216000,
+            "clientWallMs": 2633.7,
+            "supervisedWallMs": 2727.2
+          },
+          "code": "const chooseNum = (x, y) => {\n  if (x > y) return -1;\n  let maxEven = -1;\n  for (let i = y; i >= x; i--) {\n    if (i % 2 === 0) {\n      maxEven = i;\n      break;\n    }\n  }\n  return maxEven;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2727.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/102",
+                "passed": true,
+                "count": 8,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/103",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*You are given two positive integers n and m, and your task is to compute the\n  average of the integers from n through m (including n and m). \n  Round the answer to the nearest integer and convert that to binary.\n  If n is greater than m, return -1.\n  Example:\n  roundedAvg(1, 5) => \"0b11\"\n  roundedAvg(7, 5) => -1\n  roundedAvg(10, 20) => \"0b1111\"\n  roundedAvg(20, 33) => \"0b11010\"\n  */\nconst roundedAvg = (n, m) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:05.5255093Z",
+            "message": {
+              "role": "assistant",
+              "content": "const roundedAvg = (n, m) => {\n  if (n > m) {\n    return -1;\n  }\n  const sum = ((n + m) * (m - n + 1)) / 2;\n  const count = m - n + 1;\n  const avg = Math.round(sum / count);\n  return \"0b\" + avg.toString(2);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2815069300,
+            "load_duration": 227221800,
+            "prompt_eval_count": 217,
+            "prompt_eval_duration": 138805000,
+            "eval_count": 94,
+            "eval_duration": 2396463000,
+            "clientWallMs": 2836.9,
+            "supervisedWallMs": 2933.3
+          },
+          "code": "const roundedAvg = (n, m) => {\n  if (n > m) {\n    return -1;\n  }\n  const sum = ((n + m) * (m - n + 1)) / 2;\n  const count = m - n + 1;\n  const avg = Math.round(sum / count);\n  return \"0b\" + avg.toString(2);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2933.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/103",
+                "passed": true,
+                "count": 12,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/104",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*Given a list of positive integers x. return a sorted list of all \n  elements that hasn't any even digit.\n\n  Note: Returned list should be sorted in increasing order.\n  \n  For example:\n  >>> uniqueDigits([15, 33, 1422, 1])\n  [1, 15, 33]\n  >>> uniqueDigits([152, 323, 1422, 10])\n  []\n  */\nconst uniqueDigits = (x) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:07.992741Z",
+            "message": {
+              "role": "assistant",
+              "content": "const uniqueDigits = (x) => {\n  return x\n    .filter(num => {\n      const digits = num.toString().split('');\n      return digits.every(digit => parseInt(digit) % 2 !== 0);\n    })\n    .sort((a, b) => a - b);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2239568800,
+            "load_duration": 232234400,
+            "prompt_eval_count": 185,
+            "prompt_eval_duration": 130060000,
+            "eval_count": 72,
+            "eval_duration": 1813092000,
+            "clientWallMs": 2251.3,
+            "supervisedWallMs": 2345.1
+          },
+          "code": "const uniqueDigits = (x) => {\n  return x\n    .filter(num => {\n      const digits = num.toString().split('');\n      return digits.every(digit => parseInt(digit) % 2 !== 0);\n    })\n    .sort((a, b) => a - b);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2345.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/104",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/105",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n  reverse the resulting array, and then replace each digit by its corresponding name from\n  \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n  For example:\n    arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n          -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n          -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n    return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n  \n    If the array is empty, return an empty array:\n    arr = []\n    return []\n  \n    If the array has any strange number ignore it:\n    arr = [1, -1 , 55] \n          -> sort arr -> [-1, 1, 55]\n          -> reverse arr -> [55, 1, -1]\n    return = ['One']\n  */\nconst byLength = (arr) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:12.1791321Z",
+            "message": {
+              "role": "assistant",
+              "content": "const byLength = (arr) => {\n  const names = {\n    1: \"One\",\n    2: \"Two\",\n    3: \"Three\",\n    4: \"Four\",\n    5: \"Five\",\n    6: \"Six\",\n    7: \"Seven\",\n    8: \"Eight\",\n    9: \"Nine\"\n  };\n\n  return arr\n    .filter(num => num >= 1 && num <= 9)\n    .sort((a, b) => a - b)\n    .reverse()\n    .map(num => names[num]);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3952976200,
+            "load_duration": 236197800,
+            "prompt_eval_count": 357,
+            "prompt_eval_duration": 194517000,
+            "eval_count": 135,
+            "eval_duration": 3439451000,
+            "clientWallMs": 3975.6,
+            "supervisedWallMs": 4074.7
+          },
+          "code": "const byLength = (arr) => {\n  const names = {\n    1: \"One\",\n    2: \"Two\",\n    3: \"Three\",\n    4: \"Four\",\n    5: \"Five\",\n    6: \"Six\",\n    7: \"Seven\",\n    8: \"Eight\",\n    9: \"Nine\"\n  };\n\n  return arr\n    .filter(num => num >= 1 && num <= 9)\n    .sort((a, b) => a - b)\n    .reverse()\n    .map(num => names[num]);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4074.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/105",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/106",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* Implement the function f that takes n as a parameter,\n  and returns a list of size n, such that the value of the element at index i is the factorial of i if i is even\n  or the sum of numbers from 1 to i otherwise.\n  i starts from 1.\n  the factorial of i is the multiplication of the numbers from 1 to i (1 * 2 * ... * i).\n  Example:\n  f(5) == [1, 2, 6, 24, 15]\n  */\nconst f = (n) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:16.6153826Z",
+            "message": {
+              "role": "assistant",
+              "content": "const f = (n) => {\n  const result = [];\n  for (let i = 1; i <= n; i++) {\n    if (i % 2 === 0) {\n      let fact = 1;\n      for (let j = 1; j <= i; j++) {\n        fact *= j;\n      }\n      result.push(fact);\n    } else {\n      let sum = 0;\n      for (let j = 1; j <= i; j++) {\n        sum += j;\n      }\n      result.push(sum);\n    }\n  }\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4209956600,
+            "load_duration": 229760000,
+            "prompt_eval_count": 192,
+            "prompt_eval_duration": 130863000,
+            "eval_count": 147,
+            "eval_duration": 3752250000,
+            "clientWallMs": 4237.4,
+            "supervisedWallMs": 4329.5
+          },
+          "code": "const f = (n) => {\n  const result = [];\n  for (let i = 1; i <= n; i++) {\n    if (i % 2 === 0) {\n      let fact = 1;\n      for (let j = 1; j <= i; j++) {\n        fact *= j;\n      }\n      result.push(fact);\n    } else {\n      let sum = 0;\n      for (let j = 1; j <= i; j++) {\n        sum += j;\n      }\n      result.push(sum);\n    }\n  }\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4329.5,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/106",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/107",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  Given a positive integer n, return a tuple that has the number of even and odd\n  integer palindromes that fall within the range(1, n), inclusive.\n\n  Example 1:\n\n      Input: 3\n      Output: (1, 2)\n      Explanation:\n      Integer palindrome are 1, 2, 3. one of them is even, and two of them are odd.\n\n  Example 2:\n\n      Input: 12\n      Output: (4, 6)\n      Explanation:\n      Integer palindrome are 1, 2, 3, 4, 5, 6, 7, 8, 9, 11. four of them are even, and 6 of them are odd.\n\n  Note:\n      1. 1 <= n <= 10^3\n      2. returned tuple has the number of even and odd integer palindromes respectively.\n  */\nconst evenOddPalindrome = (n) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:20.5334732Z",
+            "message": {
+              "role": "assistant",
+              "content": "const evenOddPalindrome = (n) => {\n  let evenCount = 0;\n  let oddCount = 0;\n\n  for (let i = 1; i <= n; i++) {\n    const s = i.toString();\n    const reversed = s.split('').reverse().join('');\n    if (s === reversed) {\n      if (i % 2 === 0) {\n        evenCount++;\n      } else {\n        oddCount++;\n      }\n    }\n  }\n\n  return [evenCount, oddCount];\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3689483900,
+            "load_duration": 233239000,
+            "prompt_eval_count": 279,
+            "prompt_eval_duration": 165436000,
+            "eval_count": 126,
+            "eval_duration": 3223042000,
+            "clientWallMs": 3712.7,
+            "supervisedWallMs": 3806.9
+          },
+          "code": "const evenOddPalindrome = (n) => {\n  let evenCount = 0;\n  let oddCount = 0;\n\n  for (let i = 1; i <= n; i++) {\n    const s = i.toString();\n    const reversed = s.split('').reverse().join('');\n    if (s === reversed) {\n      if (i % 2 === 0) {\n        evenCount++;\n      } else {\n        oddCount++;\n      }\n    }\n  }\n\n  return [evenCount, oddCount];\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3806.9,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/107",
+                "passed": false,
+                "count": 8,
+                "failed": 8
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/108",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  Write a function countNums which takes an array of integers and returns\n  the number of elements which has a sum of digits > 0.\n  If a number is negative, then its first signed digit will be negative:\n  e.g. -123 has signed digits -1, 2, and 3.\n  >>> countNums([]) == 0\n  >>> countNums([-1, 11, -11]) == 1\n  >>> countNums([1, 1, 2]) == 3\n  */\nconst countNums = (arr) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:25.0466158Z",
+            "message": {
+              "role": "assistant",
+              "content": "const countNums = (arr) => {\n  let count = 0;\n  for (let num of arr) {\n    let sum = 0;\n    let s = num.toString();\n    for (let i = 0; i < s.length; i++) {\n      if (s[i] === '-') {\n        let digit = parseInt(s[i + 1]);\n        sum += -digit;\n        i++;\n      } else {\n        sum += parseInt(s[i]);\n      }\n    }\n    if (sum > 0) {\n      count++;\n    }\n  }\n  return count;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4276473800,
+            "load_duration": 232284900,
+            "prompt_eval_count": 192,
+            "prompt_eval_duration": 134597000,
+            "eval_count": 148,
+            "eval_duration": 3816654000,
+            "clientWallMs": 4304.0,
+            "supervisedWallMs": 4397.7
+          },
+          "code": "const countNums = (arr) => {\n  let count = 0;\n  for (let num of arr) {\n    let sum = 0;\n    let s = num.toString();\n    for (let i = 0; i < s.length; i++) {\n      if (s[i] === '-') {\n        let digit = parseInt(s[i + 1]);\n        sum += -digit;\n        i++;\n      } else {\n        sum += parseInt(s[i]);\n      }\n    }\n    if (sum > 0) {\n      count++;\n    }\n  }\n  return count;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4397.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/108",
+                "passed": true,
+                "count": 8,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/109",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*We have an array 'arr' of N integers arr[1], arr[2], ..., arr[N].The\n  numbers in the array will be randomly ordered. Your task is to determine if\n  it is possible to get an array sorted in non-decreasing order by performing \n  the following operation on the given array:\n      You are allowed to perform right shift operation any number of times.\n  \n  One right shift operation means shifting all elements of the array by one\n  position in the right direction. The last element of the array will be moved to\n  the starting position in the array i.e. 0th index. \n\n  If it is possible to obtain the sorted array by performing the above operation\n  then return true else return false.\n  If the given array is empty then return true.\n\n  Note: The given list is guaranteed to have unique elements.\n\n  For Example:\n  \n  moveOneBall([3, 4, 5, 1, 2])==>true\n  Explanation: By performin 2 right shift operations, non-decreasing order can\n               be achieved for the given array.\n  moveOneBall([3, 5, 4, 1, 2])==>false\n  Explanation:It is not possible to get non-decreasing order for the given\n              array by performing any number of right shift operations.\n              \n  */\nconst moveOneBall = (arr) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:29.3325732Z",
+            "message": {
+              "role": "assistant",
+              "content": "const moveOneBall = (arr) => {\n  if (arr.length === 0) return true;\n\n  let count = 0;\n  const n = arr.length;\n\n  for (let i = 0; i < n - 1; i++) {\n    if (arr[i] > arr[i + 1]) {\n      count++;\n    }\n  }\n\n  if (count === 0) return true;\n\n  if (count === 1 && arr[n - 1] <= arr[0]) {\n    return true;\n  }\n\n  return false;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4048604400,
+            "load_duration": 233226500,
+            "prompt_eval_count": 376,
+            "prompt_eval_duration": 196940000,
+            "eval_count": 138,
+            "eval_duration": 3552496000,
+            "clientWallMs": 4075.3,
+            "supervisedWallMs": 4169.0
+          },
+          "code": "const moveOneBall = (arr) => {\n  if (arr.length === 0) return true;\n\n  let count = 0;\n  const n = arr.length;\n\n  for (let i = 0; i < n - 1; i++) {\n    if (arr[i] > arr[i + 1]) {\n      count++;\n    }\n  }\n\n  if (count === 0) return true;\n\n  if (count === 1 && arr[n - 1] <= arr[0]) {\n    return true;\n  }\n\n  return false;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4169.0,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/109",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/110",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*In this problem, you will implement a function that takes two lists of numbers,\n  and determines whether it is possible to perform an exchange of elements\n  between them to make lst1 a list of only even numbers.\n  There is no limit on the number of exchanged elements between lst1 and lst2.\n  If it is possible to exchange elements between the lst1 and lst2 to make\n  all the elements of lst1 to be even, return \"YES\".\n  Otherwise, return \"NO\".\n  For example:\n  exchange([1, 2, 3, 4], [1, 2, 3, 4]) => \"YES\"\n  exchange([1, 2, 3, 4], [1, 5, 3, 4]) => \"NO\"\n  It is assumed that the input lists will be non-empty.\n  */\nconst exchange = (lst1, lst2) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:32.6470861Z",
+            "message": {
+              "role": "assistant",
+              "content": "const exchange = (lst1, lst2) => {\n  let oddInLst1 = lst1.filter(n => n % 2 !== 0).length;\n  let evenInLst2 = lst2.filter(n => n % 2 === 0).length;\n\n  if (evenInLst2 >= oddInLst1) {\n    return \"YES\";\n  } else {\n    return \"NO\";\n  }\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3090173100,
+            "load_duration": 231171900,
+            "prompt_eval_count": 267,
+            "prompt_eval_duration": 173057000,
+            "eval_count": 100,
+            "eval_duration": 2568448000,
+            "clientWallMs": 3113.9,
+            "supervisedWallMs": 3209.1
+          },
+          "code": "const exchange = (lst1, lst2) => {\n  let oddInLst1 = lst1.filter(n => n % 2 !== 0).length;\n  let evenInLst2 = lst2.filter(n => n % 2 === 0).length;\n\n  if (evenInLst2 >= oddInLst1) {\n    return \"YES\";\n  } else {\n    return \"NO\";\n  }\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3209.1,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/110",
+                "passed": true,
+                "count": 7,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/111",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*Given a string representing a space separated lowercase letters, return a dictionary\n  of the letter with the most repetition and containing the corresponding count.\n  If several letters have the same occurrence, return all of them.\n  \n  Example:\n  histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}\n  histogram('a b b a') == {'a': 2, 'b': 2}\n  histogram('a b c a b') == {'a': 2, 'b': 2}\n  histogram('b b b b a') == {'b': 4}\n  histogram('') == {}\n\n  */\nconst histogram = (test) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:37.5508988Z",
+            "message": {
+              "role": "assistant",
+              "content": "const histogram = (test) => {\n  if (test === '') return {};\n  const letters = test.split(' ');\n  const counts = {};\n  let maxCount = 0;\n\n  for (const char of letters) {\n    if (char === '') continue;\n    counts[char] = (counts[char] || 0) + 1;\n    if (counts[char] > maxCount) {\n      maxCount = counts[char];\n    }\n  }\n\n  const result = {};\n  for (const char in counts) {\n    if (counts[char] === maxCount) {\n      result[char] = counts[char];\n    }\n  }\n\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4671780600,
+            "load_duration": 237205300,
+            "prompt_eval_count": 219,
+            "prompt_eval_duration": 148941000,
+            "eval_count": 163,
+            "eval_duration": 4211876000,
+            "clientWallMs": 4699.0,
+            "supervisedWallMs": 4793.3
+          },
+          "code": "const histogram = (test) => {\n  if (test === '') return {};\n  const letters = test.split(' ');\n  const counts = {};\n  let maxCount = 0;\n\n  for (const char of letters) {\n    if (char === '') continue;\n    counts[char] = (counts[char] || 0) + 1;\n    if (counts[char] > maxCount) {\n      maxCount = counts[char];\n    }\n  }\n\n  const result = {};\n  for (const char in counts) {\n    if (counts[char] === maxCount) {\n      result[char] = counts[char];\n    }\n  }\n\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4793.3,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/111",
+                "passed": true,
+                "count": 8,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/112",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*Task\n  We are given two strings s and c, you have to deleted all the characters in s that are equal to any character in c\n  then check if the result string is palindrome.\n  A string is called palindrome if it reads the same backward as forward.\n  You should return a tuple containing the result string and true/false for the check.\n  Example\n  For s = \"abcde\", c = \"ae\", the result should be ('bcd',false)\n  For s = \"abcdef\", c = \"b\"  the result should be ('acdef',false)\n  For s = \"abcdedcba\", c = \"ab\", the result should be ('cdedc',true)\n  */\nconst reverseDelete = (s, c) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:41.3140061Z",
+            "message": {
+              "role": "assistant",
+              "content": "const reverseDelete = (s, c) => {\n  const charsToDelete = new Set(c);\n  let resultString = \"\";\n\n  for (let i = 0; i < s.length; i++) {\n    if (!charsToDelete.has(s[i])) {\n      resultString += s[i];\n    }\n  }\n\n  const reversedString = resultString.split(\"\").reverse().join(\"\");\n  const isPalindrome = resultString === reversedString;\n\n  return [resultString, isPalindrome];\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3536686300,
+            "load_duration": 234170500,
+            "prompt_eval_count": 230,
+            "prompt_eval_duration": 156760000,
+            "eval_count": 118,
+            "eval_duration": 3072374000,
+            "clientWallMs": 3564.8,
+            "supervisedWallMs": 3658.6
+          },
+          "code": "const reverseDelete = (s, c) => {\n  const charsToDelete = new Set(c);\n  let resultString = \"\";\n\n  for (let i = 0; i < s.length; i++) {\n    if (!charsToDelete.has(s[i])) {\n      resultString += s[i];\n    }\n  }\n\n  const reversedString = resultString.split(\"\").reverse().join(\"\");\n  const isPalindrome = resultString === reversedString;\n\n  return [resultString, isPalindrome];\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3658.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/112",
+                "passed": true,
+                "count": 9,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/113",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*Given a list of strings, where each string consists of only digits, return a list.\n  Each element i of the output should be \"the number of odd elements in the\n  string i of the input.\" where all the i's should be replaced by the number\n  of odd digits in the i'th string of the input.\n\n  >>> oddCount(['1234567'])\n  [\"the number of odd elements 4n the str4ng 4 of the 4nput.\"]\n  >>> oddCount(['3',\"11111111\"])\n  [\"the number of odd elements 1n the str1ng 1 of the 1nput.\",\n   \"the number of odd elements 8n the str8ng 8 of the 8nput.\"]\n  */\nconst oddCount = (lst) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:44.6138856Z",
+            "message": {
+              "role": "assistant",
+              "content": "const oddCount = (lst) => {\n  return lst.map(str => {\n    let count = 0;\n    for (let char of str) {\n      if (parseInt(char) % 2 !== 0) {\n        count++;\n      }\n    }\n    return `the number of odd elements ${count}n the str${count}ng ${count} of the ${count}nput.`;\n  });\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3069074900,
+            "load_duration": 229506400,
+            "prompt_eval_count": 250,
+            "prompt_eval_duration": 158308000,
+            "eval_count": 100,
+            "eval_duration": 2612574000,
+            "clientWallMs": 3091.5,
+            "supervisedWallMs": 3186.2
+          },
+          "code": "const oddCount = (lst) => {\n  return lst.map(str => {\n    let count = 0;\n    for (let char of str) {\n      if (parseInt(char) % 2 !== 0) {\n        count++;\n      }\n    }\n    return `the number of odd elements ${count}n the str${count}ng ${count} of the ${count}nput.`;\n  });\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3186.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/113",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/114",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  Given an array of integers nums, find the minimum sum of any non-empty sub-array\n  of nums.\n  Example\n  minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n  minSubArraySum([-1, -2, -3]) == -6\n  */\nconst minSubArraySum = (nums) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:47.7641007Z",
+            "message": {
+              "role": "assistant",
+              "content": "const minSubArraySum = (nums) => {\n  let minSum = nums[0];\n  let currentSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.min(nums[i], currentSum + nums[i]);\n    minSum = Math.min(minSum, currentSum);\n  }\n\n  return minSum;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2913745200,
+            "load_duration": 231792400,
+            "prompt_eval_count": 152,
+            "prompt_eval_duration": 123029000,
+            "eval_count": 97,
+            "eval_duration": 2489097000,
+            "clientWallMs": 2940.5,
+            "supervisedWallMs": 3032.6
+          },
+          "code": "const minSubArraySum = (nums) => {\n  let minSum = nums[0];\n  let currentSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.min(nums[i], currentSum + nums[i]);\n    minSum = Math.min(minSum, currentSum);\n  }\n\n  return minSum;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3032.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/114",
+                "passed": true,
+                "count": 12,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/115",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  You are given a rectangular grid of wells. Each row represents a single well,\n  and each 1 in a row represents a single unit of water.\n  Each well has a corresponding bucket that can be used to extract water from it, \n  and all buckets have the same capacity.\n  Your task is to use the buckets to empty the wells.\n  Output the number of times you need to lower the buckets.\n\n  Example 1:\n      Input: \n          grid : [[0,0,1,0], [0,1,0,0], [1,1,1,1]]\n          bucket_capacity : 1\n      Output: 6\n\n  Example 2:\n      Input: \n          grid : [[0,0,1,1], [0,0,0,0], [1,1,1,1], [0,1,1,1]]\n          bucket_capacity : 2\n      Output: 5\n  \n  Example 3:\n      Input: \n          grid : [[0,0,0], [0,0,0]]\n          bucket_capacity : 5\n      Output: 0\n\n  Constraints:\n      * all wells have the same length\n      * 1 <= grid.length <= 10^2\n      * 1 <= grid[:,1].length <= 10^2\n      * grid[i][j] -> 0 | 1\n      * 1 <= capacity <= 10\n  */\nconst maxFill = (grid, capacity) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:52.1749984Z",
+            "message": {
+              "role": "assistant",
+              "content": "const maxFill = (grid, capacity) => {\n  let totalLowerings = 0;\n  for (let i = 0; i < grid.length; i++) {\n    let waterInWell = 0;\n    for (let j = 0; j < grid[i].length; j++) {\n      if (grid[i][j] === 1) {\n        waterInWell++;\n      }\n    }\n    if (waterInWell > 0) {\n      totalLowerings += Math.ceil(waterInWell / capacity);\n    }\n  }\n  return totalLowerings;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4214832600,
+            "load_duration": 235448000,
+            "prompt_eval_count": 406,
+            "prompt_eval_duration": 222460000,
+            "eval_count": 142,
+            "eval_duration": 3708031000,
+            "clientWallMs": 4226.7,
+            "supervisedWallMs": 4319.6
+          },
+          "code": "const maxFill = (grid, capacity) => {\n  let totalLowerings = 0;\n  for (let i = 0; i < grid.length; i++) {\n    let waterInWell = 0;\n    for (let j = 0; j < grid[i].length; j++) {\n      if (grid[i][j] === 1) {\n        waterInWell++;\n      }\n    }\n    if (waterInWell > 0) {\n      totalLowerings += Math.ceil(waterInWell / capacity);\n    }\n  }\n  return totalLowerings;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4319.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/115",
+                "passed": true,
+                "count": 5,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/116",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*\n  In this Kata, you have to sort an array of non-negative integers according to\n  number of ones in their binary representation in ascending order.\n  For similar number of ones, sort based on decimal value.\n\n  It must be implemented like this:\n  >>> sortArray([1, 5, 2, 3, 4]) == [1, 2, 3, 4, 5]\n  >>> sortArray([-2, -3, -4, -5, -6]) == [-6, -5, -4, -3, -2]\n  >>> sortArray([1, 0, 2, 3, 4]) [0, 1, 2, 3, 4]\n  */\nconst sortArray = (arr) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:31:56.789799Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sortArray = (arr) => {\n  return arr.sort((a, b) => {\n    const countOnes = (num) => {\n      if (num < 0) {\n        return (num >>> 0).toString(2).split('1').length - 1;\n      }\n      return num.toString(2).split('1').length - 1;\n    };\n\n    const onesA = countOnes(a);\n    const onesB = countOnes(b);\n\n    if (onesA !== onesB) {\n      return onesA - onesB;\n    }\n    return a - b;\n  });\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4406717800,
+            "load_duration": 234516400,
+            "prompt_eval_count": 238,
+            "prompt_eval_duration": 155345000,
+            "eval_count": 150,
+            "eval_duration": 3910684000,
+            "clientWallMs": 4419.9,
+            "supervisedWallMs": 4518.7
+          },
+          "code": "const sortArray = (arr) => {\n  return arr.sort((a, b) => {\n    const countOnes = (num) => {\n      if (num < 0) {\n        return (num >>> 0).toString(2).split('1').length - 1;\n      }\n      return num.toString(2).split('1').length - 1;\n    };\n\n    const onesA = countOnes(a);\n    const onesB = countOnes(b);\n\n    if (onesA !== onesB) {\n      return onesA - onesB;\n    }\n    return a - b;\n  });\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4518.7,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/116",
+                "passed": false,
+                "count": 8,
+                "failed": 1
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/117",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*Given a string s and a natural number n, you have been tasked to implement \n  a function that returns a list of all words from string s that contain exactly \n  n consonants, in order these words appear in the string s.\n  If the string s is empty then the function should return an empty list.\n  Note: you may assume the input string contains only letters and spaces.\n  Examples:\n  selectWords(\"Mary had a little lamb\", 4) ==> [\"little\"]\n  selectWords(\"Mary had a little lamb\", 3) ==> [\"Mary\")\n  selectWords(\"simple white space\", 2) ==> []\n  selectWords(\"Hello world\", 4) ==> [\"world\"]\n  selectWords(\"Uncle sam\", 3) ==> [\"Uncle\"]\n  */\nconst selectWords = (s, n) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:32:02.1835851Z",
+            "message": {
+              "role": "assistant",
+              "content": "const selectWords = (s, n) => {\n  if (!s) return [];\n  const words = s.split(' ');\n  const vowels = new Set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']);\n  const result = [];\n\n  for (const word of words) {\n    if (word === \"\") continue;\n    let consonantCount = 0;\n    for (let i = 0; i < word.length; i++) {\n      if (!vowels.has(word[i])) {\n        consonantCount++;\n      }\n    }\n    if (consonantCount === n) {\n      result.push(word);\n    }\n  }\n\n  return result;\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 5175932700,
+            "load_duration": 230488100,
+            "prompt_eval_count": 245,
+            "prompt_eval_duration": 157076000,
+            "eval_count": 180,
+            "eval_duration": 4713764000,
+            "clientWallMs": 5204.5,
+            "supervisedWallMs": 5298.0
+          },
+          "code": "const selectWords = (s, n) => {\n  if (!s) return [];\n  const words = s.split(' ');\n  const vowels = new Set(['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']);\n  const result = [];\n\n  for (const word of words) {\n    if (word === \"\") continue;\n    let consonantCount = 0;\n    for (let i = 0; i < word.length; i++) {\n      if (!vowels.has(word[i])) {\n        consonantCount++;\n      }\n    }\n    if (consonantCount === n) {\n      result.push(word);\n    }\n  }\n\n  return result;\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 5298.0,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/117",
+                "passed": true,
+                "count": 7,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/118",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/*You are given a word. Your task is to find the closest vowel that stands between \n  two consonants from the right side of the word (case sensitive).\n  \n  Vowels in the beginning and ending doesn't count. Return empty string if you didn't\n  find any vowel met the above condition. \n\n  You may assume that the given string contains English letter only.\n\n  Example:\n  getClosestVowel(\"yogurt\") ==> \"u\"\n  getClosestVowel(\"FULL\") ==> \"U\"\n  getClosestVowel(\"quick\") ==> \"\"\n  getClosestVowel(\"ab\") ==> \"\"\n  */\nconst getClosestVowel = (word) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:32:06.4555792Z",
+            "message": {
+              "role": "assistant",
+              "content": "const getClosestVowel = (word) => {\n  const vowels = \"aeiouAEIOU\";\n  const isVowel = (char) => vowels.includes(char);\n  const isConsonant = (char) => !isVowel(char);\n\n  for (let i = word.length - 2; i > 0; i--) {\n    if (isVowel(word[i]) && isConsonant(word[i - 1]) && isConsonant(word[i + 1])) {\n      return word[i];\n    }\n  }\n  return \"\";\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4042285600,
+            "load_duration": 230454700,
+            "prompt_eval_count": 213,
+            "prompt_eval_duration": 142817000,
+            "eval_count": 137,
+            "eval_duration": 3572522000,
+            "clientWallMs": 4066.8,
+            "supervisedWallMs": 4159.6
+          },
+          "code": "const getClosestVowel = (word) => {\n  const vowels = \"aeiouAEIOU\";\n  const isVowel = (char) => vowels.includes(char);\n  const isConsonant = (char) => !isVowel(char);\n\n  for (let i = word.length - 2; i > 0; i--) {\n    if (isVowel(word[i]) && isConsonant(word[i - 1]) && isConsonant(word[i + 1])) {\n      return word[i];\n    }\n  }\n  return \"\";\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4159.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/118",
+                "passed": true,
+                "count": 13,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/119",
+          "prompt": "Implement the unfinished JavaScript program below. Return the COMPLETE JavaScript program, including the function declaration and any helper functions shown. Fill in the unfinished body and close all braces. Return code only, without Markdown, explanations, tests, or host APIs.\n\n/* You are given a list of two strings, both strings consist of open\n  parentheses '(' or close parentheses ')' only.\n  Your job is to check if it is possible to concatenate the two strings in\n  some order, that the resulting string will be good.\n  A string S is considered to be good if and only if all parentheses in S\n  are balanced. For example: the string '(())()' is good, while the string\n  '())' is not.\n  Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n  Examples:\n  matchParens(['()(', ')']) == 'Yes'\n  matchParens([')', ')']) == 'No'\n  */\nconst matchParens = (lst) => {\n",
+          "response": {
+            "model": "nightly-bench-d5808e5874e660a8:latest",
+            "created_at": "2026-09-11T20:32:10.8577296Z",
+            "message": {
+              "role": "assistant",
+              "content": "const matchParens = (lst) => {\n  const isBalanced = (s) => {\n    let balance = 0;\n    for (let char of s) {\n      if (char === '(') balance++;\n      else balance--;\n      if (balance < 0) return false;\n    }\n    return balance === 0;\n  };\n\n  const s1 = lst[0];\n  const s2 = lst[1];\n\n  if (isBalanced(s1 + s2) || isBalanced(s2 + s1)) {\n    return 'Yes';\n  }\n  return 'No';\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 4192557300,
+            "load_duration": 233383400,
+            "prompt_eval_count": 235,
+            "prompt_eval_duration": 152625000,
+            "eval_count": 142,
+            "eval_duration": 3709893000,
+            "clientWallMs": 4204.3,
+            "supervisedWallMs": 4298.4
+          },
+          "code": "const matchParens = (lst) => {\n  const isBalanced = (s) => {\n    let balance = 0;\n    for (let char of s) {\n      if (char === '(') balance++;\n      else balance--;\n      if (balance < 0) return false;\n    }\n    return balance === 0;\n  };\n\n  const s1 = lst[0];\n  const s2 = lst[1];\n\n  if (isBalanced(s1 + s2) || isBalanced(s2 + s1)) {\n    return 'Yes';\n  }\n  return 'No';\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 4298.4,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/119",
+                "passed": true,
+                "count": 12,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "nightly-bench-d5808e5874e660a8:latest",
+        "created_at": "2026-09-11T20:30:56.1577659Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7033527300,
+        "load_duration": 6883803000,
+        "prompt_eval_count": 18,
+        "prompt_eval_duration": 104581000,
+        "eval_count": 2,
+        "eval_duration": 42674000,
+        "clientWallMs": 7061.0,
+        "supervisedWallMs": 7159.7
+      },
+      "loadedModel": [
+        {
+          "name": "nightly-bench-d5808e5874e660a8:latest",
+          "model": "nightly-bench-d5808e5874e660a8:latest",
+          "size": 34710864527,
+          "digest": "af14139f71c2a99593ec0d703a7e828ced7693ebb7a4caed40ec759b3c875a00",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "gemma4",
+            "families": [
+              "gemma4"
+            ],
+            "parameter_size": "30.7B",
+            "quantization_level": "Q8_0"
+          },
+          "expires_at": "2026-09-11T14:35:56.1577659-06:00",
+          "size_vram": 34710864527,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 18,
+        "tasksAttempted": 20,
+        "tasksTotal": 20,
+        "testsPassed": 18,
+        "testsTotal": 20,
+        "medianWallMs": 3940.8,
+        "totalWallMs": 72610.3,
+        "truncated": 0,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "unloads": [
+    {
+      "model": "nightly-bench-d5808e5874e660a8:latest",
+      "endpoint": "http://127.0.0.1:11435",
+      "confirmedAt": "2026-09-11T14:32:11-06:00",
+      "gpuAfter": {
+        "freeGiB": 94.0283203125,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 2.0
+      },
+      "freeBeforeGiB": 94.02734375
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T14:32:11-06:00"
+}

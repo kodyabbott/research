@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T14:15:44-06:00
+Updated: 2026-09-11T14:54:54-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -101,14 +101,19 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-133911-de908887.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
 | [qwen3.5:122b](../../runs/20260911-134401-18652c59.json) | code-writing screen | — | 5/8 tasks; 72/99 tests (separate) | — |
 | [gpt-oss:20b](../../runs/20260911-141423-0053c3d9.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
-| unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-142514-222e4ed3.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-142644-ec25748b.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-142754-a6c0eb19.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-142915-3c1e6150.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-143045-56e187f1.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-143215-b96c664e.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-143405-6a7796f1.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf](../../runs/20260911-143545-0a3a8447.json) | HumanEval-X adapted screen | — | 3/3 tasks (separate) | — |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-143625-2aa17e29.json) | valid comparison | 44.76 / 297.56 | 10/16 / 12/16 | 3/3 / 3/3 |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-144025-ac00384a.json) | code-writing screen | — | 2/8 tasks; 54/99 tests (separate) | — |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-144135-ee0a14fb.json) | error | — | — | — |
+| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | running | — | — | — |
+| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
 | bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
 | unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf | pending | — | — | — |
 | ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf | pending | — | — | — |
@@ -131,12 +136,12 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [gpt-oss:20b](../../runs/20260911-141203-d02cec45.json) | error | — | — | — |
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-141233-e85f5ec4.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
 | [qwen3.5:122b](../../runs/20260911-141323-2fcf4c2f.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
-| qwen3.8:27b-mtp-bf16 | running | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-141453-fd172d62.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [qwen3-coder:30b](../../runs/20260911-141754-a3d8a94f.json) | HumanEval-X adapted screen | — | 16/20 tasks (separate) | — |
+| [gpt-oss:20b](../../runs/20260911-141824-5484ac91.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-141904-24a4ef56.json) | HumanEval-X adapted screen | — | 16/20 tasks (separate) | — |
+| [qwen3.5:122b](../../runs/20260911-142004-c7947dae.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
+| [qwen3.8:27b-mtp-bf16](../../runs/20260911-142104-c8f6d638.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
 | qwen3-coder:30b | pending | — | — | — |
 | gpt-oss:20b | pending | — | — | — |
 | qwen3.8:27b-mtp-bf16 | pending | — | — | — |
@@ -563,6 +568,55 @@ Personal model digests unchanged: True.
 
 Personal model digests unchanged: True.
 
+### humaneval-chat-gemma-off-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part6
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part7
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part8
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gemma-off-part9
+
+Personal model digests unchanged: True.
+
+### granite30-q8
+
+Candidate: overnight-screen-v2, 10/16. Failed cases: python-closure, python-boundary, sql-null, capacity, string-escape, sort-tiebreak.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 2.61x. Thinking characters: 822; answer characters: 767.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
+Personal model digests unchanged: True.
+
+### coding-granite-off
+
+Personal model digests unchanged: True.
+
+### workload-granite-think-pilot
+
+Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.98379620000196 seconds
+Personal model digests unchanged: True.
+
 ### humaneval-chat-gptoss-low-part1
 
 Personal model digests unchanged: True.
@@ -633,6 +687,30 @@ Personal model digests unchanged: True.
 Personal model digests unchanged: True.
 
 ### humaneval-chat-qwen35-off-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-think-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-coder-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-gptoss-low-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-off-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen35-off-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-qwen38-think-part5
 
 Personal model digests unchanged: True.
 
