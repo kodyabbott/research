@@ -27,7 +27,7 @@ GLM-5.3-Flash and Qwen3.8-Flash-Next had no eligible root-level single GGUF with
 
 The initial candidate sweep retains the existing 8,192 context, temperature 0, seed 42, 512 output-token cap and three-repetition throughput battery, plus the 16-case v2 screen. GPT-OSS uses the separately labeled low-reasoning protocol with an 8,192 output-token cap. LFM's unexpected thinking and truncated outputs invalidate its ordinary comparison.
 
-The broader `practical-json-v1` suite has 96 deterministic authored cases: 12 each for ledger replay, event reconstruction, dependency scheduling, SQL analysis, shortest paths, extraction, Python tracing and retrieval. [workload_suite.py](../../workload_suite.py) creates the fixtures; [workload_screen.py](../../workload_screen.py) saves and grades exact JSON responses. Generated model code is never executed. Trusted SQL fixtures are computed with SQLite; trusted Python tracing fixtures have an independent execution check.
+The broader `practical-json-v1` suite has 96 deterministic authored cases: 12 each for ledger replay, event reconstruction, dependency scheduling, SQL analysis, shortest paths, extraction, Python tracing and retrieval. [workload_suite.py](../../workload_suite.py) creates the fixtures; [workload_screen.py](../../workload_screen.py) saves and grades exact JSON responses. The JSON-answer suite never executes generated model code. Trusted SQL fixtures are computed with SQLite; trusted Python tracing fixtures have an independent execution check.
 
 Workload runs use the same 8,192 context, temperature 0 and seed 42. Thinking-off requests allow 2,048 generated tokens. Reasoning-enabled requests allow 8,192 generated tokens. Each case has a 120-second client deadline within the shared worker deadline. Four separately recorded blocks cover the 96 cases. Thinking modes and different suites are not pooled, and partial blocks are not presented as completed scores. Latency includes response generation and the local client round trip; model load/warmup is saved separately.
 
@@ -44,3 +44,13 @@ This is not a standardized coding benchmark, repository-editing evaluation, stat
 No public push or publication is part of this request. Results and commits remain local.
 
 The launch authorization now references a small supervision record. The agent renews a 30-minute lease after checking available usage; expiry or zero recorded usage refuses new starts. Existing workers retain their hard deadline and cleanup. `stop_campaign.py --campaign 20260911-daytime --reason "User requested stop"` revokes authorization and stops only identity-verified campaign processes. Its `--dry-run` mode is read-only. `daytime_progress.py --output-dir PATH` rebuilds the readable progress snapshot and samples GPU telemetry.
+
+## Separate function-writing screen
+
+`javascript-functions-v1` asks for eight JavaScript functions and checks 99 hidden deterministic inputs. These cover deduplicated ledgers, versioned state, interval merging, topological ordering, TTL caches, JSON pointers, CSV parsing, and recursive redaction. All trusted reference solutions passed all 99 fixtures before the model pilot.
+
+Generated functions execute only in QuickJS WebAssembly through quickjs-emscripten 0.32.0. No host functions or module loader are exposed. Every hidden test gets a fresh guest runtime with 64 MiB memory, a 512 KiB stack, and a 300 ms interrupt deadline. Host-access probes and infinite-loop interruption passed. A dependency lock is saved alongside this report.
+
+This screen requests 16384 context, temperature 0, seed 42, and 4096 output tokens with thinking off or 8192 with reasoning. Each generation has a 240-second deadline and each grading subprocess a 30-second deadline within the original one-hour worker limit. A whole Markdown code fence may be removed and is recorded. Input mutation, truncation, wrong output types, and functional mismatches fail. A task passes only when all its hidden checks pass; correlated checks are not independent evidence.
+
+The Qwen3-Coder pilot completed with 5/8 fully correct functions and 90/99 checks, 0.961 seconds median generation response, no truncation, and verified unloading and unchanged personal model digests. This is distinct from its JSON mental-computation results. Follow-ups compare GPT-OSS, Qwen3.5, Qwen3.8, KAT, and Nex with reasoning modes kept separate. The full harness regression suite passed 145 tests after this addition.
