@@ -1,6 +1,6 @@
 # Overnight campaign results
 
-Updated: 2026-09-10T23:18:43-06:00
+Updated: 2026-09-10T23:24:56-06:00
 
 This is a progress report until every worthwhile queued test is complete or the overnight window ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -28,35 +28,47 @@ The 16-item screen measures exact structured answers, code comprehension, small 
 
 A valid throughput comparison does not certify model quality. A completed quality screen is reported separately when throughput is invalid; truncation counts as a failed screen case, and unexpected returned thinking is explicitly marked. Stored BF16/MTP/DFlash configurations include custom settings and cannot isolate quantization effects.
 
+The separate GPT-OSS low-reasoning screen allows 8192 generated tokens per case versus 512 in the main sweep. It is unpaired and is not an equal-budget quality ranking. Thinking probes below are single exploratory trials excluded from throughput medians; ratios against an invalid ordinary comparison are diagnostic only.
+
 ### installed-qwen38-bf16
 
 Candidate: overnight-screen-v1, 14/16. Failed cases: capacity, string-escape.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 20.57x. Thinking characters: 17335; answer characters: 646.
 Baseline: overnight-screen-v1, 10/16. Failed cases: python-aliasing, python-default, python-boundary, sql-null, capacity, sort-tiebreak.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 ### installed-muse-bf16
 
 Comparison issue: candidate: output truncated
 Candidate: overnight-screen-v2, 15/16. Failed cases: capacity.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 1.92x. Thinking characters: 3761; answer characters: 697.
 Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 ### installed-qwen35-122b
 
 Candidate: overnight-screen-v2, 14/16. Failed cases: capacity, sort-tiebreak.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 15.80x. Thinking characters: 7927; answer characters: 692.
 Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 ### installed-qwen38-bf16-v2
 
 Candidate: overnight-screen-v2, 15/16. Failed cases: string-escape.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 20.59x. Thinking characters: 17335; answer characters: 646.
 Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 ### minicpm-f16-screen
 
 Candidate: overnight-screen-v2, 6/16. Failed cases: python-aliasing, python-closure, python-default, sql-null, sql-left-join, interval-union, capacity, weighted-rate, extract-active, string-escape.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 30.66x. Thinking characters: 11606; answer characters: 602.
 Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 Public publishing remains pending the specific approval requested in this thread. Local reports and commits continue independently.
