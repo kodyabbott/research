@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T14:54:54-06:00
+Updated: 2026-09-11T15:47:53-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -112,12 +112,12 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-143625-2aa17e29.json) | valid comparison | 44.76 / 297.56 | 10/16 / 12/16 | 3/3 / 3/3 |
 | [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-144025-ac00384a.json) | code-writing screen | — | 2/8 tasks; 54/99 tests (separate) | — |
 | [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-144135-ee0a14fb.json) | error | — | — | — |
-| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | running | — | — | — |
-| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
-| bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf | pending | — | — | — |
-| unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf | pending | — | — | — |
-| ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf | pending | — | — | — |
-| bartowski/apodex_Apodex-1.1-mini-GGUF<br>apodex_Apodex-1.1-mini-Q6_K.gguf | pending | — | — | — |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-144406-da5815c7.json) | code-writing screen | — | 2/8 tasks; 24/99 tests (separate) | — |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-150956-107f6fb0.json) | code-writing screen | — | 4/8 tasks; 49/99 tests (separate) | — |
+| [bartowski/granite-4.2-30b-GGUF<br>granite-4.2-30b-Q8_0.gguf](../../runs/20260911-153437-9e6d27cd.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF<br>NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf](../../runs/20260911-153537-72462ca6.json) | valid comparison | 260.08 / 296.17 | 11/16 / 12/16 | 3/3 / 3/3 |
+| [ggml-org/Qwen3.8-27B-GGUF<br>Qwen3.8-27B-Q8_0.gguf](../../runs/20260911-153927-ccb815e5.json) | valid comparison | 46.86 / 296.54 | 15/16 / 12/16 | 3/3 / 3/3 |
+| [bartowski/apodex_Apodex-1.1-mini-GGUF<br>apodex_Apodex-1.1-mini-Q6_K.gguf](../../runs/20260911-154328-eafa0bfe.json) | valid comparison | 224.6 / 297.13 | 12/16 / 12/16 | 3/3 / 3/3 |
 | [gpt-oss:20b](../../runs/20260911-135442-425b76a7.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-135512-ef48cf11.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
 | [qwen3.5:122b](../../runs/20260911-135612-0aff4070.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
@@ -142,29 +142,29 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-141904-24a4ef56.json) | HumanEval-X adapted screen | — | 16/20 tasks (separate) | — |
 | [qwen3.5:122b](../../runs/20260911-142004-c7947dae.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
 | [qwen3.8:27b-mtp-bf16](../../runs/20260911-142104-c8f6d638.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3-coder:30b | pending | — | — | — |
-| gpt-oss:20b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.8:27b-mtp-bf16 | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| qwen3.5:122b | pending | — | — | — |
-| muse-glimmer:30b-bf16-dflash | pending | — | — | — |
+| qwen3-coder:30b | deferred | — | — | — |
+| gpt-oss:20b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3-coder:30b | deferred | — | — | — |
+| gpt-oss:20b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3-coder:30b | deferred | — | — | — |
+| gpt-oss:20b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3-coder:30b | deferred | — | — | — |
+| gpt-oss:20b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| qwen3.8:27b-mtp-bf16 | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| qwen3.5:122b | deferred | — | — | — |
+| muse-glimmer:30b-bf16-dflash | deferred | — | — | — |
 
 ## Limits and failed cases
 
@@ -615,6 +615,42 @@ Personal model digests unchanged: True.
 ### workload-granite-think-pilot
 
 Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.98379620000196 seconds
+Personal model digests unchanged: True.
+
+### coding-granite-think
+
+Personal model digests unchanged: True.
+
+### coding-granite-think-t1-p95
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-granite-off-pilot
+
+Personal model digests unchanged: True.
+
+### nemotron30-q8
+
+Candidate: overnight-screen-v2, 11/16. Failed cases: python-boundary, sql-left-join, capacity, string-escape, sort-tiebreak.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 11.60x. Thinking characters: 5490; answer characters: 720.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
+Personal model digests unchanged: True.
+
+### qwen38-q8
+
+Candidate: overnight-screen-v2, 15/16. Failed cases: string-escape.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 16.30x. Thinking characters: 7316; answer characters: 687.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
+Personal model digests unchanged: True.
+
+### apodex-mini-q6
+
+Candidate: overnight-screen-v2, 12/16. Failed cases: python-default, capacity, extract-active, sort-tiebreak.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 37.46x. Thinking characters: 17313; answer characters: 682.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
 Personal model digests unchanged: True.
 
 ### humaneval-chat-gptoss-low-part1

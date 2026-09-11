@@ -1,12 +1,14 @@
 # RTX PRO 6000 benchmark progress
 
-Updated: 2026-09-11T14:54:53.958046-06:00
+Updated: 2026-09-11T15:48:40.372735-06:00
 
-September 11 campaign status: active. Results below are measured locally; scores from different reasoning budgets are separate.
+Verified shutdown: controller and owned workers exited; private port 11435 closed; no primary model loaded; all seven personal model digests preserved. Campaign authorization is revoked. The additional sweep was deferred at the user request.
 
-Running: coding-granite-think. Pending queue entries: 28.
+September 11 campaign status: completed. Results below are measured locally; scores from different reasoning budgets are separate.
 
-Tested model artifacts or installed configurations: 10. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.
+Running: none; campaign closed. Pending queue entries: 0.
+
+Tested model artifacts or installed configurations: 13. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.
 
 ## Matched 24-case workload comparison
 
@@ -63,12 +65,15 @@ The short throughput battery uses 8192 context and a 512-token output cap. Valid
 | bartowski/Ornith-1.5-35B-A3B-GGUF | valid | 223.67 / 296.5 | 12/16 / 12/16 | none |
 | unsloth/gemma-4-31B-it-GGUF | valid | 40.47 / 302.25 | 14/16 / 12/16 | none |
 | bartowski/granite-4.2-30b-GGUF | valid | 44.76 / 297.56 | 10/16 / 12/16 | none |
+| unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF | valid | 260.08 / 296.17 | 11/16 / 12/16 | none |
+| ggml-org/Qwen3.8-27B-GGUF | valid | 46.86 / 296.54 | 15/16 / 12/16 | none |
+| bartowski/apodex_Apodex-1.1-mini-GGUF | valid | 224.6 / 297.13 | 12/16 / 12/16 | none |
 
 ## Initial candidate screens
 
 - GPT-OSS 20B: 15/16 on the separate low-reasoning v2 screen. It followed an instruction embedded inside a data field on the failed extraction case.
 - LFM2.5 2.6B BF16: downloaded and hash-verified, imported, and tested. Its ordinary responses returned unexpected thinking and hit the token cap, so the ordinary throughput comparison is invalid. This is a protocol compatibility finding, not an overall model-quality verdict.
-- Nex-N2.5-mini Q6: a newly found Bartowski mirror was verified and added to the queue. Text-only evaluation will not test its advertised computer-use or vision capabilities.
+- Nex-N2.5-mini Q6: a newly found Bartowski mirror was verified and added to the queue. The text-only evaluation did not test its advertised computer-use or vision capabilities.
 
 ## Function-writing results
 
@@ -93,6 +98,8 @@ Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Gener
 | unsloth/gemma-4-31B-it-GGUF | True / greedy-v1 | 16384 / 8192 | 6/8 | 74/99 | 61.52 | 2 truncated |
 | qwen3.5:122b | True / greedy-v1 | 32768 / 16384 | 5/8 | 72/99 | 64.38 | 2 truncated |
 | bartowski/granite-4.2-30b-GGUF | False / greedy-v1 | 16384 / 4096 | 2/8 | 54/99 | 5.14 | none |
+| bartowski/granite-4.2-30b-GGUF | True / greedy-v1 | 16384 / 8192 | 2/8 | 24/99 | 203.17 | 6 truncated |
+| bartowski/granite-4.2-30b-GGUF | True / t1-p95-k40-v1 | 16384 / 8192 | 4/8 | 49/99 | 202.06 | 4 truncated |
 
 Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. The separate t1-p95-k40-v1 diagnostic uses temperature 1.0 and top_p 0.95 as recommended by the Granite and Nemotron publishers, while retaining the harness top_k 40, repeat penalty 1.0 and seed 42; it is not a reproduction of their full evaluation setup. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.
 
@@ -111,6 +118,7 @@ One greedy sample per task from the [published dataset](https://huggingface.co/d
 | bartowski/Ornith-1.5-35B-A3B-GGUF | full-program | False | 17/20 | 0.75 | 0.27 | 0 | none |
 | unsloth/gemma-4-31B-it-GGUF | full-program | False | 152/163 | 3.03 | 9.59 | 0 | none |
 | gpt-oss:20b | full-program | low | 95/100 | 0.94 | 1.77 | 0 | none |
+| bartowski/granite-4.2-30b-GGUF | full-program | False | 19/20 | 2.37 | 0.75 | 0 | none |
 | qwen3.8:27b-mtp-bf16 | full-program | False | 95/100 | 1.57 | 2.99 | 0 | none |
 | qwen3.5:122b | full-program | False | 94/100 | 1.33 | 2.30 | 0 | none |
 | qwen3.8:27b-mtp-bf16 | full-program | True | 98/100 | 6.36 | 13.47 | 0 | none |

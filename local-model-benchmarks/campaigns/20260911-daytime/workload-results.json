@@ -1,12 +1,7 @@
 {
-  "updatedAt": "2026-09-11T14:54:53.958046-06:00",
+  "updatedAt": "2026-09-11T15:48:40.372735-06:00",
   "campaignId": "20260911-daytime",
-  "active": [
-    {
-      "id": "coding-granite-think",
-      "runId": "20260911-144406-da5815c7"
-    }
-  ],
+  "active": [],
   "terminal": [
     {
       "id": "gpt-oss20-low",
@@ -627,6 +622,42 @@
       "error": "Command '['C:\\\\Users\\\\kody1\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe', 'C:\\\\Users\\\\kody1\\\\repos\\\\research\\\\local-model-benchmarks\\\\api_probe.py']' timed out after 119.98379620000196 seconds"
     },
     {
+      "id": "coding-granite-think",
+      "runId": "20260911-144406-da5815c7",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "coding-granite-think-t1-p95",
+      "runId": "20260911-150956-107f6fb0",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "humaneval-chat-granite-off-pilot",
+      "runId": "20260911-153437-9e6d27cd",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "nemotron30-q8",
+      "runId": "20260911-153537-72462ca6",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "qwen38-q8",
+      "runId": "20260911-153927-ccb815e5",
+      "status": "completed",
+      "error": null
+    },
+    {
+      "id": "apodex-mini-q6",
+      "runId": "20260911-154328-eafa0bfe",
+      "status": "completed",
+      "error": null
+    },
+    {
       "id": "humaneval-chat-gptoss-low-part1",
       "runId": "20260911-135442-425b76a7",
       "status": "completed",
@@ -771,7 +802,7 @@
       "error": null
     }
   ],
-  "pending": 28,
+  "pending": 0,
   "modelCoverage": [
     {
       "model": "gpt-oss:20b",
@@ -1034,11 +1065,54 @@
       "modelCardUrl": "https://huggingface.co/bartowski/granite-4.2-30b-GGUF",
       "runs": [
         "20260911-143625-2aa17e29",
-        "20260911-144025-ac00384a"
+        "20260911-144025-ac00384a",
+        "20260911-144406-da5815c7",
+        "20260911-150956-107f6fb0",
+        "20260911-153437-9e6d27cd"
       ],
       "protocols": [
         "nightly",
-        "javascript-functions-v1"
+        "javascript-functions-v1",
+        "humaneval-x-js-wasm-chat-v2"
+      ]
+    },
+    {
+      "model": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "artifact": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf",
+      "digest": "2efc0c1925241391f2c7a258965c7d125ebcfd376ef6ea285797442e26cad05d",
+      "upstreamUrl": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "modelCardUrl": "https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "runs": [
+        "20260911-153537-72462ca6"
+      ],
+      "protocols": [
+        "nightly"
+      ]
+    },
+    {
+      "model": "ggml-org/Qwen3.8-27B-GGUF",
+      "artifact": "Qwen3.8-27B-Q8_0.gguf",
+      "digest": "2f530833a174adbcb5e8731c4246ae0d4f467c4fbc8069a6bc79fb552adeb395",
+      "upstreamUrl": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "modelCardUrl": "https://huggingface.co/ggml-org/Qwen3.8-27B-GGUF",
+      "runs": [
+        "20260911-153927-ccb815e5"
+      ],
+      "protocols": [
+        "nightly"
+      ]
+    },
+    {
+      "model": "bartowski/apodex_Apodex-1.1-mini-GGUF",
+      "artifact": "apodex_Apodex-1.1-mini-Q6_K.gguf",
+      "digest": "a6c8c4f53e42add51f691458d08596ef8755fbb64a751a9eb97888e7c45807d8",
+      "upstreamUrl": "https://huggingface.co/apodex/Apodex-1.1-mini",
+      "modelCardUrl": "https://huggingface.co/bartowski/apodex_Apodex-1.1-mini-GGUF",
+      "runs": [
+        "20260911-154328-eafa0bfe"
+      ],
+      "protocols": [
+        "nightly"
       ]
     }
   ],
@@ -1160,6 +1234,69 @@
         "version": "overnight-screen-v2",
         "status": "completed",
         "passed": 10,
+        "total": 16
+      },
+      "baselineQuality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 12,
+        "total": 16
+      }
+    },
+    {
+      "model": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+      "artifact": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-Q8_0.gguf",
+      "runId": "20260911-153537-72462ca6",
+      "valid": true,
+      "reason": null,
+      "candidateTokensPerSecond": 260.08,
+      "baselineTokensPerSecond": 296.17,
+      "quality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 11,
+        "total": 16
+      },
+      "baselineQuality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 12,
+        "total": 16
+      }
+    },
+    {
+      "model": "ggml-org/Qwen3.8-27B-GGUF",
+      "artifact": "Qwen3.8-27B-Q8_0.gguf",
+      "runId": "20260911-153927-ccb815e5",
+      "valid": true,
+      "reason": null,
+      "candidateTokensPerSecond": 46.86,
+      "baselineTokensPerSecond": 296.54,
+      "quality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 15,
+        "total": 16
+      },
+      "baselineQuality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 12,
+        "total": 16
+      }
+    },
+    {
+      "model": "bartowski/apodex_Apodex-1.1-mini-GGUF",
+      "artifact": "apodex_Apodex-1.1-mini-Q6_K.gguf",
+      "runId": "20260911-154328-eafa0bfe",
+      "valid": true,
+      "reason": null,
+      "candidateTokensPerSecond": 224.6,
+      "baselineTokensPerSecond": 297.13,
+      "quality": {
+        "version": "overnight-screen-v2",
+        "status": "completed",
+        "passed": 12,
         "total": 16
       },
       "baselineQuality": {
@@ -3489,6 +3626,176 @@
           "testsTotal": 12
         }
       ]
+    },
+    {
+      "model": "bartowski/granite-4.2-30b-GGUF",
+      "artifact": "granite-4.2-30b-Q8_0.gguf",
+      "digest": "18d5273fc796dba1a721c51bffd4eb5cb5586b6df9387060cab47589a277012a",
+      "runId": "20260911-144406-da5815c7",
+      "protocol": {
+        "name": "javascript-functions-v1",
+        "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+        "thinking": true,
+        "context": 16384,
+        "outputCap": 8192,
+        "maxGenerationSeconds": 240,
+        "tasks": 8,
+        "hiddenTests": 99,
+        "temperature": 0,
+        "topP": 1,
+        "topK": 40,
+        "repeatPenalty": 1.0,
+        "samplingProfile": "greedy-v1",
+        "seed": 42,
+        "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+        "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+        "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+      },
+      "tasksPassed": 2,
+      "tasksAttempted": 8,
+      "tasksTotal": 8,
+      "testsPassed": 24,
+      "testsTotal": 99,
+      "medianWallMs": 203168.65000000002,
+      "totalWallMs": 1524212.0,
+      "truncated": 6,
+      "unexpectedThinking": false,
+      "protocolValid": true,
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        },
+        {
+          "id": "versioned-state",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        },
+        {
+          "id": "merge-intervals",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "topological-order",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 13
+        },
+        {
+          "id": "ttl-cache",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "json-pointer",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 14
+        },
+        {
+          "id": "csv-parser",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        },
+        {
+          "id": "recursive-redaction",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        }
+      ]
+    },
+    {
+      "model": "bartowski/granite-4.2-30b-GGUF",
+      "artifact": "granite-4.2-30b-Q8_0.gguf",
+      "digest": "18d5273fc796dba1a721c51bffd4eb5cb5586b6df9387060cab47589a277012a",
+      "runId": "20260911-150956-107f6fb0",
+      "protocol": {
+        "name": "javascript-functions-v1",
+        "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+        "thinking": true,
+        "context": 16384,
+        "outputCap": 8192,
+        "maxGenerationSeconds": 240,
+        "tasks": 8,
+        "hiddenTests": 99,
+        "temperature": 1.0,
+        "topP": 0.95,
+        "topK": 40,
+        "repeatPenalty": 1.0,
+        "samplingProfile": "t1-p95-k40-v1",
+        "seed": 42,
+        "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+        "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+        "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+      },
+      "tasksPassed": 4,
+      "tasksAttempted": 8,
+      "tasksTotal": 8,
+      "testsPassed": 49,
+      "testsTotal": 99,
+      "medianWallMs": 202058.15,
+      "totalWallMs": 1463418.4,
+      "truncated": 4,
+      "unexpectedThinking": false,
+      "protocolValid": true,
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "versioned-state",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "merge-intervals",
+          "passed": true,
+          "testsPassed": 12,
+          "testsTotal": 12
+        },
+        {
+          "id": "topological-order",
+          "passed": true,
+          "testsPassed": 13,
+          "testsTotal": 13
+        },
+        {
+          "id": "ttl-cache",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        },
+        {
+          "id": "json-pointer",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 14
+        },
+        {
+          "id": "csv-parser",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        },
+        {
+          "id": "recursive-redaction",
+          "passed": false,
+          "testsPassed": 0,
+          "testsTotal": 12
+        }
+      ]
     }
   ],
   "humanEvalResults": [
@@ -3879,6 +4186,32 @@
       ]
     },
     {
+      "model": "bartowski/granite-4.2-30b-GGUF",
+      "digest": "18d5273fc796dba1a721c51bffd4eb5cb5586b6df9387060cab47589a277012a",
+      "thinking": false,
+      "context": 16384,
+      "outputCap": 4096,
+      "suiteSha256": "da29da61ddd7af9dc26810172ab09b8aa5317ae36678fdc98b2a9682c17941c9",
+      "protocol": "humaneval-x-js-wasm-chat-v2",
+      "samplingProfile": "greedy-v1",
+      "promptStyle": "full-program",
+      "runs": [
+        "20260911-153437-9e6d27cd"
+      ],
+      "passed": 19,
+      "total": 20,
+      "supportedTasks": 163,
+      "repeatedTasks": 0,
+      "medianWallMs": 2374.2,
+      "totalWallMs": 44783.9,
+      "meanWallMs": 2239.195,
+      "truncated": 0,
+      "unexpectedThinking": false,
+      "failedTasks": [
+        "JavaScript/17"
+      ]
+    },
+    {
       "model": "qwen3.8:27b-mtp-bf16",
       "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
       "thinking": false,
@@ -4046,17 +4379,61 @@
     }
   ],
   "supervision": {
-    "status": "active",
-    "checkedAt": "2026-09-11T14:45:12.470067-06:00",
-    "leaseExpiresAt": "2026-09-11T15:15:12.470067-06:00",
-    "usageRemainingPercent": 35.0,
-    "meaning": "Agent renewed after reading current Codex usage. New work stops if this lease expires. Already authorized workers keep their hard deadline and cleanup."
+    "status": "completed",
+    "checkedAt": "2026-09-11T15:43:07.522273-06:00",
+    "leaseExpiresAt": "2026-09-11T16:13:07.522273-06:00",
+    "usageRemainingPercent": 17.0,
+    "meaning": "Agent renewed after reading current Codex usage. New work stops if this lease expires. Already authorized workers keep their hard deadline and cleanup.",
+    "completedAt": "2026-09-11T15:47:40-06:00",
+    "reason": "Finished the current Granite checks and three downloaded candidates, then wrapped up as requested by the user."
   },
   "gpuSample": {
-    "utilizationPercent": "99",
-    "memoryUsedMiB": "35528",
-    "temperatureC": "83",
-    "powerWatts": "300.08",
-    "clockEventReasons": "0x0000000000000004"
+    "utilizationPercent": "4",
+    "memoryUsedMiB": "1161",
+    "temperatureC": "57",
+    "powerWatts": "27.98",
+    "clockEventReasons": "0x0000000000000000"
+  },
+  "queueStatus": "completed",
+  "queueCounts": {
+    "completed": 130,
+    "deferred": 25,
+    "error": 3
+  },
+  "completion": {
+    "campaignId": "20260911-daytime",
+    "completedAt": "2026-09-11T15:47:40-06:00",
+    "reason": "Finished the current Granite checks and three downloaded candidates, then wrapped up as requested by the user.",
+    "queueCounts": {
+      "completed": 130,
+      "deferred": 25,
+      "error": 3
+    },
+    "controllerStopped": true,
+    "remainingOwnedProcesses": [],
+    "privatePortFree": true,
+    "primaryLoadedAfter": [],
+    "primaryModelDigestsUnchanged": true,
+    "primaryModelCount": 7,
+    "gpuSampleCsv": "4, 1150, 64, 28.76",
+    "gpuColumns": [
+      "utilizationPercent",
+      "memoryUsedMiB",
+      "temperatureC",
+      "powerWatts"
+    ]
+  },
+  "wrapUp": {
+    "requestedAt": "2026-09-11T15:04:24-06:00",
+    "userRequest": "OK once the center models finish benchmarking let’s wrap it up",
+    "remainingQueueIds": [
+      "apodex-mini-q6",
+      "coding-granite-think-t1-p95",
+      "humaneval-chat-granite-off-pilot",
+      "nemotron30-q8",
+      "qwen38-q8"
+    ],
+    "allowNewSelections": false,
+    "finishAction": "After the current worker and these five existing queue entries finish, verify unloaded GPU and stopped controller, revoke campaign authorization, and save final reports."
   }
 }
