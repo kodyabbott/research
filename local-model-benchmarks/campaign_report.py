@@ -39,11 +39,11 @@ def build():
             'primaryDigestsUnchanged':report.get('primaryIntegrity',{}).get('modelDigestsUnchanged'),
             'error':report.get('error') or report.get('reason'),
             'cleanupErrors':{k:report[k] for k in ('cleanupError','preflightCleanupError','uploadedBlobCleanupErrors','importBookkeepingError','postProcessingError') if k in report}})
-    data={'campaignId':queue['campaignId'],'generatedAt':now(),'rows':rows,
+    data={'campaignId':queue['campaignId'],'campaignStatus':queue.get('status','running'),'cancelledAt':queue.get('cancelledAt'),'generatedAt':now(),'rows':rows,
           'scope':'Paired standardized text battery and small authored quality screen. Not a coding-task execution benchmark.'}
     atomic_json(FOLDER/'results.json',data)
     lines=['# Overnight campaign results', '', 'Updated: '+data['generatedAt'], '',
-           'This is a progress report until every worthwhile queued test is complete or the overnight window ends.',
+           ('The user canceled the campaign at '+queue['cancelledAt']+'. All campaign processes are stopped and overnight follow-ups are paused.' if queue.get('status')=='cancelled' else 'This is a progress report until every worthwhile queued test is complete or the overnight window ends.'),
            'Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.', '',
            '| Model / artifact | Run status | Valid throughput, candidate / coder (tok/s) | v2 screen, candidate / coder | Exact checks, candidate / coder |',
            '|---|---|---:|---|---|']
@@ -75,7 +75,7 @@ def build():
               'A valid throughput comparison does not certify model quality. A completed quality screen is reported separately when throughput is invalid; truncation counts as a failed screen case, and unexpected returned thinking is explicitly marked. Stored BF16/MTP/DFlash configurations include custom settings and cannot isolate quantization effects.', '',
               'The separate GPT-OSS low-reasoning screen allows 8192 generated tokens per case versus 512 in the main sweep. It is unpaired and is not an equal-budget quality ranking. Thinking probes below are single exploratory trials excluded from throughput medians; ratios against an invalid ordinary comparison are diagnostic only.', '']
     for row in rows:
-        if row['status'] not in ('completed','error','deferred'):
+        if row['status'] not in ('completed','error','deferred','cancelled') or not row.get('runId'):
             continue
         lines.append('### '+row['id'])
         lines.append('')
