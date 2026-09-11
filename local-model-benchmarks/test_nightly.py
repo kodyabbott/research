@@ -285,7 +285,9 @@ class HarnessTests(unittest.TestCase):
         self.assertIn('Hard runtime limit', result.stdout)
 
     def test_deadline_recovery_waits_for_port_even_when_vram_is_already_free(self):
-        self.h.report.update(secondaryRuntime={'host': 'fixture'}, gpuBefore={'freeGiB': 90})
+        record = {'host': 'fixture', 'pid': 123, 'processIdentity': {'imagePath': 'fixture', 'creationFileTime': '1'}}
+        self.h.report.update(secondaryRuntime=record, gpuBefore={'freeGiB': 90})
+        nightly.atomic_json(self.h.state / 'secondary-process.json', record)
         self.h.gpu = lambda: {'freeGiB': 90}
         worker = Mock()
         worker.communicate.side_effect = subprocess.TimeoutExpired('fixture', 1)
@@ -293,6 +295,7 @@ class HarnessTests(unittest.TestCase):
         with patch('nightly.Harness', return_value=self.h), \
              patch('nightly.subprocess.Popen', return_value=worker), \
              patch('nightly.subprocess.run'), \
+             patch('nightly.process_identity', return_value=None), \
              patch('nightly.port_open', side_effect=[True, True, False]) as port, \
              patch('nightly.time.sleep') as sleep, nightly.contextlib.redirect_stdout(output):
             code = nightly.supervised([], worker_command=lambda run_id: ['fixture'], timeout=1)
@@ -302,6 +305,8 @@ class HarnessTests(unittest.TestCase):
         self.assertTrue(recovery['vramRecovered'])
         self.assertEqual(port.call_count, 3)
         sleep.assert_called_once()
+        self.assertTrue(recovery['ownedProcessExited'])
+        self.assertEqual(nightly.read_json(self.h.state / 'secondary-process.json')['stopReason'], 'hard-runtime-limit')
 
     def test_supervisor_forwards_json_to_calling_shell(self):
         source = Path(__file__).with_name('nightly.py')
