@@ -61,7 +61,16 @@ def atomic_json(path, data):
     temporary = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')
     try:
         temporary.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-        os.replace(temporary, path)
+        for attempt in range(6):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError as exc:
+                # Windows readers or scanners can briefly block atomic replacement.
+                # Persistent access failures still surface after at most 1.55 seconds.
+                if getattr(exc, 'winerror', None) not in (5, 32, 33) or attempt == 5:
+                    raise
+                time.sleep(0.05 * (2 ** attempt))
     finally:
         temporary.unlink(missing_ok=True)
 
