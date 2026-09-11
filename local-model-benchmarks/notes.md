@@ -725,3 +725,89 @@ now match the user's new time. Other admission limits and the daily ledger are u
 All 62 offline regression tests passed under Python 3.14.7 in 8.537 seconds, including
 20:14:59 refusal before contacting the runtime or reserving quota, admission at 20:15,
 midnight rollover, 06:00 refusal, same-day windows, legacy defaults, and invalid values.
+
+## 2026-09-10 - First autonomous nightly run: openbmb MiniCPM5-2B F16
+
+Controller model: claude-fable-5-1 (self-reported by the session; not independently verified
+against the task UI, which exposes no model field).
+
+**Discovery** (`runs/20260910-202253-c7bd99e2.json`): status `partial`. All six trending
+sources succeeded, 150 trending entries seen, 0 net-new. 100 detail lookups, one HTTP 429
+failure (molbal/MiniMax-H3-GGUF), 154 entries still pending metadata. Not an empty discovery;
+coverage is incomplete because of the lookup cap and the 429.
+
+**Selection**: the only approved-publisher, single-file, root-level GGUF under 35 GiB in the
+candidate pool was openbmb/MiniCPM5-2B-GGUF. The unsloth GLM-5.3-Flash and Qwen3.8-Flash-Next
+repos are split multi-part files far above the cap, and their MTP files are draft/speculative
+components, not standalone models. Pending approved-publisher entries without detail lookups
+(bartowski/Qwen3.8-27B-GGUF, unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF,
+ibm-granite/granite-4.2-8b) had no pinned revision, size, or SHA-256 yet and were not usable
+tonight. Alternatives for later nights, in order: Nemotron-3.5-Lightning-30B-A3B (hybrid
+Mamba-2 MoE, OpenMDW-1.1 license, needs a single-file quant check), bartowski/Qwen3.8-27B-GGUF
+(would duplicate the installed BF16 tag at a lower quant; only worth it with a quant-vs-BF16
+question), granite-4.2-8b (no GGUF repo seen yet).
+
+Model card facts (openbmb/MiniCPM5-2B-GGUF and openbmb/MiniCPM5-2B, read 2026-09-10): dense
+LlamaForCausalLM, 42 layers, GQA 16 Q / 2 KV heads, 2,516,756,480 parameters, 131,072 context,
+Apache-2.0, `enable_thinking` toggle, XML-style tool calls, recommended sampling temperature 1.0 /
+top_p 0.95. Card-claimed benchmarks (not measured here): AIME 2025 86.5, LiveCodeBench v6 69.1,
+SWE-bench Verified 46.4, MMLU-Pro 70.8. Provenance caveat: the card links arxiv 2506.07900,
+which is the MiniCPM4 tech report (June 2025); no MiniCPM5-specific paper or dated release note
+was found, so the release date is unverified beyond "first seen on trending 2026-09-10".
+
+**Weights**: `MiniCPM5-2B-F16.gguf` at revision c451f4d674096e6e6f1cc5d0abb6794bda638304,
+5,039,006,688 bytes, SHA-256 0ffba3682a853295566b98bc38c0ab755d6b2d91b994bc031ed727a08cfcdf25,
+verified after download (no resume). Imported as `nightly-bench-0ffba3682a853295:latest`,
+Ollama digest 7fa333c2a1b09f9a9f705601065cc19c478569b7e9073f549edef27324795154. Ollama reports
+family llama, 2.5B, F16, capabilities tools/thinking/completion, 4.97 GB VRAM at 8192 context.
+
+**Schedule note**: Kody moved the schedule to 20:15 and Codex committed the matching policy
+window (7459a94) during this invocation. I verified policy.json and scheduled-task.md on disk
+before launching at 20:32; the 21:00 timer I had armed was cancelled and never fired a launch.
+
+**Battery** (`runs/20260910-203253-1e9dd501.json`, validation `runs/20260910-202515-14b6c555.json`):
+fixed 8192 context, temperature 0, seed 42, 512-token cap, thinking disabled, warmup plus three
+repetitions, both models on Ollama 0.32.13 (candidate on the harness-owned 11435 child,
+baseline on the primary 11434). Run 20:32:53 to 20:34:30, daily slot reserved 20:32:56.
+
+| Model | Median gen tok/s (min-max) | Median short wall ms | Ingest prompt tok/s (7k prompt) | Exact checks | Truncation |
+|---|---|---|---|---|---|
+| MiniCPM5-2B F16 (candidate) | 246.4 (237.4-249.3) | 610 | ~24,500-24,700 | 3/3 | none |
+| qwen3-coder:30b Q4_K_M (baseline) | 304.1 (284.2-305.1) | 665 | ~11,640-11,680 | 3/3 | none |
+
+Comparison valid per the harness (same runtime version, request settings, machine); templates
+and tokenizers differ, and the primary server's performance environment is not verified
+identical to the child. Load durations (76-99 ms candidate, 88-90 ms baseline after warmup) are
+Ollama model-load time, not time to first token. The three exact checks (sequence, arithmetic,
+extraction) measure limited instruction following only. Neither model was near the context
+limit; no probe errors.
+
+Read: the 2B dense F16 model generates slower than the 30B-A3B MoE at Q4 (246 vs 304 tok/s)
+because it runs 16-bit weights against 3B active 4-bit weights, but it ingests a 7k prompt about
+twice as fast. It passed all three exact-output checks, which the 135M fixtures earlier today
+could not.
+
+**Thinking trial** (separate, not in medians): completed with thinking enabled, 4,126 generated
+tokens in 17.9 s at 231 tok/s, done_reason stop, not truncated. Raw character counts: 11,606
+thinking characters, 602 answer characters. These are not reasoning-token counts. The thinking
+trace shows the model drafting and word-counting a 100-word paragraph repeatedly. Baseline
+reports thinking unsupported.
+
+**Resources and cleanup**: GPU free 93.97 GiB before, 93.97 GiB after each unload; both unloads
+confirmed. Child Ollama pid 35012 stopped at 20:34:29 with exit code 1 (the same code every
+prior clean shutdown recorded), port 11435 free and confirmed closed afterwards. Primary's seven
+model digests unchanged. The exact uploaded blob (5,039,006,688 bytes) was verified unreferenced
+by any private manifest and deleted, journaled in state/blob-deletions.json. Retention evicted
+the oldest completed fixture `nightly-bench-5a1395716f791374` (SmolLM2 Q8_0) and released its
+reservation. No cleanupError, preflightCleanupError, uploadedBlobCleanupErrors,
+importBookkeepingError, or postProcessingError; job stderr is empty. Private cache now holds
+two completed imports (MiniCPM5-2B F16 and the SmolLM2 Q4_K_M fixture), 5,144,462,707 bytes
+in the Ollama store and 0 bytes in downloads. The cache keeps only two completed imports, so
+this model will be evicted after two later successful imports.
+
+**Recommendation**: keep for now as the box's small-model reference point. It is the first
+sub-20B model here to pass the exact checks cleanly and it loads in under 100 ms warm, so it is
+a candidate for a fast local assistant or draft role. No coding-quality claim is made; the
+card's SWE-bench and LiveCodeBench numbers are unmeasured here. A follow-up question worth a
+future night: Q8_0 of the same revision, to see whether the quant changes check results or
+throughput on this hardware.
