@@ -15,12 +15,20 @@ args=parser.parse_args()
 out=args.output_dir
 out.mkdir(parents=True,exist_ok=True)
 queue=read_json(root/'state/campaign-20260911-daytime-queue.json')
-groups={};terminal=[];active=[];coding=[];human_groups={};standard=[]
+groups={};terminal=[];active=[];coding=[];human_groups={};standard=[];coverage={}
 for item in queue['items']:
     if not item.get('runId'):continue
     report=read_json(root/'runs'/(item['runId']+'.json'),{})
     if report.get('status') in ('queued','running'):active.append({'id':item['id'],'runId':item['runId']});continue
     terminal.append({'id':item['id'],'runId':item['runId'],'status':report.get('status'),'error':report.get('error') or report.get('reason')})
+    if report.get('status')=='completed' and report.get('benchmarks'):
+        selected=report.get('selection',{});bench=report['benchmarks'][0]
+        identity=(selected.get('repoId',selected.get('model',bench.get('model'))),selected.get('filename'),bench.get('digest'))
+        entry=coverage.setdefault(identity,{'model':identity[0],'artifact':identity[1],'digest':identity[2],
+            'upstreamUrl':selected.get('upstreamUrl'),'modelCardUrl':selected.get('modelCardUrl'),'runs':[],'protocols':[]})
+        entry['runs'].append(item['runId'])
+        protocol=report.get('protocol',{}).get('name',report.get('mode','standard'))
+        if protocol not in entry['protocols']:entry['protocols'].append(protocol)
     if report.get('status')=='completed' and report.get('comparison'):
         benches=report.get('benchmarks',[]);b=benches[0];base=benches[1] if len(benches)>1 else {};sel=report.get('selection',{});comparison=report['comparison']
         standard.append({'model':sel.get('repoId',b['model']),'artifact':sel.get('filename'),'runId':item['runId'],'valid':comparison.get('valid',False),
@@ -63,7 +71,7 @@ human_results=[]
 for g in human_groups.values():
     recorded=g.pop('tasks');tasks=list({t['id']:t for t in recorded}.values());walls=[t['wallMs'] for t in tasks if t.get('wallMs') is not None]
     human_results.append({**g,'passed':sum(t['taskPassed'] for t in tasks),'total':len(tasks),'supportedTasks':163,'repeatedTasks':len(recorded)-len(tasks),
-        'medianWallMs':statistics.median(walls) if walls else None,'truncated':sum(t['truncated'] for t in tasks),
+        'medianWallMs':statistics.median(walls) if walls else None,'totalWallMs':sum(walls),'meanWallMs':statistics.mean(walls) if walls else None,'truncated':sum(t['truncated'] for t in tasks),
         'unexpectedThinking':any(t['unexpectedThinking'] for t in tasks),'failedTasks':[t['id'] for t in tasks if not t['taskPassed']]})
 artifacts=[]
 for job_path in (root/'state').glob('prefetch-*.job.json'):
@@ -77,7 +85,7 @@ for job_path in (root/'state').glob('prefetch-*.job.json'):
     artifacts.append({'model':report.get('selection',{}).get('repoId'),'status':report.get('status'),'verified':download.get('verified',False),
         'bytesDownloaded':size,'expectedBytes':report.get('admission',{}).get('bytes'),'runId':job['runId']})
 data={'updatedAt':dt.datetime.now().astimezone().isoformat(),'campaignId':queue['campaignId'],'active':active,'terminal':terminal,
- 'pending':sum(r['status']=='pending' for r in queue['items']),'standardResults':standard,'workloadResults':results,'common24Results':common_results,'codingResults':coding,'humanEvalResults':human_results,'artifactPrefetches':artifacts,
+ 'pending':sum(r['status']=='pending' for r in queue['items']),'modelCoverage':list(coverage.values()),'standardResults':standard,'workloadResults':results,'common24Results':common_results,'codingResults':coding,'humanEvalResults':human_results,'artifactPrefetches':artifacts,
  'supervision':read_json(root/'state'/('campaign-'+queue['campaignId']+'-control.json'),{})}
 try:
     sample=subprocess.run(['nvidia-smi','--query-gpu=utilization.gpu,memory.used,temperature.gpu,power.draw,clocks_event_reasons.active','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True,timeout=5,creationflags=subprocess.CREATE_NO_WINDOW).stdout.strip().splitlines()[0]
@@ -93,6 +101,7 @@ atomic_json(folder/'workload-results.json',data);atomic_json(out/'benchmark-prog
 lines=['# RTX PRO 6000 benchmark progress','', 'Updated: '+data['updatedAt'], '',
  'September 11 campaign status: '+queue.get('status','unknown')+'. Results below are measured locally; scores from different reasoning budgets are separate.', '',
  'Running: '+(', '.join(x['id'] for x in active) or 'between jobs')+'. Pending queue entries: '+str(data['pending'])+'.', '',
+ 'Tested model artifacts or installed configurations: '+str(len(coverage))+'. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.', '',
  '## Broader workload results','',
  'The deterministic 96-case suite covers ledger replay, event-state reconstruction, dependency scheduling, SQL, shortest paths, record extraction, Python tracing, and retrieval. Completed blocks are accumulated below. In this JSON-answer suite, model-generated code is never executed. These are authored workload checks, not a standardized coding benchmark.', '',
  '| Model | Thinking | Context | Correct / attempted | Median response seconds | Truncated | Protocol note |', '|---|---|---:|---:|---:|---:|---|']
@@ -112,10 +121,10 @@ for c in coding:
 lines+=['','Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.','','## Background model downloads','']
 lines[-2:]=[]
 lines+=['## HumanEval-X JavaScript, adapted WASM evaluation','','One greedy sample per task from the [published dataset](https://huggingface.co/datasets/zai-org/humaneval-x). The supported set is 163 of 164 tasks: Node crypto task 162 is excluded. Missing test invocations in tasks 32, 119, and 151 are explicitly added, and test randomness uses seed 42. All 163 reference solutions passed this runner. This is an adapted evaluation, not the original 200-sample leaderboard protocol; this longstanding public dataset may appear in model training data.','',
- '| Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Truncated | Protocol note |','|---|---|---|---:|---:|---:|---|']
+ '| Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Total generation minutes | Truncated | Protocol note |','|---|---|---|---:|---:|---:|---:|---|']
 for r in human_results:
-    lines.append(f"| {r['model']} | {r['promptStyle']} | {r['thinking']} | {r['passed']}/{r['total']} | {(r['medianWallMs'] or 0)/1000:.2f} | {r['truncated']} | {'unexpected thinking' if r['unexpectedThinking'] else 'none'} |")
-lines+=['','These HumanEval-X runs use 16384 context and 4096 output tokens with thinking off or 8192 with reasoning. Partial totals cover completed blocks only. Source data, transformations, reference validation, prompts, raw continuations, and test outcomes are saved.','','## Background model downloads','']
+    lines.append(f"| {r['model']} | {r['promptStyle']} | {r['thinking']} | {r['passed']}/{r['total']} | {(r['medianWallMs'] or 0)/1000:.2f} | {r['totalWallMs']/60000:.2f} | {r['truncated']} | {'unexpected thinking' if r['unexpectedThinking'] else 'none'} |")
+lines+=['','These HumanEval-X runs use 16384 context and 4096 output tokens with thinking off or 8192 with reasoning. Partial totals cover completed blocks only. Total generation time sums task response times, including failed and truncated attempts, and excludes model import, load, warmup, grading and between-block overhead. Source data, transformations, reference validation, prompts, raw continuations, and test outcomes are saved.','','## Background model downloads','']
 for a in artifacts:
     lines.append(f"- {a['model']}: {a['status']}; {a['bytesDownloaded']/1e9:.2f} / {(a['expectedBytes'] or 0)/1e9:.2f} GB; complete-file hash verified: {a['verified']}.")
 lines += ['',
