@@ -18,8 +18,16 @@ def screen_text(screen):
     return score
 
 
-def build():
-    queue = read_json(ROOT/'state/campaign-20260910-queue.json')
+def build(campaign_id=None):
+    global FOLDER
+    queue_path = ROOT/'state/campaign-20260910-queue.json'
+    if campaign_id:
+        import re
+        if not re.fullmatch(r'[a-z0-9-]+',campaign_id):
+            raise ValueError('Invalid campaign ID')
+        FOLDER = ROOT/'campaigns'/campaign_id
+        queue_path = ROOT/'state'/('campaign-'+campaign_id+'-queue.json')
+    queue = read_json(queue_path)
     rows = []
     for item in queue['items']:
         selection = read_json(ROOT/item['selectionFile'])
@@ -42,8 +50,8 @@ def build():
     data={'campaignId':queue['campaignId'],'campaignStatus':queue.get('status','running'),'cancelledAt':queue.get('cancelledAt'),'generatedAt':now(),'rows':rows,
           'scope':'Paired standardized text battery and small authored quality screen. Not a coding-task execution benchmark.'}
     atomic_json(FOLDER/'results.json',data)
-    lines=['# Overnight campaign results', '', 'Updated: '+data['generatedAt'], '',
-           ('The user canceled the campaign at '+queue['cancelledAt']+'. All campaign processes are stopped and overnight follow-ups are paused.' if queue.get('status')=='cancelled' else 'This is a progress report until every worthwhile queued test is complete or the overnight window ends.'),
+    lines=['# Model benchmark campaign results', '', 'Updated: '+data['generatedAt'], '',
+           ('The user canceled the campaign at '+queue['cancelledAt']+'. All campaign processes are stopped and overnight follow-ups are paused.' if queue.get('status')=='cancelled' else 'This is a progress report until every worthwhile queued test is complete or its authorization ends.'),
            'Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.', '',
            '| Model / artifact | Run status | Valid throughput, candidate / coder (tok/s) | v2 screen, candidate / coder | Exact checks, candidate / coder |',
            '|---|---|---:|---|---|']
@@ -57,7 +65,10 @@ def build():
         terminal=report_status=='completed'
         status=report_status
         speed=quality=checks='—'
-        if terminal and row.get('mode')=='campaign-reasoning-screen':
+        if terminal and row.get('mode')=='campaign-workload-screen':
+            status='workload screen'
+            quality=f"{cs.get('passed')}/{cs.get('total')} (practical-json-v1, separate)"
+        elif terminal and row.get('mode')=='campaign-reasoning-screen':
             status='reasoning-only screen'
             quality=screen_text(cq)+' (low reasoning; unpaired)'
         elif terminal:
@@ -115,4 +126,8 @@ def build():
 
 
 if __name__=='__main__':
-    build()
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--campaign')
+    args=parser.parse_args()
+    build(args.campaign)

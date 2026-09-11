@@ -12,7 +12,7 @@ def run(h, selection):
             'caveat':'Exploratory reasoning-enabled quality screen. Different token/reasoning budget from thinking-off v2; no throughput or equal-budget quality ranking.'})
     reserved, loaded, measurement, before = False, False, None, None
     try:
-        if not benchmark_window_open(h.policy):
+        if not h.window_open():
             h.report.update(status='deferred', reason='Outside the overnight benchmark window')
             return h.report
         if selection.get('kind') != 'installed':

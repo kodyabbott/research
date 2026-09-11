@@ -1034,3 +1034,7 @@ Morning work must account for the normal 20:15-05:59 admission window and the re
 campaign authorization; restarting the old controller is not a valid continuation.
 The handoff does not grant a new exception or publish any work. Historical raw results
 remain unchanged. Documentation checks replace inference/testing for this pause.
+
+## 2026-09-11 - Fresh daytime campaign
+
+User requested sustained actual GPU benchmarking. Created `campaigns/20260911-daytime` with a fresh authorization and separate ledger/queue, preserving the canceled campaign and normal nightly policy. See its notes, raw results and progress report for the historical audit, new Nex mirror, larger workload suite and measured findings. No public push performed.
