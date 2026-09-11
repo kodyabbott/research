@@ -982,3 +982,6 @@ Pilot 20260910-225905-c6df53d6 completed with valid standardized throughput (Qwe
 
 
 Added campaign_queue.py to advance the reviewed selections immediately after each terminal result, recording each runId and outcome under a separate queue lock. It uses the reviewed campaign launcher and existing supervisor status recovery, rather than running multiple models concurrently. Four offline controller tests pass; the combined campaign/controller set is16passing tests. The heartbeat remains responsible for reviewing results and adapting the queue.
+
+
+V2 prompt audit: the missing-evidence item omits the inferred type hint, since declaring its expected type as null would disclose its answer. Its original instruction still says to use null only when the supplied record does not establish the year. No v2 model request had run before this correction.

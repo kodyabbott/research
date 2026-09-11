@@ -93,8 +93,10 @@ def run(harness, model, thinking_capable, summary):
             break
         answer_type = {list: 'array', dict: 'object', str: 'string', int: 'number', float: 'number',
                        bool: 'boolean', type(None): 'null'}[type(expected)]
+        # Do not reveal a missing-evidence answer by declaring its type to be null.
+        type_hint = '' if expected is None else 'The value of "answer" must have JSON type ' + answer_type + '. '
         request_prompt = (prompt + '\nReturn exactly one JSON object with the single key "answer". '
-                          'The value of "answer" must have JSON type ' + answer_type + '. No markdown or explanation.')
+                          + type_hint + 'No markdown or explanation.')
         deadline = harness.deadline
         harness.deadline = min(deadline, time.monotonic() + result['maxCaseSeconds'])
         try:
