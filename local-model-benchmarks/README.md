@@ -143,7 +143,9 @@ also recorded separately. Vision is explicitly unmeasured; projector support rem
 
 The battery measures generation throughput and prompt ingest, then checks exact number
 sequencing, arithmetic, and extraction. It never executes generated code. These are small
-instruction-following checks, not a coding-quality benchmark. `loadMs` is model-loading
+instruction-following checks, not a coding-quality benchmark. The comparisons normalize newline styles
+and trim outer whitespace only: trailing spaces on individual lines, extra text, duplicates,
+and reordering fail the exact-output check. `loadMs` is model-loading
 duration, not time to first token. Output tokens are not isolated reasoning tokens.
 
 ## Running it
