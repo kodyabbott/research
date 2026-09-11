@@ -53,6 +53,9 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         if info.get('details',{}).get('family')=='gptoss' and think not in ('low','medium','high'):raise ValueError('GPT-OSS requires explicit reasoning level')
         if think and think!='implicit' and not capable:raise ValueError('Explicit thinking is not advertised by this model')
         request_capable=capable and think!='implicit';request_think=think if think!='implicit' else False
+        profile=selection.get('samplingProfile')
+        if profile not in (None,'nex-recommended-v1'):raise ValueError('Unsupported coding sampling profile')
+        sampling_args={'sampling_profile':profile} if profile else {}
         context,cap=request_budget(selection,think)
         h.policy['numCtx']=context
         before=personal_before if personal_before is not None else {name:row['digest'] for name,row in h.installed().items()}
@@ -62,7 +65,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         evaluator=config.get('evaluate',evaluate)
         h.report.update(mode=config.get('mode','campaign-coding-screen'),selection=selection,admission=plan,gpuBefore=gpu,
             protocol={'name':config.get('name',coding_suite.VERSION),'suiteSha256':config.get('suiteSha256') or coding_suite.digest(tasks),'thinking':think,'context':context,'outputCap':cap,
-            'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':0,'seed':42,
+            'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':0.7 if profile else 0,'topP':0.95 if profile else 1,'topK':40,'repeatPenalty':1.0,'samplingProfile':profile or 'greedy-v1','seed':42,
             'codeExecution':'QuickJS WebAssembly only, no exposed host functions or module loader',
             'sandboxPackageLockSha256':hashlib.sha256((ROOT/'state/coding-sandbox/package-lock.json').read_bytes()).hexdigest(),
             'scope':config.get('scope','Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval.'),**config.get('extraProtocol',{})})
@@ -70,7 +73,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
             'capabilities':info.get('capabilities',[]),'modelParameters':info.get('parameters'),
             'templateSha256':hashlib.sha256(info.get('template','').encode()).hexdigest(),'tasks':[],'status':'running'}
         h.report['benchmarks']=[measurement];h.save_report();loaded=True
-        measurement['warmup']=h.chat(plan['model'],'Reply with exactly: ready',request_capable,think=request_think,num_predict=512,supervise=True)
+        measurement['warmup']=h.chat(plan['model'],'Reply with exactly: ready',request_capable,think=request_think,num_predict=512,supervise=True,**sampling_args)
         measurement['loadedModel']=h.api('ps').get('models',[])
         for live in measurement['loadedModel']:
             if (live.get('name') or live.get('model'))==plan['model']:
@@ -79,7 +82,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         for task in tasks:
             if h.remaining()<275:measurement.update(status='incomplete',reason='Insufficient shared deadline for another task');break
             previous=h.deadline;h.deadline=min(previous,time.monotonic()+240)
-            try:response=h.chat(plan['model'],task['prompt'],request_capable,think=request_think,num_predict=cap,supervise=True)
+            try:response=h.chat(plan['model'],task['prompt'],request_capable,think=request_think,num_predict=cap,supervise=True,**sampling_args)
             finally:h.deadline=previous
             message=response.get('message',{});code,fence=extract_code(message.get('content',''))
             record={'id':task['id'],'prompt':task['prompt'],'response':response,'code':code,'markdownFenceRemoved':fence,

@@ -37,6 +37,20 @@ class CodingTests(unittest.TestCase):
         self.assertEqual(report['status'],'completed');self.assertEqual(report['protocol']['outputCap'],16384)
         self.assertEqual(seen[1:],[(32768,16384)]*8);self.assertEqual(h.policy['numCtx'],8192);h.confirm_unloaded.assert_called_once()
 
+    def test_sampling_profile_reaches_every_request_and_is_reported(self):
+        h=WorkloadTests().harness();h.chat.return_value={'done':True,'done_reason':'stop','message':{'content':'function solve(input){return input}'},'supervisedWallMs':10}
+        with patch.object(c,'evaluate',side_effect=lambda code,tests,*a:{'passed':len(tests),'total':len(tests)}):
+            report=c.run(h,{'kind':'installed','samplingProfile':'nex-recommended-v1'})
+        self.assertEqual(report['status'],'completed')
+        self.assertEqual(report['protocol']['temperature'],0.7)
+        self.assertEqual(report['protocol']['topP'],0.95)
+        self.assertEqual(len(h.chat.call_args_list),9)
+        self.assertTrue(all(call.kwargs['sampling_profile']=='nex-recommended-v1' for call in h.chat.call_args_list))
+
+    def test_unsupported_sampling_profile_refused_before_inference(self):
+        h=WorkloadTests().harness();report=c.run(h,{'kind':'installed','samplingProfile':'unbounded'})
+        self.assertEqual(report['status'],'error');h.chat.assert_not_called();h.reserve.assert_not_called()
+
     def test_fence_removal_is_narrow(self):
         self.assertEqual(c.extract_code('```javascript\nfunction solve(){}\n```'),('function solve(){}',True))
         self.assertFalse(c.extract_code('Explanation\n```js\nfunction solve(){}\n```')[1])

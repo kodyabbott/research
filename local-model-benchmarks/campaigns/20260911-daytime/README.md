@@ -68,3 +68,8 @@ Nex returned exactly identical message objects across all 24 first-block workloa
 Nex and Qwen3.5 have separately queued repeats of the same eight authored functions with 32768 context and a 16384 output-token allowance after multiple 8192-token truncations. These are different configurations, not equal-budget comparisons. The generation deadline remains 240 seconds per task within the original one-hour worker deadline. Budget validation, actual request settings, context restoration, and unloading are tested.
 
 Host conditions were not held constant: metadata downloads, report generation, reference-fixture tests, and brief browser QA with GPU rendering disabled overlapped some GPU runs. Latency is descriptive for this workstation session; no statistical-significance or dedicated-host claim is made.
+
+
+## Nex sampling diagnostic
+
+The [publisher model card](https://huggingface.co/nex-agi/Nex-N2.5-mini) recommends temperature 0.7, top_p 0.95 and top_k 40. Saved greedy failures include long repeated paragraphs and repeated zero sequences, so a separately labeled eight-function repeat uses those settings at the original 16384 context and 8192 output cap. Seed 42 and repeat_penalty 1.0 remain fixed. The native Ollama think boolean did not disable reasoning in the paired observations; its imported Jinja template branches on reasoning_effort. This is a runtime/template compatibility limitation, not a conclusion that the model cannot disable thinking. Ninety-nine focused regression tests passed after the sampler addition.
