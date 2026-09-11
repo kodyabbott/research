@@ -85,7 +85,12 @@ def worker(root, authorization, selection_path, run_id):
     h.report['runId'] = run_id
     with state_lock(h.state / 'operation.lock'):
         validate_authorization(root, authorization)
-        result = h.run_candidate(read_json(selection_path))
+        selection = read_json(selection_path)
+        if selection.get('campaignProtocol') == 'gpt-oss-reasoning-screen':
+            from reasoning_screen import run
+            result = run(h, selection)
+        else:
+            result = h.run_candidate(selection)
         h.save_report()
     print(json.dumps(result, indent=2))
     return 1 if result.get('status') == 'error' else 0

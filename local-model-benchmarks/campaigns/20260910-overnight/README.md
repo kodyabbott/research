@@ -107,3 +107,10 @@ Both models unloaded, and all seven personal model digests stayed unchanged. Thi
 configuration does not reproduce the historical hand-measured or MTP speed claim.
 
 Populate main-sweep results only from terminal raw records and retain failures and invalid comparisons.
+
+
+## Separate GPT-OSS exploration
+
+[Exact-version Ollama documentation](https://github.com/ollama/ollama/blob/v0.32.13/docs/capabilities/thinking.mdx#L69-L73) states that GPT-OSS ignores boolean thinking controls and supports low/medium/high levels. The already installed GPT-OSS20B is therefore queued with explicit low reasoning under [reasoning_screen.py](../../reasoning_screen.py), using the same16 v2 cases and the existing8192-token thinking budget. This is an unpaired exploratory screen, not a thinking-off throughput comparison or an equal-budget quality ranking. The normal installed-model digest admission, GPU idle/headroom, campaign reservation, shared process deadline, target-only unload and personal-inventory checks remain enforced. No weights or runtime upgrades are required. After this addition all92 offline tests passed in8.771seconds, including five dedicated reasoning-protocol tests.
+
+[Current results](results.md) can be rebuilt read-only with the installed Python and `campaign_report.py`.

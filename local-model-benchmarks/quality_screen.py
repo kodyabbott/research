@@ -78,13 +78,13 @@ def grade(content, expected):
         return False
 
 
-def run(harness, model, thinking_capable, summary):
+def run(harness, model, thinking_capable, summary, *, think=False, output_cap=512, allow_thinking=False):
     result = {'version': VERSION, 'status': 'running', 'cases': [],
               'generatedCodeExecution': 'disabled', 'includedInThroughputMedians': False,
-              'outputCap': 512, 'maxCaseSeconds': 45,
+              'outputCap': output_cap, 'requestedThinking': think, 'expectedThinking': allow_thinking, 'maxCaseSeconds': 45,
               'scope': '16 authored code-comprehension, data, reasoning, and instruction-following cases; not a coding benchmark or a general intelligence score.'}
     harness.report['benchmarks'][-1]['qualityScreen'] = result
-    if summary.get('unexpectedThinking'):
+    if summary.get('unexpectedThinking') and not allow_thinking:
         result.update(status='skipped', reason='Ordinary responses did not establish thinking-off behavior.')
         return result
     for name, category, prompt, expected in CASES:
@@ -101,12 +101,12 @@ def run(harness, model, thinking_capable, summary):
         harness.deadline = min(deadline, time.monotonic() + result['maxCaseSeconds'])
         try:
             response = harness.chat(model, request_prompt, thinking_capable,
-                                    num_predict=result['outputCap'], supervise=True)
+                                    think=think, num_predict=result['outputCap'], supervise=True)
             msg = response.get('message', {})
             result['cases'].append({'name': name, 'category': category, 'prompt': request_prompt,
                 'expected': {'answer': expected}, 'response': response,
                 'passed': response.get('done_reason') != 'length' and grade(msg.get('content'), expected),
-                'unexpectedThinking': isinstance(msg.get('thinking'), str) and bool(msg['thinking'].strip())})
+                'unexpectedThinking': not allow_thinking and isinstance(msg.get('thinking'), str) and bool(msg['thinking'].strip())})
             harness.save_report()
         except Exception as exc:
             result.update(status='incomplete', reason=str(exc))
@@ -117,5 +117,7 @@ def run(harness, model, thinking_capable, summary):
         result['status'] = 'completed'
     result.update(passed=sum(c['passed'] for c in result['cases']), total=len(CASES),
                   attempted=len(result['cases']), unexpectedThinking=any(c['unexpectedThinking'] for c in result['cases']))
-    result['validThinkingOffScreen'] = result['status'] == 'completed' and not result['unexpectedThinking']
+    result['validThinkingOffScreen'] = (result['status'] == 'completed' and not result['unexpectedThinking']) if not allow_thinking else None
+    if allow_thinking:
+        result['validReasoningScreen'] = result['status'] == 'completed'
     return result
