@@ -33,6 +33,15 @@ def evaluate(code,tests,timeout=30):
     data['passed']=sum(bool(x['passed']) for x in data['rows']);data['total']=len(tests)
     return data
 
+def request_budget(selection,thinking):
+    context=selection.get('codingContext',16384)
+    cap=selection.get('codingOutputCap',8192 if thinking else 4096)
+    if type(context) is not int or context not in (16384,32768):raise ValueError('Unsupported coding context')
+    allowed=(8192,16384) if thinking else (4096,)
+    if type(cap) is not int or cap not in allowed or cap>context-1024:raise ValueError('Unsupported coding output budget')
+    return context,cap
+
+
 def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_before=None,benchmark=None):
     loaded=reserved=False;before=None;measurement=None;old_ctx=h.policy['numCtx']
     try:
@@ -44,14 +53,15 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         if info.get('details',{}).get('family')=='gptoss' and think not in ('low','medium','high'):raise ValueError('GPT-OSS requires explicit reasoning level')
         if think and think!='implicit' and not capable:raise ValueError('Explicit thinking is not advertised by this model')
         request_capable=capable and think!='implicit';request_think=think if think!='implicit' else False
-        h.policy['numCtx']=16384
+        context,cap=request_budget(selection,think)
+        h.policy['numCtx']=context
         before=personal_before if personal_before is not None else {name:row['digest'] for name,row in h.installed().items()}
         gpu=h.wait_idle(plan['bytes'])
         if not reserved_elsewhere:h.reserve(plan);reserved=True
-        config=benchmark or {};tasks=config.get('tasks') or coding_suite.tasks();cap=8192 if think else 4096
+        config=benchmark or {};tasks=config.get('tasks') or coding_suite.tasks()
         evaluator=config.get('evaluate',evaluate)
         h.report.update(mode=config.get('mode','campaign-coding-screen'),selection=selection,admission=plan,gpuBefore=gpu,
-            protocol={'name':config.get('name',coding_suite.VERSION),'suiteSha256':config.get('suiteSha256') or coding_suite.digest(tasks),'thinking':think,'context':16384,'outputCap':cap,
+            protocol={'name':config.get('name',coding_suite.VERSION),'suiteSha256':config.get('suiteSha256') or coding_suite.digest(tasks),'thinking':think,'context':context,'outputCap':cap,
             'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':0,'seed':42,
             'codeExecution':'QuickJS WebAssembly only, no exposed host functions or module loader',
             'sandboxPackageLockSha256':hashlib.sha256((ROOT/'state/coding-sandbox/package-lock.json').read_bytes()).hexdigest(),
@@ -65,7 +75,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         for live in measurement['loadedModel']:
             if (live.get('name') or live.get('model'))==plan['model']:
                 if live.get('digest') and live['digest']!=plan['digest']:raise RuntimeError('Loaded model digest changed')
-                if live.get('context_length') and live['context_length']!=16384:raise RuntimeError('Runtime did not honor the requested coding context')
+                if live.get('context_length') and live['context_length']!=context:raise RuntimeError('Runtime did not honor the requested coding context')
         for task in tasks:
             if h.remaining()<275:measurement.update(status='incomplete',reason='Insufficient shared deadline for another task');break
             previous=h.deadline;h.deadline=min(previous,time.monotonic()+240)

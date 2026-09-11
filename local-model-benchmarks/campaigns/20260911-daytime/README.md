@@ -59,3 +59,12 @@ The Qwen3-Coder pilot completed with 5/8 fully correct functions and 90/99 check
 ## Published coding dataset extension
 
 [HumanEval-X source and adaptations](../../fixtures/humaneval-x/README.md) document the pinned Apache-licensed 164-task JavaScript set, the 163 tasks supported in the isolated WASM runtime, three repaired upstream test invocations, seeded test randomness, and reference validation. A continuation pilot exposed formatting failures and is preserved separately from the subsequent complete-program chat protocol. These results are kept separate from the eight authored functions and the JSON-answer workload, with public-dataset training overlap noted as an evidence limit.
+
+
+## Budget sensitivity and observed runtime controls
+
+Nex returned exactly identical message objects across all 24 first-block workload cases with think:false and think:true. Its ordinary comparison is therefore invalid as a thinking-off comparison; explicit reasoning results are kept, and additional thinking-off coding follow-ups are deferred. The valid explicit-reasoning run completed all 96 workload cases at 86/96 without truncation. Its initial eight-function screen was much weaker (2/8 tasks, six truncated responses), so published-task scores and authored-task reliability remain separate.
+
+Nex and Qwen3.5 have separately queued repeats of the same eight authored functions with 32768 context and a 16384 output-token allowance after multiple 8192-token truncations. These are different configurations, not equal-budget comparisons. The generation deadline remains 240 seconds per task within the original one-hour worker deadline. Budget validation, actual request settings, context restoration, and unloading are tested.
+
+Host conditions were not held constant: metadata downloads, report generation, reference-fixture tests, and brief browser QA with GPU rendering disabled overlapped some GPU runs. Latency is descriptive for this workstation session; no statistical-significance or dedicated-host claim is made.

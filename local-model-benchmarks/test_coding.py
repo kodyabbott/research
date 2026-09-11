@@ -21,6 +21,22 @@ class CodingTests(unittest.TestCase):
         self.assertEqual(report['status'],'completed');self.assertEqual(report['benchmarks'][0]['summary']['tasksPassed'],8)
         self.assertEqual(h.policy['numCtx'],8192);h.reserve.assert_called_once();h.finish_reservation.assert_called_once();h.confirm_unloaded.assert_called_once()
 
+    def test_oversized_budget_refused_before_inference(self):
+        h=WorkloadTests().harness();report=c.run(h,{'kind':'installed','codingContext':1000000})
+        self.assertEqual(report['status'],'error');h.chat.assert_not_called();h.reserve.assert_not_called()
+
+    def test_larger_budget_is_bounded_restored_and_reported(self):
+        h=WorkloadTests().harness();h.api.side_effect=lambda method,*a,**kw:({'capabilities':['thinking']} if method=='show' else {'models':[{'name':'model','digest':'digest','context_length':32768}]} if method=='ps' else {})
+        seen=[]
+        def chat(*a,**kw):
+            seen.append((h.policy['numCtx'],kw['num_predict']))
+            return {'done':True,'done_reason':'stop','message':{'content':'function solve(input){return input}'},'supervisedWallMs':10}
+        h.chat.side_effect=chat
+        with patch.object(c,'evaluate',side_effect=lambda code,tests,*a:{'passed':len(tests),'total':len(tests)}):
+            report=c.run(h,{'kind':'installed','thinking':True,'codingContext':32768,'codingOutputCap':16384})
+        self.assertEqual(report['status'],'completed');self.assertEqual(report['protocol']['outputCap'],16384)
+        self.assertEqual(seen[1:],[(32768,16384)]*8);self.assertEqual(h.policy['numCtx'],8192);h.confirm_unloaded.assert_called_once()
+
     def test_fence_removal_is_narrow(self):
         self.assertEqual(c.extract_code('```javascript\nfunction solve(){}\n```'),('function solve(){}',True))
         self.assertFalse(c.extract_code('Explanation\n```js\nfunction solve(){}\n```')[1])
