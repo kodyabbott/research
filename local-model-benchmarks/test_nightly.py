@@ -254,6 +254,20 @@ class HarnessTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('holds the state lock', result.stderr)
 
+    def test_duplicate_before_reservation_is_admission_failure(self):
+        model = 'candidate:latest'
+        self.h.installed = lambda: {model: {'digest': 'b' * 64, 'size': 100},
+            self.policy['baselineModel']: {'digest': 'c' * 64, 'size': 100}}
+        self.h.wait_idle = lambda *args: {}
+        nightly.atomic_json(self.h.state / 'acceptance-ledger.json', {'days': {
+            nightly.dt.date.today().isoformat(): [{'model': model, 'status': 'completed'}]}})
+        selection = {'kind': 'installed', 'model': model, 'expectedDigest': 'b' * 64,
+                     'rationale': self.selection['rationale']}
+        with patch.object(self.h, 'benchmark', side_effect=AssertionError('must not benchmark')):
+            result = self.h.run_candidate(selection, acceptance_validation=True)
+        self.assertEqual(result['failureKind'], 'admission')
+        self.assertIn('already used its daily slot', result['error'])
+
     def test_candidate_and_baseline_complete_with_persisted_ledger(self):
         hour = nightly.dt.datetime.now().hour
         self.h.policy.update(benchmarkWindowStartHour=hour, benchmarkWindowEndHour=(hour + 1) % 24)
@@ -603,7 +617,7 @@ class HarnessTests(unittest.TestCase):
         self.h.installed = lambda: {name: {'digest': digest}}
         self.h.api = lambda *args: {'models': []}
         nightly.atomic_json(self.h.state / 'imports.json', {name: {'digest': digest, 'runId': run_id}})
-        for kind in ('environment', 'timeout', 'baseline'):
+        for kind in ('environment', 'timeout', 'baseline', 'admission'):
             nightly.atomic_json(self.root / 'runs' / (run_id + '.json'), {'status': 'error',
                 'admission': {'model': name, 'digest': digest}, 'failureKind': kind, 'error': 'interrupted fixture'})
             with patch('nightly.urllib.request.urlopen', side_effect=AssertionError('must not delete')):

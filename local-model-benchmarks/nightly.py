@@ -689,7 +689,7 @@ class Harness:
                     break
                 admission = result.get('admission', {})
                 if (result.get('status') == 'error' and result.get('error')
-                        and result.get('failureKind') not in ('environment', 'timeout', 'baseline')
+                        and result.get('failureKind') not in ('environment', 'timeout', 'baseline', 'admission')
                         and admission.get('model') == name and admission.get('digest') == item['digest']):
                     terminal_failure = True
             else:
@@ -851,7 +851,7 @@ class Harness:
             if measurements_done:
                 self.report.update(status='completed', postProcessingError=str(exc))
             else:
-                kind = ('timeout' if isinstance(exc, (TimeoutError, subprocess.TimeoutExpired)) else
+                kind = ('admission' if not reserved else 'timeout' if isinstance(exc, (TimeoutError, subprocess.TimeoutExpired)) else
                         ('baseline' if self.report.get('phase') == 'baseline' else 'execution'))
                 self.report.update(status='error', error=str(exc), failureKind=kind)
         finally:
