@@ -53,6 +53,17 @@ def advance(root=ROOT, launch=None, inspect=None, queue_name=QUEUE):
         except ValueError as exc:
             return {'status': 'stopped', 'reason': str(exc)}
         row = pending[0]
+        prefetch_active = False
+        for prefetch_file in (root/'state').glob('prefetch-*.job.json'):
+            job = read_json(prefetch_file, {})
+            if job.get('processIdentity') and process_identity(job['pid']) == job['processIdentity']:
+                prefetch_active = True
+                break
+        if prefetch_active:
+            runnable = [item for item in pending if read_json(root/item['selectionFile'], {}).get('kind') == 'installed']
+            if not runnable:
+                return {'status': 'waiting-prefetch', 'reason': 'Imports wait for artifact prefetch to finish'}
+            row = runnable[0]
         try:
             with contextlib.redirect_stdout(io.StringIO()) as output:
                 launch(root / queue['authorizationFile'], root / row['selectionFile'])

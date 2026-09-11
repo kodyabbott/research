@@ -51,6 +51,17 @@ class QueueTests(unittest.TestCase):
             result=q.advance(self.root)
         self.assertEqual(result['status'],'busy')
 
+    def test_prefetch_keeps_installed_gpu_work_moving(self):
+        self.data['items']=[{'id':'hf','status':'pending','selectionFile':'hf.json'},{'id':'local','status':'pending','selectionFile':'local.json'}]
+        atomic_json(self.path,self.data)
+        atomic_json(self.root/'hf.json',{'kind':'huggingface'})
+        atomic_json(self.root/'local.json',{'kind':'installed'})
+        identity={'creationFileTime':'1','imagePath':'python'}
+        atomic_json(self.root/'state/prefetch-test.job.json',{'pid':123,'processIdentity':identity})
+        with patch.object(q.campaign,'validate_authorization',return_value={}),patch.object(q,'process_identity',return_value=identity):
+            result=q.advance(self.root,lambda *a:print(json.dumps({'status':'started','runId':'local-run'})))
+        self.assertEqual(result['id'],'local');self.assertEqual(read_json(self.path)['items'][0]['status'],'pending')
+
     def test_multiple_active_entries_remain_a_fatal_invariant(self):
         self.data['items'][1].update(status='running',runId='run-b'); atomic_json(self.path,self.data)
         with self.assertRaisesRegex(RuntimeError,'Multiple active'):

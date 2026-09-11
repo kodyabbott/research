@@ -55,4 +55,23 @@ class WorkloadTests(unittest.TestCase):
         report=screen.run(h,{'kind':'installed','caseCount':1})
         result=report['benchmarks'][0]['summary'];self.assertFalse(result['protocolValid']);self.assertEqual(result['passed'],0)
 
+    def test_implicit_thinking_omits_control_field(self):
+        h=self.harness();h.chat.return_value={'done':True,'done_reason':'stop','message':{'content':'{}','thinking':'natural'}}
+        report=screen.run(h,{'kind':'installed','caseCount':1,'thinking':'implicit'})
+        self.assertFalse(h.chat.call_args.args[2]);self.assertFalse(h.chat.call_args.kwargs['think'])
+        self.assertFalse(report['benchmarks'][0]['summary']['unexpectedThinking'])
+
+    def test_cached_owned_workload_reserves_once_and_verifies_primary(self):
+        h=self.harness();h.validate_candidate.return_value.update(kind='huggingface',alreadyImported=True)
+        h.candidate_runtime.side_effect=lambda _:nullcontext()
+        h.request.return_value={'models':[{'name':'model','digest':'digest'}]}
+        h.chat.return_value={'done':True,'done_reason':'stop','message':{'content':json.dumps({'answer':suite.cases()[0]['expected']})},'supervisedWallMs':12}
+        report=screen.run_downloaded(h,{'kind':'huggingface','caseCount':1})
+        self.assertEqual(report['status'],'completed');self.assertTrue(report['primaryIntegrity']['modelDigestsUnchanged'])
+        h.reserve.assert_called_once();h.finish_reservation.assert_called_once();h.download.assert_not_called();h.complete_import.assert_called_once()
+
+    def test_explicit_thinking_requires_advertised_capability(self):
+        h=self.harness();report=screen.run(h,{'kind':'installed','caseCount':1,'thinking':True})
+        self.assertEqual(report['status'],'error');h.chat.assert_not_called();h.reserve.assert_not_called()
+
 if __name__=='__main__':unittest.main()
