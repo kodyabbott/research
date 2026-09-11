@@ -1,0 +1,44 @@
+# September 11 daytime local-model benchmarks
+
+<!-- AI-ASSISTED-NOTE -->
+> [!NOTE]
+> This is an AI-assisted research report. Kody directed the work; Codex (OpenAI) implemented and ran the local measurements.
+<!-- /AI-ASSISTED-NOTE -->
+
+The user explicitly requested sustained daytime GPU benchmarking, including worthwhile historical candidates and newly discovered models, until stopped or Codex usage is exhausted. This is a fresh campaign. The canceled September 10 authorization, queue and results remain preserved.
+
+Read [current progress](progress.md), [standardized screens](results.md), and [aggregated workload results](workload-results.json). Raw run IDs link each observation to saved prompts, responses, runtime metadata, model digests and cleanup evidence.
+
+## Authorization and controls
+
+[authorization.json](authorization.json) permits daytime starts and multiple candidates in a separate campaign ledger. The original policy file and nightly scheduler are unchanged. The present start cutoff is 22:58 MDT and expiry is 23:59 MDT, leaving the original hour-long worker deadline plus cleanup margin. Explicit cancellation takes precedence over those times.
+
+The 35 GiB artifact, 240 GiB task storage, 25 GiB disk reserve and 12 GiB GPU headroom checks remain. There is one GPU job at a time. A separately supervised prefetch may download a pinned GGUF while an installed-model job runs, but imports wait for prefetch completion. Every complete artifact is hash-checked, and partial files remain resumable. Only task-owned cache artifacts can be removed.
+
+## Historical review and new selection
+
+[candidate-audit.json](candidate-audit.json) categorizes all 392 saved registry entries and rechecks every raw-file hash in the prior historical audit. Every old raw hash matched. The registry includes 213 entries outside this text protocol, 91 needing approved mirrors, 29 without an eligible single GGUF, 57 unresolved metadata entries, and two entries marked previously measured. Registry status is not a complete count of installed-model runs or later mirror selections.
+
+The prior campaign's source-reviewed untested selections are retained: KAT-Coder, Ornith, Gemma, Granite, Nemotron, stock Qwen3.8, Apodex and LFM. The installed GPT-OSS screen was run first. Live public HF discovery found an approved [Bartowski Nex-N2.5-mini mirror](https://huggingface.co/bartowski/nex-agi_Nex-N2.5-mini-GGUF), closing a previously recorded mirror gap. Its Q6 file is pinned in [the selection](selections/nex-mini-q6.json). The [upstream model card](https://huggingface.co/nex-agi/Nex-N2.5-mini) describes agentic and multimodal capabilities; this text-only protocol does not measure those capabilities.
+
+GLM-5.3-Flash and Qwen3.8-Flash-Next had no eligible root-level single GGUF within the standing cap in this metadata check. Pantheon is a lower-priority creative-writing/reasoning finetune. GPT-OSS 120B was investigated after the strong 20B result, but its pinned 63.4 GB MXFP4 artifact exceeds the standing 35 GiB cap and is not authorized by this campaign's exceptions. Its proposal is retained for later consideration, not queued or downloaded.
+
+## Methods and evidence limits
+
+The initial candidate sweep retains the existing 8,192 context, temperature 0, seed 42, 512 output-token cap and three-repetition throughput battery, plus the 16-case v2 screen. GPT-OSS uses the separately labeled low-reasoning protocol with an 8,192 output-token cap. LFM's unexpected thinking and truncated outputs invalidate its ordinary comparison.
+
+The broader `practical-json-v1` suite has 96 deterministic authored cases: 12 each for ledger replay, event reconstruction, dependency scheduling, SQL analysis, shortest paths, extraction, Python tracing and retrieval. [workload_suite.py](../../workload_suite.py) creates the fixtures; [workload_screen.py](../../workload_screen.py) saves and grades exact JSON responses. Generated model code is never executed. Trusted SQL fixtures are computed with SQLite; trusted Python tracing fixtures have an independent execution check.
+
+Workload runs use the same 8,192 context, temperature 0 and seed 42. Thinking-off requests allow 2,048 generated tokens. Reasoning-enabled requests allow 8,192 generated tokens. Each case has a 120-second client deadline within the shared worker deadline. Four separately recorded blocks cover the 96 cases. Thinking modes and different suites are not pooled, and partial blocks are not presented as completed scores. Latency includes response generation and the local client round trip; model load/warmup is saved separately.
+
+This is not a standardized coding benchmark, repository-editing evaluation, statistically established model ranking, or a claim about production agent quality. It is a reproducible personal workload screen. MTP/DFlash and custom model templates remain part of the installed configurations.
+
+## Implementation and validation
+
+- Normal `Harness.window_open()` preserves the overnight rule; only fresh daytime `CampaignHarness` authorization overrides it.
+- Launchers ignore stdout JSON when scanning supervisor records, fixing an empty canceled-output file that blocked the first launch.
+- Queue and report tools accept a campaign identifier while retaining old defaults. Canceled queues refuse advancement.
+- Prefetch and GPU launch admission share a lock; prefetch never imports models or starts inference.
+- Relevant offline tests cover authorization, changed policy/refusal, normal quota preservation, queue progression, the stdout regression, deterministic fixtures, exact grading, truncation/mismatch and cleanup. The full validation result is recorded in notes.
+
+No public push or publication is part of this request. Results and commits remain local.

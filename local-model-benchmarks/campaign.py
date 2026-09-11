@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parent
 
 def validate_authorization(root, path, current=None):
     auth = read_json(path)
-    if not auth or auth.get('schemaVersion') != 1 or auth.get('scope') != 'overnight-candidate-count-exemption':
+    if not auth or auth.get('schemaVersion') != 1 or auth.get('scope') not in ('overnight-candidate-count-exemption', 'human-directed-daytime-campaign') or auth.get('revoked'):
         raise ValueError('Explicit overnight count authorization is required')
     if not re.fullmatch(r'[a-z0-9-]{1,80}', auth.get('campaignId', '')) or not auth.get('userRequest'):
         raise ValueError('Authorization needs an ID and the user request')
@@ -26,7 +26,8 @@ def validate_authorization(root, path, current=None):
     if any(v.tzinfo is None for v in (start, last, end)):
         raise ValueError('Authorization timestamps require time zone offsets')
     policy = read_json(Path(root) / 'policy.json')
-    if not start < last < end or end-start > dt.timedelta(hours=12):
+    max_hours = 24 if auth['scope'] == 'human-directed-daytime-campaign' else 12
+    if not start < last < end or end-start > dt.timedelta(hours=max_hours):
         raise ValueError('Authorization must describe a single overnight window')
     if (end-last).total_seconds() < policy['maxRuntimeSeconds'] + 60:
         raise ValueError('Latest start must leave the full deadline and shutdown verification margin')
@@ -49,6 +50,12 @@ class CampaignHarness(Harness):
         self.report['campaign'] = self.authorization.copy()
         self.report['campaign']['authorizationSha256'] = hashlib.sha256(self.authorization_path.read_bytes()).hexdigest()
         self.report['campaign']['policyFileModified'] = False
+
+    def window_open(self):
+        active = validate_authorization(self.root, self.authorization_path)
+        if active != self.authorization:
+            raise ValueError('Campaign authorization changed during preflight')
+        return active['scope'] == 'human-directed-daytime-campaign' or super().window_open()
 
     def reserve(self, plan):
         active = validate_authorization(self.root, self.authorization_path)
@@ -86,7 +93,10 @@ def worker(root, authorization, selection_path, run_id):
     with state_lock(h.state / 'operation.lock'):
         validate_authorization(root, authorization)
         selection = read_json(selection_path)
-        if selection.get('campaignProtocol') == 'gpt-oss-reasoning-screen':
+        if selection.get('campaignProtocol') == 'practical-json-v1':
+            from workload_screen import run
+            result = run(h, selection)
+        elif selection.get('campaignProtocol') == 'gpt-oss-reasoning-screen':
             from reasoning_screen import run
             result = run(h, selection)
         else:
@@ -102,13 +112,20 @@ def launch(authorization, selection_path):
     h = CampaignHarness(ROOT, authorization)
     jobs = h.state / 'jobs'
     jobs.mkdir(parents=True, exist_ok=True)
-    # Hold the normal operation lock across launch and job recording. The supervisor
-    # waits briefly for this handoff before its worker attempts the same lock.
-    with state_lock(h.state / 'operation.lock'):
+    # Serialize launch with artifact prefetch admission, then hold the operation lock
+    # across job recording. Installed-model workers do not hold the prefetch lock.
+    with state_lock(h.state / 'prefetch-launch.lock'), state_lock(h.state / 'operation.lock'):
         for job_file in jobs.glob('*.json'):
+            if not re.fullmatch(r'[0-9]{8}-[0-9]{6}-[0-9a-f]{8}\.json', job_file.name):
+                continue  # stdout records are not supervisor identity records.
             job = read_json(job_file, {})
             if job.get('pid') and job.get('processIdentity') and process_identity(job['pid']) == job['processIdentity']:
                 raise RuntimeError('Another benchmark supervisor is active')
+        if read_json(selection_path).get('kind') == 'huggingface':
+            for prefetch_file in h.state.glob('prefetch-*.job.json'):
+                prefetch = read_json(prefetch_file, {})
+                if prefetch.get('processIdentity') and process_identity(prefetch['pid']) == prefetch['processIdentity']:
+                    raise RuntimeError('Artifact prefetch is active; defer imports until it finishes')
         h.report.update(mode='nightly', status='queued', selection=read_json(selection_path))
         h.save_report()
         output, errors = jobs / (h.run_id + '.stdout.json'), jobs / (h.run_id + '.stderr.log')

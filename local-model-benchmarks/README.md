@@ -14,6 +14,10 @@ A fixed battery, a fixed machine, and every measurement traceable to a command a
 >
 > What follows is a personal instrument for one machine, kept because same-day numbers on identical hardware are useful to its owner. Treat any framing of it as novel with suspicion.
 
+## Active daytime benchmark campaign - September 11
+
+A fresh user request authorized sustained daytime benchmarking. See the [daytime campaign](campaigns/20260911-daytime/README.md) and [current progress](campaigns/20260911-daytime/progress.md). Its separate authorization exempts daytime starts and candidate count, while preserving the normal nightly policy and prior cancellation history.
+
 ## Paused benchmark campaign - September 10-11
 
 The campaign was canceled at user request on September 10 at 23:28 MDT, with five

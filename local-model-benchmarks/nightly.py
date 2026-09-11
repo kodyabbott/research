@@ -116,6 +116,9 @@ class Harness:
         self.report['python'] = {'executable': sys.executable, 'version': sys.version,
             'cacheFallback': 'codex-runtimes' in sys.executable.lower()}
 
+    def window_open(self):
+        return benchmark_window_open(self.policy)
+
     def remaining(self, maximum=None):
         seconds = self.deadline - time.monotonic()
         if seconds <= 0:
@@ -798,7 +801,7 @@ class Harness:
             # Only the explicit human acceptance script calls this, never the nightly CLI.
             self.ledger_path = self.state / 'acceptance-ledger.json'
             self.report.update(mode='acceptance-validation', ledgerFile='state/acceptance-ledger.json')
-        if not benchmark_window_open(self.policy) and not acceptance_validation:
+        if not self.window_open() and not acceptance_validation:
             self.report.update(status='deferred', reason='Daytime catch-up: benchmarks start only in the configured overnight window')
             return self.report
         reserved, measurements_done, plan = False, False, None

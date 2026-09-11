@@ -9,6 +9,7 @@ import quality_screen as qs
 class ReasoningTests(unittest.TestCase):
     def make_harness(self):
         h=Mock()
+        h.window_open.side_effect=lambda: r.benchmark_window_open(h.policy)
         h.report={};h.policy={'thinkingProbeTokens':8192,'numCtx':8192};h.endpoint='http://127.0.0.1:11434'
         h.validate_candidate.return_value={'model':'gpt-oss:20b','digest':'digest','bytes':1}
         h.installed.return_value={'gpt-oss:20b':{'digest':'digest'}}
