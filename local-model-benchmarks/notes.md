@@ -979,3 +979,6 @@ Final preflight grader review: a 400-digit JSON integer triggered float-conversi
 
 
 Pilot 20260910-225905-c6df53d6 completed with valid standardized throughput (Qwen3.8 BF16/MTP43.24tok/s, coder287.38tok/s),3/3 exact checks each, and v1 screen14/16 versus10/16. Two coder misses returned correct array text inside JSON strings; the prompt had not explicitly required the answer value type. Before the main sweep, v2 now specifies JSON array/string/number/etc. for each case. Historical pilot responses remain untouched and v1/v2 scores will not be pooled. Queue a fresh v2 Qwen comparison. This change clarifies the input contract without changing answer keys or grading. The campaign+controller test set passes16tests in0.141s; the unchanged base harness previously passed its69tests.
+
+
+Added campaign_queue.py to advance the reviewed selections immediately after each terminal result, recording each runId and outcome under a separate queue lock. It uses the reviewed campaign launcher and existing supervisor status recovery, rather than running multiple models concurrently. Four offline controller tests pass; the combined campaign/controller set is16passing tests. The heartbeat remains responsible for reviewing results and adapting the queue.
