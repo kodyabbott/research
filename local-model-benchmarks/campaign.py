@@ -106,6 +106,13 @@ def worker(root, authorization, selection_path, run_id):
         if selection.get('campaignProtocol') == 'javascript-coding-v1':
             from coding_screen import run
             result = run(h, selection)
+        elif selection.get('campaignProtocol') in ('humaneval-x-js-v1','humaneval-x-js-chat-v2'):
+            from humaneval_screen import run
+            result = run(h, selection)
+        elif selection.get('campaignProtocol') in ('humaneval-x-js-hf-v1','humaneval-x-js-hf-chat-v2'):
+            from humaneval_screen import run
+            from workload_screen import run_downloaded
+            result = run_downloaded(h, selection, runner=run)
         elif selection.get('campaignProtocol') == 'javascript-coding-hf-v1':
             from coding_screen import run
             from workload_screen import run_downloaded

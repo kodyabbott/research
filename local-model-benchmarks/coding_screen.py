@@ -33,7 +33,7 @@ def evaluate(code,tests,timeout=30):
     data['passed']=sum(bool(x['passed']) for x in data['rows']);data['total']=len(tests)
     return data
 
-def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_before=None):
+def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_before=None,benchmark=None):
     loaded=reserved=False;before=None;measurement=None;old_ctx=h.policy['numCtx']
     try:
         if not h.window_open():raise ValueError('Outside authorized campaign window')
@@ -48,13 +48,14 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         before=personal_before if personal_before is not None else {name:row['digest'] for name,row in h.installed().items()}
         gpu=h.wait_idle(plan['bytes'])
         if not reserved_elsewhere:h.reserve(plan);reserved=True
-        tasks=coding_suite.tasks();cap=8192 if think else 4096
-        h.report.update(mode='campaign-coding-screen',selection=selection,admission=plan,gpuBefore=gpu,
-            protocol={'name':coding_suite.VERSION,'suiteSha256':coding_suite.digest(tasks),'thinking':think,'context':16384,'outputCap':cap,
-            'maxGenerationSeconds':240,'tasks':8,'hiddenTests':99,'temperature':0,'seed':42,
+        config=benchmark or {};tasks=config.get('tasks') or coding_suite.tasks();cap=8192 if think else 4096
+        evaluator=config.get('evaluate',evaluate)
+        h.report.update(mode=config.get('mode','campaign-coding-screen'),selection=selection,admission=plan,gpuBefore=gpu,
+            protocol={'name':config.get('name',coding_suite.VERSION),'suiteSha256':config.get('suiteSha256') or coding_suite.digest(tasks),'thinking':think,'context':16384,'outputCap':cap,
+            'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':0,'seed':42,
             'codeExecution':'QuickJS WebAssembly only, no exposed host functions or module loader',
             'sandboxPackageLockSha256':hashlib.sha256((ROOT/'state/coding-sandbox/package-lock.json').read_bytes()).hexdigest(),
-            'scope':'Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval.'})
+            'scope':config.get('scope','Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval.'),**config.get('extraProtocol',{})})
         measurement={'model':plan['model'],'digest':plan['digest'],'endpoint':h.endpoint,'runtime':h.api('version'),'details':info.get('details'),
             'capabilities':info.get('capabilities',[]),'modelParameters':info.get('parameters'),
             'templateSha256':hashlib.sha256(info.get('template','').encode()).hexdigest(),'tasks':[],'status':'running'}
@@ -77,7 +78,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
             if not code or record['truncated']:
                 record['evaluation']={'passed':0,'total':len(task['tests']),'reason':'Empty or truncated code response'}
             else:
-                record['evaluation']=evaluate(code,task['tests'],min(30,h.remaining()))
+                record['evaluation']=evaluator(code,task['tests'],min(30,h.remaining()))
                 record['taskPassed']=record['evaluation']['passed']==record['evaluation']['total']
             measurement['tasks'].append(record);h.save_report()
         else:measurement['status']='completed'

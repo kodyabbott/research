@@ -64,8 +64,11 @@ def build(campaign_id=None):
             label='['+label+'](../../'+row['resultFile']+')'
         terminal=report_status=='completed'
         status=report_status
-        speed=quality=checks='â€”'
-        if terminal and row.get('mode')=='campaign-coding-screen':
+        speed=quality=checks='—'
+        if terminal and row.get('mode')=='campaign-humanevalx-screen':
+            status='HumanEval-X adapted screen'
+            quality=f"{cs.get('tasksPassed')}/{cs.get('tasksTotal')} tasks (separate)"
+        elif terminal and row.get('mode')=='campaign-coding-screen':
             status='code-writing screen'
             quality=f"{cs.get('tasksPassed')}/{cs.get('tasksTotal')} tasks; {cs.get('testsPassed')}/{cs.get('testsTotal')} tests (separate)"
         elif terminal and row.get('mode')=='campaign-workload-screen':

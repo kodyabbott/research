@@ -1,0 +1,1158 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-112823-5a23bb5e",
+  "startedAt": "2026-09-11T11:28:23-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 28,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T11:28:23-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-humanevalx-screen",
+  "selection": {
+    "kind": "installed",
+    "model": "qwen3-coder:30b",
+    "expectedDigest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+    "thinking": false,
+    "campaignProtocol": "humaneval-x-js-v1",
+    "rationale": "Pilot the first 20 supported HumanEval-X JavaScript continuation tasks after all 163 reference tasks and sandbox integrity probes passed.",
+    "caseOffset": 0,
+    "caseCount": 20
+  },
+  "admission": {
+    "kind": "installed",
+    "model": "qwen3-coder:30b",
+    "digest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+    "bytes": 18556700761,
+    "selection": {
+      "kind": "installed",
+      "model": "qwen3-coder:30b",
+      "expectedDigest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+      "thinking": false,
+      "campaignProtocol": "humaneval-x-js-v1",
+      "rationale": "Pilot the first 20 supported HumanEval-X JavaScript continuation tasks after all 163 reference tasks and sandbox integrity probes passed.",
+      "caseOffset": 0,
+      "caseCount": 20
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 93.8564453125,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 2.0
+  },
+  "protocol": {
+    "name": "humaneval-x-js-wasm-v1",
+    "suiteSha256": "53c3e3b15db2e53f9defc26be04b930b3bfe2f7b0cd462bb0c27917882888bbb",
+    "thinking": false,
+    "context": 16384,
+    "outputCap": 4096,
+    "maxGenerationSeconds": 240,
+    "tasks": 20,
+    "hiddenTests": 20,
+    "temperature": 0,
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Adapted HumanEval-X JavaScript continuation screen; one greedy sample per task, not the original 200-sample leaderboard protocol.",
+    "upstream": "https://huggingface.co/datasets/zai-org/humaneval-x",
+    "datasetRevision": "62c78627f3072a1454fa0cb0184737cafe5e4198",
+    "datasetSha256": "1ffbb18b60d36c50c8a7d1230b7fbb82e5dd838d341242aab1caa2f8d7b598eb",
+    "supportedTasks": 163,
+    "upstreamTasks": 164,
+    "caseOffset": 0,
+    "caseCount": 20,
+    "excludedTasks": {
+      "JavaScript/162": "Reference requires the Node crypto module, unavailable in this WASM guest."
+    },
+    "testInvocationRepairs": [
+      "JavaScript/119",
+      "JavaScript/151",
+      "JavaScript/32"
+    ],
+    "randomSeed": 42,
+    "randomAlgorithm": "xorshift32",
+    "guestDeadlineMs": 2000,
+    "contaminationCaveat": "This longstanding public benchmark may be represented in model training data; scores do not establish unseen-task or repository-agent performance."
+  },
+  "benchmarks": [
+    {
+      "model": "qwen3-coder:30b",
+      "digest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+      "endpoint": "http://127.0.0.1:11434",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen3moe",
+        "families": [
+          "qwen3moe"
+        ],
+        "parameter_size": "30.5B",
+        "quantization_level": "Q4_K_M"
+      },
+      "capabilities": [
+        "completion",
+        "tools"
+      ],
+      "modelParameters": "temperature                    0.7\ntop_k                          20\ntop_p                          0.8\nrepeat_penalty                 1.05\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\nstop                           \"<|endoftext|>\"",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "JavaScript/0",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Check if in given list of numbers, are any two numbers closer to each other than\n  given threshold.\n  >>> hasCloseElements([1.0, 2.0, 3.0], 0.5)\n  false\n  >>> hasCloseElements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n  true\n  */\nconst hasCloseElements = (numbers, threshold) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:30.622218Z",
+            "message": {
+              "role": "assistant",
+              "content": "{\n    for (let i = 0; i < numbers.length; i++) {\n        for (let j = i + 1; j < numbers.length; j++) {\n            if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n                return true;\n            }\n        }\n    }\n    return false;\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 446071200,
+            "load_duration": 91177900,
+            "prompt_eval_count": 153,
+            "prompt_eval_duration": 112798000,
+            "eval_count": 69,
+            "eval_duration": 238247000,
+            "clientWallMs": 457.9,
+            "supervisedWallMs": 557.7
+          },
+          "code": "{\n    for (let i = 0; i < numbers.length; i++) {\n        for (let j = i + 1; j < numbers.length; j++) {\n            if (Math.abs(numbers[i] - numbers[j]) < threshold) {\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 557.7,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/0",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:18:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 18
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/1",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n  separate those group into separate strings and return the list of those.\n  Separate groups are balanced (each open brace is properly closed) and not nested within each other\n  Ignore any spaces in the input string.\n  >>> separateParenGroups('( ) (( )) (( )( ))')\n  ['()', '(())', '(()())']\n  */\nconst separateParenGroups = (paren_string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:31.4723064Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    let result = [];\n    let currentGroup = '';\n    let balance = 0;\n    \n    // Remove all spaces from the input string\n    paren_string = paren_string.replace(/\\s/g, '');\n    \n    for (let i = 0; i < paren_string.length; i++) {\n        let char = paren_string[i];\n        currentGroup += char;\n        \n        if (char === '(') {\n            balance++;\n        } else if (char === ')') {\n            balance--;\n        }\n        \n        // When balance reaches 0, we have a complete group\n        if (balance === 0) {\n            result.push(currentGroup);\n            currentGroup = '';\n        }\n    }\n    \n    return result;\n}\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 662189700,
+            "load_duration": 92495200,
+            "prompt_eval_count": 144,
+            "prompt_eval_duration": 45318000,
+            "eval_count": 151,
+            "eval_duration": 513355000,
+            "clientWallMs": 674.7,
+            "supervisedWallMs": 771.7
+          },
+          "code": "    let result = [];\n    let currentGroup = '';\n    let balance = 0;\n    \n    // Remove all spaces from the input string\n    paren_string = paren_string.replace(/\\s/g, '');\n    \n    for (let i = 0; i < paren_string.length; i++) {\n        let char = paren_string[i];\n        currentGroup += char;\n        \n        if (char === '(') {\n            balance++;\n        } else if (char === ')') {\n            balance--;\n        }\n        \n        // When balance reaches 0, we have a complete group\n        if (balance === 0) {\n            result.push(currentGroup);\n            currentGroup = '';\n        }\n    }\n    \n    return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 771.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/1",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/2",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Given a positive floating point number, it can be decomposed into\n  and integer part (largest integer smaller than given number) and decimals\n  (leftover part always smaller than 1).\n\n  Return the decimal part of the number.\n  >>> truncateNumber(3.5)\n  0.5\n  */\nconst truncateNumber = (number) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:31.9555019Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nconst truncateNumber = (number) => {\n    return number - Math.floor(number);\n};\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 244627900,
+            "load_duration": 95231500,
+            "prompt_eval_count": 122,
+            "prompt_eval_duration": 42898000,
+            "eval_count": 23,
+            "eval_duration": 94340000,
+            "clientWallMs": 275.9,
+            "supervisedWallMs": 372.4
+          },
+          "code": "const truncateNumber = (number) => {\n    return number - Math.floor(number);\n};",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 372.4,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/2",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:12:3\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 12
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/3",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* You're given a list of deposit and withdrawal operations on a bank account that starts with\n  zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n  at that point function should return true. Otherwise it should return false.\n  >>> belowZero([1, 2, 3])\n  false\n  >>> belowZero([1, 2, -4, 5])\n  true\n  */\nconst belowZero = (operations) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:32.5051259Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    let balance = 0;\n    for (let i = 0; i < operations.length; i++) {\n        balance += operations[i];\n        if (balance < 0) {\n            return true;\n        }\n    }\n    return false;\n}\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 339840400,
+            "load_duration": 89718000,
+            "prompt_eval_count": 149,
+            "prompt_eval_duration": 47161000,
+            "eval_count": 57,
+            "eval_duration": 192390000,
+            "clientWallMs": 375.3,
+            "supervisedWallMs": 471.2
+          },
+          "code": "    let balance = 0;\n    for (let i = 0; i < operations.length; i++) {\n        balance += operations[i];\n        if (balance < 0) {\n            return true;\n        }\n    }\n    return false;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 471.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/3",
+                "passed": true,
+                "count": 6,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/4",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* For a given list of input numbers, calculate Mean Absolute Deviation\n  around the mean of this dataset.\n  Mean Absolute Deviation is the average absolute difference between each\n  element and a centerpoint (mean in this case):\n  MAD = average | x - x_mean |\n  >>> meanAbsoluteDeviation([1.0, 2.0, 3.0, 4.0])\n  1.0\n  */\nconst meanAbsoluteDeviation = (numbers) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:33.1261853Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    const mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;\n    const absoluteDeviations = numbers.map(num => Math.abs(num - mean));\n    return absoluteDeviations.reduce((sum, dev) => sum + dev, 0) / absoluteDeviations.length;\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 394604300,
+            "load_duration": 95864000,
+            "prompt_eval_count": 148,
+            "prompt_eval_duration": 45611000,
+            "eval_count": 72,
+            "eval_duration": 243521000,
+            "clientWallMs": 420.5,
+            "supervisedWallMs": 517.7
+          },
+          "code": "    const mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;\n    const absoluteDeviations = numbers.map(num => Math.abs(num - mean));\n    return absoluteDeviations.reduce((sum, dev) => sum + dev, 0) / absoluteDeviations.length;",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 517.7,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/4",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:12:94\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 12
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/5",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n  >>> intersperse([], 4)\n  []\n  >>> intersperse([1, 2, 3], 4)\n  [1, 4, 2, 4, 3]\n  */\nconst intersperse = (numbers, delimeter) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:33.727854Z",
+            "message": {
+              "role": "assistant",
+              "content": "{\n    if (numbers.length === 0) {\n        return [];\n    }\n    \n    const result = [];\n    \n    for (let i = 0; i < numbers.length; i++) {\n        result.push(numbers[i]);\n        if (i < numbers.length - 1) {\n            result.push(delimeter);\n        }\n    }\n    \n    return result;\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 398741100,
+            "load_duration": 94159500,
+            "prompt_eval_count": 120,
+            "prompt_eval_duration": 40145000,
+            "eval_count": 75,
+            "eval_duration": 253650000,
+            "clientWallMs": 426.7,
+            "supervisedWallMs": 524.0
+          },
+          "code": "{\n    if (numbers.length === 0) {\n        return [];\n    }\n    \n    const result = [];\n    \n    for (let i = 0; i < numbers.length; i++) {\n        result.push(numbers[i]);\n        if (i < numbers.length - 1) {\n            result.push(delimeter);\n        }\n    }\n    \n    return result;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 524.0,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/5",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:23:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 23
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/6",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n  For each of the group, output the deepest level of nesting of parentheses.\n  E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n  >>> parseNestedParens('(()()) ((())) () ((())()())')\n  [2, 3, 1, 3]\n  */\nconst parseNestedParens = (paren_string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:34.3814704Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    return paren_string.split(' ').map(group => {\n        let maxDepth = 0;\n        let currentDepth = 0;\n        for (let char of group) {\n            if (char === '(') {\n                currentDepth++;\n                maxDepth = Math.max(maxDepth, currentDepth);\n            } else if (char === ')') {\n                currentDepth--;\n            }\n        }\n        return maxDepth;\n    });\n};\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 457011000,
+            "load_duration": 90336700,
+            "prompt_eval_count": 143,
+            "prompt_eval_duration": 47440000,
+            "eval_count": 91,
+            "eval_duration": 308146000,
+            "clientWallMs": 480.1,
+            "supervisedWallMs": 577.5
+          },
+          "code": "    return paren_string.split(' ').map(group => {\n        let maxDepth = 0;\n        let currentDepth = 0;\n        for (let char of group) {\n            if (char === '(') {\n                currentDepth++;\n                maxDepth = Math.max(maxDepth, currentDepth);\n            } else if (char === ')') {\n                currentDepth--;\n            }\n        }\n        return maxDepth;\n    });\n};",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 577.5,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/6",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/7",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Filter an input list of strings only for ones that contain given substring\n  >>> filterBySubstring([], 'a')\n  []\n  >>> filterBySubstring(['abc', 'bacd', 'cde', 'array'], 'a')\n  ['abc', 'bacd', 'array']\n  */\nconst filterBySubstring = (strings, substring) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:34.811747Z",
+            "message": {
+              "role": "assistant",
+              "content": "{\n    return strings.filter(str => str.includes(substring));\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 193987200,
+            "load_duration": 91838900,
+            "prompt_eval_count": 118,
+            "prompt_eval_duration": 39434000,
+            "eval_count": 14,
+            "eval_duration": 51898000,
+            "clientWallMs": 227.3,
+            "supervisedWallMs": 322.2
+          },
+          "code": "{\n    return strings.filter(str => str.includes(substring));\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 322.2,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/7",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:10:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 10
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/8",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n  Empty sum should be equal to 0 and empty product should be equal to 1.\n  >>> sumProduct([])\n  (0, 1)\n  >>> sumProduct([1, 2, 3, 4])\n  (10, 24)\n  */\nconst sumProduct = (numbers, int) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:35.453961Z",
+            "message": {
+              "role": "assistant",
+              "content": "const sumProduct = (numbers, int) => {\n    if (numbers.length === 0) {\n        return [0, 1];\n    }\n    \n    let sum = 0;\n    let product = 1;\n    \n    for (let i = 0; i < numbers.length; i++) {\n        sum += numbers[i];\n        product *= numbers[i];\n    }\n    \n    return [sum, product];\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 444160000,
+            "load_duration": 91356200,
+            "prompt_eval_count": 140,
+            "prompt_eval_duration": 46420000,
+            "eval_count": 88,
+            "eval_duration": 298492000,
+            "clientWallMs": 468.1,
+            "supervisedWallMs": 563.9
+          },
+          "code": "const sumProduct = (numbers, int) => {\n    if (numbers.length === 0) {\n        return [0, 1];\n    }\n    \n    let sum = 0;\n    let product = 1;\n    \n    for (let i = 0; i < numbers.length; i++) {\n        sum += numbers[i];\n        product *= numbers[i];\n    }\n    \n    return [sum, product];\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 563.9,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/8",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:23:3\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 23
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/9",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* From a given list of integers, generate a list of rolling maximum element found until given moment\n  in the sequence.\n  >>> rollingMax([1, 2, 3, 2, 3, 4, 2])\n  [1, 2, 3, 3, 3, 4, 4]\n  */\nconst rollingMax = (numbers) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:35.8634498Z",
+            "message": {
+              "role": "assistant",
+              "content": "[1, 2, 3, 3, 3, 4, 4]"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 223679400,
+            "load_duration": 93828600,
+            "prompt_eval_count": 128,
+            "prompt_eval_duration": 42444000,
+            "eval_count": 22,
+            "eval_duration": 76876000,
+            "clientWallMs": 235.0,
+            "supervisedWallMs": 332.6
+          },
+          "code": "[1, 2, 3, 3, 3, 4, 4]",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 332.6,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/9",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:7:22\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 7
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/10",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Test if gniven strig is a palindrome */\nconst isPalindrome = (string) => {\n  return string == string.split('').reverse().join('');\n}\n\n/* Find the shortest palindrome that begins with a supplied string.\n  Algorithm idea is simple:\n  - Find the longest postfix of supplied string that is a palindrome.\n  - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n  >>> makePalindrome('')\n  ''\n  >>> makePalindrome('cat')\n  'catac'\n  >>> makePalindrome('cata')\n  'catac'\n  */\nconst makePalindrome = (string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:36.6964052Z",
+            "message": {
+              "role": "assistant",
+              "content": "const makePalindrome = (string) => {\n  if (string === '') return '';\n  \n  // Find the longest postfix that is a palindrome\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.substring(i);\n    if (isPalindrome(suffix)) {\n      // Append the reverse of the prefix to the original string\n      const prefix = string.substring(0, i);\n      return string + prefix.split('').reverse().join('');\n    }\n  }\n  \n  // If no palindromic suffix found (shouldn't happen), append reverse of entire string except last char\n  return string + string.substring(0, string.length - 1).split('').reverse().join('');\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 648419000,
+            "load_duration": 92158900,
+            "prompt_eval_count": 178,
+            "prompt_eval_duration": 38268000,
+            "eval_count": 150,
+            "eval_duration": 509233000,
+            "clientWallMs": 659.2,
+            "supervisedWallMs": 756.2
+          },
+          "code": "const makePalindrome = (string) => {\n  if (string === '') return '';\n  \n  // Find the longest postfix that is a palindrome\n  for (let i = 0; i < string.length; i++) {\n    const suffix = string.substring(i);\n    if (isPalindrome(suffix)) {\n      // Append the reverse of the prefix to the original string\n      const prefix = string.substring(0, i);\n      return string + prefix.split('').reverse().join('');\n    }\n  }\n  \n  // If no palindromic suffix found (shouldn't happen), append reverse of entire string except last char\n  return string + string.substring(0, string.length - 1).split('').reverse().join('');\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 756.2,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/10",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:33:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 33
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/11",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Input are two strings a and b consisting only of 1s and 0s.\n  Perform binary XOR on these inputs and return result also as a string.\n  >>> stringXor('010', '110')\n  '100'\n  */\nconst stringXor = (a, b) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:37.2193781Z",
+            "message": {
+              "role": "assistant",
+              "content": "```\n    let result = '';\n    for (let i = 0; i < a.length; i++) {\n        result += a[i] === b[i] ? '0' : '1';\n    }\n    return result;\n}\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 319300500,
+            "load_duration": 93091200,
+            "prompt_eval_count": 114,
+            "prompt_eval_duration": 38645000,
+            "eval_count": 51,
+            "eval_duration": 175371000,
+            "clientWallMs": 350.5,
+            "supervisedWallMs": 446.6
+          },
+          "code": "    let result = '';\n    for (let i = 0; i < a.length; i++) {\n        result += a[i] === b[i] ? '0' : '1';\n    }\n    return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 446.6,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/11",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/12",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Out of list of strings, return the longest one. Return the first one in case of multiple\n  strings of the same length. Return null in case the input list is empty.\n  >>> longest([])\n\n  >>> longest(['a', 'b', 'c'])\n  'a'\n  >>> longest(['a', 'bb', 'ccc'])\n  'ccc'\n  */\nconst longest = (strings) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:37.8366764Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nif (strings.length === 0) {\n    return null;\n}\nlet longestString = strings[0];\nfor (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > longestString.length) {\n        longestString = strings[i];\n    }\n}\nreturn longestString;\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 385198600,
+            "load_duration": 96183000,
+            "prompt_eval_count": 130,
+            "prompt_eval_duration": 42674000,
+            "eval_count": 70,
+            "eval_duration": 238268000,
+            "clientWallMs": 412.2,
+            "supervisedWallMs": 508.1
+          },
+          "code": "if (strings.length === 0) {\n    return null;\n}\nlet longestString = strings[0];\nfor (let i = 1; i < strings.length; i++) {\n    if (strings[i].length > longestString.length) {\n        longestString = strings[i];\n    }\n}\nreturn longestString;",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 508.1,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/12",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:20:22\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 20
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/13",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Return a greatest common divisor of two integers a and b\n  >>> greatestCommonDivisor(3, 5)\n  1\n  >>> greatestCommonDivisor(25, 15)\n  5\n  */\nconst greatestCommonDivisor = (a, b) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:38.3208665Z",
+            "message": {
+              "role": "assistant",
+              "content": "const greatestCommonDivisor = (a, b) => {\n    while (b !== 0) {\n        [a, b] = [b, a % b];\n    }\n    return Math.abs(a);\n};"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 297281100,
+            "load_duration": 90531800,
+            "prompt_eval_count": 107,
+            "prompt_eval_duration": 37798000,
+            "eval_count": 46,
+            "eval_duration": 158456000,
+            "clientWallMs": 309.3,
+            "supervisedWallMs": 408.4
+          },
+          "code": "const greatestCommonDivisor = (a, b) => {\n    while (b !== 0) {\n        [a, b] = [b, a % b];\n    }\n    return Math.abs(a);\n};",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 408.4,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/13",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:13:3\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 13
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/14",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Return list of all prefixes from shortest to longest of the input string\n  >>> allPrefixes('abc')\n  ['a', 'ab', 'abc']\n  */\nconst allPrefixes = (string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:38.8206602Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    const prefixes = [];\n    for (let i = 1; i <= string.length; i++) {\n        prefixes.push(string.substring(0, i));\n    }\n    return prefixes;\n}\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 286075200,
+            "load_duration": 92935900,
+            "prompt_eval_count": 90,
+            "prompt_eval_duration": 32656999,
+            "eval_count": 44,
+            "eval_duration": 150811000,
+            "clientWallMs": 322.7,
+            "supervisedWallMs": 420.7
+          },
+          "code": "    const prefixes = [];\n    for (let i = 1; i <= string.length; i++) {\n        prefixes.push(string.substring(0, i));\n    }\n    return prefixes;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 420.7,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/14",
+                "passed": true,
+                "count": 3,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/15",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Return a string containing space-delimited numbers starting from 0 upto n inclusive.\n  >>> stringSequence(0)\n  '0'\n  >>> stringSequence(5)\n  '0 1 2 3 4 5'\n  */\nconst stringSequence = (n) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:39.2856219Z",
+            "message": {
+              "role": "assistant",
+              "content": "{\n    return Array.from({length: n + 1}, (_, i) => i).join(' ');\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 220337400,
+            "load_duration": 91905200,
+            "prompt_eval_count": 105,
+            "prompt_eval_duration": 37184000,
+            "eval_count": 24,
+            "eval_duration": 84500000,
+            "clientWallMs": 254.0,
+            "supervisedWallMs": 350.8
+          },
+          "code": "{\n    return Array.from({length: n + 1}, (_, i) => i).join(' ');\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 350.8,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/15",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:10:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 10
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/16",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Given a string, find out how many distinct characters (regardless of case) does it consist of\n  >>> countDistinctCharacters('xyzXYZ')\n  3\n  >>> countDistinctCharacters('Jerry')\n  4\n  */\nconst countDistinctCharacters = (string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:39.7166214Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nconst countDistinctCharacters = (string) => {\n    const uniqueChars = new Set(string.toLowerCase());\n    return uniqueChars.size;\n};\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 243564500,
+            "load_duration": 91602400,
+            "prompt_eval_count": 104,
+            "prompt_eval_duration": 33761000,
+            "eval_count": 32,
+            "eval_duration": 111072000,
+            "clientWallMs": 256.4,
+            "supervisedWallMs": 353.0
+          },
+          "code": "const countDistinctCharacters = (string) => {\n    const uniqueChars = new Set(string.toLowerCase());\n    return uniqueChars.size;\n};",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 353.0,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/16",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:11:3\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 11
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/17",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Input to this function is a string representing musical notes in a special ASCII format.\n  Your task is to parse this string and return list of integers corresponding to how many beats does each\n  not last.\n\n  Here is a legend:\n  'o' - whole note, lasts four beats\n  'o|' - half note, lasts two beats\n  '.|' - quater note, lasts one beat\n\n  >>> parseMusic('o o| .| o| o| .| .| .| .| o o')\n  [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n  */\nconst parseMusic = (music_string) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:40.4133225Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nconst parseMusic = (music_string) => {\n    const notes = music_string.split(' ');\n    const beats = [];\n    \n    for (let note of notes) {\n        if (note === 'o') {\n            beats.push(4);\n        } else if (note === 'o|') {\n            beats.push(2);\n        } else if (note === '.|') {\n            beats.push(1);\n        }\n    }\n    \n    return beats;\n};\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 485080100,
+            "load_duration": 91045800,
+            "prompt_eval_count": 202,
+            "prompt_eval_duration": 43159000,
+            "eval_count": 99,
+            "eval_duration": 341678000,
+            "clientWallMs": 521.5,
+            "supervisedWallMs": 620.6
+          },
+          "code": "const parseMusic = (music_string) => {\n    const notes = music_string.split(' ');\n    const beats = [];\n    \n    for (let note of notes) {\n        if (note === 'o') {\n            beats.push(4);\n        } else if (note === 'o|') {\n            beats.push(2);\n        } else if (note === '.|') {\n            beats.push(1);\n        }\n    }\n    \n    return beats;\n};",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 620.6,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/17",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:29:3\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 29
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/18",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Find how many times a given substring can be found in the original string. Count overlaping cases.\n  >>> howManyTimes('', 'a')\n  0\n  >>> howManyTimes('aaa', 'a')\n  3\n  >>> howManyTimes('aaaa', 'aa')\n  3\n  */\nconst howManyTimes = (string, substring) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:41.0673288Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\n    if (substring.length === 0) return 0;\n    \n    let count = 0;\n    let pos = 0;\n    \n    while (pos <= string.length - substring.length) {\n        const foundPos = string.indexOf(substring, pos);\n        if (foundPos === -1) break;\n        count++;\n        pos = foundPos + 1;\n    }\n    \n    return count;\n}\n```"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 447720400,
+            "load_duration": 93151100,
+            "prompt_eval_count": 123,
+            "prompt_eval_duration": 42101000,
+            "eval_count": 89,
+            "eval_duration": 301278000,
+            "clientWallMs": 477.8,
+            "supervisedWallMs": 575.2
+          },
+          "code": "    if (substring.length === 0) return 0;\n    \n    let count = 0;\n    let pos = 0;\n    \n    while (pos <= string.length - substring.length) {\n        const foundPos = string.indexOf(substring, pos);\n        if (foundPos === -1) break;\n        count++;\n        pos = foundPos + 1;\n    }\n    \n    return count;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 575.2,
+          "taskPassed": true,
+          "evaluation": {
+            "passed": 1,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/18",
+                "passed": true,
+                "count": 4,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        },
+        {
+          "id": "JavaScript/19",
+          "prompt": "Complete the following JavaScript code. Return ONLY the missing continuation, including the closing brace. Do not repeat the supplied code. Do not include Markdown, explanations, tests, or host APIs.\n\n/* Input is a space-delimited string of numberals from 'zero' to 'nine'.\n  Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n  Return the string with numbers sorted from smallest to largest\n  >>> sortNumbers('three one five')\n  'one three five'\n  */\nconst sortNumbers = (numbers) => {\n",
+          "response": {
+            "model": "qwen3-coder:30b",
+            "created_at": "2026-09-11T17:28:42.1300939Z",
+            "message": {
+              "role": "assistant",
+              "content": "{\n    const wordToNum = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        'five': 5,\n        'six': 6,\n        'seven': 7,\n        'eight': 8,\n        'nine': 9\n    };\n    \n    const numToWord = {\n        0: 'zero',\n        1: 'one',\n        2: 'two',\n        3: 'three',\n        4: 'four',\n        5: 'five',\n        6: 'six',\n        7: 'seven',\n        8: 'eight',\n        9: 'nine'\n    };\n    \n    return numbers.split(' ')\n        .map(word => wordToNum[word])\n        .sort((a, b) => a - b)\n        .map(num => numToWord[num])\n        .join(' ');\n}"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 848581800,
+            "load_duration": 91916200,
+            "prompt_eval_count": 137,
+            "prompt_eval_duration": 41053000,
+            "eval_count": 207,
+            "eval_duration": 700900000,
+            "clientWallMs": 859.6,
+            "supervisedWallMs": 955.5
+          },
+          "code": "{\n    const wordToNum = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        'five': 5,\n        'six': 6,\n        'seven': 7,\n        'eight': 8,\n        'nine': 9\n    };\n    \n    const numToWord = {\n        0: 'zero',\n        1: 'one',\n        2: 'two',\n        3: 'three',\n        4: 'four',\n        5: 'five',\n        6: 'six',\n        7: 'seven',\n        8: 'eight',\n        9: 'nine'\n    };\n    \n    return numbers.split(' ')\n        .map(word => wordToNum[word])\n        .sort((a, b) => a - b)\n        .map(num => numToWord[num])\n        .join(' ');\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 955.5,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 1,
+            "rows": [
+              {
+                "id": "JavaScript/19",
+                "passed": false,
+                "error": {
+                  "name": "SyntaxError",
+                  "message": "unexpected token in expression: ''",
+                  "stack": "    at candidate.js:40:2\n",
+                  "fileName": "candidate.js",
+                  "lineNumber": 40
+                },
+                "phase": "candidate",
+                "count": 0,
+                "failed": 0
+              }
+            ],
+            "meaning": "Each check here is one whole upstream test program, not one console assertion."
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "qwen3-coder:30b",
+        "created_at": "2026-09-11T17:28:30.0635243Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 6053568900,
+        "load_duration": 5938458700,
+        "prompt_eval_count": 13,
+        "prompt_eval_duration": 98212000,
+        "eval_count": 2,
+        "eval_duration": 14933000,
+        "clientWallMs": 6085.7,
+        "supervisedWallMs": 6185.6
+      },
+      "loadedModel": [
+        {
+          "name": "qwen3-coder:30b",
+          "model": "qwen3-coder:30b",
+          "size": 20196045618,
+          "digest": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3moe",
+            "families": [
+              "qwen3moe"
+            ],
+            "parameter_size": "30.5B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-09-11T11:33:30.0635243-06:00",
+          "size_vram": 20196045618,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 6,
+        "tasksAttempted": 20,
+        "tasksTotal": 20,
+        "testsPassed": 6,
+        "testsTotal": 20,
+        "medianWallMs": 512.9000000000001,
+        "totalWallMs": 10406.0,
+        "truncated": 0,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "updatedAt": "2026-09-11T11:28:42-06:00",
+  "resultFile": "runs/20260911-112823-5a23bb5e.json",
+  "unloads": [
+    {
+      "model": "qwen3-coder:30b",
+      "endpoint": "http://127.0.0.1:11434",
+      "confirmedAt": "2026-09-11T11:28:42-06:00",
+      "gpuAfter": {
+        "freeGiB": 93.8603515625,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 60.0
+      },
+      "freeBeforeGiB": 93.8564453125
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T11:28:42-06:00"
+}

@@ -1,0 +1,3484 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-105852-8da350a1",
+  "startedAt": "2026-09-11T10:58:52-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 22,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T10:58:52-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-coding-screen",
+  "selection": {
+    "kind": "installed",
+    "model": "qwen3.8:27b-mtp-bf16",
+    "expectedDigest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+    "campaignProtocol": "javascript-coding-v1",
+    "thinking": true,
+    "rationale": "Compare actual function-writing against the validated Qwen3-Coder pilot: eight authored functions, 99 hidden checks, isolated QuickJS WASM. Context 16384; keep reasoning budgets separate."
+  },
+  "admission": {
+    "kind": "installed",
+    "model": "qwen3.8:27b-mtp-bf16",
+    "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+    "bytes": 55588891672,
+    "selection": {
+      "kind": "installed",
+      "model": "qwen3.8:27b-mtp-bf16",
+      "expectedDigest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "campaignProtocol": "javascript-coding-v1",
+      "thinking": true,
+      "rationale": "Compare actual function-writing against the validated Qwen3-Coder pilot: eight authored functions, 99 hidden checks, isolated QuickJS WASM. Context 16384; keep reasoning budgets separate."
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 93.9091796875,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 2.0
+  },
+  "protocol": {
+    "name": "javascript-functions-v1",
+    "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+    "thinking": true,
+    "context": 16384,
+    "outputCap": 8192,
+    "maxGenerationSeconds": 240,
+    "tasks": 8,
+    "hiddenTests": 99,
+    "temperature": 0,
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+  },
+  "benchmarks": [
+    {
+      "model": "qwen3.8:27b-mtp-bf16",
+      "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "endpoint": "http://127.0.0.1:11434",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "qwen3.8:27b-bf16",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "27.3B",
+        "quantization_level": "BF16"
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ],
+      "modelParameters": "presence_penalty               0\nrepeat_penalty                 1\ntemperature                    1\ntop_k                          20\ntop_p                          0.95\ndraft_num_predict              4\nmin_p                          0",
+      "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {eventId, account, delta}. Duplicate eventId records are identical duplicate deliveries; count each eventId once. Sum integer delta per account. Return [[account,balance],...] sorted by account using ordinary lexicographic string order. Accounts can be any strings, including object prototype names.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T16:59:25.7005336Z",
+            "message": {
+              "role": "assistant",
+              "content": "function solve(input) {\n  const seen = new Set();\n  const balances = new Map();\n  for (const record of input) {\n    if (seen.has(record.eventId)) continue;\n    seen.add(record.eventId);\n    const { account, delta } = record;\n    balances.set(account, (balances.get(account) || 0) + delta);\n  }\n  const result = [...balances.entries()];\n  result.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);\n  return result;\n}",
+              "thinking": "Let me analyze the requirements:\n\n1. Write a synchronous JavaScript ES2020 function `solve(input)`\n2. Do not mutate input\n3. No external libraries or host APIs\n4. Input is an array of `{eventId, account, delta}`\n5. Duplicate `eventId` records are identical duplicate deliveries - count each `eventId` once\n6. Sum integer `delta` per account\n7. Return `[[account, balance], ...]` sorted by account using ordinary lexicographic string order\n8. Accounts can be any strings, including object prototype names (like \"constructor\", \"toString\", \"hasOwnProperty\", etc.)\n\nKey considerations:\n- Need to deduplicate by `eventId` - only count each eventId once\n- Need to sum deltas per account\n- Need to handle prototype names safely - so I should use `Object.create(null)` or `Map` instead of plain objects\n- Sort by account using ordinary lexicographic string order (default string comparison)\n- Return array of [account, balance] pairs\n\nLet me think about the implementation:\n\n1. Use a `Set` to track seen `eventId`s\n2. Use a `Map` to accumulate balances per account (avoids prototype pollution issues)\n3. Iterate through input, skip if eventId already seen\n4. For each new eventId, add delta to the account's balance in the Map\n5. Convert Map entries to array of [account, balance] pairs\n6. Sort by account using default string comparison (lexicographic)\n\nFor sorting: \"ordinary lexicographic string order\" - this means default string comparison. In JavaScript, `a < b` for strings does lexicographic comparison based on UTF-16 code units. Using `.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)` or simply `.sort((a, b) => a[0].localeCompare(b[0]))` - wait, localeCompare might not be \"ordinary lexicographic\". Let me use simple comparison operators which give UTF-16 code unit order, which is the standard lexicographic order for strings in JS.\n\nActually, the default `.sort()` without a comparator converts to strings and sorts lexicographically. But since we're sorting arrays of [account, balance], I need a comparator.\n\nLet me use: `.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)`\n\nThis gives ordinary lexicographic (UTF-16 code unit) order.\n\nLet me write the code:\n\n```javascript\nfunction solve(input) {\n  const seen = new Set();\n  const balances = new Map();\n  \n  for (const record of input) {\n    if (seen.has(record.eventId)) continue;\n    seen.add(record.eventId);\n    const { account, delta } = record;\n    balances.set(account, (balances.get(account) || 0) + delta);\n  }\n  \n  const result = [...balances.entries()];\n  result.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);\n  return result;\n}\n```\n\nWait, `balances.entries()` returns an iterator of [key, value] pairs. Spreading it gives an array of [account, balance] arrays. That's exactly the format needed.\n\nLet me verify:\n- No mutation of input: I'm only reading from it ✓\n- No external libraries ✓\n- No host APIs ✓\n- Deduplicates by eventId ✓\n- Sums delta per account ✓\n- Returns [[account, balance], ...] ✓\n- Sorted by account lexicographically ✓\n- Handles prototype names (using Map, not plain object) ✓\n- ES2020 compatible ✓\n\nThis looks good."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 14128139300,
+            "load_duration": 145861800,
+            "prompt_eval_count": 105,
+            "prompt_eval_duration": 169408000,
+            "eval_count": 988,
+            "eval_duration": 13744429000,
+            "clientWallMs": 14161.6,
+            "supervisedWallMs": 14262.5
+          },
+          "code": "function solve(input) {\n  const seen = new Set();\n  const balances = new Map();\n  for (const record of input) {\n    if (seen.has(record.eventId)) continue;\n    seen.add(record.eventId);\n    const { account, delta } = record;\n    balances.set(account, (balances.get(account) || 0) + delta);\n  }\n  const result = [...balances.entries()];\n  result.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);\n  return result;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 14262.5,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "versioned-state",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {key,version,op,value}, arriving out of order. Versions are unique nonnegative integers. For each key choose the greatest version. op=\"delete\" removes that key; op=\"set\" sets its value, including null/false/0. Return a JSON-compatible object of final keys to values. Keys may include __proto__ or constructor.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T16:59:47.6363022Z",
+            "message": {
+              "role": "assistant",
+              "content": "function solve(input) {\n  const best = new Map();\n  for (const entry of input) {\n    const { key, version, op, value } = entry;\n    const existing = best.get(key);\n    if (existing === undefined || version > existing.version) {\n      best.set(key, { version, op, value });\n    }\n  }\n  const result = Object.create(null);\n  for (const [key, entry] of best) {\n    if (entry.op === \"set\") {\n      Object.defineProperty(result, key, {\n        value: entry.value,\n        writable: true,\n        enumerable: true,\n        configurable: true\n      });\n    }\n  }\n  return result;\n}",
+              "thinking": "The user wants a synchronous JavaScript ES2020 function called `solve(input)` that:\n\n1. Takes an array of `{key, version, op, value}` objects\n2. Does not mutate the input\n3. Uses no external libraries or host APIs\n4. Returns a JSON-compatible object of final keys to values\n\nLogic:\n- For each key, find the entry with the greatest version\n- If that entry has `op === \"delete\"`, the key is removed (not in output)\n- If that entry has `op === \"set\"`, the key's value is set to `value` (which can be null, false, 0, etc.)\n- Keys may include `__proto__` or `constructor`, so I need to be careful about how I build the result object\n\nSince keys can be `__proto__` or `constructor`, I should use `Object.create(null)` to create a plain object without prototype, or use `Object.defineProperty` to set properties safely. Actually, the safest approach is to use `Object.create(null)` and then use `Object.defineProperty` or bracket notation. Wait, even with `Object.create(null)`, setting `obj[\"__proto__\"]` via bracket notation should work fine since there's no prototype chain. Let me think...\n\nActually, with `Object.create(null)`, there's no `__proto__` property on the prototype, so `obj[\"__proto__\"] = value` would just set a regular property. But wait, in some engines, `__proto__` is a special accessor on `Object.prototype`. If we use `Object.create(null)`, there's no prototype, so `__proto__` is just a regular property name. That should work.\n\nBut to be extra safe, I could use `Object.defineProperty(obj, key, {value: value, writable: true, enumerable: true, configurable: true})`.\n\nLet me think about the algorithm:\n1. Iterate through the input array\n2. For each key, track the entry with the greatest version\n3. After processing all entries, build the result object\n\nI'll use a Map to track the best entry per key (since keys can be any string including `__proto__`, `constructor`, etc.).\n\n```javascript\nfunction solve(input) {\n  const best = new Map();\n  for (const entry of input) {\n    const { key, version, op, value } = entry;\n    const existing = best.get(key);\n    if (existing === undefined || version > existing.version) {\n      best.set(key, { version, op, value });\n    }\n  }\n  \n  const result = Object.create(null);\n  for (const [key, entry] of best) {\n    if (entry.op === \"set\") {\n      Object.defineProperty(result, key, {\n        value: entry.value,\n        writable: true,\n        enumerable: true,\n        configurable: true\n      });\n    }\n    // if op === \"delete\", we simply don't add the key\n  }\n  \n  return result;\n}\n```\n\nWait, but the problem says \"Return a JSON-compatible object\". If I use `Object.create(null)`, is that JSON-compatible? `JSON.stringify` works on objects created with `Object.create(null)` - it will serialize their own enumerable properties. So yes, it should be fine.\n\nActually, let me reconsider. The problem says \"Return a JSON-compatible object of final keys to values.\" This means the return value should be an object that can be JSON-serialized. Using `Object.create(null)` is fine for that.\n\nBut wait - should I return a regular `{}` object instead? The issue is that if a key is `__proto__`, setting it on a regular object via bracket notation `obj[\"__proto__\"] = value` would actually set the prototype in some cases. Let me check...\n\nIn modern JavaScript (ES2015+), `obj[\"__proto__\"] = value` on a regular object will invoke the `__proto__` setter from `Object.prototype`, which changes the prototype rather than setting a property. So I definitely need to use `Object.defineProperty` or `Object.create(null)`.\n\nUsing `Object.create(null)` + `Object.defineProperty` is the safest approach.\n\nActually, even with `Object.create(null)`, using `obj[key] = value` should be safe because there's no `__proto__` accessor in the prototype chain. But `Object.defineProperty` is even safer and more explicit.\n\nLet me also make sure I'm not mutating the input. I'm only reading from it, so that's fine.\n\nLet me also consider: what if there are duplicate versions for the same key? The problem says \"Versions are unique nonnegative integers\" - so each version is unique across all entries. That means for a given key, there can be at most one entry with the greatest version. Good.\n\nLet me finalize my solution:\n\n```javascript\nfunction solve(input) {\n  const best = new Map();\n  for (const entry of input) {\n    const { key, version, op, value } = entry;\n    const existing = best.get(key);\n    if (existing === undefined || version > existing.version) {\n      best.set(key, { version, op, value });\n    }\n  }\n  \n  const result = Object.create(null);\n  for (const [key, entry] of best) {\n    if (entry.op === \"set\") {\n      Object.defineProperty(result, key, {\n        value: entry.value,\n        writable: true,\n        enumerable: true,\n        configurable: true\n      });\n    }\n  }\n  \n  return result;\n}\n```\n\nThis looks correct. Let me verify edge cases:\n- `op === \"delete\"`: key is not added to result ✓\n- `op === \"set\"` with value `null`, `false`, `0`: these are all valid values and will be set ✓\n- Keys like `__proto__`, `constructor`: handled by `Object.create(null)` + `Object.defineProperty` ✓\n- No mutation of input: we only read from it ✓\n- No external libraries: only using built-in `Map`, `Object.create`, `Object.defineProperty` ✓\n- ES2020: `Map`, `Object.create`, `Object.defineProperty` are all available ✓\n\nI think this is correct."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 21715419500,
+            "load_duration": 148999500,
+            "prompt_eval_count": 120,
+            "prompt_eval_duration": 166694000,
+            "eval_count": 1532,
+            "eval_duration": 21320965000,
+            "clientWallMs": 21726.8,
+            "supervisedWallMs": 21827.8
+          },
+          "code": "function solve(input) {\n  const best = new Map();\n  for (const entry of input) {\n    const { key, version, op, value } = entry;\n    const existing = best.get(key);\n    if (existing === undefined || version > existing.version) {\n      best.set(key, { version, op, value });\n    }\n  }\n  const result = Object.create(null);\n  for (const [key, entry] of best) {\n    if (entry.op === \"set\") {\n      Object.defineProperty(result, key, {\n        value: entry.value,\n        writable: true,\n        enumerable: true,\n        configurable: true\n      });\n    }\n  }\n  return result;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 21827.8,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {},
+                "mutated": false,
+                "passed": true,
+                "expected": {}
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "b": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": false
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "constructor": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "constructor": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "a": 0,
+                  "__proto__": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": 0
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": 17,
+                  "constructor": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": 17,
+                  "__proto__": false,
+                  "constructor": 17
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": false,
+                  "constructor": null,
+                  "b": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": false,
+                  "constructor": null,
+                  "b": "x",
+                  "a": false
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": null
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "a": null,
+                  "b": false,
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": null,
+                  "c": null,
+                  "b": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "a": "x",
+                  "b": "x",
+                  "__proto__": "x",
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": "x",
+                  "c": null,
+                  "a": "x",
+                  "b": "x"
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "a": false,
+                  "b": 17,
+                  "__proto__": null,
+                  "c": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": false,
+                  "__proto__": null,
+                  "c": 17,
+                  "b": 17
+                }
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "merge-intervals",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of closed integer intervals [start,end], with start<=end. Merge intervals that overlap or touch, and return intervals sorted by start then end. Preserve the original input and its inner arrays. Example [[7,9],[1,4],[4,6]] -> [[1,6],[7,9]].",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:00:05.6749137Z",
+            "message": {
+              "role": "assistant",
+              "content": "function solve(input) {\n  const sorted = input.map(([s, e]) => [s, e]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const result = [];\n  for (const [s, e] of sorted) {\n    if (result.length > 0 && s <= result[result.length - 1][1]) {\n      result[result.length - 1][1] = Math.max(result[result.length - 1][1], e);\n    } else {\n      result.push([s, e]);\n    }\n  }\n  return result;\n}",
+              "thinking": "The user wants a synchronous JavaScript ES2020 function `solve(input)` that:\n1. Takes an array of closed integer intervals [start, end] where start <= end\n2. Merges intervals that overlap or touch\n3. Returns intervals sorted by start then end\n4. Does not mutate input (preserve original input and its inner arrays)\n5. No external libraries or host APIs\n6. Return JavaScript code only, no explanation\n\nLet me think about the algorithm:\n1. Copy the input intervals (shallow copy of the array, and copy each inner array)\n2. Sort by start, then by end\n3. Merge: iterate through sorted intervals, if current interval overlaps or touches the last merged interval, merge them; otherwise add a new interval.\n\nTwo intervals [a, b] and [c, d] overlap or touch if c <= b + 1 (since they're integer intervals, [1,4] and [4,6] touch at 4, and [1,4] and [5,7] touch since 4+1=5).\n\nWait, let me reconsider. \"Overlap or touch\" - for closed integer intervals [start, end]:\n- They overlap if start2 <= end1 and start1 <= end2\n- They touch if end1 + 1 === start2 or end2 + 1 === start1\n\nActually, for closed integer intervals, [1,4] and [4,6] overlap (they share point 4). [1,4] and [5,7] touch (4+1=5). So the condition for merging is: start2 <= end1 + 1.\n\nLet me verify with the example: [[7,9],[1,4],[4,6]]\n- Sort: [[1,4],[4,6],[7,9]]\n- Start with [1,4]\n- [4,6]: 4 <= 4+1=5, so merge → [1,6]\n- [7,9]: 7 <= 6+1=7, so merge → [1,9]\n\nWait, but the expected output is [[1,6],[7,9]]. So [1,6] and [7,9] should NOT be merged. That means \"touch\" means they share a point, not that they're adjacent.\n\nLet me re-read: \"Merge intervals that overlap or touch\". \n\n[1,4] and [4,6] - they share point 4, so they overlap (since both are closed intervals). They should be merged.\n[1,6] and [7,9] - they don't share any point. 6 and 7 are adjacent integers but the intervals don't overlap or touch in the sense of sharing a point.\n\nWait, but \"touch\" could mean adjacent. Let me look at the example again:\n[[7,9],[1,4],[4,6]] -> [[1,6],[7,9]]\n\n[1,4] and [4,6] are merged into [1,6] - they share point 4 (overlap).\n[1,6] and [7,9] are NOT merged - they are adjacent (6+1=7) but not merged.\n\nSo \"touch\" here means sharing a boundary point, which for closed intervals is the same as overlapping. The condition is: start2 <= end1 (they overlap or share a point).\n\nLet me verify: [1,4] and [4,6]: start2=4, end1=4, 4<=4 → merge. ✓\n[1,6] and [7,9]: start2=7, end1=6, 7<=6 is false → don't merge. ✓\n\nSo the condition is simply: next.start <= current.end (for closed intervals, this covers both overlap and touching at a point).\n\nNow let me write the code:\n\n```javascript\nfunction solve(input) {\n  const sorted = input.map(([s, e]) => [s, e]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const result = [];\n  for (const [s, e] of sorted) {\n    if (result.length > 0 && s <= result[result.length - 1][1]) {\n      result[result.length - 1][1] = Math.max(result[result.length - 1][1], e);\n    } else {\n      result.push([s, e]);\n    }\n  }\n  return result;\n}\n```\n\nThis doesn't mutate input because:\n- `input.map(...)` creates new arrays\n- We sort the new array, not the original\n- We create new arrays in result\n\nLet me double-check: the inner arrays in `sorted` are new arrays (created by the map), so sorting them doesn't affect input. The result arrays are also new. Good.\n\nThis looks correct. Let me finalize."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 17825076700,
+            "load_duration": 147760600,
+            "prompt_eval_count": 111,
+            "prompt_eval_duration": 166612000,
+            "eval_count": 1217,
+            "eval_duration": 17411845000,
+            "clientWallMs": 17836.7,
+            "supervisedWallMs": 17935.1
+          },
+          "code": "function solve(input) {\n  const sorted = input.map(([s, e]) => [s, e]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const result = [];\n  for (const [s, e] of sorted) {\n    if (result.length > 0 && s <= result[result.length - 1][1]) {\n      result[result.length - 1][1] = Math.max(result[result.length - 1][1], e);\n    } else {\n      result.push([s, e]);\n    }\n  }\n  return result;\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 17935.1,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    1
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    4
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    4
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "topological-order",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {nodes,edges}. nodes is an array of unique strings; every edge [u,v] means u must precede v, and both nodes exist. Ignore duplicate edges. Return a topological order, always choosing the lexicographically smallest currently available node. Return null if any cycle exists, including a self-loop.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:00:28.8395101Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n    const { nodes, edges } = input;\n    const n = nodes.length;\n\n    const adj = new Map();\n    const inDeg = new Map();\n\n    for (const node of nodes) {\n        adj.set(node, []);\n        inDeg.set(node, 0);\n    }\n\n    const seen = new Map();\n    for (const [u, v] of edges) {\n        if (u === v) return null;\n        if (!seen.has(u)) seen.set(u, new Set());\n        if (seen.get(u).has(v)) continue;\n        seen.get(u).add(v);\n        adj.get(u).push(v);\n        inDeg.set(v, inDeg.get(v) + 1);\n    }\n\n    const available = [];\n    for (const node of nodes) {\n        if (inDeg.get(node) === 0) available.push(node);\n    }\n    available.sort();\n\n    const result = [];\n\n    while (available.length > 0) {\n        const node = available.shift();\n        result.push(node);\n\n        for (const neighbor of adj.get(node)) {\n            const d = inDeg.get(neighbor) - 1;\n            inDeg.set(neighbor, d);\n            if (d === 0) {\n                let lo = 0, hi = available.length;\n                while (lo < hi) {\n                    const mid = (lo + hi) >> 1;\n                    if (available[mid] < neighbor) lo = mid + 1;\n                    else hi = mid;\n                }\n                available.splice(lo, 0, neighbor);\n            }\n        }\n    }\n\n    return result.length === n ? result : null;\n}\n```",
+              "thinking": "Let me write a synchronous JavaScript ES2020 function that performs topological sort with lexicographic ordering (Kahn's algorithm with a min-heap or sorted selection).\n\nRequirements:\n- Function `solve(input)` where input is `{nodes, edges}`\n- Don't mutate input\n- No external libraries or host APIs\n- Return topological order choosing lexicographically smallest available node\n- Return null if cycle exists (including self-loop)\n- Ignore duplicate edges\n- ES2020\n\nAlgorithm:\n1. Build adjacency list and in-degree map\n2. Use Kahn's algorithm but always pick the lexicographically smallest node with in-degree 0\n3. If we can't process all nodes, there's a cycle → return null\n\nFor \"lexicographically smallest currently available node\" - I need to always pick the smallest from the available set. I can use a sorted array and always pick the first element, or maintain a sorted structure.\n\nSince I can't use external libraries, I'll maintain an array of available nodes and always find the minimum, or keep it sorted.\n\nLet me think about the approach:\n- Build in-degree map and adjacency list\n- Start with all nodes having in-degree 0\n- Repeatedly pick the lexicographically smallest from available nodes\n- Add to result, decrement in-degrees of neighbors\n- If a neighbor's in-degree becomes 0, add to available\n- If at any point no available nodes but not all processed → cycle\n\nFor efficiency with \"always pick smallest\", I can keep the available set as a sorted array. When adding a new node, I insert it in sorted position. When removing, I remove the first element.\n\nActually, for simplicity and correctness, I can just keep an array and find the min each time. But that's O(n) per selection. For a cleaner approach, I'll keep a sorted array.\n\nLet me code this:\n\n```javascript\nfunction solve(input) {\n    const { nodes, edges } = input;\n    const n = nodes.length;\n    \n    // Build adjacency list and in-degree\n    const adj = new Map();\n    const inDeg = new Map();\n    \n    for (const node of nodes) {\n        adj.set(node, []);\n        inDeg.set(node, 0);\n    }\n    \n    const seen = new Set();\n    for (const [u, v] of edges) {\n        if (u === v) return null; // self-loop\n        const key = u + '\\0' + v;\n        if (seen.has(key)) continue;\n        seen.add(key);\n        adj.get(u).push(v);\n        inDeg.set(v, inDeg.get(v) + 1);\n    }\n    \n    // Available nodes (in-degree 0), kept sorted\n    const available = [];\n    for (const node of nodes) {\n        if (inDeg.get(node) === 0) {\n            available.push(node);\n        }\n    }\n    available.sort();\n    \n    const result = [];\n    \n    while (available.length > 0) {\n        // Pick the smallest (first in sorted array)\n        const node = available.shift();\n        result.push(node);\n        \n        for (const neighbor of adj.get(node)) {\n            const newDeg = inDeg.get(neighbor) - 1;\n            inDeg.set(neighbor, newDeg);\n            if (newDeg === 0) {\n                // Insert in sorted position\n                // Binary search for insertion point\n                let lo = 0, hi = available.length;\n                while (lo < hi) {\n                    const mid = (lo + hi) >> 1;\n                    if (available[mid] < neighbor) lo = mid + 1;\n                    else hi = mid;\n                }\n                available.splice(lo, 0, neighbor);\n            }\n        }\n    }\n    \n    if (result.length !== n) return null;\n    return result;\n}\n```\n\nWait, I need to be careful about not mutating input. I'm creating new Maps and arrays, so that should be fine. The `nodes` and `edges` arrays are not being modified.\n\nLet me also consider: the self-loop check. If u === v, that's a self-loop which is a cycle. I handle that.\n\nActually, I should also handle the case where a self-loop is detected during edge processing. Let me keep the `if (u === v) return null;` check.\n\nLet me also make sure I'm not mutating the input. I'm reading from `nodes` and `edges` but not modifying them. Good.\n\nOne more thing - the `seen` set for duplicate edges. I'm using `u + '\\0' + v` as a key. This should work as long as node names don't contain '\\0'. Actually, to be safer, I could use a nested set or a different approach. But for practical purposes, '\\0' as separator should be fine. Alternatively, I could use a Set of Sets or a Map of Sets.\n\nLet me use a Map of Sets to be safe:\n\n```javascript\nconst seen = new Map();\nfor (const [u, v] of edges) {\n    if (u === v) return null;\n    if (!seen.has(u)) seen.set(u, new Set());\n    if (seen.get(u).has(v)) continue;\n    seen.get(u).add(v);\n    adj.get(u).push(v);\n    inDeg.set(v, inDeg.get(v) + 1);\n}\n```\n\nThis is cleaner and avoids the separator issue.\n\nLet me finalize the code."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 22953016100,
+            "load_duration": 145092600,
+            "prompt_eval_count": 111,
+            "prompt_eval_duration": 155846000,
+            "eval_count": 1613,
+            "eval_duration": 22565490000,
+            "clientWallMs": 22965.4,
+            "supervisedWallMs": 23064.2
+          },
+          "code": "function solve(input) {\n    const { nodes, edges } = input;\n    const n = nodes.length;\n\n    const adj = new Map();\n    const inDeg = new Map();\n\n    for (const node of nodes) {\n        adj.set(node, []);\n        inDeg.set(node, 0);\n    }\n\n    const seen = new Map();\n    for (const [u, v] of edges) {\n        if (u === v) return null;\n        if (!seen.has(u)) seen.set(u, new Set());\n        if (seen.get(u).has(v)) continue;\n        seen.get(u).add(v);\n        adj.get(u).push(v);\n        inDeg.set(v, inDeg.get(v) + 1);\n    }\n\n    const available = [];\n    for (const node of nodes) {\n        if (inDeg.get(node) === 0) available.push(node);\n    }\n    available.sort();\n\n    const result = [];\n\n    while (available.length > 0) {\n        const node = available.shift();\n        result.push(node);\n\n        for (const neighbor of adj.get(node)) {\n            const d = inDeg.get(neighbor) - 1;\n            inDeg.set(neighbor, d);\n            if (d === 0) {\n                let lo = 0, hi = available.length;\n                while (lo < hi) {\n                    const mid = (lo + hi) >> 1;\n                    if (available[mid] < neighbor) lo = mid + 1;\n                    else hi = mid;\n                }\n                available.splice(lo, 0, neighbor);\n            }\n        }\n    }\n\n    return result.length === n ? result : null;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 23064.2,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  "a"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a"
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b"
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "c",
+                  "b"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "c",
+                  "b"
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "c",
+                  "d",
+                  "e"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "c",
+                  "d",
+                  "e"
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "c",
+                  "b",
+                  "d",
+                  "e",
+                  "f"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "c",
+                  "b",
+                  "d",
+                  "e",
+                  "f"
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "d",
+                  "c",
+                  "f",
+                  "e",
+                  "g"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "d",
+                  "c",
+                  "f",
+                  "e",
+                  "g"
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  "b",
+                  "c",
+                  "d",
+                  "e",
+                  "f",
+                  "g",
+                  "h",
+                  "i",
+                  "a"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "b",
+                  "c",
+                  "d",
+                  "e",
+                  "f",
+                  "g",
+                  "h",
+                  "i",
+                  "a"
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  "g",
+                  "f",
+                  "d",
+                  "e",
+                  "b",
+                  "c",
+                  "h",
+                  "a",
+                  "i",
+                  "j",
+                  "k"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "g",
+                  "f",
+                  "d",
+                  "e",
+                  "b",
+                  "c",
+                  "h",
+                  "a",
+                  "i",
+                  "j",
+                  "k"
+                ]
+              },
+              {
+                "id": "12",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              }
+            ],
+            "passed": 13,
+            "total": 13
+          }
+        },
+        {
+          "id": "ttl-cache",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nSimulate a cache from operations in input order. Timestamps t are nondecreasing integers. put has {t,op:\"put\",key,value,ttl}; it replaces a key and expires exactly at t+ttl, so ttl=0 expires immediately. get has {t,op:\"get\",key} and returns the current value or null if absent/expired. delete removes a key. Return an array of get results only. Same-timestamp operations obey input order.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:00:48.7343938Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      if (cache.has(op.key)) {\n        const entry = cache.get(op.key);\n        results.push(op.t < entry.expiry ? entry.value : null);\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n\n  return results;\n}\n```",
+              "thinking": "Let me analyze this problem:\n\n1. I need to write a synchronous JavaScript ES2020 function `solve(input)`\n2. It simulates a cache with operations in input order\n3. Timestamps are nondecreasing integers\n4. Operations:\n   - `put`: `{t, op:\"put\", key, value, ttl}` - replaces a key, expires at `t+ttl`, ttl=0 expires immediately\n   - `get`: `{t, op:\"get\", key}` - returns current value or null if absent/expired\n   - `delete`: removes a key (presumably `{t, op:\"delete\", key}`)\n5. Return an array of get results only\n6. Don't mutate input\n7. No external libraries or host APIs\n8. Same-timestamp operations obey input order\n\nLet me think about the implementation:\n\n- I'll use a Map to store cache entries\n- For each operation in order:\n  - `put`: store `{value, expiry: t + ttl}` in the map. If ttl=0, expiry = t, so it's already expired at time t.\n  - `get`: check if key exists in map. If it does, check if `t < expiry` (expires exactly at t+ttl means at time t+ttl it's expired). So the value is valid if `t < expiry`. If valid, return value. Otherwise, return null.\n  - `delete`: remove key from map.\n\nWait, \"expires exactly at t+ttl\" - this means at time t+ttl, the entry is expired. So the entry is valid for times < t+ttl. If ttl=0, expiry = t, so at time t it's already expired.\n\nFor get at time t: the entry is valid if `t < expiry` (i.e., `t < put_t + ttl`).\n\nLet me also consider: should I clean up expired entries? Not strictly necessary for correctness, but I could. Actually, I don't need to - I just check at get time whether the entry is still valid.\n\nLet me also consider: when a put happens with ttl=0, should I store it or not? It doesn't matter functionally since any get at time >= t will see it as expired. But to be clean, I could just not store it, or store it and let the expiry check handle it. I'll store it and let the check handle it - simpler code.\n\nActually wait - if ttl=0, expiry = t + 0 = t. A get at time t would check `t < t` which is false, so it returns null. That's correct.\n\nLet me write the code:\n\n```javascript\nfunction solve(input) {\n  const cache = new Map();\n  const results = [];\n  \n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      const entry = cache.get(op.key);\n      if (entry !== undefined && op.t < entry.expiry) {\n        results.push(entry.value);\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n  \n  return results;\n}\n```\n\nWait, I need to be careful with `cache.get(op.key)` - if the value stored is `undefined`, then `entry` would be `undefined` and I'd incorrectly return null. But actually, the value in a put could be anything. Let me use `has` instead:\n\n```javascript\nfunction solve(input) {\n  const cache = new Map();\n  const results = [];\n  \n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      if (cache.has(op.key)) {\n        const entry = cache.get(op.key);\n        if (op.t < entry.expiry) {\n          results.push(entry.value);\n        } else {\n          results.push(null);\n        }\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n  \n  return results;\n}\n```\n\nThis looks correct. Let me verify:\n- Don't mutate input: I'm only reading from input, not modifying it. ✓\n- No external libraries: only using Map and basic JS. ✓\n- Synchronous: yes. ✓\n- ES2020: Map is ES6, this is fine. ✓\n- Returns array of get results only. ✓\n- Same-timestamp operations obey input order: since we process in order, yes. ✓\n- ttl=0 expires immediately: expiry = t, so at time t, `t < t` is false. ✓\n\nI think this is correct. Let me also consider edge cases:\n- What if a key is put, then deleted, then get? The delete removes it, get returns null. ✓\n- What if a key is put with ttl, then put again with different ttl? The second put replaces the first. ✓\n- What about negative ttl? The problem says ttl is part of the input, I'll assume it's non-negative. But even if negative, expiry would be < t, so it'd be immediately expired.\n\nI'm satisfied with this solution."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 19679838600,
+            "load_duration": 145786800,
+            "prompt_eval_count": 141,
+            "prompt_eval_duration": 178976000,
+            "eval_count": 1380,
+            "eval_duration": 19268781000,
+            "clientWallMs": 19690.8,
+            "supervisedWallMs": 19789.7
+          },
+          "code": "function solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      if (cache.has(op.key)) {\n        const entry = cache.get(op.key);\n        results.push(op.t < entry.expiry ? entry.value : null);\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n\n  return results;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 19789.7,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "json-pointer",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {document,pointer}. Resolve a JSON Pointer: empty pointer selects the whole document; otherwise split after the leading slash, decode ~1 to / then ~0 to ~. Use only own object properties. Array indexes must be canonical nonnegative decimal integers (0 valid; 01 and - invalid). Return {found:true,value:...} if found, otherwise {found:false}. Null is a real found value.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:01:16.7715951Z",
+            "message": {
+              "role": "assistant",
+              "content": "function solve(input) {\n  const { document, pointer } = input;\n\n  if (typeof pointer !== 'string') return { found: false };\n  if (pointer === '') return { found: true, value: document };\n  if (pointer[0] !== '/') return { found: false };\n\n  const tokens = pointer.slice(1).split('/');\n  let current = document;\n\n  for (const token of tokens) {\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n\n    if (current === null || current === undefined) return { found: false };\n\n    if (Array.isArray(current)) {\n      if (!/^(0|[1-9][0-9]*)$/.test(decoded)) return { found: false };\n      const idx = Number(decoded);\n      if (idx >= current.length) return { found: false };\n      current = current[idx];\n    } else if (typeof current === 'object') {\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) return { found: false };\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}",
+              "thinking": "Let me analyze the requirements:\n\n1. Write a synchronous JavaScript ES2020 function `solve(input)`\n2. Do not mutate input\n3. No external libraries or host APIs\n4. Return JavaScript code only, no explanation\n5. Input is `{document, pointer}`\n6. Resolve a JSON Pointer:\n   - Empty pointer selects the whole document\n   - Otherwise split after the leading slash\n   - Decode `~1` to `/` then `~0` to `~`\n   - Use only own object properties\n   - Array indexes must be canonical nonnegative decimal integers (0 valid; 01 and - invalid)\n   - Return `{found:true, value:...}` if found, otherwise `{found:false}`\n   - Null is a real found value\n\nLet me think through the implementation:\n\n1. If pointer is empty string `\"\"`, return `{found: true, value: document}`\n2. If pointer doesn't start with `/`, it's invalid → `{found: false}`\n3. Split the pointer after the leading slash by `/`\n4. For each token, decode `~1` to `/` then `~0` to `~` (order matters: `~1` first, then `~0`)\n5. Navigate the document:\n   - For objects: check if the key is an own property\n   - For arrays: the token must be a canonical nonnegative decimal integer (no leading zeros, no negative sign, no empty string)\n   - If at any point the current value is null or undefined, we can't navigate further → `{found: false}`\n\nWait, let me re-read: \"Use only own object properties\" - this means for objects, we check `Object.prototype.hasOwnProperty.call(obj, key)`.\n\nFor arrays: \"Array indexes must be canonical nonnegative decimal integers (0 valid; 01 and - invalid)\"\n- Valid: \"0\", \"1\", \"2\", \"10\", etc.\n- Invalid: \"01\", \"-1\", \"\", \"1.5\", \" 1\", etc.\n\nSo the regex for valid array index would be: `^(0|[1-9][0-9]*)$`\n\nLet me also consider: what if the pointer is not a string? The problem says input is `{document, pointer}`, so I'll assume pointer is a string. But let me handle edge cases.\n\nWhat if pointer is not a string? I'll treat it as not found.\n\nWhat about the document? It could be null, an object, an array, a number, a string, a boolean.\n\nLet me think about the decoding order: \"decode ~1 to / then ~0 to ~\"\n- This means we first replace all `~1` with `/`, then replace all `~0` with `~`.\n- This is important because `~01` should become `~1` (first `~1` → `/` doesn't apply since it's `~01` not `~1`... wait, let me re-read.\n\nActually, the standard JSON Pointer decoding is:\n- First replace `~1` with `/`\n- Then replace `~0` with `~`\n\nSo `~01` → first pass: no `~1` found (it's `~0` followed by `1`)... wait, `~01` contains `~0` and `1`. Let me think character by character.\n\n`~01`: \n- First replace `~1` with `/`: Is there a `~1` in `~01`? The string is `~`, `0`, `1`. There's no `~1` substring. So no change.\n- Then replace `~0` with `~`: `~0` is at position 0-1. Replace with `~`. Result: `~1`.\n\nSo `~01` decodes to `~1`. That's correct per the spec.\n\nWhat about `~10`?\n- First replace `~1` with `/`: `~1` is at position 0-1. Replace with `/`. Result: `/0`.\n- Then replace `~0` with `~`: No `~0` in `/0`. Result: `/0`.\n\nSo `~10` decodes to `/0`. That's correct.\n\nNow let me code this:\n\n```javascript\nfunction solve(input) {\n  const { document, pointer } = input;\n  \n  if (typeof pointer !== 'string') return { found: false };\n  \n  if (pointer === '') return { found: true, value: document };\n  \n  if (pointer[0] !== '/') return { found: false };\n  \n  const tokens = pointer.slice(1).split('/');\n  \n  let current = document;\n  \n  for (const token of tokens) {\n    // Decode: ~1 -> /, then ~0 -> ~\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n    \n    if (current === null || current === undefined) return { found: false };\n    \n    if (Array.isArray(current)) {\n      // Must be canonical nonnegative decimal integer\n      if (!/^(0|[1-9][0-9]*)$/.test(decoded)) return { found: false };\n      const idx = Number(decoded);\n      if (idx >= current.length) return { found: false };\n      current = current[idx];\n    } else if (typeof current === 'object') {\n      // Use only own properties\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) return { found: false };\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n  \n  return { found: true, value: current };\n}\n```\n\nWait, I need to be careful. The problem says \"Do not mutate input.\" I'm not mutating anything, just reading. Good.\n\nAlso, \"Use only own object properties\" - I'm using `hasOwnProperty.call` which is correct.\n\nLet me also consider: what if `document` is null and pointer is empty? Then we return `{found: true, value: null}`. That's correct since \"Null is a real found value.\"\n\nWhat if pointer is `/` (just a slash)? Then `pointer.slice(1)` is `\"\"`, and `\"\".split('/')` gives `[\"\"]`. So we'd try to access key `\"\"` on the document. That seems correct per JSON Pointer spec.\n\nLet me double-check the array index validation:\n- \"0\" → valid (matches `0`)\n- \"01\" → invalid (doesn't match `0|[1-9][0-9]*`)\n- \"-1\" → invalid (doesn't match)\n- \"\" → invalid (doesn't match)\n- \"1\" → valid\n- \"10\" → valid\n- \" 1\" → invalid\n- \"1 \" → invalid\n\nLooks good.\n\nOne more thing: what if the pointer has a trailing slash like `/foo/`? Then tokens would be `[\"foo\", \"\"]`. We'd look for key \"foo\" then key \"\" in the result. That's correct per spec.\n\nI think the solution is complete. Let me also make sure I'm not using any host APIs - `Array.isArray`, `Object.prototype.hasOwnProperty`, `String.prototype.replace`, `String.prototype.split`, `String.prototype.slice`, `Number` - these are all standard JavaScript built-ins, not host APIs. Should be fine.\n\nActually wait - is `Number` a host API? No, it's a standard JavaScript built-in. The constraint says \"no external libraries or host APIs\" which I interpret as no `fetch`, `console`, `window`, `document` (the DOM one), `process`, etc. Standard JS built-ins are fine.\n\nLet me finalize."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 27809542500,
+            "load_duration": 147349000,
+            "prompt_eval_count": 130,
+            "prompt_eval_duration": 166000000,
+            "eval_count": 1974,
+            "eval_duration": 27412912000,
+            "clientWallMs": 27840.7,
+            "supervisedWallMs": 27939.0
+          },
+          "code": "function solve(input) {\n  const { document, pointer } = input;\n\n  if (typeof pointer !== 'string') return { found: false };\n  if (pointer === '') return { found: true, value: document };\n  if (pointer[0] !== '/') return { found: false };\n\n  const tokens = pointer.slice(1).split('/');\n  let current = document;\n\n  for (const token of tokens) {\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n\n    if (current === null || current === undefined) return { found: false };\n\n    if (Array.isArray(current)) {\n      if (!/^(0|[1-9][0-9]*)$/.test(decoded)) return { found: false };\n      const idx = Number(decoded);\n      if (idx >= current.length) return { found: false };\n      current = current[idx];\n    } else if (typeof current === 'object') {\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) return { found: false };\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}",
+          "markdownFenceRemoved": false,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 27939.0,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                }
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": null
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": false
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "ok"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "ok"
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 7
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 7
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "data"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "data"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "object key"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "object key"
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "12",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "13",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              }
+            ],
+            "passed": 14,
+            "total": 14
+          }
+        },
+        {
+          "id": "csv-parser",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is a valid CSV string. Return an array of rows (arrays of strings). Handle commas, quoted fields, doubled quote escapes, newlines inside quoted fields, and LF or CRLF row endings. Preserve embedded newlines inside quotes. Empty input returns []; a final row terminator must not create an extra row. An empty line is one empty field.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:02:17.3714627Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  if (input === '') return [];\n\n  const rows = [];\n  let row = [];\n  let field = '';\n  let i = 0;\n  const len = input.length;\n  let inQuotes = false;\n\n  while (i < len) {\n    const ch = input[i];\n\n    if (inQuotes) {\n      if (ch === '\"') {\n        if (i + 1 < len && input[i + 1] === '\"') {\n          field += '\"';\n          i += 2;\n        } else {\n          inQuotes = false;\n          i++;\n        }\n      } else {\n        field += ch;\n        i++;\n      }\n    } else {\n      if (ch === '\"' && field === '') {\n        inQuotes = true;\n        i++;\n      } else if (ch === ',') {\n        row.push(field);\n        field = '';\n        i++;\n      } else if (ch === '\\r') {\n        if (i + 1 < len && input[i + 1] === '\\n') {\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i += 2;\n        } else {\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i++;\n        }\n      } else if (ch === '\\n') {\n        row.push(field);\n        field = '';\n        rows.push(row);\n        row = [];\n        i++;\n      } else {\n        field += ch;\n        i++;\n      }\n    }\n  }\n\n  if (field !== '' || row.length > 0) {\n    row.push(field);\n    rows.push(row);\n  }\n\n  return rows;\n}\n```",
+              "thinking": "Let me write a CSV parser in JavaScript that handles:\n1. Commas as delimiters\n2. Quoted fields (fields starting and ending with `\"`)\n3. Doubled quote escapes (`\"\"` inside quoted fields)\n4. Newlines inside quoted fields (both LF and CRLF)\n5. LF or CRLF row endings\n6. Preserve embedded newlines inside quotes\n7. Empty input returns `[]`\n8. A final row terminator must not create an extra row\n9. An empty line is one empty field (i.e., `\"\\n\"` → `[[\"\"]]`)\n10. Do not mutate input\n11. Synchronous, ES2020, no external libraries\n\nLet me think through the parsing logic:\n\n- I'll iterate character by character through the input string.\n- States: I'm either in a \"field\" state or in a \"quoted field\" state.\n- When I encounter a comma (outside quotes), I end the current field and start a new one.\n- When I encounter a newline (LF or CRLF) outside quotes, I end the current row.\n- When I encounter a quote at the start of a field, I enter quoted mode.\n- Inside quoted mode, `\"\"` is an escaped quote, and a single `\"` ends the quoted field.\n- After a closing quote, the next character should be a comma or newline (or end of input).\n\nLet me think about edge cases:\n- Empty input: return `[]`\n- Input ending with `\\n` or `\\r\\n`: don't create extra row\n- Empty line (just `\\n`): should produce `[[\"\"]]` - one row with one empty field\n- Input like `\"a,b\"\\n`: one row with one field `a,b`\n- Input like `a,\"b\"\"c\"\\n`: one row with fields `a` and `b\"c`\n\nLet me code this:\n\n```javascript\nfunction solve(input) {\n  if (input === '') return [];\n  \n  const rows = [];\n  let row = [];\n  let field = '';\n  let i = 0;\n  const len = input.length;\n  let inQuotes = false;\n  \n  while (i < len) {\n    const ch = input[i];\n    \n    if (inQuotes) {\n      if (ch === '\"') {\n        if (i + 1 < len && input[i + 1] === '\"') {\n          field += '\"';\n          i += 2;\n        } else {\n          inQuotes = false;\n          i++;\n        }\n      } else {\n        field += ch;\n        i++;\n      }\n    } else {\n      if (ch === '\"') {\n        inQuotes = true;\n        i++;\n      } else if (ch === ',') {\n        row.push(field);\n        field = '';\n        i++;\n      } else if (ch === '\\r') {\n        // Check for CRLF\n        if (i + 1 < len && input[i + 1] === '\\n') {\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i += 2;\n        } else {\n          // Lone CR - treat as row ending? The problem says LF or CRLF. Let me re-read.\n          // \"LF or CRLF row endings\" - so lone CR might not be a valid row ending.\n          // But to be safe, I'll treat lone CR as a row ending too? Actually the problem says \"LF or CRLF row endings\" so I'll only handle those.\n          // Actually, let me just handle it as a row ending to be safe.\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i++;\n        }\n      } else if (ch === '\\n') {\n        row.push(field);\n        field = '';\n        rows.push(row);\n        row = [];\n        i++;\n      } else {\n        field += ch;\n        i++;\n      }\n    }\n  }\n  \n  // After the loop, if we have remaining content (field or row not empty), push it\n  // But we need to handle the case where input ends without a newline\n  // If field is non-empty OR row already has elements, we need to push\n  // Actually, if we're at the end and field is '' and row is [], that means the last char was a newline (already handled)\n  // If field is '' and row has elements, that means we just had a comma at the end\n  // If field is non-empty, we have a trailing field\n  \n  // Wait, let me reconsider. After the loop:\n  // - If the input ended with a newline, we already pushed the row. field is '' and row is [].\n  // - If the input ended without a newline, we have field (possibly '') and row (possibly with elements).\n  \n  // The condition for \"a final row terminator must not create an extra row\" is handled because when we hit the newline, we push the row and reset. If there's nothing after, field is '' and row is [].\n  \n  // But what about an empty input? We already handled that.\n  \n  // What if input is just \"\\n\"? We'd push row [\"\"] and then field is '' and row is []. So we get [[\"\"]]. That's correct - an empty line is one empty field.\n  \n  // What if input is \"a\\n\"? We'd push row [\"a\"], then field is '' and row is []. Result: [[\"a\"]]. Correct.\n  \n  // What if input is \"a\"? We never hit a newline. field is \"a\", row is []. We need to push.\n  \n  // What if input is \"a,\"? We hit comma, push \"a\" to row, field is \"\". Then end. row is [\"a\"], field is \"\". We need to push row [\"a\", \"\"].\n  \n  // So the condition is: if field !== '' || row.length > 0, push.\n  // Wait, but what about the case where input ends with a newline? Then field is '' and row is []. We don't push. Good.\n  // What about input \"a\\n\\n\"? First \\n: push [\"a\"], reset. Second \\n: push [\"\"], reset. field is '', row is []. We don't push extra. Result: [[\"a\"], [\"\"]]. Correct.\n  \n  if (field !== '' || row.length > 0) {\n    row.push(field);\n    rows.push(row);\n  }\n  \n  return rows;\n}\n```\n\nWait, let me reconsider the \"empty line is one empty field\" requirement. If input is `\"\\n\"`, that should give `[[\"\"]]`. Let me trace:\n- i=0, ch='\\n', not inQuotes, ch is '\\n': row.push('') → row=[\"\"], field='', rows.push([\"\"]), row=[], i=1\n- Loop ends (i=1, len=1)\n- field is '' and row.length is 0, so we don't push.\n- Result: [[\"\"]]. Correct!\n\nWhat about input `\"\"` (empty string)? We return []. Correct.\n\nWhat about input `\"a\"` (just the character a, no newline)?\n- i=0, ch='a', not inQuotes, not special: field='a', i=1\n- Loop ends\n- field is 'a', row.length is 0: push. row.push('a') → row=['a'], rows.push(['a'])\n- Result: [[\"a\"]]. Correct.\n\nWhat about input `\"a,b\"`?\n- i=0: field='a', i=1\n- i=1: ch=',', row.push('a'), field='', i=2\n- i=2: field='b', i=3\n- Loop ends\n- field is 'b', row.length is 1: push. row.push('b') → row=['a','b'], rows.push(['a','b'])\n- Result: [[\"a\",\"b\"]]. Correct.\n\nWhat about `\"\\\"hello\\\"\"` (quoted field \"hello\")?\n- i=0: ch='\"', inQuotes=true, i=1\n- i=1: ch='h', inQuotes, field='h', i=2\n- ... field becomes \"hello\"\n- i=6: ch='\"', inQuotes, check i+1: if it's end or not a quote, inQuotes=false, i=7\n- Loop ends\n- field is \"hello\", row.length is 0: push.\n- Result: [[\"hello\"]]. Correct.\n\nWhat about `\"\\\"a\\\"\\\"b\\\"\"` (quoted field with escaped quote: a\"b)?\n- i=0: ch='\"', inQuotes=true, i=1\n- i=1: ch='a', field='a', i=2\n- i=2: ch='\"', inQuotes, check i+1: input[3]='\"', so field+='\"', i=4\n- i=4: ch='b', field='a\"b', i=5\n- i=5: ch='\"', inQuotes, check i+1: i+1=6 which is >= len, so inQuotes=false, i=6\n- Loop ends\n- field is 'a\"b', push.\n- Result: [[\"a\\\"b\"]]. Correct.\n\nWhat about `\"a,\\\"b\\nc\\\"\"` (field with newline in quotes)?\n- i=0: field='a', i=1\n- i=1: ch=',', row.push('a'), field='', i=2\n- i=2: ch='\"', inQuotes=true, i=3\n- i=3: ch='b', field='b', i=4\n- i=4: ch='\\n', inQuotes, field='b\\n', i=5\n- i=5: ch='c', field='b\\nc', i=6\n- i=6: ch='\"', inQuotes, i+1=7 >= len, inQuotes=false, i=7\n- Loop ends\n- field is 'b\\nc', row.length is 1: push. row=['a', 'b\\nc']\n- Result: [[\"a\", \"b\\nc\"]]. Correct!\n\nWhat about CRLF: `\"a\\r\\nb\\r\\n\"`?\n- i=0: field='a', i=1\n- i=1: ch='\\r', not inQuotes, check i+1: input[2]='\\n', so row.push('a'), field='', rows.push(['a']), row=[], i=3\n- i=3: field='b', i=4\n- i=4: ch='\\r', check i+1: input[5]='\\n', row.push('b'), field='', rows.push(['b']), row=[], i=6\n- Loop ends (i=6, len=6)\n- field is '', row.length is 0: don't push.\n- Result: [[\"a\"], [\"b\"]]. Correct!\n\nWhat about `\"a\\r\\n\"` (final CRLF)?\n- i=0: field='a', i=1\n- i=1: ch='\\r', check i+1: input[2]='\\n', row.push('a'), field='', rows.push(['a']), row=[], i=3\n- Loop ends (i=3, len=3)\n- field is '', row.length is 0: don't push.\n- Result: [[\"a\"]]. Correct! No extra row.\n\nWhat about `\"a\\n\"` (final LF)?\n- i=0: field='a', i=1\n- i=1: ch='\\n', row.push('a'), field='', rows.push(['a']), row=[], i=2\n- Loop ends\n- field is '', row.length is 0: don't push.\n- Result: [[\"a\"]]. Correct!\n\nWhat about `\"\\n\"` (just a newline - empty line)?\n- i=0: ch='\\n', row.push(''), field='', rows.push(['']), row=[], i=1\n- Loop ends\n- field is '', row.length is 0: don't push.\n- Result: [[\"\"]]. Correct! Empty line is one empty field.\n\nWhat about `\"\\n\\n\"` (two newlines - two empty lines)?\n- i=0: ch='\\n', row.push(''), rows.push(['']), row=[], i=1\n- i=1: ch='\\n', row.push(''), rows.push(['']), row=[], i=2\n- Loop ends\n- Result: [[\"\"], [\"\"]]. Correct!\n\nWhat about `\"a,\"` (trailing comma)?\n- i=0: field='a', i=1\n- i=1: ch=',', row.push('a'), field='', i=2\n- Loop ends\n- field is '', row.length is 1: push. row.push('') → row=['a',''], rows.push(['a',''])\n- Result: [[\"a\", \"\"]]. Correct!\n\nWhat about `\",\"` (just a comma)?\n- i=0: ch=',', row.push(''), field='', i=1\n- Loop ends\n- field is '', row.length is 1: push. row.push('') → row=['',''], rows.push(['',''])\n- Result: [[\"\", \"\"]]. Correct!\n\nI think this looks good. Let me also consider: what if there's a quote in the middle of a field (not at the start)? Like `a\"b`. In standard CSV, this is ambiguous. The problem says \"quoted fields\" which I'll interpret as fields that start with a quote. If a quote appears mid-field, I'll just treat it as a literal character. Let me adjust:\n\nActually, looking at my code again, I only enter `inQuotes` mode when `ch === '\"'` and we're NOT already in quotes. But what if we're in the middle of a field and encounter a quote? Like `ab\"cd`. In my current code:\n- i=0: field='a', i=1\n- i=1: field='ab', i=2\n- i=2: ch='\"', not inQuotes, so inQuotes=true, i=3\n- i=3: field='ab' + 'c' = 'abc', i=4\n- i=4: field='abcd', i=5\n- Loop ends\n- Result: [[\"abcd\"]]\n\nHmm, that's not quite right. The quote in the middle should probably be treated as a literal. But actually, in RFC 4180, quotes are only special at the beginning of a field. Let me adjust: I should only enter quoted mode if the field is empty (i.e., we're at the start of a field).\n\nLet me fix this:\n\n```javascript\nif (ch === '\"' && field === '') {\n  inQuotes = true;\n  i++;\n} else if (ch === ',') {\n  ...\n}\n```\n\nWait, but what about after a comma? The field would be '' at that point. And at the start of a row, field is also ''. So checking `field === ''` should work for \"start of field\" detection.\n\nActually wait, what about `\"a\"b`? After the closing quote, we're no longer in quotes, and field is \"a\". Then we hit 'b'. In my code, since inQuotes is false and ch is 'b', it just appends. So field becomes \"ab\". That seems reasonable for a malformed CSV.\n\nLet me also think: what about `\"\"` (two quotes, representing an empty quoted field)?\n- i=0: ch='\"', field is '', so inQuotes=true, i=1\n- i=1: ch='\"', inQuotes, check i+1: i+1=2 >= len, so inQuotes=false, i=2\n- Loop ends\n- field is '', row.length is 0: push. row.push('') → row=[''], rows.push([''])\n- Result: [[\"\"]]. Correct! An empty quoted field is an empty string.\n\nWhat about `\"\"\"\"` (four quotes, representing a quoted field containing one quote)?\n- i=0: ch='\"', field is '', inQuotes=true, i=1\n- i=1: ch='\"', inQuotes, check i+1: input[2]='\"', so field+='\"', i=3\n- i=3: ch='\"', inQuotes, check i+1: i+1=4 >= len, inQuotes=false, i=4\n- Loop ends\n- field is '\"', push.\n- Result: [[\"\\\"\"]]. Correct!\n\nI think the solution is solid. Let me write the final version.\n\nOne more thing: the problem says \"Do not mutate input.\" Since I'm only reading from the string (strings are immutable in JS anyway), this is fine.\n\nLet me also make sure I handle the case where after a closing quote, there might be garbage before the next delimiter. In strict CSV, this shouldn't happen, but I'll just let it be appended to the field.\n\nActually, re-reading my code: after `inQuotes` becomes false, the next character is processed in the non-quoted branch. If it's a comma or newline, great. If it's something else, it gets appended to field. That's fine for a lenient parser.\n\nLet me finalize the code."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 60373514300,
+            "load_duration": 146794600,
+            "prompt_eval_count": 116,
+            "prompt_eval_duration": 163214000,
+            "eval_count": 4214,
+            "eval_duration": 59953052000,
+            "clientWallMs": 60400.1,
+            "supervisedWallMs": 60496.9
+          },
+          "code": "function solve(input) {\n  if (input === '') return [];\n\n  const rows = [];\n  let row = [];\n  let field = '';\n  let i = 0;\n  const len = input.length;\n  let inQuotes = false;\n\n  while (i < len) {\n    const ch = input[i];\n\n    if (inQuotes) {\n      if (ch === '\"') {\n        if (i + 1 < len && input[i + 1] === '\"') {\n          field += '\"';\n          i += 2;\n        } else {\n          inQuotes = false;\n          i++;\n        }\n      } else {\n        field += ch;\n        i++;\n      }\n    } else {\n      if (ch === '\"' && field === '') {\n        inQuotes = true;\n        i++;\n      } else if (ch === ',') {\n        row.push(field);\n        field = '';\n        i++;\n      } else if (ch === '\\r') {\n        if (i + 1 < len && input[i + 1] === '\\n') {\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i += 2;\n        } else {\n          row.push(field);\n          field = '';\n          rows.push(row);\n          row = [];\n          i++;\n        }\n      } else if (ch === '\\n') {\n        row.push(field);\n        field = '';\n        rows.push(row);\n        row = [];\n        i++;\n      } else {\n        field += ch;\n        i++;\n      }\n    }\n  }\n\n  if (field !== '' || row.length > 0) {\n    row.push(field);\n    rows.push(row);\n  }\n\n  return rows;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 60496.9,
+          "taskPassed": false,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    ""
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    "b"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    "b"
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": false,
+                "expected": [
+                  [
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "",
+                    "a"
+                  ],
+                  [
+                    "line\nbreak",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "",
+                    "a"
+                  ],
+                  [
+                    "line\nbreak",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "",
+                    "\"quoted\"",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    ""
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "",
+                    "\"quoted\"",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    ""
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "b,c",
+                    "line\nbreak",
+                    "a"
+                  ],
+                  [
+                    "",
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "a",
+                    "b,c"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "b,c",
+                    "line\nbreak",
+                    "a"
+                  ],
+                  [
+                    "",
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "a",
+                    "b,c"
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ],
+                  [
+                    ""
+                  ],
+                  [
+                    "0",
+                    "line\nbreak"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "a",
+                    "line\nbreak",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\"",
+                    "b,c"
+                  ],
+                  [
+                    ""
+                  ],
+                  [
+                    "0",
+                    "line\nbreak"
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "b,c"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny",
+                    "line\nbreak"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "b,c",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "\"quoted\"",
+                    ""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "a",
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "",
+                    "x\r\ny"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "b,c"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny",
+                    "line\nbreak"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "b,c",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "\"quoted\"",
+                    ""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "a",
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "",
+                    "x\r\ny"
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "x\r\ny",
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "b,c",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "0"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "a",
+                    "a"
+                  ],
+                  [
+                    "0",
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "",
+                    "x\r\ny",
+                    "line\nbreak",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "a"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny",
+                    "line\nbreak",
+                    "x\r\ny",
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "b,c",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "0"
+                  ],
+                  [
+                    "0",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0",
+                    "a",
+                    "a"
+                  ],
+                  [
+                    "0",
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "b,c"
+                  ],
+                  [
+                    "",
+                    "x\r\ny",
+                    "line\nbreak",
+                    "\"quoted\""
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a",
+                    ""
+                  ],
+                  [
+                    "x\r\ny",
+                    "a"
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "b,c",
+                    "a"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "line\nbreak",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "line\nbreak",
+                    "x\r\ny",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "a"
+                  ],
+                  [
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "a",
+                    "0"
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "",
+                    "b,c",
+                    "a"
+                  ],
+                  [
+                    "\"quoted\""
+                  ],
+                  [
+                    "line\nbreak",
+                    "0",
+                    "a"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "\"quoted\"",
+                    "\"quoted\""
+                  ],
+                  [
+                    "",
+                    "a",
+                    "line\nbreak",
+                    "x\r\ny"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "0"
+                  ],
+                  [
+                    "a",
+                    "",
+                    ""
+                  ],
+                  [
+                    "line\nbreak",
+                    "x\r\ny",
+                    "",
+                    "\"quoted\""
+                  ],
+                  [
+                    "b,c",
+                    "a",
+                    "b,c",
+                    "x\r\ny"
+                  ],
+                  [
+                    "x\r\ny"
+                  ],
+                  [
+                    "a"
+                  ],
+                  [
+                    "\"quoted\"",
+                    "x\r\ny",
+                    "a",
+                    "0"
+                  ]
+                ]
+              }
+            ],
+            "passed": 11,
+            "total": 12
+          }
+        },
+        {
+          "id": "recursive-redaction",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nReturn a deep copy of a JSON-compatible input value. In every object, replace values of keys equal to password, token, or secret (case-insensitive) with \"[REDACTED]\". Recursively process all other values, including objects inside arrays. Preserve every key (including __proto__), array order, null, and primitive values. Do not mutate input.",
+          "response": {
+            "model": "qwen3.8:27b-mtp-bf16",
+            "created_at": "2026-09-11T17:02:40.5809066Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n    const REDACTED = new Set(['password', 'token', 'secret']);\n\n    function deepCopy(value) {\n        if (value === null || typeof value !== 'object') {\n            return value;\n        }\n        if (Array.isArray(value)) {\n            const result = [];\n            for (let i = 0; i < value.length; i++) {\n                result[i] = deepCopy(value[i]);\n            }\n            return result;\n        }\n        const result = Object.create(null);\n        const keys = Object.keys(value);\n        for (let i = 0; i < keys.length; i++) {\n            const key = keys[i];\n            if (REDACTED.has(key.toLowerCase())) {\n                result[key] = \"[REDACTED]\";\n            } else {\n                result[key] = deepCopy(value[key]);\n            }\n        }\n        return result;\n    }\n\n    return deepCopy(input);\n}\n```",
+              "thinking": "Let me analyze the requirements:\n\n1. Synchronous JavaScript ES2020 function `solve(input)`\n2. Do not mutate input\n3. No external libraries or host APIs\n4. Return a deep copy of a JSON-compatible input value\n5. In every object, replace values of keys equal to `password`, `token`, or `secret` (case-insensitive) with `\"[REDACTED]\"`\n6. Recursively process all other values, including objects inside arrays\n7. Preserve every key (including `__proto__`), array order, null, and primitive values\n8. Do not mutate input\n\nKey considerations:\n- JSON-compatible means: objects, arrays, strings, numbers, booleans, null\n- Case-insensitive matching for keys: \"password\", \"token\", \"secret\" - so \"Password\", \"PASSWORD\", \"Token\", \"SECRET\", etc.\n- Must preserve `__proto__` as a key - this means I need to use `Object.create(null)` or handle it carefully. Actually, if I use a regular object literal, `__proto__` would be treated specially. I need to use `Object.defineProperty` or `Object.assign` carefully, or use `Object.create(null)`.\n\nWait, let me think about `__proto__`. If the input has a key `__proto__`, I need to preserve it as a regular key in the output. If I do `result[\"__proto__\"] = value`, that would set the prototype, not create a key. So I need to use `Object.defineProperty(result, key, {value: ..., enumerable: true, writable: true, configurable: true})` or use `Object.assign` with a null-prototype object.\n\nActually, let me think more carefully. If I create `const result = Object.create(null)`, then `result[\"__proto__\"] = value` would just set a regular property because there's no `__proto__` accessor on the prototype chain. That's the cleanest approach.\n\nWait, but the output should be a \"JSON-compatible\" value. If I use `Object.create(null)`, the result won't have `Object.prototype` methods. But the requirement says \"Return a deep copy of a JSON-compatible input value\" - it doesn't say the output needs to be a regular object. It just needs to be a deep copy with the redaction applied.\n\nActually, let me reconsider. The requirement says \"Preserve every key (including __proto__)\". This means if the input object has a key literally named `__proto__`, I need to include it in the output as a regular key. Using `Object.create(null)` for the result objects would handle this correctly.\n\nLet me also consider: what about `Object.prototype` keys like `constructor`, `hasOwnProperty`, etc.? The requirement says \"Preserve every key\" - so if the input has such keys, I should preserve them. Using `Object.create(null)` for results and `Object.keys()` or `for...in` with `hasOwnProperty` check for input... Actually, for JSON-compatible values, the input should only have its own enumerable properties. Let me use `Object.keys()` which only returns own enumerable string-keyed properties.\n\nWait, but what if the input object was created with `Object.create(null)` and has a `__proto__` key? `Object.keys()` would still return it. And if the input is a regular object with a `__proto__` key set via `Object.defineProperty`, `Object.keys()` would return it too.\n\nLet me write the solution:\n\n```javascript\nfunction solve(input) {\n    const REDACTED_KEYS = new Set(['password', 'token', 'secret']);\n    \n    function isRedactedKey(key) {\n        return REDACTED_KEYS.has(key.toLowerCase());\n    }\n    \n    function deepCopy(value) {\n        if (value === null || typeof value !== 'object') {\n            return value;\n        }\n        \n        if (Array.isArray(value)) {\n            const result = [];\n            for (let i = 0; i < value.length; i++) {\n                result[i] = deepCopy(value[i]);\n            }\n            return result;\n        }\n        \n        // It's a plain object\n        const result = Object.create(null);\n        const keys = Object.keys(value);\n        for (let i = 0; i < keys.length; i++) {\n            const key = keys[i];\n            if (isRedactedKey(key)) {\n                result[key] = \"[REDACTED]\";\n            } else {\n                result[key] = deepCopy(value[key]);\n            }\n        }\n        return result;\n    }\n    \n    return deepCopy(input);\n}\n```\n\nWait, there's an issue with `result[key] = \"[REDACTED]\"` when key is `__proto__`. If `result` is created with `Object.create(null)`, then `result[\"__proto__\"] = \"[REDACTED]\"` would just set a regular property because there's no `__proto__` accessor in the prototype chain. So that's fine.\n\nBut wait - what about `result[key] = deepCopy(value[key])` when key is `__proto__`? Same thing - since `result` has null prototype, setting `result[\"__proto__\"]` just creates a regular own property. Good.\n\nActually, let me double-check: with `Object.create(null)`, the object has no prototype, so there's no `__proto__` getter/setter. Assigning to `obj[\"__proto__\"]` would just create a regular data property. Yes, that's correct.\n\nLet me also make sure I'm not mutating the input. I'm only reading from `value` and creating new objects/arrays. Good.\n\nOne more thing: the requirement says \"case-insensitive\". So \"Password\", \"PASSWORD\", \"pAsSwOrD\" should all be redacted. My `key.toLowerCase()` handles this.\n\nI think this solution is correct. Let me also consider edge cases:\n- `input` is a primitive (string, number, boolean, null) → return as-is\n- `input` is an array → deep copy with recursion\n- `input` is an object → deep copy with redaction\n- Nested objects in arrays → handled by recursion\n- `__proto__` key → preserved as regular key due to `Object.create(null)`\n\nI'm satisfied with this solution."
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 23001200900,
+            "load_duration": 152593500,
+            "prompt_eval_count": 119,
+            "prompt_eval_duration": 166386000,
+            "eval_count": 1603,
+            "eval_duration": 22544918000,
+            "clientWallMs": 23013.0,
+            "supervisedWallMs": 23110.5
+          },
+          "code": "function solve(input) {\n    const REDACTED = new Set(['password', 'token', 'secret']);\n\n    function deepCopy(value) {\n        if (value === null || typeof value !== 'object') {\n            return value;\n        }\n        if (Array.isArray(value)) {\n            const result = [];\n            for (let i = 0; i < value.length; i++) {\n                result[i] = deepCopy(value[i]);\n            }\n            return result;\n        }\n        const result = Object.create(null);\n        const keys = Object.keys(value);\n        for (let i = 0; i < keys.length; i++) {\n            const key = keys[i];\n            if (REDACTED.has(key.toLowerCase())) {\n                result[key] = \"[REDACTED]\";\n            } else {\n                result[key] = deepCopy(value[key]);\n            }\n        }\n        return result;\n    }\n\n    return deepCopy(input);\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 23110.5,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "1",
+                "outputKind": "number",
+                "actual": 0,
+                "mutated": false,
+                "passed": true,
+                "expected": 0
+              },
+              {
+                "id": "2",
+                "outputKind": "boolean",
+                "actual": false,
+                "mutated": false,
+                "passed": true,
+                "expected": false
+              },
+              {
+                "id": "3",
+                "outputKind": "string",
+                "actual": "text",
+                "mutated": false,
+                "passed": true,
+                "expected": "text"
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {},
+                "mutated": false,
+                "passed": true,
+                "expected": {}
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "password": "[REDACTED]",
+                  "safe": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "password": "[REDACTED]",
+                  "safe": false
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "Token": "[REDACTED]",
+                  "SECRET": "[REDACTED]"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "Token": "[REDACTED]",
+                  "SECRET": "[REDACTED]"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "nested": [
+                    {
+                      "password": "[REDACTED]"
+                    },
+                    {
+                      "ok": [
+                        "secret",
+                        null
+                      ]
+                    }
+                  ]
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "nested": [
+                    {
+                      "password": "[REDACTED]"
+                    },
+                    {
+                      "ok": [
+                        "secret",
+                        null
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": {
+                    "token": "[REDACTED]"
+                  },
+                  "constructor": 7
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": {
+                    "token": "[REDACTED]"
+                  },
+                  "constructor": 7
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  {
+                    "safe": 1
+                  },
+                  {
+                    "token": "[REDACTED]"
+                  }
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  {
+                    "safe": 1
+                  },
+                  {
+                    "token": "[REDACTED]"
+                  }
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "passwordHint": "keep",
+                  "secrets": "keep",
+                  "secret": "[REDACTED]"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "passwordHint": "keep",
+                  "secrets": "keep",
+                  "secret": "[REDACTED]"
+                }
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "qwen3.8:27b-mtp-bf16",
+        "created_at": "2026-09-11T16:59:11.4149147Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready",
+          "thinking": "The user wants me to reply with exactly the word \"ready\". This is a simple, direct instruction. I should respond with just that word and nothing else."
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 18578453400,
+        "load_duration": 17636190100,
+        "prompt_eval_count": 15,
+        "prompt_eval_duration": 193774000,
+        "eval_count": 37,
+        "eval_duration": 746433000,
+        "clientWallMs": 18612.8,
+        "supervisedWallMs": 18709.6
+      },
+      "loadedModel": [
+        {
+          "name": "qwen3.8:27b-mtp-bf16",
+          "model": "qwen3.8:27b-mtp-bf16",
+          "size": 53454789671,
+          "digest": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35",
+            "families": [
+              "qwen35"
+            ],
+            "parameter_size": "27.3B",
+            "quantization_level": "BF16"
+          },
+          "expires_at": "2026-09-11T11:04:11.4149147-06:00",
+          "size_vram": 53454789671,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 7,
+        "tasksAttempted": 8,
+        "tasksTotal": 8,
+        "testsPassed": 98,
+        "testsTotal": 99,
+        "medianWallMs": 22446.0,
+        "totalWallMs": 208425.7,
+        "truncated": 0,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "updatedAt": "2026-09-11T11:02:41-06:00",
+  "resultFile": "runs/20260911-105852-8da350a1.json",
+  "unloads": [
+    {
+      "model": "qwen3.8:27b-mtp-bf16",
+      "endpoint": "http://127.0.0.1:11434",
+      "confirmedAt": "2026-09-11T11:02:41-06:00",
+      "gpuAfter": {
+        "freeGiB": 93.9111328125,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 3.0
+      },
+      "freeBeforeGiB": 93.9091796875
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T11:02:41-06:00"
+}
