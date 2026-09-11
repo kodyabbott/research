@@ -130,7 +130,9 @@ class CampaignTests(unittest.TestCase):
     def test_quality_grader_requires_exact_json_value_and_type(self):
         self.assertTrue(qs.grade('{ "answer": [1,2] }', [1, 2]))
         self.assertTrue(qs.grade('{"answer":null}', None))
-        for content in ('{"answer":true}', '{"answer":1.0}', '{"answer":1,"extra":2}',
+        self.assertTrue(qs.grade('{"answer":40.0}', 40))
+        self.assertTrue(qs.grade('{"answer":8.0}', 8))
+        for content in ('{"answer":true}', '{"answer":1,"extra":2}',
                         '{"answer":0,"answer":1}', '{"answer":NaN}', '```json\n{"answer":1}\n```',
                         'Explanation {"answer":1}', '{"answer":1} trailing'):
             self.assertFalse(qs.grade(content, 1), content)

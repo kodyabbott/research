@@ -64,7 +64,8 @@ comprehension, algorithms, SQL/data reasoning, structured output, missing eviden
 embedded instructions as data. Candidate and baseline receive the same cases and 512-token cap.
 Each case has a 45-second subprocess deadline within the shared one-hour run budget. The grader
 parses exactly one JSON object, rejects duplicate keys and nonstandard numbers, and requires
-the expected JSON value and type. It never executes generated code. These are a small screen,
+the expected JSON value and type, accepting equivalent finite numbers such as 40 and 40.0
+while keeping booleans distinct from numbers. It never executes generated code. These are a small screen,
 not coding-task execution, a production agent evaluation, or a general intelligence score.
 No confidence intervals or broad ranking are inferred from 16 items.
 
@@ -73,8 +74,8 @@ unexpected thinking marks the thinking-off screen invalid. If the ordinary batte
 returns unexpected thinking, the extra screen is skipped. Interrupted screens preserve partial
 responses and are labeled incomplete. Historical raw results remain unchanged.
 
-Validation before live use: all 78 offline tests passed in 8.770 seconds, comprising the existing
-69 harness tests and nine campaign/screen tests. These verify expiry, time zones, deadline
+Validation before live use: all 80 offline tests passed in 8.817 seconds after review fixes, comprising the existing
+69 harness tests and 11 campaign/screen tests. These verify expiry, time zones, deadline
 margin, changed-policy refusal, reservation/restoration behavior, unchanged normal daily quota,
 JSON grading, persistence, and partial/contaminated screens. No live result is implied by tests.
 

@@ -970,3 +970,6 @@ Added campaign.py and quality_screen.py. Existing supervised admission and guara
 
 
 Campaign review correction: the first implementation used the normal calendar-day ledger, which would have consumed the next evening slot after midnight. Campaign reservations now use a separate state/campaign-20260910-overnight-ledger.json; supervisor timeout recovery routes to the same recorded ledger. The normal ledger and policy are left untouched. Two additional regressions verify unused normal quota remains available and hard-deadline recovery completes only the campaign reservation. This corrects the initial normal-ledger statement in the campaign entry.
+
+
+Campaign grading correction: the original strict Python-type comparison rejected correct JSON numbers such as 8.0 and 40.0 when an integer value was expected. The grader now accepts equivalent finite JSON numbers and still rejects booleans-as-numbers, duplicate keys, extra fields/text and nonstandard numbers. All 16 authored answer keys were independently reviewed. After both review fixes, all 80 offline tests passed in 8.817 seconds before inference.
