@@ -1,5 +1,6 @@
 """Small authored answer-quality screen; model-generated code is never executed."""
 import json
+import math
 import time
 
 VERSION = 'overnight-screen-v1'
@@ -57,6 +58,8 @@ def _unique_object(pairs):
 
 
 def _same(actual, expected):
+    if type(expected) in (int, float):
+        return type(actual) in (int, float) and math.isfinite(actual) and actual == expected
     if type(actual) is not type(expected):
         return False
     if isinstance(expected, list):
