@@ -2,7 +2,7 @@
 
 The approved revision is deployed in the scheduled research checkout. Python 3.14.7 is
 installed per user, all 58 regression tests pass, and live download/import, retention,
-admission-refusal, and deadline checks have completed. Final peer acceptance is pending.
+admission-refusal, and deadline checks have completed. Codex and the original Fable 5.1 reviewer accepted the project at 19:11 MDT; see [peer-review.md](peer-review.md).
 
 ## Live evidence
 

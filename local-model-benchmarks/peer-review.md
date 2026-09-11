@@ -1,6 +1,6 @@
 # Peer review of the nightly benchmark harness
 
-Status: approved revision deployed; live acceptance checks pass. Final Fable sign-off is pending. Historical review entries below record the earlier gates; see validation.md for current evidence.
+Status: accepted by Codex and the original Claude Fable 5.1 reviewer for the authorized bounded nightly experiment. The approved revision is deployed, 58 tests pass, and live acceptance is complete. Historical entries below record earlier gates; see validation.md for the evidence.
 
 Kody requested collaboration with the existing Claude Fable 5.1 session
 `68591a9a-964d-4e81-88ff-e4934174c051`. Codex sent peer messages to that session through
@@ -128,4 +128,25 @@ contacted, and no credentials or unrestricted environment dump was shared.
 The primary runtime environment remains an explicit comparison caveat. The final discovery
 sweep was partial after four HTTP 429s, with 253 metadata entries still pending. These limits
 are documented, and neither is represented as successful coverage or laboratory isolation.
-Final project sign-off remains pending the review of this completed evidence bundle.
+The final project sign-off below closes this evidence review.
+## Final project acceptance - 2026-09-10 19:11 MDT
+
+The original Fable 5.1 session (68591a9a-964d-4e81-88ff-e4934174c051) gave this verdict after
+reviewing commit 4da97ba and independently rerunning the suite and inspecting the live store:
+
+> Verdict: adequate for the authorized bounded nightly experiment. I agree. No remaining concrete blocker.
+
+Fable confirmed all 58 tests under Python 3.14.7, exact removal and journaling of the two
+unreferenced uploaded blobs, unchanged retained and primary model digests, final loaded-worker
+deadline recovery and shutdown metadata, explicit admission failure classification, and a clean
+checkout. Codex agrees with that verdict. The code did not change after this final review.
+
+The acceptance is for this local text-benchmark harness and its bounded routine. It is not a
+model-quality endorsement. Large downloads may need multiple nights within the one-hour budget;
+real multi-night resume timing remains to be observed. The next scheduled run's JSON should be
+read with the same care as this acceptance batch. Metadata coverage remains partial, the primary
+performance environment is not fully matched to the child, and optional vision is not measured.
+The task's Fable 5.1 field was verified visually by Codex; Fable did not independently inspect UI.
+
+All changes remain committed locally. No push, primary-library migration, or global Ollama
+configuration change was performed. The old review worktree is retained as a non-active checkout.
