@@ -53,7 +53,8 @@ produced an invalid comparison; repeating it unchanged adds little evidence.
 validates an expiring authorization and the original policy hash at launch and again at
 reservation. Under the normal operation lock, only that reservation may exceed the daily
 count. The in-memory value is immediately restored; `policy.json` is never written. Every
-attempt still appears in the normal ledger. Publisher, hash, file, storage, GPU, ownership,
+attempt appears in a separate campaign ledger, including hard-deadline failures. Normal
+calendar-day quota stays available for the next evening scheduled run. Publisher, hash, file, storage, GPU, ownership,
 private-runtime, idle/unload, and one-hour process limits remain active. A new candidate cannot
 start at or after 04:58 MDT; the full hour plus shutdown verification fits before 06:00.
 

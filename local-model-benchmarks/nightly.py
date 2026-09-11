@@ -993,6 +993,12 @@ def supervised(argv, worker_command=None, timeout=None, run_id=None):
                 harness.report = partial
                 if partial.get('mode') == 'acceptance-validation':
                     harness.ledger_path = harness.state / 'acceptance-ledger.json'
+                elif partial.get('campaign'):
+                    campaign_id = partial['campaign'].get('campaignId', '')
+                    if re.fullmatch(r'[a-z0-9-]{1,80}', campaign_id):
+                        ledger_name = 'campaign-' + campaign_id + '-ledger.json'
+                        if partial.get('ledgerFile') == 'state/' + ledger_name:
+                            harness.ledger_path = harness.state / ledger_name
             if harness.report.get('secondaryRuntime'):
                 record = harness.report['secondaryRuntime']
                 expected = record.get('processIdentity')
