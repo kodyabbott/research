@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260910-214201-5ef4a287",
+  "startedAt": "2026-09-10T21:42:01-06:00",
+  "status": "validated",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "secondaryRuntime": {
+    "host": "127.0.0.1:11435",
+    "modelsDir": "F:\\models\\nightly-benchmark\\ollama",
+    "downloadDir": "F:\\models\\nightly-benchmark\\downloads",
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.EXE",
+    "environmentOverrides": {
+      "OLLAMA_HOST": "127.0.0.1:11435",
+      "OLLAMA_MODELS": "F:\\models\\nightly-benchmark\\ollama"
+    },
+    "performanceEnvironment": {
+      "OLLAMA_FLASH_ATTENTION": null,
+      "OLLAMA_KV_CACHE_TYPE": null,
+      "OLLAMA_NUM_PARALLEL": null,
+      "OLLAMA_MAX_LOADED_MODELS": null,
+      "OLLAMA_CONTEXT_LENGTH": null,
+      "OLLAMA_GPU_OVERHEAD": null,
+      "CUDA_VISIBLE_DEVICES": null,
+      "GGML_CUDA_ENABLE_UNIFIED_MEMORY": null
+    },
+    "primaryPerformanceEnvironment": "unknown; primary is an independently started server",
+    "logFile": "C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\state\\ollama-20260910-214201-5ef4a287.log",
+    "startedAt": "2026-09-10T21:42:02-06:00",
+    "pid": 4032,
+    "processIdentity": {
+      "imagePath": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "creationFileTime": "134335717222369804"
+    },
+    "version": {
+      "version": "0.32.13"
+    },
+    "stoppedAt": "2026-09-10T21:42:05-06:00",
+    "childExitCode": 1,
+    "portFree": true
+  },
+  "updatedAt": "2026-09-10T21:42:05-06:00",
+  "resultFile": "runs/20260910-214201-5ef4a287.json",
+  "storageAccounting": {
+    "basis": "actual private store and download bytes",
+    "storeBytes": 5144462707,
+    "downloadBytes": 0,
+    "newCopyAllowanceBytes": 88838873952,
+    "importCaveat": "Reserve download plus upload blob plus a possible Ollama-rewritten model layer"
+  },
+  "mode": "validate",
+  "admission": {
+    "kind": "huggingface",
+    "model": "nightly-bench-f2c087d694ca8242:latest",
+    "bytes": 29612957984,
+    "sha256": "f2c087d694ca8242a4a436076df7c041703ab051ac4b72bb1bfe2698299b0e86",
+    "repoId": "unsloth/Muse-Glimmer-30B-GGUF",
+    "revision": "faa5b025c584459c13febfa5c59883516710ae39",
+    "filename": "Muse-Glimmer-30B-Q8_0.gguf",
+    "alreadyImported": false,
+    "digest": null,
+    "selection": {
+      "kind": "huggingface",
+      "repoId": "unsloth/Muse-Glimmer-30B-GGUF",
+      "revision": "faa5b025c584459c13febfa5c59883516710ae39",
+      "filename": "Muse-Glimmer-30B-Q8_0.gguf",
+      "rationale": "Codex-requested independent execution of the nightly routine: measure a roughly 28B dense text model at Q8_0 against the qwen3-coder:30b Q4_K_M MoE baseline using the same fixed battery. This tests a materially larger dense-model memory and throughput tradeoff than tonight's MiniCPM5-2B F16. The exact single-file Q8 artifact is 29,612,957,984 bytes from approved publisher unsloth. Muse architecture is recognized by the installed Ollama, which reports the existing BF16 variant requires 0.32.8; the installed runtime is 0.32.13. Import compatibility remains to be measured. This selection includes no DFlash drafter or vision projector and makes no direct speed or quality claim against the customized installed BF16+DFlash model.",
+      "modelCardUrl": "https://huggingface.co/unsloth/Muse-Glimmer-30B-GGUF",
+      "upstreamUrl": "https://huggingface.co/meta-models/Muse-Glimmer-30B"
+    }
+  },
+  "finishedAt": "2026-09-10T21:42:05-06:00"
+}

@@ -811,3 +811,51 @@ a candidate for a fast local assistant or draft role. No coding-quality claim is
 card's SWE-bench and LiveCodeBench numbers are unmeasured here. A follow-up question worth a
 future night: Q8_0 of the same revision, to see whether the quant changes check results or
 throughput on this hardware.
+
+## 2026-09-10 21:43 MDT - Codex execution of the scheduled routine
+
+Kody requested an independent execution by Codex after Fable's completed MiniCPM run.
+The saved routine was followed with the existing policy. Codex controlled this requested
+invocation; the daily scheduled controller remains Fable 5.1 at 20:15 local.
+
+**Discovery**: `runs/20260910-214016-52f44c8c.json` completed successfully in 17 seconds:
+150 trending entries, three newly seen repositories, 100 detail lookups, no source or detail
+failures. Metadata pending fell from 154 in Fable's discovery record to 57. This is a later
+queue snapshot with another 100 lookups, not evidence that one controller discovers better models.
+
+**Ranked shortlist**:
+1. `unsloth/Muse-Glimmer-30B-GGUF`, `Muse-Glimmer-30B-Q8_0.gguf` (selected): a roughly 28B
+   dense text model at Q8 versus the existing Qwen coder MoE baseline. This asks a different
+   throughput and memory question from the 2B F16 run. Its upstream card describes the
+   language architecture as "Dense Causal Transformer", gives "Model Release Date: August 2026",
+   and lists Apache-2.0. Sources: https://huggingface.co/meta-models/Muse-Glimmer-30B and
+   https://huggingface.co/unsloth/Muse-Glimmer-30B-GGUF (read 2026-09-10). The Unsloth model
+   tree links that upstream. The installed BF16 Muse tag reports architecture `muse-glimmer`
+   and minimum Ollama 0.32.8 via `ollama show`; installed runtime is 0.32.13. This supports
+   attempting import, not claiming this exact Q8 file has already run successfully. No
+   projector or DFlash drafter is selected, so this would measure ordinary text inference,
+   not the existing customized BF16+DFlash configuration or the card's agentic scores.
+2. MiniCPM5-2B Q8_0 from the same `openbmb` revision as the completed F16 run: a future
+   precision/throughput comparison, not a new-model capability claim. The repository is
+   marked completed at the model/revision level in the queue, so a quant comparison must
+   be selected deliberately. Source: https://huggingface.co/openbmb/MiniCPM5-2B-GGUF.
+
+**Selection validation**: `runs/20260910-214201-5ef4a287.json` is `validated`. Exact Muse
+revision `faa5b025c584459c13febfa5c59883516710ae39`, artifact size 29,612,957,984 bytes
+(27.58 GiB), SHA-256 `f2c087d694ca8242a4a436076df7c041703ab051ac4b72bb1bfe2698299b0e86`.
+Publisher `unsloth`, single-file metadata, revision, hash, and storage checks passed. Existing
+private storage was 5,144,462,707 bytes; the three-copy allowance was 88,838,873,952 bytes.
+This verifies the expected hash in pinned metadata, not the contents of un-downloaded weights.
+
+**Actual launch result**: `runs/20260910-214219-3c960d70.json` ended at 21:42:22 with
+`status: error` and `Daily candidate limit already used; failed attempts also consume the slot`.
+Fable's successful `20260910-203253-1e9dd501` remains the only September 10 ledger entry.
+The harness reports this expected quota refusal as `error`, not `deferred`; no benchmark
+measurements or download were performed. No policy, harness, schedule, or ledger limit was
+changed to get past the refusal. A separate one-run exception has been requested from Kody.
+
+The owned child stopped with port 11435 free; job stderr was empty, no cleanup error fields
+were recorded, and downloads stayed empty. A fresh primary `/api/tags` check at 21:43:38
+confirmed all seven digests match the previous completed run. The quota refusal record
+itself omits `primaryIntegrity`; this independent check supplies that evidence. No keep/reject
+judgment for Muse is possible yet. Recommendation: retain it as the selected next experiment.
