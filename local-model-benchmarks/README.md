@@ -14,6 +14,16 @@ A fixed battery, a fixed machine, and every measurement traceable to a command a
 >
 > What follows is a personal instrument for one machine, kept because same-day numbers on identical hardware are useful to its owner. Treat any framing of it as novel with suspicion.
 
+## Authorized overnight campaign - September 10-11
+
+A separate, expiring campaign is testing the historical backlog with no candidate-count limit
+for this session. The normal 8:15 PM task and its next-evening quota are preserved.
+See the [selection plan](campaigns/20260910-overnight/README.md),
+[dated results](campaigns/20260910-overnight/results.md), and
+[runtime compatibility findings](campaigns/20260910-overnight/compatibility.md).
+The main sweep adds a 16-case authored answer-quality screen; GPT-OSS uses a separately labeled
+reasoning-enabled protocol. This does not establish a general coding-quality leaderboard.
+
 ## Autonomous routine — updated 2026-09-10
 
 Kody authorized autonomous model selection, downloads, and benchmarks within

@@ -991,3 +991,6 @@ Controller review correction: acquiring a busy queue lock previously terminated 
 
 
 GPT-OSS is worth testing but cannot enter the thinking-off comparison honestly: Ollama0.32.13 documents that boolean thinking values are ignored. Added a separate low-reasoning screen for the installed digest-pinned model, using16 unchanged v2 cases,8192-token output cap and45-second case deadlines under the existing one-hour supervisor and expiring campaign authorization. It has no throughput/baseline comparison. All92 offline tests passed in8.771seconds, including separate-protocol admission/unload/failure tests. Normal v2 prompts and512-token budget remain unchanged.
+
+
+The Muse BF16/DFlash memory anomaly is explained by runtime accounting, not evidence of wrong weights. Bounded startup logs show 53/53 main layers and a 50,566.42 MiB CUDA buffer; the draft loads separately. Replaying the 0.32.13 parser entries exactly reproduces the 2,464,656,915-byte API figure because matching draft allocation keys replace main entries. The snapshot and source references are in campaigns/20260910-overnight/compatibility.md and muse-memory-evidence.json. Truncated short responses and unusual answer/token counts remain separate unresolved behavior. No inference or runtime change was required for this audit.
