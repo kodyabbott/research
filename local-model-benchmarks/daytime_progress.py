@@ -30,8 +30,8 @@ for item in queue['items']:
             'baselineQuality':{k:base.get('qualityScreen',{}).get(k) for k in ['version','status','passed','total']}})
     if report.get('mode')=='campaign-humanevalx-screen' and report.get('status')=='completed':
         b=report['benchmarks'][0];sel=report['selection'];pr=report['protocol'];label=sel.get('repoId',b['model'])
-        key=(label,b['digest'],str(pr['thinking']),pr['context'],pr['outputCap'],pr['suiteSha256'])
-        g=human_groups.setdefault(key,{'model':label,'digest':b['digest'],'thinking':pr['thinking'],'context':pr['context'],'outputCap':pr['outputCap'],'suiteSha256':pr['suiteSha256'],'protocol':pr['name'],'promptStyle':pr.get('promptStyle','continuation'),'runs':[],'tasks':[]})
+        key=(label,b['digest'],str(pr['thinking']),pr['context'],pr['outputCap'],pr['suiteSha256'],pr.get('samplingProfile','greedy-v1'))
+        g=human_groups.setdefault(key,{'model':label,'digest':b['digest'],'thinking':pr['thinking'],'context':pr['context'],'outputCap':pr['outputCap'],'suiteSha256':pr['suiteSha256'],'protocol':pr['name'],'samplingProfile':pr.get('samplingProfile','greedy-v1'),'promptStyle':pr.get('promptStyle','continuation'),'runs':[],'tasks':[]})
         g['runs'].append(item['runId']);g['tasks'].extend(b['tasks'])
     if report.get('mode')=='campaign-coding-screen' and report.get('status')=='completed':
         b=report['benchmarks'][0];sel=report['selection'];pr=report['protocol']
@@ -105,11 +105,11 @@ lines+=['','Thinking-off jobs allow 2,048 output tokens; reasoning jobs allow 8,
  '## Background model downloads','']
 lines[-2:]=[]
 lines+=['## Function-writing results','','Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Generated functions execute only inside an isolated QuickJS WebAssembly guest, with no host functions or module loader. This is a small function-writing screen, not a standardized coding leaderboard or repository agent evaluation.','',
- '| Model | Thinking | Context / output cap | Functions fully correct | Hidden checks passed | Median generation seconds | Issues |','|---|---|---:|---:|---:|---:|---|']
+ '| Model | Thinking / sampler | Context / output cap | Functions fully correct | Hidden checks passed | Median generation seconds | Issues |','|---|---|---:|---:|---:|---:|---|']
 for c in coding:
     issues=([str(c['truncated'])+' truncated'] if c['truncated'] else [])+(['unexpected thinking'] if c['unexpectedThinking'] else [])
-    lines.append(f"| {c['model']} | {c['protocol']['thinking']} | {c['protocol']['context']} / {c['protocol']['outputCap']} | {c['tasksPassed']}/{c['tasksTotal']} | {c['testsPassed']}/{c['testsTotal']} | {(c['medianWallMs'] or 0)/1000:.2f} | {'; '.join(issues) or 'none'} |")
-lines+=['','Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.','','## Background model downloads','']
+    lines.append(f"| {c['model']} | {c['protocol']['thinking']} / {c['protocol'].get('samplingProfile','greedy-v1')} | {c['protocol']['context']} / {c['protocol']['outputCap']} | {c['tasksPassed']}/{c['tasksTotal']} | {c['testsPassed']}/{c['testsTotal']} | {(c['medianWallMs'] or 0)/1000:.2f} | {'; '.join(issues) or 'none'} |")
+lines+=['','Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.','','## Background model downloads','']
 lines[-2:]=[]
 lines+=['## HumanEval-X JavaScript, adapted WASM evaluation','','One greedy sample per task from the [published dataset](https://huggingface.co/datasets/zai-org/humaneval-x). The supported set is 163 of 164 tasks: Node crypto task 162 is excluded. Missing test invocations in tasks 32, 119, and 151 are explicitly added, and test randomness uses seed 42. All 163 reference solutions passed this runner. This is an adapted evaluation, not the original 200-sample leaderboard protocol; this longstanding public dataset may appear in model training data.','',
  '| Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Truncated | Protocol note |','|---|---|---|---:|---:|---:|---|']

@@ -217,6 +217,20 @@ class HarnessTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'declared size'):
                 self.h.download(plan)
 
+    def test_named_sampling_variant_preserves_normal_chat_defaults(self):
+        calls=[]
+        self.h.api=lambda path,body,**kwargs:(calls.append(body) or {'done':True})
+        self.h.chat('example:latest','hello',True,sampling_profile='nex-recommended-v1')
+        self.h.chat('example:latest','hello',True)
+        self.assertEqual(calls[0]['options']['temperature'],0.7)
+        self.assertEqual(calls[0]['options']['top_p'],0.95)
+        self.assertEqual(calls[0]['options']['seed'],42)
+        self.assertEqual(calls[1]['options']['temperature'],0)
+        self.assertEqual(calls[1]['options']['top_p'],1)
+        with self.assertRaises(ValueError):
+            self.h.chat('example:latest','hello',True,sampling_profile='unbounded')
+        self.assertEqual(len(calls),2)
+
     def test_chat_pins_context_sampling_and_output_cap(self):
         calls = []
         self.h.api = lambda path, body, **kwargs: (calls.append(body) or {'done': True})

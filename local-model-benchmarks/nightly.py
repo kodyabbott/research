@@ -515,12 +515,16 @@ class Harness:
             if imported:
                 path.unlink(missing_ok=True)
 
-    def chat(self, model, prompt, thinking_capable, think=False, num_predict=None, supervise=False):
+    def chat(self, model, prompt, thinking_capable, think=False, num_predict=None, supervise=False, sampling_profile=None):
         if self.endpoint != OLLAMA and self.request(OLLAMA + '/api/ps').get('models'):
             raise RuntimeBusy('Primary Ollama became busy during candidate battery')
         options = {key: self.policy[value] for key, value in (
             ('num_ctx', 'numCtx'), ('num_predict', 'numPredict'), ('temperature', 'temperature'), ('seed', 'seed'))}
         options.update(top_p=1, top_k=40, repeat_penalty=1.0)
+        if sampling_profile is not None:
+            if sampling_profile != 'nex-recommended-v1':
+                raise ValueError('Unsupported sampling profile')
+            options.update(temperature=0.7, top_p=0.95, top_k=40)
         if num_predict is not None:
             options['num_predict'] = num_predict
         body = {'model': model, 'messages': [{'role': 'user', 'content': prompt}],
