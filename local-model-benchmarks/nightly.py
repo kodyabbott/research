@@ -807,11 +807,19 @@ class Harness:
                         baseline = self.benchmark(baseline_name)
                     finally:
                         self.endpoint = candidate_endpoint
+                    invalid_reasons = []
+                    for label, result in (('candidate', candidate), ('baseline', baseline)):
+                        if result.get('status') != 'completed':
+                            invalid_reasons.append(label + ': battery incomplete')
+                        if result['summary'].get('anyTruncated'):
+                            invalid_reasons.append(label + ': output truncated')
+                        if result['summary'].get('promptNearContextLimit'):
+                            invalid_reasons.append(label + ': prompt near context limit')
                     self.report['comparison'] = {'candidate': candidate['summary'], 'baseline': baseline['summary'],
-                        'baselineModel': baseline_name, 'valid': all(
-                            result.get('status') == 'completed' and not result['summary'].get('anyTruncated')
-                            and not result['summary'].get('promptNearContextLimit') for result in (candidate, baseline)),
+                        'baselineModel': baseline_name, 'valid': not invalid_reasons,
                         'caveat': 'Same versions, request settings, and machine; templates/tokenizers differ. Primary server environment is not verified identical.'}
+                    if invalid_reasons:
+                        self.report['comparison']['invalidReason'] = '; '.join(invalid_reasons)
                 measurements_done = True
                 self.report['phase'] = 'postprocessing'
                 self.report['benchmarkStatus'] = 'completed'
