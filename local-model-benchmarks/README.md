@@ -38,6 +38,10 @@ The cache retains the two latest eligible completed imports. Eviction requires a
 recorded digest, task prefix, completed raw result, and an unloaded secondary server. A verified
 failed import is also removable when a terminal error result pins the same name and digest.
 Environmental, timeout, and baseline interruptions do not trigger failed-model eviction.
+The harness reclaims a successful import's original uploaded blob only after verifying its full
+SHA-256 and size, the matching owned-store marker and imported manifest, and absence of that hash
+from every private manifest. Unknown blobs remain for manual review. Admission reserves three
+possible copies: download, upload, and Ollama's rewritten model layer.
 Verified GGUFs survive failed imports so another attempt need not download them again. Deletions
 are journaled and reservations released. Storage admission counts actual directory bytes,
 including failed-import orphan blobs; old reservations do not accumulate into a permanent

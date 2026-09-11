@@ -36,7 +36,12 @@ download prohibition is replaced by this authorization. Skipping a night is vali
   be evicted when a terminal error result pins the same model and digest. Environmental,
   timeout, and baseline aborts are excluded from failed-model eviction. The ledger records
   deletions and releases reservations. Actual directory bytes, including orphan blobs, determine the budget.
-  Do not delete models manually. Orphan blobs without eligible provenance need reconciliation.
+  After a successful import, it may remove the exact uploaded blob only if the private-store
+  ownership marker matches, the imported manifest matches the recorded model digest, no private
+  manifest references that source hash, and the source size and full SHA-256 still match. It
+  journals this narrowly verified cleanup before deletion. This also runs before cache eviction.
+  Do not delete models or blobs manually. Other orphan blobs need reconciliation. Admission
+  reserves download, upload, and possible rewritten-layer copies during import.
 - Only single-file GGUFs from publishers in `policy.json`, pinned to a full commit SHA with
   exact size and SHA-256. The harness verifies these and imports into `nightly-bench-*` names.
 - The harness waits up to five minutes for ordinary keep-alives, within its deadline. Busy
@@ -100,7 +105,7 @@ download prohibition is replaced by this authorization. Skipping a night is vali
    Primary environment is not verified identical to the child; keep that comparison caveat.
    Recommend keep/reject and report any automatic cache eviction. Do not imply a cached
    model is permanently retained; the default cache keeps only two completed imports.
-   `cleanupError`, `preflightCleanupError`, `importBookkeepingError`, or `postProcessingError`
+   `cleanupError`, `preflightCleanupError`, `uploadedBlobCleanupErrors`, `importBookkeepingError`, or `postProcessingError`
    need to be reported even when measurements completed. A successful battery is distinct
    from successful cleanup. Flag invalid comparisons, near-context warnings, and probe errors.
 

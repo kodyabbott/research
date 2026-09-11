@@ -391,6 +391,69 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual((probe['thinkingCharacters'], probe['answerCharacters']), (3, 4))
         self.assertEqual(probe['wallTimeRatioToThinkingOffMedian'], 2)
 
+    def uploaded_blob_fixture(self):
+        self.h.endpoint = 'http://127.0.0.1:11435'
+        self.h.secondary_process = object()
+        self.h.api = lambda *args: {'models': []}
+        name = nightly.OWNED_PREFIX + self.sha[:16] + ':latest'
+        blob = self.h.models_dir / 'blobs' / ('sha256-' + self.sha)
+        blob.parent.mkdir(parents=True)
+        blob.write_bytes(self.contents)
+        marker = Path(self.h.policy['taskStorageRoot']) / '.nightly-benchmark.json'
+        nightly.atomic_json(marker, {'schemaVersion': 1, 'project': str(self.root.resolve())})
+        manifest = self.h.models_dir / 'manifests' / 'registry.ollama.ai' / 'library' / name.split(':')[0] / 'latest'
+        data = {'schemaVersion': 2, 'config': {'digest': 'sha256:' + 'c' * 64},
+                'layers': [{'digest': 'sha256:' + 'd' * 64}]}
+        nightly.atomic_json(manifest, data)
+        digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+        provenance = {'sha256': self.sha, 'bytes': len(self.contents), 'digest': digest}
+        self.h.installed = lambda: {name: {'digest': digest}}
+        return name, provenance, blob, manifest
+
+    def test_prune_only_verified_unreferenced_upload_and_journal_before_deletion(self):
+        name, provenance, blob, manifest = self.uploaded_blob_fixture()
+        unrelated = blob.with_name('sha256-' + 'e' * 64)
+        unrelated.write_bytes(b'unknown orphan')
+        original_unlink = Path.unlink
+        def unlink(path, *args, **kwargs):
+            if path == blob:
+                journal = nightly.read_json(self.h.state / 'blob-deletions.json')
+                self.assertEqual(journal['deletions'][-1]['status'], 'requested')
+            return original_unlink(path, *args, **kwargs)
+        with patch.object(Path, 'unlink', unlink):
+            result = owned_runtime.prune_uploaded_blob(self.h, name, provenance)
+        self.assertEqual(result['status'], 'deleted')
+        self.assertFalse(blob.exists())
+        self.assertTrue(unrelated.exists())
+        self.assertTrue(manifest.exists())
+
+    def test_prune_preserves_upload_referenced_by_any_private_manifest(self):
+        name, provenance, blob, manifest = self.uploaded_blob_fixture()
+        other = manifest.parent.parent / 'another-model' / 'latest'
+        nightly.atomic_json(other, {'schemaVersion': 2, 'config': {'digest': 'sha256:' + 'c' * 64},
+            'layers': [{'digest': 'sha256:' + self.sha}]})
+        self.assertIsNone(owned_runtime.prune_uploaded_blob(self.h, name, provenance))
+        self.assertTrue(blob.exists())
+
+    def test_prune_refuses_changed_upload_and_changed_manifest(self):
+        name, provenance, blob, manifest = self.uploaded_blob_fixture()
+        blob.write_bytes(b'x' * len(self.contents))
+        with self.assertRaisesRegex(ValueError, 'checksum'):
+            owned_runtime.prune_uploaded_blob(self.h, name, provenance)
+        self.assertTrue(blob.exists())
+        blob.write_bytes(self.contents)
+        manifest.write_text('{}')
+        with self.assertRaisesRegex(ValueError, 'manifest no longer matches'):
+            owned_runtime.prune_uploaded_blob(self.h, name, provenance)
+        self.assertTrue(blob.exists())
+
+    def test_storage_reserves_upload_and_rewritten_copy(self):
+        self.h.storage_check = nightly.Harness.storage_check.__get__(self.h)
+        with patch('nightly.shutil.disk_usage', return_value=type('Disk', (), {'free': 27 * nightly.GIB})()):
+            with self.assertRaisesRegex(RuntimeError, 'free-disk reserve'):
+                self.h.storage_check(nightly.GIB, {})
+        self.assertEqual(self.h.report['storageAccounting']['newCopyAllowanceBytes'], 3 * nightly.GIB)
+
     def test_cleanup_three_completed_imports_deletes_only_oldest_and_releases_reservation(self):
         self.h.endpoint = 'http://127.0.0.1:11435'
         self.h.secondary_process = object()
