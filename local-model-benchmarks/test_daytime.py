@@ -41,6 +41,20 @@ class DaytimeTests(CampaignTests):
             campaign.launch(self.auth_path,selection)
         self.assertEqual(len([p for p in jobs.glob('*.json') if not p.name.endswith('.stdout.json')]),1)
 
+    def test_expired_supervision_and_exhausted_usage_block_launch(self):
+        self.auth['scope']='human-directed-daytime-campaign'
+        self.auth['supervisionFile']='state/campaign-test-campaign-control.json'
+        self.write_auth()
+        control={'status':'active','leaseExpiresAt':(self.current+dt.timedelta(minutes=30)).isoformat(),'usageRemainingPercent':25}
+        nightly.atomic_json(self.root/self.auth['supervisionFile'],control)
+        campaign.validate_authorization(self.root,self.auth_path)
+        control['usageRemainingPercent']=0
+        nightly.atomic_json(self.root/self.auth['supervisionFile'],control)
+        with self.assertRaisesRegex(ValueError,'usage exhausted'):campaign.validate_authorization(self.root,self.auth_path)
+        control['usageRemainingPercent']=25;control['leaseExpiresAt']=(self.current-dt.timedelta(seconds=1)).isoformat()
+        nightly.atomic_json(self.root/self.auth['supervisionFile'],control)
+        with self.assertRaisesRegex(ValueError,'supervision lease'):campaign.validate_authorization(self.root,self.auth_path)
+
     def test_bounded_daytime_duration(self):
         self.auth['scope']='human-directed-daytime-campaign'
         self.auth['latestStartAt']=(self.current+dt.timedelta(hours=13)).isoformat()

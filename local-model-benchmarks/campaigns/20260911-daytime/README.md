@@ -42,3 +42,5 @@ This is not a standardized coding benchmark, repository-editing evaluation, stat
 - Relevant offline tests cover authorization, changed policy/refusal, normal quota preservation, queue progression, the stdout regression, deterministic fixtures, exact grading, truncation/mismatch and cleanup. The full validation result is recorded in notes.
 
 No public push or publication is part of this request. Results and commits remain local.
+
+The launch authorization now references a small supervision record. The agent renews a 30-minute lease after checking available usage; expiry or zero recorded usage refuses new starts. Existing workers retain their hard deadline and cleanup. `stop_campaign.py --campaign 20260911-daytime --reason "User requested stop"` revokes authorization and stops only identity-verified campaign processes. Its `--dry-run` mode is read-only. `daytime_progress.py --output-dir PATH` rebuilds the readable progress snapshot and samples GPU telemetry.

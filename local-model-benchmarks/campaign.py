@@ -34,6 +34,16 @@ def validate_authorization(root, path, current=None):
     current = current or dt.datetime.now(dt.timezone.utc)
     if not start <= current < last:
         raise ValueError('Overnight authorization is not active for new work')
+    if auth.get('supervisionFile'):
+        expected = 'state/campaign-' + auth['campaignId'] + '-control.json'
+        if auth['supervisionFile'] != expected:
+            raise ValueError('Invalid campaign supervision path')
+        control = read_json(Path(root) / expected, {})
+        lease = dt.datetime.fromisoformat(control.get('leaseExpiresAt', '1900-01-01T00:00:00+00:00'))
+        if control.get('status') != 'active' or lease.tzinfo is None or current >= lease:
+            raise ValueError('Agent supervision lease ended; no new work may start')
+        if control.get('usageRemainingPercent', 0) <= 0:
+            raise ValueError('Codex usage exhausted; no new work may start')
     policy_hash = hashlib.sha256((Path(root) / 'policy.json').read_bytes()).hexdigest()
     if auth.get('policySha256') != policy_hash:
         raise ValueError('Policy changed since this campaign was authorized')
@@ -93,7 +103,10 @@ def worker(root, authorization, selection_path, run_id):
     with state_lock(h.state / 'operation.lock'):
         validate_authorization(root, authorization)
         selection = read_json(selection_path)
-        if selection.get('campaignProtocol') == 'practical-json-v1':
+        if selection.get('campaignProtocol') == 'practical-json-hf-v1':
+            from workload_screen import run_downloaded
+            result = run_downloaded(h, selection)
+        elif selection.get('campaignProtocol') == 'practical-json-v1':
             from workload_screen import run
             result = run(h, selection)
         elif selection.get('campaignProtocol') == 'gpt-oss-reasoning-screen':
