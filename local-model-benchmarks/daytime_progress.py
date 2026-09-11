@@ -139,12 +139,22 @@ for r in standard:
     speed=str(r['candidateTokensPerSecond'])+' / '+str(r['baselineTokensPerSecond']) if r['valid'] else 'not comparable'
     standard_lines.append(f"| {r['model']} | {'valid' if r['valid'] else 'invalid'} | {speed} | {short_quality(r['quality'])} / {short_quality(r['baselineQuality'])} | {r['reason'] or 'none'} |")
 standard_lines+=[''];position=lines.index('## Initial candidate screens');lines[position:position]=standard_lines
-common_lines=['## Matched 24-case workload comparison','','Every row below covers exactly the same first 24 authored cases. Thinking-off output caps are 2048 tokens; reasoning caps are 8192. The 8-case LFM diagnostic is excluded from this matched table. These are workload answers, not generated-code execution scores.','',
+common_lines=['## Matched 24-case workload comparison','','Every row below covers exactly the same first 24 authored cases. Thinking-off output caps are 2048 tokens; reasoning caps are 8192. Diagnostic pilots with fewer than 24 completed cases are excluded from this matched table. These are workload answers, not generated-code execution scores.','',
  '| Model | Thinking | Correct / 24 | Median response seconds | Truncated | Protocol note |','|---|---|---:|---:|---:|---|']
 for r in common_results:
     common_lines.append(f"| {r['model']} | {r['thinking']} | {r['passed']}/24 | {r['medianWallMs']/1000:.2f} | {r['truncated']} | {'unexpected thinking' if r['unexpectedThinking'] else 'none'} |")
 common_lines+=['']
 position=lines.index('## Broader workload results');lines[position:position]=common_lines
+failed=[r for r in terminal if r['status']=='error']
+if failed:
+    import re
+    lines+=['## Incomplete runs','','These attempts produced no complete score and are excluded from aggregate accuracy tables. Full error details and any partial responses remain in the raw records.','']
+    for row in failed:
+        error=str(row.get('error') or 'Run did not complete')
+        timeout=re.search(r'timed out after ([0-9.]+) seconds',error)
+        reason=('Request exceeded '+str(round(float(timeout.group(1))))+' seconds' if timeout else error.replace('\n',' ')[:350])
+        lines.append('- '+row['id']+' ('+row['runId']+'): '+reason+'.')
+    lines.append('')
 text='\n'.join(lines)
 (out/'benchmark-progress.md').write_text(text,encoding='utf-8');(folder/'progress.md').write_text(text,encoding='utf-8')
 print(json.dumps({'active':active,'terminalCount':len(terminal),'pending':data['pending'],'workloadResults':[{k:r[k] for k in ('model','thinking','passed','total','medianWallMs')} for r in results]}))
