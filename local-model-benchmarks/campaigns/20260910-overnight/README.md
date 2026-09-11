@@ -69,6 +69,11 @@ while keeping booleans distinct from numbers. It never executes generated code. 
 not coding-task execution, a production agent evaluation, or a general intelligence score.
 No confidence intervals or broad ranking are inferred from 16 items.
 
+The main sweep uses `overnight-screen-v2`, which explicitly states the required JSON value
+type for every case. The first v1 comparison is retained as a pilot: two baseline answers
+encoded correct arrays as strings, exposing ambiguity in the original prompts. V1 and v2
+quality scores must not be pooled. The installed Qwen3.8 build is queued again for v2.
+
 Quality results are separate from throughput medians. A truncated answer fails its case;
 unexpected thinking marks the thinking-off screen invalid. If the ordinary battery already
 returns unexpected thinking, the extra screen is skipped. Interrupted screens preserve partial
@@ -86,5 +91,11 @@ awake for thread follow-ups; local job state and raw results are retained on dis
 
 ## Results
 
-Live work follows the above review and offline validation. Populate this section only
-from terminal raw records, recording invalid comparisons and failures alongside successes.
+Pilot [20260910-225905-c6df53d6](../../runs/20260910-225905-c6df53d6.json) completed: installed
+Qwen3.8 BF16/MTP generated at median 43.24 tok/s versus 287.38 for the coder baseline; the
+standard comparison was valid and both passed 3/3 exact checks. V1 screen scores were 14/16
+and 10/16, respectively. These are pilot scores with the format ambiguity described above.
+Both models unloaded, and all seven personal model digests stayed unchanged. This installed
+configuration does not reproduce the historical hand-measured or MTP speed claim.
+
+Populate main-sweep results only from terminal raw records and retain failures and invalid comparisons.
