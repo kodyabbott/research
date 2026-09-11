@@ -143,13 +143,17 @@ class CampaignTests(unittest.TestCase):
         original_deadline = h.deadline
         answers = iter([expected for _, _, _, expected in qs.CASES])
         def chat(*args, **kwargs):
-            return {'message': {'content': json.dumps({'answer': next(answers)})}, 'done_reason': 'stop'}
+            return {'message': {'content': json.dumps({'answer': next(answers)}), 'thinking': None}, 'done_reason': 'stop'}
         h.chat = chat
         result = qs.run(h, 'mock', False, {})
         self.assertEqual((result['status'], result['passed'], result['attempted']), ('completed', 16, 16))
         self.assertTrue(result['validThinkingOffScreen'])
         self.assertEqual(h.deadline, original_deadline)
         self.assertEqual(len(nightly.read_json(h.root / h.report['resultFile'])['benchmarks'][0]['qualityScreen']['cases']), 16)
+
+    def test_extreme_json_numbers_fail_without_interrupting_screen(self):
+        self.assertFalse(qs.grade('{"answer":' + '9' * 400 + '}', 40))
+        self.assertFalse(qs.grade('{"answer":1e999}', 40))
 
     def test_contaminated_screen_skips_and_interrupted_screen_is_incomplete(self):
         h = nightly.Harness(self.root)

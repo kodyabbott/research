@@ -59,7 +59,7 @@ def _unique_object(pairs):
 
 def _same(actual, expected):
     if type(expected) in (int, float):
-        return type(actual) in (int, float) and math.isfinite(actual) and actual == expected
+        return type(actual) in (int, float) and (type(actual) is int or math.isfinite(actual)) and actual == expected
     if type(actual) is not type(expected):
         return False
     if isinstance(expected, list):
@@ -101,7 +101,7 @@ def run(harness, model, thinking_capable, summary):
             result['cases'].append({'name': name, 'category': category, 'prompt': request_prompt,
                 'expected': {'answer': expected}, 'response': response,
                 'passed': response.get('done_reason') != 'length' and grade(msg.get('content'), expected),
-                'unexpectedThinking': bool(str(msg.get('thinking', '')).strip())})
+                'unexpectedThinking': isinstance(msg.get('thinking'), str) and bool(msg['thinking'].strip())})
             harness.save_report()
         except Exception as exc:
             result.update(status='incomplete', reason=str(exc))
