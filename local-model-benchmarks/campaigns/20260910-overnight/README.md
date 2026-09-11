@@ -84,6 +84,13 @@ Validation before live use: all 81 offline tests passed in 8.736 seconds after r
 margin, changed-policy refusal, reservation/restoration behavior, unchanged normal daily quota,
 JSON grading, persistence, and partial/contaminated screens. No live result is implied by tests.
 
+The local [queue controller](../../campaign_queue.py) advances the reviewed queue as each
+run finishes, so it does not wait for a thread heartbeat between models. It records failures
+and continues to the next selection, refuses overlapping supervisors, and stops launching
+after authorization expires. Four controller tests cover active-run exclusion, failed-run
+progression, expired authorization, and busy-launcher retention. The combined 16 campaign
+and controller tests passed in 0.141 seconds after this addition.
+
 The thread heartbeat checks progress every 20 minutes and expires on the morning of September
 11. Its recorded ID is `overnight-model-benchmark-campaign`. Keep the app open and workstation
 awake for thread follow-ups; local job state and raw results are retained on disk. See the
