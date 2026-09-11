@@ -54,7 +54,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         if think and think!='implicit' and not capable:raise ValueError('Explicit thinking is not advertised by this model')
         request_capable=capable and think!='implicit';request_think=think if think!='implicit' else False
         profile=selection.get('samplingProfile')
-        if profile not in (None,'nex-recommended-v1'):raise ValueError('Unsupported coding sampling profile')
+        if profile not in (None,'nex-recommended-v1','t1-p95-k40-v1'):raise ValueError('Unsupported coding sampling profile')
         sampling_args={'sampling_profile':profile} if profile else {}
         context,cap=request_budget(selection,think)
         h.policy['numCtx']=context
@@ -65,7 +65,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
         evaluator=config.get('evaluate',evaluate)
         h.report.update(mode=config.get('mode','campaign-coding-screen'),selection=selection,admission=plan,gpuBefore=gpu,
             protocol={'name':config.get('name',coding_suite.VERSION),'suiteSha256':config.get('suiteSha256') or coding_suite.digest(tasks),'thinking':think,'context':context,'outputCap':cap,
-            'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':0.7 if profile else 0,'topP':0.95 if profile else 1,'topK':40,'repeatPenalty':1.0,'samplingProfile':profile or 'greedy-v1','seed':42,
+            'maxGenerationSeconds':240,'tasks':len(tasks),'hiddenTests':sum(len(t['tests']) for t in tasks),'temperature':(0.7 if profile=='nex-recommended-v1' else 1.0) if profile else 0,'topP':0.95 if profile else 1,'topK':40,'repeatPenalty':1.0,'samplingProfile':profile or 'greedy-v1','seed':42,
             'codeExecution':'QuickJS WebAssembly only, no exposed host functions or module loader',
             'sandboxPackageLockSha256':hashlib.sha256((ROOT/'state/coding-sandbox/package-lock.json').read_bytes()).hexdigest(),
             'scope':config.get('scope','Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval.'),**config.get('extraProtocol',{})})
