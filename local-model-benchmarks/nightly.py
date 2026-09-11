@@ -22,7 +22,7 @@ import urllib.parse
 import urllib.request
 import uuid
 
-from owned_runtime import RuntimeBusy, port_open, secondary, tree_bytes
+from owned_runtime import RuntimeBusy, port_open, process_identity, secondary, tree_bytes
 
 GIB = 1024 ** 3
 OLLAMA = 'http://127.0.0.1:11434'
@@ -940,6 +940,8 @@ def supervised(argv, worker_command=None, timeout=None, run_id=None):
                 if partial.get('mode') == 'acceptance-validation':
                     harness.ledger_path = harness.state / 'acceptance-ledger.json'
             if harness.report.get('secondaryRuntime'):
+                record = harness.report['secondaryRuntime']
+                expected = record.get('processIdentity')
                 recovery = {'portFree': not port_open(harness.policy['secondaryPort'])}
                 try:
                     harness.deadline = time.monotonic() + 35  # bounded shutdown verification, no inference
@@ -951,12 +953,19 @@ def supervised(argv, worker_command=None, timeout=None, run_id=None):
                         # Poll both resources within the same bounded recovery window.
                         recovery.update(portFree=not port_open(harness.policy['secondaryPort']),
                             gpuAfter=gpu, vramRecovered=(gpu['freeGiB'] >= before - harness.policy.get('vramRecoveryToleranceGiB', 2)) if before is not None else None)
-                        if (recovery['portFree'] and (before is None or recovery['vramRecovered'])) or time.monotonic() >= until:
+                        recovery['ownedProcessExited'] = (process_identity(record['pid']) != expected) if expected and record.get('pid') else None
+                        if (recovery['portFree'] and recovery['ownedProcessExited'] is not False and (before is None or recovery['vramRecovered'])) or time.monotonic() >= until:
                             break
                         time.sleep(0.25)
                 except Exception as exc:
                     recovery['verificationError'] = str(exc)
                 harness.report['deadlineRecovery'] = recovery
+                record['deadlineRecovery'] = recovery
+                if recovery.get('portFree') and recovery.get('ownedProcessExited') is True:
+                    record.update(stoppedAt=now(), stopReason='hard-runtime-limit')
+                previous = read_json(harness.state / 'secondary-process.json', {})
+                if expected and previous.get('pid') == record.get('pid') and previous.get('processIdentity') == expected:
+                    atomic_json(harness.state / 'secondary-process.json', record)
             harness.report.update(status='error', error='Hard runtime limit reached; worker stopped', failureKind='timeout')
             harness.save_report()
             harness.finish_reservation()
