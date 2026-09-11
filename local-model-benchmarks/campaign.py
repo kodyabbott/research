@@ -44,6 +44,8 @@ class CampaignHarness(Harness):
         super().__init__(root)
         self.authorization_path = Path(authorization)
         self.authorization = validate_authorization(self.root, self.authorization_path)
+        self.ledger_path = self.state / ('campaign-' + self.authorization['campaignId'] + '-ledger.json')
+        self.report['ledgerFile'] = 'state/' + self.ledger_path.name
         self.report['campaign'] = self.authorization.copy()
         self.report['campaign']['authorizationSha256'] = hashlib.sha256(self.authorization_path.read_bytes()).hexdigest()
         self.report['campaign']['policyFileModified'] = False

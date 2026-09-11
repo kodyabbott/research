@@ -5,9 +5,10 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import campaign
 import nightly
@@ -63,15 +64,52 @@ class CampaignTests(unittest.TestCase):
         h = campaign.CampaignHarness(self.root, self.auth_path)
         plan = {'kind': 'installed', 'model': 'example:latest', 'bytes': 1, 'selection': {'kind': 'installed'}}
         day = dt.date.today().isoformat()
-        nightly.atomic_json(h.ledger_path, {'days': {day: [{'runId': 'prior', 'status': 'completed'}]}})
+        normal = nightly.Harness(self.root)
+        nightly.atomic_json(normal.ledger_path, {'days': {day: [{'runId': 'prior', 'status': 'completed'}]}})
+        normal_before = normal.ledger_path.read_bytes()
+        nightly.atomic_json(h.ledger_path, {'days': {day: [{'runId': 'campaign-prior', 'status': 'completed'}]}})
         with nightly.state_lock(h.state / 'operation.lock'):
             h.reserve(plan)
         self.assertEqual(len(nightly.read_json(h.ledger_path)['days'][day]), 2)
         self.assertEqual(h.policy['maxCandidatesPerDay'], 1)
         self.assertEqual((self.root / 'policy.json').read_bytes(), self.original)
+        self.assertEqual(normal.ledger_path.read_bytes(), normal_before)
         self.assertTrue(h.report['campaign']['reservation']['countExemptionUsed'])
         with self.assertRaisesRegex(RuntimeError, 'Daily candidate limit'):
             nightly.Harness(self.root).reserve(plan)
+
+    def test_campaign_leaves_unused_regular_quota_available(self):
+        h = campaign.CampaignHarness(self.root, self.auth_path)
+        plan = {'kind': 'installed', 'model': 'example:latest', 'bytes': 1, 'selection': {'kind': 'installed'}}
+        with nightly.state_lock(h.state / 'operation.lock'):
+            h.reserve(plan)
+            normal = nightly.Harness(self.root)
+            self.assertFalse(normal.ledger_path.exists())
+            normal.reserve(plan)
+        day = dt.date.today().isoformat()
+        self.assertEqual(len(nightly.read_json(normal.ledger_path)['days'][day]), 1)
+        self.assertEqual(len(nightly.read_json(h.ledger_path)['days'][day]), 1)
+
+    def test_hard_deadline_finishes_campaign_ledger_only(self):
+        h = campaign.CampaignHarness(self.root, self.auth_path)
+        run_id = h.run_id
+        day = dt.date.today().isoformat()
+        nightly.atomic_json(h.ledger_path, {'days': {day: [{'runId': run_id, 'status': 'reserved'}]}})
+        normal = nightly.Harness(self.root)
+        nightly.atomic_json(normal.ledger_path, {'days': {day: [{'runId': 'normal', 'status': 'completed'}]}})
+        normal_before = normal.ledger_path.read_bytes()
+        h.save_report()
+        process = Mock(pid=123)
+        process.communicate.side_effect = subprocess.TimeoutExpired('mock', 1)
+        process.wait.return_value = 0
+        with patch.object(nightly, '__file__', str(self.root/'nightly.py')), \
+             patch.object(nightly.subprocess, 'Popen', return_value=process), \
+             patch.object(nightly.subprocess, 'run', return_value=Mock(returncode=0)), \
+             patch('builtins.print'):
+            code = nightly.supervised([], timeout=1, run_id=run_id)
+        self.assertEqual(code, 124)
+        self.assertEqual(nightly.read_json(h.ledger_path)['days'][day][0]['status'], 'error')
+        self.assertEqual(normal.ledger_path.read_bytes(), normal_before)
 
     def test_reservation_failure_restores_in_memory_limit(self):
         h = campaign.CampaignHarness(self.root, self.auth_path)
