@@ -14,10 +14,13 @@ A fixed battery, a fixed machine, and every measurement traceable to a command a
 >
 > What follows is a personal instrument for one machine, kept because same-day numbers on identical hardware are useful to its owner. Treat any framing of it as novel with suspicion.
 
-## Authorized overnight campaign - September 10-11
+## Paused benchmark campaign - September 10-11
 
-A separate, expiring campaign is testing the historical backlog with no candidate-count limit
-for this session. The normal 8:15 PM task and its next-evening quota are preserved.
+The campaign was canceled at user request on September 10 at 23:28 MDT, with five
+completed runs preserved. All campaign work and its heartbeat are stopped; the normal
+8:15 PM task remains unchanged. Read the [Codex/Astra morning handoff](campaigns/20260910-overnight/handoff.md)
+before resuming: the old authorization is revoked, and daytime candidate admission
+remains gated by the overnight window.
 See the [selection plan](campaigns/20260910-overnight/README.md),
 [dated results](campaigns/20260910-overnight/results.md), and
 [runtime compatibility findings](campaigns/20260910-overnight/compatibility.md).

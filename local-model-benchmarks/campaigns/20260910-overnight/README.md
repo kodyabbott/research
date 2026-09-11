@@ -2,6 +2,8 @@
 
 **Canceled at user request on September 10 at 23:28 MDT.** All campaign processes are stopped and overnight follow-ups are paused. Five completed runs are preserved in [results.md](results.md); see the [shutdown verification](cancellation.json). New launches require a new user request.
 
+See the [Codex/Astra morning handoff](handoff.md) for the stopped state, network findings, and continuation requirements.
+
 Kody asked to review every past nightly run and test as many worthwhile models as possible
 overnight, with quality ahead of quantity and no further input required. This is a temporary
 count exemption, not a permanent change to the 8:15 PM Fable task or its one-model daily limit.

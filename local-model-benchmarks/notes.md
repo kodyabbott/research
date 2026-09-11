@@ -1006,3 +1006,31 @@ The first new download (KAT-Coder Q8) progressed unusually slowly. Four bounded 
 ### Campaign canceled at user request
 
 At 23:28 MDT, Kody asked to hold off tonight and stop all processes. The verified controller and all owned descendants were stopped, remaining queue items marked canceled, the overnight heartbeat paused, and the campaign latest-start cutoff moved to the cancellation timestamp so new campaign launches are refused. Five completed runs are preserved. KAT-Coder was canceled during download with 950,603,057 bytes retained as a resumable partial; no KAT import or inference occurred. No benchmark supervisor remains, private port 11435 is free, the primary runtime has no loaded models, and GPU utilization was zero with 96,195 MiB free. All seven personal model digests and the normal policy hash are unchanged. The regular 8:15 PM schedule was not modified. The proposed isolated Hugging Face downloader installation did not run because the installed Python has no pip module; no packages were installed. Evidence is in campaigns/20260910-overnight/cancellation.json. Public pushing remains pending the previously requested specific approval; no publishing was attempted after cancellation.
+
+## 2026-09-11 - Pause and morning handoff
+
+Kody asked to stop and document all findings, with a manual Codex/Astra continuation
+planned for the morning. No inference, downloads, router changes, or new follow-up
+tasks were started. [The morning handoff](campaigns/20260910-overnight/handoff.md)
+collects the five completed results, canceled selections, retained KAT partial,
+runtime/quality caveats, previous validation, publishing status, and resume gates.
+
+At 00:13:10 MDT, a fresh process/port check found only the personal Ollama tray/server,
+no loaded models, no private listener on 11435, and no benchmark workers. GPU utilization
+was 0% with 96,188 MiB free. The canceled campaign queue, revoked latest-start cutoff,
+and paused heartbeat remain intact. The regular 20:15 Claude/Fable task was unchanged;
+its deployed prompt still matches the versioned file. Python 3.14.7 runs, policy bytes
+are unchanged, and the retained KAT partial is still 950,603,057 bytes. See the ignored
+local verification file `state/handoffs/20260911/stop-verification.json`.
+
+The read-only GFiber investigation confirmed a `/ubus` internal API but found no
+supported QoS operation in the inspected UI, two frontend bundles, or reviewed docs.
+Two Samsung TVs use different Wi-Fi bands; the affected 7 Series has not been
+identified. Download-related streaming interference remains unproven. No router
+settings changed, and browser network observation was stopped. Full device details
+and source/evidence limits are in ignored `state/handoffs/20260911/network-observations.md`.
+
+Morning work must account for the normal 20:15-05:59 admission window and the revoked
+campaign authorization; restarting the old controller is not a valid continuation.
+The handoff does not grant a new exception or publish any work. Historical raw results
+remain unchanged. Documentation checks replace inference/testing for this pause.
