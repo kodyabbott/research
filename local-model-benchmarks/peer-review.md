@@ -89,3 +89,13 @@ in files and checks its exit code. The corrected setup completed, all 51 tests p
 normal Windows process set NIGHTLY_BENCH_PYTHON to the per-user installation. Live benchmark
 acceptance remains pending at this point. Run installation from an ordinary Windows shell,
 not a packaged app shell, if repeating setup on another machine.
+### Live deadline finding, 2026-09-10 18:53 MDT
+
+The first deliberately stalled live worker was terminated, and VRAM recovered, but raw
+run 20260910-185239-04f5464a recorded portFree=false. A direct follow-up found no listening
+socket or surviving owned Ollama process; only TCP TIME_WAIT entries remained. The supervisor
+sampled the port immediately after taskkill and never refreshed that sample while checking
+GPU recovery. It now polls both port release and VRAM in the existing bounded recovery
+window. A regression test reproduces delayed port release after VRAM is already free.
+All 52 tests pass under Python 3.14.7 (8.399 seconds). The failed acceptance report is retained;
+a fresh live deadline run is required before closing this finding.
