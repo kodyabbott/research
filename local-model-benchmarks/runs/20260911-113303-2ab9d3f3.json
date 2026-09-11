@@ -1,0 +1,2925 @@
+{
+  "schemaVersion": 2,
+  "runId": "20260911-113303-2ab9d3f3",
+  "startedAt": "2026-09-11T11:33:04-06:00",
+  "status": "completed",
+  "python": {
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe",
+    "version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+    "cacheFallback": false
+  },
+  "ledgerFile": "state/campaign-20260911-daytime-ledger.json",
+  "campaign": {
+    "schemaVersion": 1,
+    "scope": "human-directed-daytime-campaign",
+    "campaignId": "20260911-daytime",
+    "userRequest": "last night i was going to have you start doing benchmarks with models and my local gpu but held off. lets pick that up again as a lot of the nightly benchmarks just pulled info from huggingface but never did benchmark them as i never approved any. go through them and if there are any worth doing, do so. or if you see other models along the way that look interesting do those as well. i want my rtx pro 6000 crunching all day today, so dont let up and keep going as long as you can without my input. keep going until i say stop or you run out of usage.",
+    "notBefore": "2026-09-11T10:14:34.490868-06:00",
+    "latestStartAt": "2026-09-11T22:58:00-06:00",
+    "expiresAt": "2026-09-11T23:59:00-06:00",
+    "policySha256": "15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1",
+    "revoked": false,
+    "exceptions": [
+      "daytime benchmark starts",
+      "multiple campaign candidates"
+    ],
+    "stopConditions": [
+      "user says stop",
+      "Codex usage exhausted",
+      "authorization expiry"
+    ],
+    "preservedLimits": "Original artifact, storage, headroom, ownership, worker deadline, publisher and integrity checks remain active.",
+    "supervisionFile": "state/campaign-20260911-daytime-control.json",
+    "authorizationSha256": "d7a269e8d502ef5e2c5fdb05f9417d7ed30b6ace3a9810ae661efd6a00691d8c",
+    "policyFileModified": false,
+    "reservation": {
+      "dailyCountBefore": 33,
+      "normalDailyLimit": 1,
+      "reservedAt": "2026-09-11T11:33:07-06:00",
+      "countExemptionUsed": true
+    }
+  },
+  "mode": "campaign-coding-screen",
+  "selection": {
+    "kind": "huggingface",
+    "repoId": "bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF",
+    "revision": "d8f684f08d2950ea9d2db6a35ef7dada0707858b",
+    "filename": "Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf",
+    "rationale": "Compare actual function-writing against the validated Qwen3-Coder pilot: eight authored functions, 99 hidden checks, isolated QuickJS WASM. Context 16384; keep reasoning budgets separate.",
+    "modelCardUrl": "https://huggingface.co/bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF",
+    "upstreamUrl": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+    "expectedBytes": 36914690464,
+    "expectedSha256": "5fa510f44779b0e3d38a6678985f417a1c65e3000405ca5d6dcf7fd065e47a15",
+    "campaignProtocol": "javascript-coding-hf-v1",
+    "thinking": true
+  },
+  "secondaryRuntime": {
+    "host": "127.0.0.1:11435",
+    "modelsDir": "F:\\models\\nightly-benchmark\\ollama",
+    "downloadDir": "F:\\models\\nightly-benchmark\\downloads",
+    "executable": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.EXE",
+    "environmentOverrides": {
+      "OLLAMA_HOST": "127.0.0.1:11435",
+      "OLLAMA_MODELS": "F:\\models\\nightly-benchmark\\ollama"
+    },
+    "performanceEnvironment": {
+      "OLLAMA_FLASH_ATTENTION": null,
+      "OLLAMA_KV_CACHE_TYPE": null,
+      "OLLAMA_NUM_PARALLEL": null,
+      "OLLAMA_MAX_LOADED_MODELS": null,
+      "OLLAMA_CONTEXT_LENGTH": null,
+      "OLLAMA_GPU_OVERHEAD": null,
+      "CUDA_VISIBLE_DEVICES": null,
+      "GGML_CUDA_ENABLE_UNIFIED_MEMORY": null
+    },
+    "primaryPerformanceEnvironment": "unknown; primary is an independently started server",
+    "logFile": "C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\state\\ollama-20260911-113303-2ab9d3f3.log",
+    "startedAt": "2026-09-11T11:33:04-06:00",
+    "pid": 41612,
+    "processIdentity": {
+      "imagePath": "C:\\Users\\kody1\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "creationFileTime": "134336215844982409"
+    },
+    "version": {
+      "version": "0.32.13"
+    },
+    "stoppedAt": "2026-09-11T11:34:23-06:00",
+    "childExitCode": 1,
+    "portFree": true
+  },
+  "updatedAt": "2026-09-11T11:34:23-06:00",
+  "resultFile": "runs/20260911-113303-2ab9d3f3.json",
+  "admission": {
+    "kind": "huggingface",
+    "model": "nightly-bench-5fa510f44779b0e3:latest",
+    "bytes": 36914690464,
+    "sha256": "5fa510f44779b0e3d38a6678985f417a1c65e3000405ca5d6dcf7fd065e47a15",
+    "repoId": "bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF",
+    "revision": "d8f684f08d2950ea9d2db6a35ef7dada0707858b",
+    "filename": "Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf",
+    "alreadyImported": true,
+    "digest": "caf8e6eec1ee2107f59a82aedb58df915e6697dd85c6d35f52012efb35ec6ed9",
+    "selection": {
+      "kind": "huggingface",
+      "repoId": "bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF",
+      "revision": "d8f684f08d2950ea9d2db6a35ef7dada0707858b",
+      "filename": "Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf",
+      "rationale": "Compare actual function-writing against the validated Qwen3-Coder pilot: eight authored functions, 99 hidden checks, isolated QuickJS WASM. Context 16384; keep reasoning budgets separate.",
+      "modelCardUrl": "https://huggingface.co/bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF",
+      "upstreamUrl": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+      "expectedBytes": 36914690464,
+      "expectedSha256": "5fa510f44779b0e3d38a6678985f417a1c65e3000405ca5d6dcf7fd065e47a15",
+      "campaignProtocol": "javascript-coding-hf-v1",
+      "thinking": true
+    }
+  },
+  "gpuBefore": {
+    "freeGiB": 93.8525390625,
+    "totalGiB": 95.5927734375,
+    "utilizationPercent": 2.0
+  },
+  "protocol": {
+    "name": "javascript-functions-v1",
+    "suiteSha256": "d568f0d124d74ff29980cf7ba71157f3c34f89159d87a7e98dff598ae7c92a75",
+    "thinking": true,
+    "context": 16384,
+    "outputCap": 8192,
+    "maxGenerationSeconds": 240,
+    "tasks": 8,
+    "hiddenTests": 99,
+    "temperature": 0,
+    "seed": 42,
+    "codeExecution": "QuickJS WebAssembly only, no exposed host functions or module loader",
+    "sandboxPackageLockSha256": "4e8e97c6b72e291188c8e6c03c35739260895e9ccd91506ab824f96bb8f5a71c",
+    "scope": "Eight authored JavaScript function-writing tasks and 99 deterministic hidden functional checks; not a standardized coding benchmark or a repository-editing agent eval."
+  },
+  "benchmarks": [
+    {
+      "model": "nightly-bench-5fa510f44779b0e3:latest",
+      "digest": "caf8e6eec1ee2107f59a82aedb58df915e6697dd85c6d35f52012efb35ec6ed9",
+      "endpoint": "http://127.0.0.1:11435",
+      "runtime": {
+        "version": "0.32.13"
+      },
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen35moe",
+        "families": [
+          "qwen35moe"
+        ],
+        "parameter_size": "34.7B",
+        "quantization_level": "Q8_0"
+      },
+      "capabilities": [
+        "tools",
+        "thinking",
+        "completion"
+      ],
+      "modelParameters": null,
+      "templateSha256": "e84f32a23fdda27689f868aa4a1a5621f41133e51a48d7f3efcbea2839574259",
+      "tasks": [
+        {
+          "id": "deduplicated-ledger",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {eventId, account, delta}. Duplicate eventId records are identical duplicate deliveries; count each eventId once. Sum integer delta per account. Return [[account,balance],...] sorted by account using ordinary lexicographic string order. Accounts can be any strings, including object prototype names.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:16.5280062Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const seen = new Set();\n  const balances = new Map();\n  for (const { eventId, account, delta } of input) {\n    if (seen.has(eventId)) continue;\n    seen.add(eventId);\n    balances.set(account, (balances.get(account) || 0) + delta);\n  }\n  return [...balances.entries()].sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);\n}\n```",
+              "thinking": "Use a plain object or Map. Since accounts can be prototype property names, use Map to be safe.\n\nIterate through input, deduplicate by eventId using a Set. For each unique eventId, accumulate delta into the Map for that account.\n\nThen convert to array of [account, balance], sort by account lexicographically.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1163292800,
+            "load_duration": 145601900,
+            "prompt_eval_count": 105,
+            "prompt_eval_duration": 79088000,
+            "eval_count": 197,
+            "eval_duration": 918298000,
+            "clientWallMs": 1189.8,
+            "supervisedWallMs": 1284.3
+          },
+          "code": "function solve(input) {\n  const seen = new Set();\n  const balances = new Map();\n  for (const { eventId, account, delta } of input) {\n    if (seen.has(eventId)) continue;\n    seen.add(eventId);\n    balances.set(account, (balances.get(account) || 0) + delta);\n  }\n  return [...balances.entries()].sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1284.3,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "c",
+                    -11
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "a",
+                    -13
+                  ],
+                  [
+                    "constructor",
+                    -13
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -11
+                  ],
+                  [
+                    "a",
+                    -32
+                  ],
+                  [
+                    "b",
+                    -3
+                  ],
+                  [
+                    "c",
+                    -20
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    44
+                  ],
+                  [
+                    "a",
+                    -33
+                  ],
+                  [
+                    "b",
+                    56
+                  ],
+                  [
+                    "c",
+                    -28
+                  ],
+                  [
+                    "constructor",
+                    16
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -48
+                  ],
+                  [
+                    "a",
+                    133
+                  ],
+                  [
+                    "b",
+                    40
+                  ],
+                  [
+                    "c",
+                    -22
+                  ],
+                  [
+                    "constructor",
+                    46
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -83
+                  ],
+                  [
+                    "a",
+                    -67
+                  ],
+                  [
+                    "b",
+                    72
+                  ],
+                  [
+                    "c",
+                    -24
+                  ],
+                  [
+                    "constructor",
+                    -35
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    56
+                  ],
+                  [
+                    "a",
+                    -106
+                  ],
+                  [
+                    "b",
+                    134
+                  ],
+                  [
+                    "c",
+                    159
+                  ],
+                  [
+                    "constructor",
+                    -15
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    -140
+                  ],
+                  [
+                    "a",
+                    -61
+                  ],
+                  [
+                    "b",
+                    75
+                  ],
+                  [
+                    "c",
+                    -83
+                  ],
+                  [
+                    "constructor",
+                    13
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    69
+                  ],
+                  [
+                    "a",
+                    -132
+                  ],
+                  [
+                    "b",
+                    16
+                  ],
+                  [
+                    "c",
+                    -11
+                  ],
+                  [
+                    "constructor",
+                    181
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    217
+                  ],
+                  [
+                    "a",
+                    -240
+                  ],
+                  [
+                    "b",
+                    54
+                  ],
+                  [
+                    "c",
+                    -232
+                  ],
+                  [
+                    "constructor",
+                    5
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    "__proto__",
+                    190
+                  ],
+                  [
+                    "a",
+                    67
+                  ],
+                  [
+                    "b",
+                    99
+                  ],
+                  [
+                    "c",
+                    -58
+                  ],
+                  [
+                    "constructor",
+                    199
+                  ]
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "versioned-state",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of {key,version,op,value}, arriving out of order. Versions are unique nonnegative integers. For each key choose the greatest version. op=\"delete\" removes that key; op=\"set\" sets its value, including null/false/0. Return a JSON-compatible object of final keys to values. Keys may include __proto__ or constructor.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:20.449885Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const best = new Map();\n  for (const op of input) {\n    const existing = best.get(op.key);\n    if (!existing || op.version > existing.version) {\n      best.set(op.key, op);\n    }\n  }\n  const result = Object.create(null);\n  for (const [key, op] of best) {\n    if (op.op === \"set\") {\n      result[key] = op.value;\n    }\n  }\n  return result;\n}\n```",
+              "thinking": "Let me analyze this problem:\n\n1. We have an array of operations, each with {key, version, op, value}\n2. Versions are unique nonnegative integers\n3. For each key, we need to find the greatest version\n4. If that operation is \"delete\", remove the key\n5. If that operation is \"set\", set the value\n6. Return a JSON-compatible object\n7. Keys may include __proto__ or constructor (so we can't use plain object literal merging or Object.assign)\n8. Must not mutate input\n9. No external libraries or host APIs\n\nSince keys can include __proto__ or constructor, I need to be careful about how I build the result object. Using a plain object `{}` and setting properties on it could be problematic with __proto__ keys. I should use `Object.create(null)` to create a safe object, or use a Map.\n\nWait, the return should be a \"JSON-compatible object\". JSON-compatible means it should be serializable to JSON. Using `Object.create(null)` would work for that since it's still an object.\n\nLet me think about the approach:\n1. Group operations by key\n2. For each key, find the operation with the greatest version\n3. Build the result object\n\nSince keys can be __proto__ or constructor, I should use a Map to group by key, then build the result.\n\nActually, let me reconsider. The input is an array of objects. I need to not mutate the input. So I'll create a copy or just read from it.\n\nLet me use a Map to collect the best operation per key, then build the result object using Object.create(null).\n\n```javascript\nfunction solve(input) {\n  const best = new Map();\n  for (const op of input) {\n    const existing = best.get(op.key);\n    if (!existing || op.version > existing.version) {\n      best.set(op.key, op);\n    }\n  }\n  \n  const result = Object.create(null);\n  for (const [key, op] of best) {\n    if (op.op === \"set\") {\n      result[key] = op.value;\n    }\n    // if delete, don't add it\n  }\n  return result;\n}\n```\n\nWait, but if a key has a \"delete\" as its greatest version, we simply don't include it. If a key has \"set\" as its greatest version, we include it with the value.\n\nThis looks correct. Let me also consider: what if the same key appears multiple times with different versions? We pick the greatest version. What if a key appears with both set and delete at different versions? We pick the greatest version's operation.\n\nUsing `Object.create(null)` avoids prototype pollution issues with __proto__ and constructor keys.\n\nThis should work. Let me also make sure I'm not mutating the input - I'm only reading from it, so that's fine.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3714656700,
+            "load_duration": 144851700,
+            "prompt_eval_count": 120,
+            "prompt_eval_duration": 73296000,
+            "eval_count": 751,
+            "eval_duration": 3474596000,
+            "clientWallMs": 3726.1,
+            "supervisedWallMs": 3820.1
+          },
+          "code": "function solve(input) {\n  const best = new Map();\n  for (const op of input) {\n    const existing = best.get(op.key);\n    if (!existing || op.version > existing.version) {\n      best.set(op.key, op);\n    }\n  }\n  const result = Object.create(null);\n  for (const [key, op] of best) {\n    if (op.op === \"set\") {\n      result[key] = op.value;\n    }\n  }\n  return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3820.1,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {},
+                "mutated": false,
+                "passed": true,
+                "expected": {}
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "b": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": false
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "constructor": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "constructor": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "a": 0,
+                  "__proto__": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": 0
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": 17,
+                  "constructor": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": 17,
+                  "__proto__": false,
+                  "constructor": 17
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": false,
+                  "a": false,
+                  "constructor": null,
+                  "b": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": false,
+                  "constructor": null,
+                  "b": "x",
+                  "a": false
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": null
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": 17,
+                  "a": "x",
+                  "constructor": "x"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "b": 17,
+                  "a": 17,
+                  "c": 0
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "a": null,
+                  "b": false,
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": null,
+                  "c": null,
+                  "b": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "a": "x",
+                  "b": "x",
+                  "__proto__": "x",
+                  "c": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": "x",
+                  "c": null,
+                  "a": "x",
+                  "b": "x"
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "a": false,
+                  "b": 17,
+                  "__proto__": null,
+                  "c": 17
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "a": false,
+                  "__proto__": null,
+                  "c": 17,
+                  "b": 17
+                }
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "merge-intervals",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is an array of closed integer intervals [start,end], with start<=end. Merge intervals that overlap or touch, and return intervals sorted by start then end. Preserve the original input and its inner arrays. Example [[7,9],[1,4],[4,6]] -> [[1,6],[7,9]].",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:21.8674209Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const intervals = input.map(([s, e]) => [s, e]);\n  intervals.sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const result = [intervals[0]];\n  for (let i = 1; i < intervals.length; i++) {\n    const last = result[result.length - 1];\n    const [s, e] = intervals[i];\n    if (s <= last[1]) {\n      last[1] = Math.max(last[1], e);\n    } else {\n      result.push([s, e]);\n    }\n  }\n  return result;\n}\n```",
+              "thinking": "Clone input, sort by start, merge overlapping/touching intervals.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 1188156800,
+            "load_duration": 148112900,
+            "prompt_eval_count": 111,
+            "prompt_eval_duration": 87588000,
+            "eval_count": 181,
+            "eval_duration": 925093000,
+            "clientWallMs": 1213.0,
+            "supervisedWallMs": 1307.3
+          },
+          "code": "function solve(input) {\n  const intervals = input.map(([s, e]) => [s, e]);\n  intervals.sort((a, b) => a[0] - b[0] || a[1] - b[1]);\n  const result = [intervals[0]];\n  for (let i = 1; i < intervals.length; i++) {\n    const last = result[result.length - 1];\n    const [s, e] = intervals[i];\n    if (s <= last[1]) {\n      last[1] = Math.max(last[1], e);\n    } else {\n      result.push([s, e]);\n    }\n  }\n  return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 1307.3,
+          "taskPassed": false,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": false,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    1
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    1
+                  ]
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    1,
+                    4
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    1,
+                    4
+                  ]
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -70,
+                    -66
+                  ],
+                  [
+                    -24,
+                    -9
+                  ]
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -60,
+                    -58
+                  ],
+                  [
+                    -35,
+                    -34
+                  ],
+                  [
+                    22,
+                    29
+                  ]
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    33,
+                    34
+                  ],
+                  [
+                    58,
+                    67
+                  ],
+                  [
+                    75,
+                    93
+                  ],
+                  [
+                    96,
+                    99
+                  ]
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -83,
+                    -74
+                  ],
+                  [
+                    -66,
+                    -55
+                  ],
+                  [
+                    14,
+                    22
+                  ],
+                  [
+                    32,
+                    32
+                  ],
+                  [
+                    56,
+                    56
+                  ],
+                  [
+                    65,
+                    71
+                  ],
+                  [
+                    78,
+                    96
+                  ]
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -98,
+                    -80
+                  ],
+                  [
+                    -44,
+                    -10
+                  ],
+                  [
+                    -8,
+                    8
+                  ],
+                  [
+                    27,
+                    46
+                  ],
+                  [
+                    47,
+                    54
+                  ],
+                  [
+                    73,
+                    93
+                  ],
+                  [
+                    99,
+                    117
+                  ]
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -97,
+                    -72
+                  ],
+                  [
+                    -69,
+                    -39
+                  ],
+                  [
+                    -35,
+                    -24
+                  ],
+                  [
+                    -2,
+                    20
+                  ],
+                  [
+                    30,
+                    30
+                  ],
+                  [
+                    36,
+                    55
+                  ],
+                  [
+                    65,
+                    66
+                  ],
+                  [
+                    68,
+                    68
+                  ],
+                  [
+                    75,
+                    90
+                  ],
+                  [
+                    94,
+                    94
+                  ]
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -93,
+                    -63
+                  ],
+                  [
+                    -48,
+                    -46
+                  ],
+                  [
+                    -45,
+                    -34
+                  ],
+                  [
+                    -24,
+                    55
+                  ],
+                  [
+                    59,
+                    60
+                  ],
+                  [
+                    75,
+                    84
+                  ],
+                  [
+                    89,
+                    97
+                  ]
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -99
+                  ],
+                  [
+                    -97,
+                    -53
+                  ],
+                  [
+                    -48,
+                    -36
+                  ],
+                  [
+                    -33,
+                    -8
+                  ],
+                  [
+                    -6,
+                    8
+                  ],
+                  [
+                    14,
+                    70
+                  ],
+                  [
+                    71,
+                    74
+                  ],
+                  [
+                    78,
+                    92
+                  ],
+                  [
+                    93,
+                    101
+                  ]
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  [
+                    -99,
+                    -45
+                  ],
+                  [
+                    -41,
+                    118
+                  ]
+                ]
+              }
+            ],
+            "passed": 11,
+            "total": 12
+          }
+        },
+        {
+          "id": "topological-order",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {nodes,edges}. nodes is an array of unique strings; every edge [u,v] means u must precede v, and both nodes exist. Ignore duplicate edges. Return a topological order, always choosing the lexicographically smallest currently available node. Return null if any cycle exists, including a self-loop.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:25.3318205Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const { nodes, edges } = input;\n  const nodeSet = new Set(nodes);\n  const adj = new Map();\n  const inDegree = new Map();\n\n  for (const n of nodes) {\n    adj.set(n, new Set());\n    inDegree.set(n, 0);\n  }\n\n  for (const [u, v] of edges) {\n    if (u === v) return null;\n    if (!adj.get(u).has(v)) {\n      adj.get(u).add(v);\n      inDegree.set(v, inDegree.get(v) + 1);\n    }\n  }\n\n  // Min-heap\n  const heap = [];\n  function push(x) { heap.push(x); let i = heap.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (heap[p] <= heap[i]) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } }\n  function pop() { const top = heap[0]; const last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; while (true) { let c = 2 * i + 1; if (c >= heap.length) break; if (c + 1 < heap.length && heap[c + 1] < heap[c]) c++; if (heap[i] <= heap[c]) break; [heap[i], heap[c]] = [heap[c], heap[i]]; i = c; } } return top; }\n  function empty() { return heap.length === 0; }\n\n  for (const n of nodes) {\n    if (inDegree.get(n) === 0) push(n);\n  }\n\n  const result = [];\n  while (!empty()) {\n    const u = pop();\n    result.push(u);\n    for (const v of adj.get(u)) {\n      inDegree.set(v, inDegree.get(v) - 1);\n      if (inDegree.get(v) === 0) push(v);\n    }\n  }\n\n  return result.length === nodes.length ? result : null;\n}\n```",
+              "thinking": "Build a topological sort with lexicographic tie-breaking using a min-heap (or sorted structure). Since we can't use external libraries, I'll implement a simple binary min-heap.\n\nSteps:\n1. Build adjacency list and in-degree count\n2. Put all nodes with in-degree 0 into a min-heap\n3. Repeatedly extract min, add to result, decrease in-degrees of neighbors, add new zero in-degree nodes to heap\n4. If result length != node count, there's a cycle → return null\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 3232379600,
+            "load_duration": 144388100,
+            "prompt_eval_count": 111,
+            "prompt_eval_duration": 84772000,
+            "eval_count": 606,
+            "eval_duration": 2983164000,
+            "clientWallMs": 3257.2,
+            "supervisedWallMs": 3351.1
+          },
+          "code": "function solve(input) {\n  const { nodes, edges } = input;\n  const nodeSet = new Set(nodes);\n  const adj = new Map();\n  const inDegree = new Map();\n\n  for (const n of nodes) {\n    adj.set(n, new Set());\n    inDegree.set(n, 0);\n  }\n\n  for (const [u, v] of edges) {\n    if (u === v) return null;\n    if (!adj.get(u).has(v)) {\n      adj.get(u).add(v);\n      inDegree.set(v, inDegree.get(v) + 1);\n    }\n  }\n\n  // Min-heap\n  const heap = [];\n  function push(x) { heap.push(x); let i = heap.length - 1; while (i > 0) { const p = (i - 1) >> 1; if (heap[p] <= heap[i]) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } }\n  function pop() { const top = heap[0]; const last = heap.pop(); if (heap.length) { heap[0] = last; let i = 0; while (true) { let c = 2 * i + 1; if (c >= heap.length) break; if (c + 1 < heap.length && heap[c + 1] < heap[c]) c++; if (heap[i] <= heap[c]) break; [heap[i], heap[c]] = [heap[c], heap[i]]; i = c; } } return top; }\n  function empty() { return heap.length === 0; }\n\n  for (const n of nodes) {\n    if (inDegree.get(n) === 0) push(n);\n  }\n\n  const result = [];\n  while (!empty()) {\n    const u = pop();\n    result.push(u);\n    for (const v of adj.get(u)) {\n      inDegree.set(v, inDegree.get(v) - 1);\n      if (inDegree.get(v) === 0) push(v);\n    }\n  }\n\n  return result.length === nodes.length ? result : null;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 3351.1,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [
+                  "a"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a"
+                ]
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b"
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "c",
+                  "b"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "c",
+                  "b"
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "c",
+                  "d",
+                  "e"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "c",
+                  "d",
+                  "e"
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "c",
+                  "b",
+                  "d",
+                  "e",
+                  "f"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "c",
+                  "b",
+                  "d",
+                  "e",
+                  "f"
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  "a",
+                  "b",
+                  "d",
+                  "c",
+                  "f",
+                  "e",
+                  "g"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "a",
+                  "b",
+                  "d",
+                  "c",
+                  "f",
+                  "e",
+                  "g"
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  "b",
+                  "c",
+                  "d",
+                  "e",
+                  "f",
+                  "g",
+                  "h",
+                  "i",
+                  "a"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "b",
+                  "c",
+                  "d",
+                  "e",
+                  "f",
+                  "g",
+                  "h",
+                  "i",
+                  "a"
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  "g",
+                  "f",
+                  "d",
+                  "e",
+                  "b",
+                  "c",
+                  "h",
+                  "a",
+                  "i",
+                  "j",
+                  "k"
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  "g",
+                  "f",
+                  "d",
+                  "e",
+                  "b",
+                  "c",
+                  "h",
+                  "a",
+                  "i",
+                  "j",
+                  "k"
+                ]
+              },
+              {
+                "id": "12",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              }
+            ],
+            "passed": 13,
+            "total": 13
+          }
+        },
+        {
+          "id": "ttl-cache",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nSimulate a cache from operations in input order. Timestamps t are nondecreasing integers. put has {t,op:\"put\",key,value,ttl}; it replaces a key and expires exactly at t+ttl, so ttl=0 expires immediately. get has {t,op:\"get\",key} and returns the current value or null if absent/expired. delete removes a key. Return an array of get results only. Same-timestamp operations obey input order.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:27.9124987Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      const entry = cache.get(op.key);\n      if (entry && op.t < entry.expiry) {\n        results.push(entry.value);\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n\n  return results;\n}\n```",
+              "thinking": "We need to simulate a cache with put, get, and delete operations. Timestamps are nondecreasing. For each get, return the current value or null if the key is absent or expired. Expiration happens exactly at t+ttl, meaning at time t+ttl the key is no longer valid. So at time t, if ttl=0, it expires immediately (so after put, it's already expired). We need to be careful: \"expires exactly at t+ttl\" means that at time t+ttl, the key is expired. So for a put at time t with ttl, the key is valid for times in [t, t+ttl). At time t+ttl, it's expired.\n\nWe'll maintain a Map from key to {value, expiry}. For each operation:\n- put: set the key with value and expiry = t+ttl. If ttl=0, expiry = t, so it's expired immediately.\n- get: check if key exists and t < expiry. If so, return value; else return null.\n- delete: remove the key.\n\nSince timestamps are nondecreasing, we process in order. We don't need to clean up expired keys unless they interfere, but we can just check on get/delete.\n\nWe must not mutate input. We'll iterate over input array.\n\nReturn array of get results.\n\nLet's write the function.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 2359559500,
+            "load_duration": 146240200,
+            "prompt_eval_count": 141,
+            "prompt_eval_duration": 70848000,
+            "eval_count": 451,
+            "eval_duration": 2120542000,
+            "clientWallMs": 2390.8,
+            "supervisedWallMs": 2482.9
+          },
+          "code": "function solve(input) {\n  const cache = new Map();\n  const results = [];\n\n  for (const op of input) {\n    if (op.op === \"put\") {\n      cache.set(op.key, { value: op.value, expiry: op.t + op.ttl });\n    } else if (op.op === \"get\") {\n      const entry = cache.get(op.key);\n      if (entry && op.t < entry.expiry) {\n        results.push(entry.value);\n      } else {\n        results.push(null);\n      }\n    } else if (op.op === \"delete\") {\n      cache.delete(op.key);\n    }\n  }\n\n  return results;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 2482.9,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": [
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null
+                ]
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  17
+                ]
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  "v",
+                  0,
+                  null,
+                  0,
+                  null,
+                  0,
+                  null
+                ]
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  "v",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  17,
+                  null,
+                  17,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  false,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  0,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  "v",
+                  null
+                ]
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        },
+        {
+          "id": "json-pointer",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is {document,pointer}. Resolve a JSON Pointer: empty pointer selects the whole document; otherwise split after the leading slash, decode ~1 to / then ~0 to ~. Use only own object properties. Array indexes must be canonical nonnegative decimal integers (0 valid; 01 and - invalid). Return {found:true,value:...} if found, otherwise {found:false}. Null is a real found value.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:33:34.7693571Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  const { document, pointer } = input;\n\n  if (pointer === '') {\n    return { found: true, value: document };\n  }\n\n  if (pointer[0] !== '/') {\n    return { found: false };\n  }\n\n  const tokens = pointer.slice(1).split('/');\n  let current = document;\n\n  for (const token of tokens) {\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n\n    if (current === null || current === undefined) {\n      return { found: false };\n    }\n\n    if (Array.isArray(current)) {\n      if (!/^(0|[1-9]\\d*)$/.test(decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else if (typeof current === 'object') {\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}\n```",
+              "thinking": "Let me carefully implement a JSON Pointer resolver according to RFC 6901.\n\nKey requirements:\n1. Synchronous ES2020 function\n2. Don't mutate input\n3. No external libraries\n4. Return only JS code\n5. Input: {document, pointer}\n6. Empty pointer → whole document\n7. Split after leading slash\n8. Decode ~1 → / then ~0 → ~\n9. Only own object properties\n10. Array indexes: canonical nonnegative decimal integers (0 valid, 01 invalid, - invalid)\n11. Return {found:true, value:...} or {found:false}\n12. Null is a real found value\n\nLet me think about the algorithm:\n\n1. If pointer is empty string, return {found: true, value: document}\n2. Pointer must start with '/'\n3. Split by '/' - the first element will be empty (before the leading slash)\n4. For each reference token:\n   a. Decode: replace ~1 with / then ~0 with ~\n   b. Navigate into the current value\n   c. If current value is an object, use only own properties (hasOwnProperty or Object.prototype.hasOwnProperty.call)\n   d. If current value is an array, validate the token as a canonical array index\n   e. If not found at any step, return {found: false}\n\nFor array index validation:\n- Must be a nonnegative decimal integer\n- Must be canonical: no leading zeros (except \"0\" itself), no negative sign\n- So valid: \"0\", \"1\", \"123\"\n- Invalid: \"01\", \"-1\", \"1a\", \"\"\n\nLet me write this carefully.\n\n```javascript\nfunction solve(input) {\n  const { document, pointer } = input;\n  \n  if (pointer === '') {\n    return { found: true, value: document };\n  }\n  \n  if (pointer[0] !== '/') {\n    return { found: false };\n  }\n  \n  const tokens = pointer.slice(1).split('/');\n  let current = document;\n  \n  for (const token of tokens) {\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n    \n    if (current === null || current === undefined) {\n      return { found: false };\n    }\n    \n    if (Array.isArray(current)) {\n      // Validate canonical array index\n      if (!/^(0|[1-9]\\d*)$/.test(decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else if (typeof current === 'object') {\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n  \n  return { found: true, value: current };\n}\n```\n\nWait, I need to be careful about the order of replacements. The spec says decode ~1 to / then ~0 to ~. So first replace ~1 with /, then ~0 with ~. That's what I have.\n\nBut wait - what about the case where we have ~1~0? After replacing ~1 with /, we get /~0, then replacing ~0 with ~ gives /~. That's correct.\n\nWhat about ~0~1? After replacing ~1 with /, we get ~0/, then replacing ~0 with ~ gives ~/ . That's correct.\n\nLet me also think about edge cases:\n- pointer = \"/\" → tokens = [\"\"] → decoded = \"\" → looking for property \"\" in the object\n- pointer = \"/a\" → tokens = [\"a\"] → decoded = \"a\" → looking for property \"a\"\n\nFor array index validation, the regex `/^(0|[1-9]\\d*)$/` ensures:\n- \"0\" is valid\n- \"1\", \"123\" are valid\n- \"01\", \"00\", \"-1\", \"\" are invalid\n\nThis looks correct. Let me also consider: what if document is null and pointer is empty? Then we return {found: true, value: null}. That's correct per the spec.\n\nWhat about when current is a primitive (not object, not array, not null/undefined)? Then we return {found: false}. That's correct.\n\nI think this is solid. Let me also make sure I'm not mutating input - I'm only reading from it.\n\nOne more thing: the regex for array index. Let me double-check:\n- \"0\" → matches `0` → valid ✓\n- \"1\" → matches `[1-9]\\d*` → valid ✓\n- \"01\" → doesn't match either → invalid ✓\n- \"-1\" → doesn't match → invalid ✓\n- \"\" → doesn't match → invalid ✓\n- \"123\" → matches `[1-9]\\d*` → valid ✓\n- \"00\" → doesn't match → invalid ✓\n\nLooks good.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 6632214700,
+            "load_duration": 144310900,
+            "prompt_eval_count": 130,
+            "prompt_eval_duration": 73379000,
+            "eval_count": 1377,
+            "eval_duration": 6388046000,
+            "clientWallMs": 6668.0,
+            "supervisedWallMs": 6761.1
+          },
+          "code": "function solve(input) {\n  const { document, pointer } = input;\n\n  if (pointer === '') {\n    return { found: true, value: document };\n  }\n\n  if (pointer[0] !== '/') {\n    return { found: false };\n  }\n\n  const tokens = pointer.slice(1).split('/');\n  let current = document;\n\n  for (const token of tokens) {\n    const decoded = token.replace(/~1/g, '/').replace(/~0/g, '~');\n\n    if (current === null || current === undefined) {\n      return { found: false };\n    }\n\n    if (Array.isArray(current)) {\n      if (!/^(0|[1-9]\\d*)$/.test(decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else if (typeof current === 'object') {\n      if (!Object.prototype.hasOwnProperty.call(current, decoded)) {\n        return { found: false };\n      }\n      current = current[decoded];\n    } else {\n      return { found: false };\n    }\n  }\n\n  return { found: true, value: current };\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 6761.1,
+          "taskPassed": false,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": {
+                    "a": [
+                      0,
+                      null,
+                      {
+                        "x/y": false,
+                        "m~n": "ok"
+                      }
+                    ],
+                    "": {
+                      "__proto__": 7
+                    },
+                    "constructor": "data",
+                    "01": "object key"
+                  }
+                }
+              },
+              {
+                "id": "1",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": [
+                    0,
+                    null,
+                    {
+                      "x/y": false,
+                      "m~n": "ok"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "2",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 0
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 0
+                }
+              },
+              {
+                "id": "3",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": null
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": null
+                }
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": false
+                }
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "ok"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "ok"
+                }
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": 7
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": 7
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "data"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "data"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "found": true,
+                  "value": "object key"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": true,
+                  "value": "object key"
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "12",
+                "outputKind": "object",
+                "actual": {
+                  "found": true
+                },
+                "mutated": false,
+                "passed": false,
+                "expected": {
+                  "found": false
+                }
+              },
+              {
+                "id": "13",
+                "outputKind": "object",
+                "actual": {
+                  "found": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "found": false
+                }
+              }
+            ],
+            "passed": 13,
+            "total": 14
+          }
+        },
+        {
+          "id": "csv-parser",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nInput is a valid CSV string. Return an array of rows (arrays of strings). Handle commas, quoted fields, doubled quote escapes, newlines inside quoted fields, and LF or CRLF row endings. Preserve embedded newlines inside quotes. Empty input returns []; a final row terminator must not create an extra row. An empty line is one empty field.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:34:14.1930342Z",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "thinking": "Let me write a robust CSV parser that handles all the specified requirements.\n\nKey requirements:\n1. Synchronous ES2020 function\n2. No mutation of input\n3. No external libraries or host APIs\n4. Handle commas, quoted fields, doubled quote escapes, newlines inside quoted fields\n5. LF or CRLF row endings\n6. Preserve embedded newlines inside quotes\n7. Empty input returns []\n8. Final row terminator must not create an extra row\n9. Empty line is one empty field\n\nLet me think through the parsing logic carefully.\n\nState machine approach:\n- We iterate through the input character by character\n- States: IN_FIELD, IN_QUOTED_FIELD\n- When we encounter a newline (or CRLF), we finish the current row\n- When we encounter a comma, we finish the current field\n- When we encounter a quote at the start of a field, we enter quoted mode\n\n\n- Inside quoted fields, doubled quotes become single quotes, and newlines are preserved as part of the field content\n- Unquoted fields end at commas or newlines\n\nNow I'm implementing the parser with a state machine that tracks whether we're inside quotes, accumulating fields and rows as we process each character.\n\nWriting the parser logic... I'm realizing the edge cases here—when a newline appears inside quotes, it should be preserved as part of the field value, but I need to be careful about how CRLF is handled. Let me trace through what happens when we encounter a newline while in quoted mode: we should keep accumulating characters until we find the closing quote, then check if the next character is a comma or newline to determine if we've reached the end of the row. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes, we keep reading until we find the closing quote, and any newlines within that quoted section are preserved as part of the field value. I'm working through the edge cases for CSV parsing—specifically how to handle newlines inside quoted fields and what happens when a quote appears mid-field. The key insight is that once we're inside quotes,"
+            },
+            "done": true,
+            "done_reason": "length",
+            "total_duration": 39184673300,
+            "load_duration": 145455700,
+            "prompt_eval_count": 116,
+            "prompt_eval_duration": 67661000,
+            "eval_count": 8192,
+            "eval_duration": 38945632000,
+            "clientWallMs": 39211.7,
+            "supervisedWallMs": 39305.4
+          },
+          "code": "",
+          "markdownFenceRemoved": false,
+          "truncated": true,
+          "unexpectedThinking": false,
+          "wallMs": 39305.4,
+          "taskPassed": false,
+          "evaluation": {
+            "passed": 0,
+            "total": 12,
+            "reason": "Empty or truncated code response"
+          }
+        },
+        {
+          "id": "recursive-redaction",
+          "prompt": "Write a synchronous JavaScript ES2020 function solve(input). Do not mutate input. Use no external libraries or host APIs. Return JavaScript code only; no explanation.\nReturn a deep copy of a JSON-compatible input value. In every object, replace values of keys equal to password, token, or secret (case-insensitive) with \"[REDACTED]\". Recursively process all other values, including objects inside arrays. Preserve every key (including __proto__), array order, null, and primitive values. Do not mutate input.",
+          "response": {
+            "model": "nightly-bench-5fa510f44779b0e3:latest",
+            "created_at": "2026-09-11T17:34:22.5401558Z",
+            "message": {
+              "role": "assistant",
+              "content": "```javascript\nfunction solve(input) {\n  if (input === null || typeof input !== 'object') {\n    return input;\n  }\n\n  if (Array.isArray(input)) {\n    return input.map(item => solve(item));\n  }\n\n  const result = Object.create(Object.getPrototypeOf(input));\n  for (const key of Object.getOwnPropertyNames(input)) {\n    const descriptor = Object.getOwnPropertyDescriptor(input, key);\n    let value = descriptor.value;\n    if (value !== null && typeof value === 'object') {\n      value = solve(value);\n    }\n    if (key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret') {\n      descriptor.value = '[REDACTED]';\n    } else {\n      descriptor.value = value;\n    }\n    Object.defineProperty(result, key, descriptor);\n  }\n  return result;\n}\n```",
+              "thinking": "I need to create a deep copy function that redacts sensitive fields. Let me think through the requirements carefully.\n\nFirst, I need to handle JSON-compatible values: objects, arrays, strings, numbers, booleans, null. I need to preserve __proto__ keys, array order, and not mutate the input.\n\nFor the redaction logic: any key that equals \"password\", \"token\", or \"secret\" (case-insensitive) should have its value replaced with \"[REDACTED]\". This applies recursively to nested objects and arrays.\n\nLet me think about the implementation:\n\n1. If the value is null or a primitive (string, number, boolean), return it as-is.\n2. If it's an array, create a new array and recursively process each element.\n3. If it's an object, create a new object. I need to preserve all keys including __proto__. Using Object.create(null) or just {} would lose __proto__ as a key. I should use Object.assign or spread with a null prototype, or better yet, use Object.create(Object.getPrototypeOf(input)) to preserve the prototype chain, and then copy all own properties including __proto__.\n\nActually, the requirement says \"Preserve every key (including __proto__)\". So if the input has a key literally named \"__proto__\", I need to keep it. Using `{}` or `Object.create(null)` won't work well for this. Let me use `Object.create(Object.getPrototypeOf(input))` to preserve the prototype, and then use `Object.getOwnPropertyNames` to get all keys including `__proto__`.\n\nWait, but `__proto__` is a special property. If I do `obj.__proto__`, it accesses the prototype, not a property. But if the object has an own property named `__proto__`, I can access it via `Object.getOwnPropertyDescriptor` or `Reflect.get`.\n\nLet me think about this more carefully. If input is `{__proto__: \"something\"}`, then `input.__proto__` would actually return the prototype chain, not the string \"something\". But `Object.getOwnPropertyNames(input)` would include `\"__proto__\"`.\n\nSo my approach should be:\n1. Get all own property names using `Object.getOwnPropertyNames(input)`\n2. For each property name, get its descriptor using `Object.getOwnPropertyDescriptor(input, key)`\n3. If the value needs redaction, use `\"[REDACTED]\"`\n4. Otherwise, recursively process the value\n5. Create a new object with the same prototype using `Object.create(Object.getPrototypeOf(input))`\n6. Use `Object.defineProperty` to set each property with its descriptor\n\nThis preserves everything including `__proto__` as a regular property.\n\nLet me write this out:\n\n```javascript\nfunction solve(input) {\n  if (input === null || typeof input !== 'object') {\n    return input;\n  }\n  \n  if (Array.isArray(input)) {\n    return input.map(item => solve(item));\n  }\n  \n  const result = Object.create(Object.getPrototypeOf(input));\n  for (const key of Object.getOwnPropertyNames(input)) {\n    const descriptor = Object.getOwnPropertyDescriptor(input, key);\n    let value = descriptor.value;\n    if (value !== null && typeof value === 'object') {\n      value = solve(value);\n    }\n    if (key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret') {\n      descriptor.value = '[REDACTED]';\n    } else {\n      descriptor.value = value;\n    }\n    Object.defineProperty(result, key, descriptor);\n  }\n  return result;\n}\n```\n\nWait, I need to be careful. The redaction should happen after recursive processing. Let me restructure:\n\n```javascript\nfunction solve(input) {\n  if (input === null || typeof input !== 'object') {\n    return input;\n  }\n  \n  if (Array.isArray(input)) {\n    return input.map(item => solve(item));\n  }\n  \n  const result = Object.create(Object.getPrototypeOf(input));\n  for (const key of Object.getOwnPropertyNames(input)) {\n    const descriptor = Object.getOwnPropertyDescriptor(input, key);\n    let value = descriptor.value;\n    if (value !== null && typeof value === 'object') {\n      value = solve(value);\n    }\n    if (key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret') {\n      descriptor.value = '[REDACTED]';\n    } else {\n      descriptor.value = value;\n    }\n    Object.defineProperty(result, key, descriptor);\n  }\n  return result;\n}\n```\n\nHmm, but what about getters/setters? The problem says \"JSON-compatible input value\", so I think we can assume all properties are data properties with values. But to be safe, I should handle accessor properties too. Actually, for JSON-compatible values, there won't be getters/setters. Let me keep it simple.\n\nActually wait - I should also consider: what if the value itself is an object that needs redaction? The recursive call handles that. And for arrays, each element is processed recursively.\n\nLet me also think about whether I need to handle the case where `input` is a Date or other non-plain object. The problem says \"JSON-compatible\", so I think we only need to handle plain objects and arrays.\n\nLet me refine my solution:\n\n```javascript\nfunction solve(input) {\n  if (input === null || typeof input !== 'object') {\n    return input;\n  }\n  \n  if (Array.isArray(input)) {\n    return input.map(item => solve(item));\n  }\n  \n  const result = Object.create(Object.getPrototypeOf(input));\n  for (const key of Object.getOwnPropertyNames(input)) {\n    const descriptor = Object.getOwnPropertyDescriptor(input, key);\n    let value = descriptor.value;\n    if (value !== null && typeof value === 'object') {\n      value = solve(value);\n    }\n    if (key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret') {\n      descriptor.value = '[REDACTED]';\n    } else {\n      descriptor.value = value;\n    }\n    Object.defineProperty(result, key, descriptor);\n  }\n  return result;\n}\n```\n\nThis looks good. Let me verify:\n- Deep copy: yes, we create new objects and arrays\n- No mutation of input: yes, we only read from input\n- Case-insensitive key matching: yes, using toLowerCase()\n- Preserves __proto__: yes, using Object.getOwnPropertyNames and Object.defineProperty\n- Preserves array order: yes, using map\n- Preserves null and primitives: yes, returned as-is\n- Recursively processes objects inside arrays: yes, map calls solve on each item\n- No external libraries: yes\n- ES2020: yes, using optional chaining isn't needed, but the code is ES2020 compatible\n\nI think this is correct. Let me finalize it.\n"
+            },
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": 8211065500,
+            "load_duration": 146806200,
+            "prompt_eval_count": 119,
+            "prompt_eval_duration": 73659000,
+            "eval_count": 1715,
+            "eval_duration": 7946267000,
+            "clientWallMs": 8239.3,
+            "supervisedWallMs": 8332.7
+          },
+          "code": "function solve(input) {\n  if (input === null || typeof input !== 'object') {\n    return input;\n  }\n\n  if (Array.isArray(input)) {\n    return input.map(item => solve(item));\n  }\n\n  const result = Object.create(Object.getPrototypeOf(input));\n  for (const key of Object.getOwnPropertyNames(input)) {\n    const descriptor = Object.getOwnPropertyDescriptor(input, key);\n    let value = descriptor.value;\n    if (value !== null && typeof value === 'object') {\n      value = solve(value);\n    }\n    if (key.toLowerCase() === 'password' || key.toLowerCase() === 'token' || key.toLowerCase() === 'secret') {\n      descriptor.value = '[REDACTED]';\n    } else {\n      descriptor.value = value;\n    }\n    Object.defineProperty(result, key, descriptor);\n  }\n  return result;\n}",
+          "markdownFenceRemoved": true,
+          "truncated": false,
+          "unexpectedThinking": false,
+          "wallMs": 8332.7,
+          "taskPassed": true,
+          "evaluation": {
+            "engine": "quickjs-emscripten",
+            "version": "0.32.0",
+            "node": "v22.23.2",
+            "isolation": "WebAssembly guest with no exposed host functions or module loader",
+            "memoryLimitBytes": 67108864,
+            "testMs": 300,
+            "rows": [
+              {
+                "id": "0",
+                "outputKind": "null",
+                "actual": null,
+                "mutated": false,
+                "passed": true,
+                "expected": null
+              },
+              {
+                "id": "1",
+                "outputKind": "number",
+                "actual": 0,
+                "mutated": false,
+                "passed": true,
+                "expected": 0
+              },
+              {
+                "id": "2",
+                "outputKind": "boolean",
+                "actual": false,
+                "mutated": false,
+                "passed": true,
+                "expected": false
+              },
+              {
+                "id": "3",
+                "outputKind": "string",
+                "actual": "text",
+                "mutated": false,
+                "passed": true,
+                "expected": "text"
+              },
+              {
+                "id": "4",
+                "outputKind": "object",
+                "actual": [],
+                "mutated": false,
+                "passed": true,
+                "expected": []
+              },
+              {
+                "id": "5",
+                "outputKind": "object",
+                "actual": {},
+                "mutated": false,
+                "passed": true,
+                "expected": {}
+              },
+              {
+                "id": "6",
+                "outputKind": "object",
+                "actual": {
+                  "password": "[REDACTED]",
+                  "safe": false
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "password": "[REDACTED]",
+                  "safe": false
+                }
+              },
+              {
+                "id": "7",
+                "outputKind": "object",
+                "actual": {
+                  "Token": "[REDACTED]",
+                  "SECRET": "[REDACTED]"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "Token": "[REDACTED]",
+                  "SECRET": "[REDACTED]"
+                }
+              },
+              {
+                "id": "8",
+                "outputKind": "object",
+                "actual": {
+                  "nested": [
+                    {
+                      "password": "[REDACTED]"
+                    },
+                    {
+                      "ok": [
+                        "secret",
+                        null
+                      ]
+                    }
+                  ]
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "nested": [
+                    {
+                      "password": "[REDACTED]"
+                    },
+                    {
+                      "ok": [
+                        "secret",
+                        null
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "9",
+                "outputKind": "object",
+                "actual": {
+                  "__proto__": {
+                    "token": "[REDACTED]"
+                  },
+                  "constructor": 7
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "__proto__": {
+                    "token": "[REDACTED]"
+                  },
+                  "constructor": 7
+                }
+              },
+              {
+                "id": "10",
+                "outputKind": "object",
+                "actual": [
+                  {
+                    "safe": 1
+                  },
+                  {
+                    "token": "[REDACTED]"
+                  }
+                ],
+                "mutated": false,
+                "passed": true,
+                "expected": [
+                  {
+                    "safe": 1
+                  },
+                  {
+                    "token": "[REDACTED]"
+                  }
+                ]
+              },
+              {
+                "id": "11",
+                "outputKind": "object",
+                "actual": {
+                  "passwordHint": "keep",
+                  "secrets": "keep",
+                  "secret": "[REDACTED]"
+                },
+                "mutated": false,
+                "passed": true,
+                "expected": {
+                  "passwordHint": "keep",
+                  "secrets": "keep",
+                  "secret": "[REDACTED]"
+                }
+              }
+            ],
+            "passed": 12,
+            "total": 12
+          }
+        }
+      ],
+      "status": "completed",
+      "warmup": {
+        "model": "nightly-bench-5fa510f44779b0e3:latest",
+        "created_at": "2026-09-11T17:33:15.2027008Z",
+        "message": {
+          "role": "assistant",
+          "content": "ready",
+          "thinking": "The user wants me to reply with exactly \"ready\".\n"
+        },
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": 7490140500,
+        "load_duration": 7251323100,
+        "prompt_eval_count": 15,
+        "prompt_eval_duration": 149802000,
+        "eval_count": 16,
+        "eval_duration": 86152000,
+        "clientWallMs": 7501.2,
+        "supervisedWallMs": 7598.8
+      },
+      "loadedModel": [
+        {
+          "name": "nightly-bench-5fa510f44779b0e3:latest",
+          "model": "nightly-bench-5fa510f44779b0e3:latest",
+          "size": 36940954991,
+          "digest": "caf8e6eec1ee2107f59a82aedb58df915e6697dd85c6d35f52012efb35ec6ed9",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen35moe",
+            "families": [
+              "qwen35moe"
+            ],
+            "parameter_size": "34.7B",
+            "quantization_level": "Q8_0"
+          },
+          "expires_at": "2026-09-11T11:38:15.2027008-06:00",
+          "size_vram": 36940954991,
+          "context_length": 16384
+        }
+      ],
+      "summary": {
+        "tasksPassed": 5,
+        "tasksAttempted": 8,
+        "tasksTotal": 8,
+        "testsPassed": 85,
+        "testsTotal": 99,
+        "medianWallMs": 3585.6,
+        "totalWallMs": 66644.90000000001,
+        "truncated": 1,
+        "unexpectedThinking": false,
+        "protocolValid": true
+      },
+      "unloadConfirmed": true
+    }
+  ],
+  "unloads": [
+    {
+      "model": "nightly-bench-5fa510f44779b0e3:latest",
+      "endpoint": "http://127.0.0.1:11435",
+      "confirmedAt": "2026-09-11T11:34:22-06:00",
+      "gpuAfter": {
+        "freeGiB": 93.8544921875,
+        "totalGiB": 95.5927734375,
+        "utilizationPercent": 2.0
+      },
+      "freeBeforeGiB": 93.8525390625
+    }
+  ],
+  "primaryIntegrity": {
+    "before": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "after": {
+      "obliterated-v3-q8-8k:latest": "6191a552bc1747aee2cdd64caac02979997c403357b8b56fc6bec02adc3867a5",
+      "hf.co/OBLITERATUS/Qwen3.8-27B-OBLITERATED:Q8_0": "a69dbbd875cd1b6ac0895d5d0c70094529a195abda49c91470001fb4b9e6b062",
+      "qwen3.8:27b-mtp-bf16": "197257101a8c1b63edbaba1cf030f60396b15d11a604b29806546b837b3b5e57",
+      "muse-glimmer:30b-bf16-dflash": "bd22c6664845c019aa757e6e00d7e19b7aacc605523328a0ac290fbce8fb43d6",
+      "qwen3.5:122b": "8b9d11d807c57feb1e2ecb0d6cbf40334c37dcc3523bed5540af4f927f112a37",
+      "gpt-oss:20b": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+      "qwen3-coder:30b": "06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca"
+    },
+    "modelDigestsUnchanged": true
+  },
+  "finishedAt": "2026-09-11T11:34:23-06:00"
+}
