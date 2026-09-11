@@ -463,6 +463,107 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual((probe['thinkingCharacters'], probe['answerCharacters']), (3, 4))
         self.assertEqual(probe['wallTimeRatioToThinkingOffMedian'], 2)
 
+    def replay_battery(self, index, *, inject_at=None, thinking_text='unexpected reasoning', advertised=False):
+        # Replay captured HTTP responses through the real chat/battery path, without inference.
+        run = nightly.read_json(Path(__file__).parent / 'runs' / '20260910-215014-a3642e7d.json')
+        saved = run['benchmarks'][index]
+        responses = [saved['warmup']]
+        for trial in saved['trials']:
+            responses.extend((trial['shortResponse'], trial['ingestResponse']))
+        responses.extend(check['response'] for check in saved['checks'])
+        responses = copy.deepcopy(responses)
+        if inject_at is not None:
+            responses[inject_at]['message']['thinking'] = thinking_text
+        pending = iter(responses)
+        requests = []
+        model = saved['model']
+        self.h = nightly.Harness(self.root)
+        self.h.installed = lambda: {model: {'digest': saved['digest'], 'size': 100}}
+        self.h.wait_idle = lambda *args: saved['gpuBefore']
+        self.h.confirm_unloaded = Mock()
+        def api(path, body=None, **kwargs):
+            if path == 'show':
+                return {'capabilities': ['completion', 'thinking'] if advertised else ['completion'],
+                        'details': saved['details']}
+            if path == 'version':
+                return saved['runtime']
+            if path == 'ps':
+                return {'models': []}
+            if path == 'chat':
+                requests.append(body)
+                return next(pending)
+            if path == 'generate':
+                return {'done': True}
+            raise AssertionError('Unexpected API request: ' + path)
+        self.h.api = api
+        result = self.h.benchmark(model)
+        self.assertEqual(len(requests), len(responses))
+        self.h.confirm_unloaded.assert_called_once()
+        return result, requests
+
+    def test_captured_muse_responses_expose_unadvertised_thinking(self):
+        result, requests = self.replay_battery(0)
+        self.assertTrue(result['summary']['unexpectedThinking'])
+        self.assertEqual(result['thinking'], 'unexpected-output')
+        self.assertFalse(result['thinkingControl']['advertised'])
+        self.assertEqual(result['thinkingControl']['requested'], 'not-sent')
+        short = [row for row in result['thinkingControl']['unexpectedResponses'] if row['phase'].startswith('short-')]
+        self.assertEqual(len(short), 3)
+        self.assertTrue(all(row['thinkingCharacters'] == 2107 and row['answerCharacters'] == 0 for row in short))
+        self.assertEqual(result['summary']['checksPassed'], 3)
+        self.assertEqual(result['thinkingProbe']['status'], 'skipped')
+        self.assertTrue(all('think' not in request for request in requests))
+
+    def test_captured_coder_responses_do_not_raise_thinking_mismatch(self):
+        result, _ = self.replay_battery(1)
+        self.assertFalse(result['summary']['unexpectedThinking'])
+        self.assertEqual(result['thinkingControl']['unexpectedResponses'], [])
+        self.assertEqual(result['thinking'], 'not-advertised')
+        self.assertEqual(result['thinkingProbe']['status'], 'unsupported')
+
+    def test_thinking_detected_in_every_ordinary_battery_stage_without_truncation(self):
+        for index, phase in ((0, 'warmup'), (1, 'short-1'), (2, 'ingest-1'), (7, 'check-sequence')):
+            with self.subTest(phase=phase):
+                result, _ = self.replay_battery(1, inject_at=index)
+                self.assertFalse(result['summary']['anyTruncated'])
+                self.assertTrue(result['summary']['unexpectedThinking'])
+                self.assertEqual([row['phase'] for row in result['thinkingControl']['unexpectedResponses']], [phase])
+
+    def test_advertised_model_returning_thinking_despite_false_is_flagged(self):
+        result, requests = self.replay_battery(1, inject_at=1, advertised=True)
+        self.assertTrue(result['summary']['unexpectedThinking'])
+        self.assertTrue(result['thinkingControl']['advertised'])
+        self.assertEqual(result['thinkingControl']['requested'], 'off')
+        self.assertTrue(all(request['think'] is False for request in requests))
+        self.assertEqual(result['thinkingProbe']['status'], 'skipped')
+
+    def test_empty_thinking_field_is_not_a_mismatch(self):
+        result, _ = self.replay_battery(1, inject_at=1, thinking_text=' \n\t')
+        self.assertFalse(result['summary']['unexpectedThinking'])
+
+    def test_unexpected_thinking_invalidates_candidate_and_baseline_without_truncation(self):
+        model = 'candidate:latest'
+        self.h.installed = lambda: {model: {'digest': 'b' * 64, 'size': 100},
+            self.policy['baselineModel']: {'digest': 'c' * 64, 'size': 100}}
+        self.h.wait_idle = lambda *args: {}
+        self.h.benchmark = lambda name: {'status': 'completed', 'summary': {
+            'anyTruncated': False, 'promptNearContextLimit': False, 'unexpectedThinking': True}}
+        selection = {'kind': 'installed', 'model': model, 'expectedDigest': 'b' * 64,
+                     'rationale': self.selection['rationale']}
+        result = self.h.run_candidate(selection, acceptance_validation=True)
+        self.assertEqual(result['status'], 'completed')
+        self.assertFalse(result['comparison']['valid'])
+        self.assertEqual(result['comparison']['invalidReason'],
+                         'candidate: unexpected thinking in ordinary responses; baseline: unexpected thinking in ordinary responses')
+
+    def test_thinking_probe_skips_a_contaminated_thinking_off_reference(self):
+        with patch.object(self.h, 'chat', side_effect=AssertionError('must not run another probe')):
+            probe = self.h.thinking_probe('example:latest', True,
+                {'unexpectedThinking': True, 'medianClientWallMs': 100})
+        self.assertEqual(probe['status'], 'skipped')
+        self.assertNotIn('wallTimeRatioToThinkingOffMedian', probe)
+        self.assertFalse(probe['includedInThroughputMedians'])
+
     def uploaded_blob_fixture(self):
         self.h.endpoint = 'http://127.0.0.1:11435'
         self.h.secondary_process = object()

@@ -557,6 +557,18 @@ class Harness:
                 'clientWallMs': response['clientWallMs'], 'doneReason': response.get('done_reason'),
                 'truncated': response.get('done_reason') == 'length'}
 
+    @staticmethod
+    def observe_thinking(measurement, response, phase):
+        message = response.get('message', {})
+        thinking = message.get('thinking', '')
+        if not isinstance(thinking, str) or not thinking.strip():
+            return
+        answer = message.get('content', '')
+        measurement['thinking'] = 'unexpected-output'
+        measurement['thinkingControl']['unexpectedResponses'].append({
+            'phase': phase, 'thinkingCharacters': len(thinking),
+            'answerCharacters': len(answer) if isinstance(answer, str) else None})
+
     def benchmark(self, model):
         installed = self.installed()
         if model not in installed:
@@ -569,7 +581,10 @@ class Harness:
             'runtime': self.api('version'), 'details': info.get('details'),
             'modelParameters': info.get('parameters'), 'capabilities': info.get('capabilities'),
             'templateSha256': hashlib.sha256(info.get('template', '').encode()).hexdigest(),
-            'policy': self.policy.copy(), 'gpuBefore': gpu, 'thinking': 'disabled' if thinking else 'not-supported',
+            'policy': self.policy.copy(), 'gpuBefore': gpu, 'thinking': 'requested-off' if thinking else 'not-advertised',
+            'thinkingControl': {'advertised': thinking, 'requested': 'off' if thinking else 'not-sent',
+                'unexpectedResponses': [],
+                'caveat': 'Checks returned thinking text only, not unexposed internal reasoning; character counts are not tokens.'},
             'loadTiming': 'Ollama model-load duration; not time to first token; warmup excluded from medians',
             'qualityScope': 'Small instruction-following checks; no coding-quality claim',
             'trials': [], 'checks': [], 'generatedCodeExecution': 'disabled'}
@@ -579,15 +594,18 @@ class Harness:
             started_model = True
             warmup = self.chat(model, 'Reply with exactly: ready', thinking)
             measurement['warmup'] = warmup
+            self.observe_thinking(measurement, warmup, 'warmup')
             measurement['loadedModel'] = self.api('ps').get('models', [])
             if any(row.get('digest') and row['digest'] != installed[model]['digest']
                    for row in measurement['loadedModel'] if row.get('name') == model):
                 raise RuntimeError('Loaded model digest changed during benchmark startup')
             for trial in range(self.policy['repetitions']):
                 short = self.chat(model, 'Write a 100 word description of the Rocky Mountains.', thinking)
+                self.observe_thinking(measurement, short, f'short-{trial + 1}')
                 # Distinct first tokens prevent cross-trial prefix cache hits in the ingest measurement.
                 filler = ('The quick brown fox jumps over the lazy dog. ' * 700)
                 ingest = self.chat(model, f'Trial {trial + 1}.\n{filler}\nReply with the single word: acknowledged.', thinking)
+                self.observe_thinking(measurement, ingest, f'ingest-{trial + 1}')
                 measurement['trials'].append({'trial': trial + 1,
                     'short': self.measurement(short), 'ingest': self.measurement(ingest),
                     'shortResponse': short, 'ingestResponse': ingest})
@@ -600,12 +618,14 @@ class Harness:
                 response = self.chat(model, prompt, thinking)
                 content = response.get('message', {}).get('content', '')
                 measurement['checks'].append({'name': name, 'passed': exact_lines(content, expected), 'response': response})
+                self.observe_thinking(measurement, response, 'check-' + name)
             values = [row['short']['genTokPerSec'] for row in measurement['trials'] if row['short']['genTokPerSec'] is not None]
             wall = [row['short']['clientWallMs'] for row in measurement['trials']]
             measurement['summary'] = {'medianGenTokPerSec': statistics.median(values) if values else None,
                 'minGenTokPerSec': min(values) if values else None, 'maxGenTokPerSec': max(values) if values else None,
                 'medianClientWallMs': statistics.median(wall),
                 'checksPassed': sum(row['passed'] for row in measurement['checks']), 'checksTotal': len(cases),
+                'unexpectedThinking': bool(measurement['thinkingControl']['unexpectedResponses']),
                 'anyTruncated': any(row[kind]['truncated'] for row in measurement['trials'] for kind in ('short', 'ingest')),
                 'promptNearContextLimit': any(row['ingest']['promptTokens'] >= 0.9 * self.policy['numCtx'] for row in measurement['trials']),
                 'contextCaveat': 'Prompt counts near 90% of context may reflect silent input truncation; not a proof of truncation.'}
@@ -648,6 +668,9 @@ class Harness:
             time.sleep(min(1, self.remaining()))
 
     def thinking_probe(self, model, capable, summary):
+        if summary.get('unexpectedThinking'):
+            return {'status': 'skipped', 'includedInThroughputMedians': False,
+                    'reason': 'Ordinary responses returned thinking; a thinking-off reference was not established.'}
         if not capable:
             return {'status': 'unsupported', 'includedInThroughputMedians': False}
         deadline = self.deadline
@@ -827,6 +850,8 @@ class Harness:
                             invalid_reasons.append(label + ': output truncated')
                         if result['summary'].get('promptNearContextLimit'):
                             invalid_reasons.append(label + ': prompt near context limit')
+                        if result['summary'].get('unexpectedThinking'):
+                            invalid_reasons.append(label + ': unexpected thinking in ordinary responses')
                     self.report['comparison'] = {'candidate': candidate['summary'], 'baseline': baseline['summary'],
                         'baselineModel': baseline_name, 'valid': not invalid_reasons,
                         'caveat': 'Same versions, request settings, and machine; templates/tokenizers differ. Primary server environment is not verified identical.'}

@@ -109,6 +109,10 @@ download prohibition is replaced by this authorization. Skipping a night is vali
    `cleanupError`, `preflightCleanupError`, `uploadedBlobCleanupErrors`, `importBookkeepingError`, or `postProcessingError`
    need to be reported even when measurements completed. A successful battery is distinct
    from successful cleanup. Flag invalid comparisons, near-context warnings, and probe errors.
+   Inspect `thinkingControl` and `summary.unexpectedThinking`: returned thinking can disagree
+   with advertised capabilities or a `think: false` request. Such ordinary responses invalidate
+   the comparison even without truncation; the separate thinking probe is then skipped. Report
+   the mismatch and skip reason. Do not change per-model limits to force a valid comparison.
 
 6. Append a dated section to `notes.md`. On discovery-only nights give a ranked shortlist of
    at most three candidates and the skip reason. Preserve the historical README results;
