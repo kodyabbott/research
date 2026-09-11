@@ -859,3 +859,65 @@ were recorded, and downloads stayed empty. A fresh primary `/api/tags` check at 
 confirmed all seven digests match the previous completed run. The quota refusal record
 itself omits `primaryIntegrity`; this independent check supplies that evidence. No keep/reject
 judgment for Muse is possible yet. Recommendation: retain it as the selected next experiment.
+
+## 2026-09-10 22:02 MDT - Approved extra Muse-Glimmer Q8 benchmark
+
+Kody approved one additional Muse-Glimmer-30B Q8 benchmark after the quota refusal above,
+with every other limit unchanged and the daily limit restored afterward. Codex executed it
+through `bench.ps1 -RunCandidate` and the existing supervisor. The only temporary policy
+change was `maxCandidatesPerDay: 1 -> 2`; the original policy bytes were restored at 21:50:17,
+as soon as this worker reserved its slot. The worker retained its initial policy snapshot.
+The receipt is `runs/20260910-215014-a3642e7d-authorization.json`, including the original and
+temporary SHA-256 hashes. The live policy again hashes to
+`15fe141fe58693c96aa6d1d4591e650121d3dc5dd3fad4497d81ed0e21e9f9b1` and allows one daily candidate.
+The September 10 ledger now has exactly two completed reservations: Fable's MiniCPM and
+this explicitly approved extra run. The schedule and harness source were unchanged.
+
+**Execution**: `runs/20260910-215014-a3642e7d.json` completed from 21:50:14 to 22:00:45 MDT
+(10 minutes 31 seconds). The exact previously validated Unsloth Q8_0 artifact at revision
+`faa5b025c584459c13febfa5c59883516710ae39` downloaded 29,612,957,984 bytes without resuming
+and passed the full SHA-256 check
+`f2c087d694ca8242a4a436076df7c041703ab051ac4b72bb1bfe2698299b0e86`. Import succeeded as
+`nightly-bench-f2c087d694ca8242:latest`, digest
+`387b8e1cfda3199833efb105941a118c59e70e5566d3143cf1ee0e2bb5bf4212`. Ollama reports Muse-Glimmer,
+27.9B, Q8_0. Both runtimes were 0.32.13. Battery settings stayed at 8192 context, temperature 0,
+seed 42, 512 generated tokens, warmup plus three repetitions; no drafter or vision projector.
+
+| Model | Raw median gen tok/s (range) | Median client wall ms | Median ingest tok/s | Exact checks | Timed-answer outcome |
+|---|---|---|---|---|---|
+| Muse-Glimmer Q8_0 | 47.89 (47.50-48.11) | 11,021.4 | 3,464.62 | 3/3 | All three hit the 512-token cap; no final answer |
+| qwen3-coder:30b Q4_K_M | 284.45 (282.09-305.55) | 689.4 | 11,370.52 | 3/3 | Completed without truncation |
+
+**Comparison is invalid**, with recorded reason `candidate: output truncated`. These raw
+rates are diagnostic measurements, not a clean speed ranking. Neither prompt was near the
+context limit. Runtime versions and requested options matched, but templates/tokenizers
+and the unverified primary performance environment remain additional comparison caveats.
+
+**Thinking-mode mismatch**: the imported Q8 model advertised only `tools` and `completion`.
+The harness therefore labeled thinking `not-supported`, omitted the `think` option in its
+ordinary requests, and skipped the separate thinking probe (`unsupported`). Nevertheless,
+Ollama returned `message.thinking` in the ordinary responses. Each of the three short trials
+returned 512 generated tokens, 2,107 thinking characters, an empty final `content`, and
+`done_reason: length`. These character counts are not exact reasoning-token counts. Even
+the successful sequence, arithmetic, and extraction checks included thinking text. Thus
+passing 3/3 establishes only the limited exact-output checks; it does not establish coding
+quality or successful thinking-disabled behavior. The existing customized BF16+DFlash tag
+advertises thinking support, so its configuration is not equivalent to this bare Q8 import.
+Evidence: candidate responses/capabilities in the run JSON and `nightly.py` `benchmark`/`chat`.
+
+**Cleanup and resources**: both models unloaded, recovering 94.0068 GiB free VRAM. Reported
+loaded VRAM was 26.65 GiB for Muse and 18.04 GiB for the baseline. The private child stopped
+at 22:00:44, with port 11435 free; all seven primary model digests remained unchanged. Stderr
+was empty and no cleanup, preflight cleanup, uploaded-blob cleanup, import-bookkeeping, or
+postprocessing errors were recorded. Retention evicted the older SmolLM2 Q4_K_M fixture
+`nightly-bench-2e8040ceae7815ab:latest`, keeping MiniCPM F16 and Muse Q8. An independent
+filesystem check at 22:02:02 found 34,651,965,817 bytes in the private store and zero download
+bytes. Muse's private manifest still references the uploaded source hash as its model layer,
+so that blob is retained model storage, not an unreferenced upload to delete.
+
+**Recommendation**: keep the Q8 artifact temporarily for compatibility diagnosis under the
+normal two-model cache policy; do not recommend replacing the coding baseline from these
+results. Next improvement: detect returned thinking even when capabilities omit it and
+mark that mismatch explicitly. Confirm this import's thinking controls before a future
+comparison; increasing only its token allowance would change the standardized protocol.
+No additional inference was run after this single authorized attempt.
