@@ -54,3 +54,8 @@ Generated functions execute only in QuickJS WebAssembly through quickjs-emscript
 This screen requests 16384 context, temperature 0, seed 42, and 4096 output tokens with thinking off or 8192 with reasoning. Each generation has a 240-second deadline and each grading subprocess a 30-second deadline within the original one-hour worker limit. A whole Markdown code fence may be removed and is recorded. Input mutation, truncation, wrong output types, and functional mismatches fail. A task passes only when all its hidden checks pass; correlated checks are not independent evidence.
 
 The Qwen3-Coder pilot completed with 5/8 fully correct functions and 90/99 checks, 0.961 seconds median generation response, no truncation, and verified unloading and unchanged personal model digests. This is distinct from its JSON mental-computation results. Follow-ups compare GPT-OSS, Qwen3.5, Qwen3.8, KAT, and Nex with reasoning modes kept separate. The full harness regression suite passed 145 tests after this addition.
+
+
+## Published coding dataset extension
+
+[HumanEval-X source and adaptations](../../fixtures/humaneval-x/README.md) document the pinned Apache-licensed 164-task JavaScript set, the 163 tasks supported in the isolated WASM runtime, three repaired upstream test invocations, seeded test randomness, and reference validation. A continuation pilot exposed formatting failures and is preserved separately from the subsequent complete-program chat protocol. These results are kept separate from the eight authored functions and the JSON-answer workload, with public-dataset training overlap noted as an evidence limit.
