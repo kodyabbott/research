@@ -72,3 +72,20 @@ was needed. Untyped/non-text backlog entries can still wait behind new candidate
 The tested source is preserved in local commit 36a54c6 on codex/nightly-peer-review; the
 review documentation is committed separately. The scheduled checkout remains at dfd44e8.
 Nothing has been pushed, installed, downloaded as model weights, or activated in this round.
+
+## Approved activation, 2026-09-10 18:06 MDT
+
+Kody approved proceeding with the 35 GiB artifact limit, 240 GiB F: cache retaining two
+completed models, per-user Python 3.14.7, and live acceptance. The signed installer initially
+failed under the app's package identity: its MSI payload was redirected into the private
+AppData cache and Windows Installer reported path-not-found. Running the same setup script
+in a hidden, ordinary Windows PowerShell process created through Win32_Process resolved
+that installation failure without changing app permissions or Windows Installer settings.
+
+The initial captured setup output also exposed PowerShell 5.1 treating unittest's successful
+stderr summary as NativeCommandError. Setup now captures the test process's stdout/stderr
+in files and checks its exit code. The corrected setup completed, all 51 tests passed in
+8.136 seconds under Python 3.14.7 with Codex runtime directories removed from PATH, and the
+normal Windows process set NIGHTLY_BENCH_PYTHON to the per-user installation. Live benchmark
+acceptance remains pending at this point. Run installation from an ordinary Windows shell,
+not a packaged app shell, if repeating setup on another machine.

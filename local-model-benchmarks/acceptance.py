@@ -1,6 +1,6 @@
 """Human-invoked live acceptance checks. Never called by the nightly task.
 
-The fixture uses the real admission path and a separate one-per-day validation ledger.
+The fixture uses the real admission path and a separate bounded validation ledger (three distinct fixtures per day).
 The deadline smoke reuses that imported fixture; it performs no download or import.
 """
 import argparse
