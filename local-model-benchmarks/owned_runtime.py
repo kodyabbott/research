@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import contextlib
+import hashlib
+import json
+import re
 import os
 from pathlib import Path
 import shutil
@@ -185,3 +188,75 @@ def secondary(harness):
             h.save_report()
             if not record['portFree']:
                 raise RuntimeError('Secondary port remained occupied after owned child stopped; no other process was killed')
+
+
+def prune_uploaded_blob(h, name, provenance):
+    """Remove only our verified upload when every private manifest leaves it unreferenced."""
+    from nightly import atomic_json, now, read_json, OLLAMA, OWNED_PREFIX
+    sha = provenance.get('sha256', '')
+    if not re.fullmatch(r'[0-9a-f]{64}', sha) or name != OWNED_PREFIX + sha[:16] + ':latest':
+        return None
+    blob = h.models_dir / 'blobs' / ('sha256-' + sha)
+    if not blob.exists():
+        return None
+    if h.endpoint == OLLAMA or h.secondary_process is None:
+        raise RuntimeError('Uploaded-blob cleanup requires the owned secondary server')
+    marker = Path(h.policy['taskStorageRoot']) / '.nightly-benchmark.json'
+    if read_json(marker) != {'schemaVersion': 1, 'project': str(h.root.resolve())}:
+        raise ValueError('Uploaded-blob ownership marker does not match')
+    tree_bytes(h.models_dir)  # Refuse links/junctions anywhere in the private store.
+    if not blob.resolve().is_relative_to(h.models_dir.resolve()):
+        raise ValueError('Uploaded blob is outside the owned model store')
+    if h.installed().get(name, {}).get('digest') != provenance.get('digest') or h.api('ps').get('models'):
+        raise RuntimeBusy('Uploaded-blob cleanup state changed or a model is loaded')
+    manifest_root = h.models_dir / 'manifests'
+    own_manifest = manifest_root / 'registry.ollama.ai' / 'library' / name.split(':')[0] / 'latest'
+    if own_manifest.stat().st_size > 1024 * 1024:
+        raise ValueError('Private manifest is unexpectedly large')
+    if hashlib.sha256(own_manifest.read_bytes()).hexdigest() != provenance['digest']:
+        raise ValueError('Imported manifest no longer matches the recorded digest')
+    references = set()
+    manifests = list(manifest_root.rglob('*'))
+    for path in manifests:
+        h.remaining()
+        if not path.is_file():
+            continue
+        if path.stat().st_size > 1024 * 1024:
+            raise ValueError('Private manifest is unexpectedly large')
+        manifest = json.loads(path.read_bytes())
+        if manifest.get('schemaVersion') != 2 or not isinstance(manifest.get('layers'), list):
+            raise ValueError('Unrecognized private manifest; uploaded blob retained')
+        for layer in [manifest.get('config', {}), *manifest['layers']]:
+            digest = layer.get('digest', '')
+            if not re.fullmatch(r'sha256:[0-9a-f]{64}', digest):
+                raise ValueError('Unrecognized manifest reference; uploaded blob retained')
+            references.add(digest)
+    if 'sha256:' + sha in references:
+        return None
+    initial = blob.stat()
+    if initial.st_size != provenance.get('bytes'):
+        raise ValueError('Uploaded blob size differs from the recorded upload')
+    actual = hashlib.sha256()
+    with blob.open('rb') as handle:
+        while chunk := handle.read(1024 * 1024):
+            h.remaining()
+            actual.update(chunk)
+    current = blob.stat()
+    fingerprint = lambda stat: (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns)
+    if actual.hexdigest() != sha or fingerprint(current) != fingerprint(initial):
+        raise ValueError('Uploaded blob changed or its checksum differs; retained')
+    deletion = {'model': name, 'modelDigest': provenance['digest'], 'sha256': sha,
+        'path': str(blob), 'bytes': initial.st_size, 'runId': h.run_id,
+        'reason': 'Verified harness upload is not referenced by any private manifest',
+        'status': 'requested', 'requestedAt': now()}
+    journal_path = h.state / 'blob-deletions.json'
+    journal = read_json(journal_path, {'deletions': []})
+    journal['deletions'].append(deletion)
+    atomic_json(journal_path, journal)  # Durable intent before deleting a proven owned file.
+    h.report.setdefault('uploadedBlobCleanup', []).append(deletion)
+    h.save_report()
+    blob.unlink()
+    deletion.update(status='deleted', deletedAt=now())
+    atomic_json(journal_path, journal)
+    h.save_report()
+    return deletion

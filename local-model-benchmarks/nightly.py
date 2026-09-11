@@ -22,7 +22,7 @@ import urllib.parse
 import urllib.request
 import uuid
 
-from owned_runtime import RuntimeBusy, port_open, process_identity, secondary, tree_bytes
+from owned_runtime import RuntimeBusy, port_open, process_identity, prune_uploaded_blob, secondary, tree_bytes
 
 GIB = 1024 ** 3
 OLLAMA = 'http://127.0.0.1:11434'
@@ -321,11 +321,12 @@ class Harness:
         # The entire private store is charged, including failed-import orphan blobs.
         # Historic reservations are an audit trail, not an ever-growing storage bill.
         owned = tree_bytes(self.models_dir)
-        allowance = 2 * new_bytes - min(new_bytes, resume_bytes)
+        allowance = 3 * new_bytes - min(new_bytes, resume_bytes)
         self.report['storageAccounting'] = {'basis': 'actual private store and download bytes',
-            'storeBytes': owned, 'downloadBytes': existing_downloads, 'newCopyAllowanceBytes': allowance}
+            'storeBytes': owned, 'downloadBytes': existing_downloads, 'newCopyAllowanceBytes': allowance,
+            'importCaveat': 'Reserve download plus upload blob plus a possible Ollama-rewritten model layer'}
         if owned + existing_downloads + allowance > self.policy['maxOwnedStorageGiB'] * GIB:
-            raise RuntimeError('Task storage budget full including orphan blobs and transient import copy; reconcile private storage')
+            raise RuntimeError('Task storage budget full including orphan blobs and transient import copies; reconcile private storage')
         stores = [download_dir, self.models_dir]
         by_device = {}
         for path in stores:
@@ -336,7 +337,7 @@ class Harness:
                 parent = parent.parent
             device = os.stat(parent).st_dev
             amount, previous_parent = by_device.get(device, (0, parent))
-            needed = new_bytes - min(new_bytes, resume_bytes) if path == download_dir else new_bytes
+            needed = new_bytes - min(new_bytes, resume_bytes) if path == download_dir else 2 * new_bytes
             by_device[device] = (amount + needed, previous_parent)
         for required, parent in by_device.values():
             if shutil.disk_usage(parent).free < required + self.policy['minFreeDiskGiB'] * GIB:
@@ -485,6 +486,10 @@ class Harness:
                 'repoId': plan['repoId'], 'revision': plan['revision'], 'filename': plan['filename'],
                 'bytes': plan['bytes'], 'importedAt': now(), 'runId': self.run_id}
             atomic_json(self.state / 'imports.json', imports)
+            try:
+                prune_uploaded_blob(self, plan['model'], imports[plan['model']])
+            except Exception as exc:
+                self.report.setdefault('uploadedBlobCleanupErrors', []).append(str(exc))
             imported = True
             return digest
         finally:
@@ -668,6 +673,10 @@ class Harness:
             if not (name.startswith(OWNED_PREFIX) and name in installed and name not in loaded
                     and item.get('digest') == installed[name].get('digest')):
                 continue
+            try:
+                prune_uploaded_blob(self, name, item)
+            except Exception as exc:
+                self.report.setdefault('uploadedBlobCleanupErrors', []).append(str(exc))
             terminal_failure = False
             for run_id in dict.fromkeys(item.get(key, '') for key in ('completedRun', 'lastRun', 'runId')):
                 if not re.fullmatch(r'[0-9]{8}-[0-9]{6}-[0-9a-f]{8}', run_id):
