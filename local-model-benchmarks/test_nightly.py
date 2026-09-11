@@ -268,6 +268,20 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(result['failureKind'], 'admission')
         self.assertIn('already used its daily slot', result['error'])
 
+    def test_invalid_comparison_records_the_truncation_reason(self):
+        model = 'candidate:latest'
+        self.h.installed = lambda: {model: {'digest': 'b' * 64, 'size': 100},
+            self.policy['baselineModel']: {'digest': 'c' * 64, 'size': 100}}
+        self.h.wait_idle = lambda *args: {}
+        self.h.benchmark = lambda name: {'status': 'completed', 'summary': {
+            'anyTruncated': name == model, 'promptNearContextLimit': False}}
+        selection = {'kind': 'installed', 'model': model, 'expectedDigest': 'b' * 64,
+                     'rationale': self.selection['rationale']}
+        result = self.h.run_candidate(selection, acceptance_validation=True)
+        self.assertEqual(result['status'], 'completed')
+        self.assertFalse(result['comparison']['valid'])
+        self.assertEqual(result['comparison']['invalidReason'], 'candidate: output truncated')
+
     def test_candidate_and_baseline_complete_with_persisted_ledger(self):
         hour = nightly.dt.datetime.now().hour
         self.h.policy.update(benchmarkWindowStartHour=hour, benchmarkWindowEndHour=(hour + 1) % 24)
