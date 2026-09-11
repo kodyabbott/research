@@ -946,9 +946,10 @@ absence of unexposed internal reasoning. Raw measurements and responses remain a
 
 Validation: three focused regressions reproduced the missing behavior before the patch.
 After the change, all 69 offline tests passed in 8.619 seconds with Python 3.14.7. Seven new
-tests replay the saved Muse and coder responses through the actual chat/battery code, cover
-each ordinary response stage, ignored `think: false`, whitespace fields, nontruncated
-candidate/baseline mismatches, and suppression of an invalid thinking-overhead probe. Existing
+tests cover the guard. Five replay saved Muse and coder responses through the actual
+chat/battery code, covering each ordinary response stage, ignored `think: false`, and
+whitespace fields; two directly test nontruncated candidate/baseline mismatches and
+suppression of an invalid thinking-overhead probe. Existing
 runtime, cleanup, admission, and deadline tests also passed. No model inference or downloads
 were performed for this fix. `test_nightly.py` contains the reproducible regression cases.
 
