@@ -1,10 +1,12 @@
 # RTX PRO 6000 benchmark progress
 
-Updated: 2026-09-11T12:29:47.402178-06:00
+Updated: 2026-09-11T12:58:56.959647-06:00
 
 September 11 campaign status: active. Results below are measured locally; scores from different reasoning budgets are separate.
 
-Running: ornith-35b-q6. Pending queue entries: 62.
+Running: humaneval-chat-ornith-implicit-part7. Pending queue entries: 61.
+
+Tested model artifacts or installed configurations: 8. This includes completed compatibility diagnostics; it does not mean every configuration produced a valid ordinary comparison. Downloads alone are excluded. The JSON companion links each tested artifact to its source model, protocols and raw runs.
 
 ## Matched 24-case workload comparison
 
@@ -22,6 +24,8 @@ Every row below covers exactly the same first 24 authored cases. Thinking-off ou
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | False | 22/24 | 2.40 | 0 | unexpected thinking |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | True | 22/24 | 2.41 | 0 | none |
 | qwen3.8:27b-mtp-bf16 | True | 24/24 | 11.77 | 0 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | implicit | 21/24 | 4.67 | 0 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | False | 4/24 | 0.60 | 0 | none |
 
 ## Broader workload results
 
@@ -40,6 +44,8 @@ The deterministic 96-case suite covers ledger replay, event-state reconstruction
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | False | 8192 | 22/24 | 2.40 | 0 | unexpected thinking |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF / nex-agi_Nex-N2.5-mini-Q6_K.gguf | True | 8192 | 86/96 | 2.45 | 0 | none |
 | qwen3.8:27b-mtp-bf16 | True | 8192 | 24/24 | 11.77 | 0 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | implicit | 8192 | 89/96 | 5.18 | 0 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF / Ornith-1.5-35B-A3B-Q6_K.gguf | False | 8192 | 4/24 | 0.60 | 0 | none |
 
 Thinking-off jobs allow 2,048 output tokens; reasoning jobs allow 8,192. All use an 8,192-token context. Raw answers, runtime versions, model digests, and exact prompts are preserved in the research repository. Partial totals should not be read as a final ranking. Rows marked unexpected thinking violate their requested mode and must not be used as valid thinking-off comparisons.
 
@@ -52,6 +58,7 @@ The short throughput battery uses 8192 context and a 512-token output cap. Valid
 | bartowski/LiquidAI_LFM2.5-2.6B-GGUF | invalid | not comparable | not scored / 12/16 | candidate: output truncated; candidate: unexpected thinking in ordinary responses |
 | bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | valid | 212.29 / 296.28 | 13/16 / 12/16 | none |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF | invalid | not comparable | not scored / 12/16 | candidate: output truncated; candidate: unexpected thinking in ordinary responses |
+| bartowski/Ornith-1.5-35B-A3B-GGUF | valid | 223.67 / 296.5 | 12/16 / 12/16 | none |
 
 ## Initial candidate screens
 
@@ -76,6 +83,8 @@ Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Gener
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF | True / greedy-v1 | 16384 / 8192 | 2/8 | 24/99 | 38.97 | 6 truncated |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF | True / greedy-v1 | 32768 / 16384 | 2/8 | 24/99 | 78.38 | 6 truncated |
 | bartowski/nex-agi_Nex-N2.5-mini-GGUF | True / nex-recommended-v1 | 16384 / 8192 | 4/8 | 51/99 | 27.81 | 4 truncated |
+| bartowski/Ornith-1.5-35B-A3B-GGUF | implicit / greedy-v1 | 16384 / 8192 | 7/8 | 87/99 | 17.80 | 1 truncated |
+| bartowski/Ornith-1.5-35B-A3B-GGUF | False / greedy-v1 | 16384 / 4096 | 4/8 | 72/99 | 1.62 | none |
 
 Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,192 with reasoning. Larger-budget rows use 32,768 context and 16,384 output tokens; they are separate configurations, not equal-budget comparisons. The separately labeled nex-recommended-v1 sampler uses temperature 0.7, top_p 0.95, top_k 40 and seed 42; the original greedy sampler stays unchanged. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.
 
@@ -83,15 +92,17 @@ Initial runs use 16,384 context and 4,096 output tokens with thinking off or 8,1
 
 One greedy sample per task from the [published dataset](https://huggingface.co/datasets/zai-org/humaneval-x). The supported set is 163 of 164 tasks: Node crypto task 162 is excluded. Missing test invocations in tasks 32, 119, and 151 are explicitly added, and test randomness uses seed 42. All 163 reference solutions passed this runner. This is an adapted evaluation, not the original 200-sample leaderboard protocol; this longstanding public dataset may appear in model training data.
 
-| Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Truncated | Protocol note |
-|---|---|---|---:|---:|---:|---|
-| qwen3-coder:30b | continuation | False | 6/20 | 0.51 | 0 | none |
-| qwen3-coder:30b | full-program | False | 20/20 | 0.53 | 0 | none |
-| bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | True | 15/20 | 0.76 | 0 | none |
-| bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | False | 136/163 | 0.79 | 0 | none |
-| bartowski/nex-agi_Nex-N2.5-mini-GGUF | full-program | True | 129/163 | 2.21 | 21 | none |
+| Model | Prompt style | Thinking | Correct / attempted | Median generation seconds | Total generation minutes | Truncated | Protocol note |
+|---|---|---|---:|---:|---:|---:|---|
+| qwen3-coder:30b | continuation | False | 6/20 | 0.51 | 0.17 | 0 | none |
+| qwen3-coder:30b | full-program | False | 20/20 | 0.53 | 0.19 | 0 | none |
+| bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | True | 15/20 | 0.76 | 0.25 | 0 | none |
+| bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF | full-program | False | 136/163 | 0.79 | 2.26 | 0 | none |
+| bartowski/nex-agi_Nex-N2.5-mini-GGUF | full-program | True | 129/163 | 2.21 | 19.21 | 21 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF | full-program | implicit | 110/120 | 3.25 | 8.38 | 2 | none |
+| bartowski/Ornith-1.5-35B-A3B-GGUF | full-program | False | 17/20 | 0.75 | 0.27 | 0 | none |
 
-These HumanEval-X runs use 16384 context and 4096 output tokens with thinking off or 8192 with reasoning. Partial totals cover completed blocks only. Source data, transformations, reference validation, prompts, raw continuations, and test outcomes are saved.
+These HumanEval-X runs use 16384 context and 4096 output tokens with thinking off or 8192 with reasoning. Partial totals cover completed blocks only. Total generation time sums task response times, including failed and truncated attempts, and excludes model import, load, warmup, grading and between-block overhead. Source data, transformations, reference validation, prompts, raw continuations, and test outcomes are saved.
 
 ## Background model downloads
 

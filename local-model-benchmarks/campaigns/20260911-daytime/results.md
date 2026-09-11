@@ -1,6 +1,6 @@
 # Model benchmark campaign results
 
-Updated: 2026-09-11T12:29:47-06:00
+Updated: 2026-09-11T12:58:57-06:00
 
 This is a progress report until every worthwhile queued test is complete or its authorization ends.
 Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.
@@ -72,8 +72,22 @@ Rows remain in queue order, not quality rank. Only terminal records are scored. 
 | [bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF<br>Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf](../../runs/20260911-122726-7099ff82.json) | HumanEval-X adapted screen | — | 14/20 tasks (separate) | — |
 | [bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF<br>Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf](../../runs/20260911-122807-c6c59bf6.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
 | [bartowski/Kwaipilot_KAT-Coder-V2.5-Dev-GGUF<br>Kwaipilot_KAT-Coder-V2.5-Dev-Q8_0.gguf](../../runs/20260911-122847-fb776302.json) | HumanEval-X adapted screen | — | 1/3 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-122907-c28b9962.json) | valid comparison | 223.67 / 296.5 | 12/16 / 12/16 | 3/3 / 3/3 |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-123237-2d6e9243.json) | workload screen | — | 21/24 (practical-json-v1, separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-123527-f610d12d.json) | code-writing screen | — | 7/8 tasks; 87/99 tests (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-123827-d0c54af4.json) | HumanEval-X adapted screen | — | 20/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-123927-a45f0cb9.json) | workload screen | — | 4/24 (practical-json-v1, separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-123957-6c2bc715.json) | code-writing screen | — | 4/8 tasks; 72/99 tests (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-124027-ee1c6066.json) | HumanEval-X adapted screen | — | 17/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-124057-af772aaa.json) | workload screen | — | 24/24 (practical-json-v1, separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-124338-5574d5f9.json) | workload screen | — | 22/24 (practical-json-v1, separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-124628-7aed5384.json) | workload screen | — | 22/24 (practical-json-v1, separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-124918-607403db.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125048-9723b122.json) | HumanEval-X adapted screen | — | 19/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125238-aecaf43d.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125358-15438ab5.json) | HumanEval-X adapted screen | — | 18/20 tasks (separate) | — |
+| [bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf](../../runs/20260911-125619-d200815e.json) | HumanEval-X adapted screen | — | 16/20 tasks (separate) | — |
 | bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | running | — | — | — |
-| bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | pending | — | — | — |
 | bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | pending | — | — | — |
 | bartowski/Ornith-1.5-35B-A3B-GGUF<br>Ornith-1.5-35B-A3B-Q6_K.gguf | pending | — | — | — |
 | unsloth/gemma-4-31B-it-GGUF<br>gemma-4-31B-it-Q8_0.gguf | pending | — | — | — |
@@ -410,6 +424,70 @@ Personal model digests unchanged: True.
 Personal model digests unchanged: True.
 
 ### humaneval-chat-kat-off-part9
+
+Personal model digests unchanged: True.
+
+### ornith-35b-q6
+
+Candidate: overnight-screen-v2, 12/16. Failed cases: sql-null, sql-left-join, capacity, sort-tiebreak.
+Candidate thinking probe: completed. Wall-time ratio to ordinary median: 2.10x. Thinking characters: 869; answer characters: 655.
+Baseline: overnight-screen-v2, 12/16. Failed cases: python-boundary, sql-null, sql-left-join, capacity.
+Baseline thinking probe: unsupported.
+Personal model digests unchanged: True.
+
+### workload-ornith-pilot
+
+Personal model digests unchanged: True.
+
+### coding-ornith-pilot
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-pilot
+
+Personal model digests unchanged: True.
+
+### workload-ornith-off-pilot
+
+Personal model digests unchanged: True.
+
+### coding-ornith-off-pilot
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-off-pilot
+
+Personal model digests unchanged: True.
+
+### workload-ornith-implicit-part2
+
+Personal model digests unchanged: True.
+
+### workload-ornith-implicit-part3
+
+Personal model digests unchanged: True.
+
+### workload-ornith-implicit-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part2
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part3
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part4
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part5
+
+Personal model digests unchanged: True.
+
+### humaneval-chat-ornith-implicit-part6
 
 Personal model digests unchanged: True.
 
