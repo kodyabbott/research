@@ -1,6 +1,6 @@
 # Peer review of the nightly benchmark harness
 
-Status: proposed changes on codex/nightly-peer-review; live acceptance and deployment are pending.
+Status: approved revision deployed; live acceptance checks pass. Final Fable sign-off is pending. Historical review entries below record the earlier gates; see validation.md for current evidence.
 
 Kody requested collaboration with the existing Claude Fable 5.1 session
 `68591a9a-964d-4e81-88ff-e4934174c051`. Codex sent peer messages to that session through
@@ -99,3 +99,33 @@ GPU recovery. It now polls both port release and VRAM in the existing bounded re
 window. A regression test reproduces delayed port release after VRAM is already free.
 All 52 tests pass under Python 3.14.7 (8.399 seconds). The failed acceptance report is retained;
 a fresh live deadline run is required before closing this finding.
+## Live acceptance follow-up
+
+The final deployed source includes the deadline port-polling fix (541ec15), durable shutdown
+record finalization (d66e72b), verified upload-orphan cleanup and three-copy admission (1a4c038),
+admission failure classification (e5c0ad1), invalid-comparison reasons (7deb6ab), and explicit
+whitespace grading documentation (4176afa). All 58 tests pass under Python 3.14.7.
+
+Fable reviewed the cleanup code against the real store and reported no blockers to live
+verification. It independently confirmed that the recorded Ollama digests equal the SHA-256
+of the corresponding manifests. Live reconciliation then removed precisely the two known
+unreferenced uploads, 250,265,792 bytes, on its first cleanup pass with no cleanup errors.
+Both retained model digests and all seven primary digests were unchanged. The final loaded
+worker deadline test records portFree, vramRecovered and ownedProcessExited as true, with
+stoppedAt and hard-runtime-limit as the stop reason. No candidate quota was reset or bypassed.
+
+The full, current evidence is indexed in validation.md. The active routine's editor/model menu
+was visually inspected by Codex and showed Fable 5.1 and daily 9 PM in the research folder.
+The redundant UI Save was rejected by automatic review, so the dialog was canceled and no
+UI settings were changed. The already-correct settings were verified read-only; the subsequent
+prompt deployment only synchronized the separately reviewed versioned instructions.
+
+A peer-message approval rejection was resolved by verifying that the live session UUID matched
+the user's quoted original review and narrowing the message to benchmark commit IDs and a
+review request. The authorized existing session received the update. No unrelated session was
+contacted, and no credentials or unrestricted environment dump was shared.
+
+The primary runtime environment remains an explicit comparison caveat. The final discovery
+sweep was partial after four HTTP 429s, with 253 metadata entries still pending. These limits
+are documented, and neither is represented as successful coverage or laboratory isolation.
+Final project sign-off remains pending the review of this completed evidence bundle.
