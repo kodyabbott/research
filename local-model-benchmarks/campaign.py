@@ -103,7 +103,14 @@ def worker(root, authorization, selection_path, run_id):
     with state_lock(h.state / 'operation.lock'):
         validate_authorization(root, authorization)
         selection = read_json(selection_path)
-        if selection.get('campaignProtocol') == 'practical-json-hf-v1':
+        if selection.get('campaignProtocol') == 'javascript-coding-v1':
+            from coding_screen import run
+            result = run(h, selection)
+        elif selection.get('campaignProtocol') == 'javascript-coding-hf-v1':
+            from coding_screen import run
+            from workload_screen import run_downloaded
+            result = run_downloaded(h, selection, runner=run)
+        elif selection.get('campaignProtocol') == 'practical-json-hf-v1':
             from workload_screen import run_downloaded
             result = run_downloaded(h, selection)
         elif selection.get('campaignProtocol') == 'practical-json-v1':

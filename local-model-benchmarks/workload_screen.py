@@ -80,7 +80,7 @@ def run(h,selection,*,prepared_plan=None,reserved_elsewhere=False,personal_befor
     return h.report
 
 
-def run_downloaded(h,selection):
+def run_downloaded(h,selection,*,runner=run):
     """Use the same private runtime/import transaction for a broader candidate screen."""
     reserved=False;plan=None
     h.report.update(mode='campaign-workload-screen',selection=selection)
@@ -95,7 +95,7 @@ def run_downloaded(h,selection):
             h.wait_idle(plan['bytes']);h.reserve(plan);reserved=True
             if not plan['alreadyImported']:
                 path=h.download(plan);plan['digest']=h.import_model(plan,path)
-            run(h,selection,prepared_plan=plan,reserved_elsewhere=True,personal_before=before)
+            runner(h,selection,prepared_plan=plan,reserved_elsewhere=True,personal_before=before)
             if h.report.get('status')=='completed':
                 h.complete_import(plan);h.cleanup()
     except Exception as exc:h.report.update(status='error',error=str(exc))

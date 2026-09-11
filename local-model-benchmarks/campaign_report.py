@@ -48,12 +48,12 @@ def build(campaign_id=None):
             'error':report.get('error') or report.get('reason'),
             'cleanupErrors':{k:report[k] for k in ('cleanupError','preflightCleanupError','uploadedBlobCleanupErrors','importBookkeepingError','postProcessingError') if k in report}})
     data={'campaignId':queue['campaignId'],'campaignStatus':queue.get('status','running'),'cancelledAt':queue.get('cancelledAt'),'generatedAt':now(),'rows':rows,
-          'scope':'Paired standardized text battery and small authored quality screen. Not a coding-task execution benchmark.'}
+          'scope':'Separate text throughput, authored exact-answer workloads, and isolated JavaScript function-writing screens; protocol and reasoning budgets are recorded per run.'}
     atomic_json(FOLDER/'results.json',data)
     lines=['# Model benchmark campaign results', '', 'Updated: '+data['generatedAt'], '',
            ('The user canceled the campaign at '+queue['cancelledAt']+'. All campaign processes are stopped and overnight follow-ups are paused.' if queue.get('status')=='cancelled' else 'This is a progress report until every worthwhile queued test is complete or its authorization ends.'),
            'Rows remain in queue order, not quality rank. Only terminal records are scored. Raw throughput from invalid comparisons is omitted here and retained in the linked JSON.', '',
-           '| Model / artifact | Run status | Valid throughput, candidate / coder (tok/s) | v2 screen, candidate / coder | Exact checks, candidate / coder |',
+           '| Model / artifact | Run status | Valid throughput, candidate / coder (tok/s) | Quality screen (protocol shown) | Exact checks, candidate / coder |',
            '|---|---|---:|---|---|']
     for row in rows:
         report_status=row['status']; comparison=row.get('comparison') or {}
@@ -64,8 +64,11 @@ def build(campaign_id=None):
             label='['+label+'](../../'+row['resultFile']+')'
         terminal=report_status=='completed'
         status=report_status
-        speed=quality=checks='—'
-        if terminal and row.get('mode')=='campaign-workload-screen':
+        speed=quality=checks='â€”'
+        if terminal and row.get('mode')=='campaign-coding-screen':
+            status='code-writing screen'
+            quality=f"{cs.get('tasksPassed')}/{cs.get('tasksTotal')} tasks; {cs.get('testsPassed')}/{cs.get('testsTotal')} tests (separate)"
+        elif terminal and row.get('mode')=='campaign-workload-screen':
             status='workload screen'
             quality=f"{cs.get('passed')}/{cs.get('total')} (practical-json-v1, separate)"
         elif terminal and row.get('mode')=='campaign-reasoning-screen':
@@ -82,7 +85,7 @@ def build(campaign_id=None):
             checks=f"{cs.get('checksPassed','?')}/{cs.get('checksTotal','?')} / {bs.get('checksPassed','?')}/{bs.get('checksTotal','?')}"
         lines.append(f'| {label} | {status} | {speed} | {quality} | {checks} |')
     lines += ['', '## Limits and failed cases', '',
-              'The 16-item screen measures exact structured answers, code comprehension, small reasoning problems and evidence handling. It does not execute generated code or test a production coding agent. One item changes the score by 6.25 percentage points; differences are descriptive and have no statistical significance claim. V1 pilot and V2 main-sweep scores are not pooled.', '',
+              'The separate function-writing screen executes eight generated functions against 99 hidden checks in QuickJS WASM; it uses 16384 context and is not pooled with the answer-only screens. The practical JSON suite uses 96 authored checks in 24-case blocks. The 16-item v2 screen measures exact structured answers, code comprehension, small reasoning problems and evidence handling. It does not execute generated code or test a production coding agent. One item changes the score by 6.25 percentage points; differences are descriptive and have no statistical significance claim. V1 pilot and V2 main-sweep scores are not pooled.', '',
               'A valid throughput comparison does not certify model quality. A completed quality screen is reported separately when throughput is invalid; truncation counts as a failed screen case, and unexpected returned thinking is explicitly marked. Stored BF16/MTP/DFlash configurations include custom settings and cannot isolate quantization effects.', '',
               'The separate GPT-OSS low-reasoning screen allows 8192 generated tokens per case versus 512 in the main sweep. It is unpaired and is not an equal-budget quality ranking. Thinking probes below are single exploratory trials excluded from throughput medians; ratios against an invalid ordinary comparison are diagnostic only.', '']
     for row in rows:

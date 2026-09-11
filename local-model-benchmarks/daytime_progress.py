@@ -15,12 +15,16 @@ args=parser.parse_args()
 out=args.output_dir
 out.mkdir(parents=True,exist_ok=True)
 queue=read_json(root/'state/campaign-20260911-daytime-queue.json')
-groups={};terminal=[];active=[]
+groups={};terminal=[];active=[];coding=[]
 for item in queue['items']:
     if not item.get('runId'):continue
     report=read_json(root/'runs'/(item['runId']+'.json'),{})
     if report.get('status') in ('queued','running'):active.append({'id':item['id'],'runId':item['runId']});continue
     terminal.append({'id':item['id'],'runId':item['runId'],'status':report.get('status'),'error':report.get('error') or report.get('reason')})
+    if report.get('mode')=='campaign-coding-screen' and report.get('status')=='completed':
+        b=report['benchmarks'][0];sel=report['selection'];pr=report['protocol']
+        coding.append({'model':sel.get('repoId',b['model']),'artifact':sel.get('filename'),'digest':b['digest'],'runId':item['runId'],
+            'protocol':pr,**b['summary'],'tasks':[{'id':x['id'],'passed':x['taskPassed'],'testsPassed':x['evaluation']['passed'],'testsTotal':x['evaluation']['total']} for x in b['tasks']]})
     if report.get('mode')!='campaign-workload-screen' or report.get('status')!='completed':continue
     bench=report['benchmarks'][0];protocol=report['protocol'];selection=report.get('selection',{})
     label=(selection['repoId']+' / '+selection.get('filename','')) if selection.get('repoId') else bench['model']
@@ -47,7 +51,7 @@ for job_path in (root/'state').glob('prefetch-*.job.json'):
     artifacts.append({'model':report.get('selection',{}).get('repoId'),'status':report.get('status'),'verified':download.get('verified',False),
         'bytesDownloaded':size,'expectedBytes':report.get('admission',{}).get('bytes'),'runId':job['runId']})
 data={'updatedAt':dt.datetime.now().astimezone().isoformat(),'campaignId':queue['campaignId'],'active':active,'terminal':terminal,
- 'pending':sum(r['status']=='pending' for r in queue['items']),'workloadResults':results,'artifactPrefetches':artifacts,
+ 'pending':sum(r['status']=='pending' for r in queue['items']),'workloadResults':results,'codingResults':coding,'artifactPrefetches':artifacts,
  'supervision':read_json(root/'state'/('campaign-'+queue['campaignId']+'-control.json'),{})}
 try:
     sample=subprocess.run(['nvidia-smi','--query-gpu=utilization.gpu,memory.used,temperature.gpu,power.draw,clocks_event_reasons.active','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True,timeout=5,creationflags=subprocess.CREATE_NO_WINDOW).stdout.strip().splitlines()[0]
@@ -64,7 +68,7 @@ lines=['# RTX PRO 6000 benchmark progress','', 'Updated: '+data['updatedAt'], ''
  'The September 11 campaign is active. Results below are measured locally; scores from different reasoning budgets are separate.', '',
  'Running: '+(', '.join(x['id'] for x in active) or 'between jobs')+'. Pending queue entries: '+str(data['pending'])+'.', '',
  '## Broader workload results','',
- 'The deterministic 96-case suite covers ledger replay, event-state reconstruction, dependency scheduling, SQL, shortest paths, record extraction, Python tracing, and retrieval. Completed blocks are accumulated below. Model-generated code is never executed. These are authored workload checks, not a standardized coding benchmark.', '',
+ 'The deterministic 96-case suite covers ledger replay, event-state reconstruction, dependency scheduling, SQL, shortest paths, record extraction, Python tracing, and retrieval. Completed blocks are accumulated below. In this JSON-answer suite, model-generated code is never executed. These are authored workload checks, not a standardized coding benchmark.', '',
  '| Model | Thinking | Context | Correct / attempted | Median response seconds | Truncated |', '|---|---|---:|---:|---:|---:|']
 for r in results:
     lines.append(f"| {r['model']} | {r['thinking']} | {r['context']} | {r['passed']}/{r['total']} | {(r['medianWallMs'] or 0)/1000:.2f} | {r['truncated']} |")
@@ -73,6 +77,12 @@ lines+=['','Thinking-off jobs allow 2,048 output tokens; reasoning jobs allow 8,
  '- LFM2.5 2.6B BF16: downloaded and hash-verified, imported, and tested. Its ordinary responses returned unexpected thinking and hit the token cap, so the ordinary throughput comparison is invalid. This is a protocol compatibility finding, not an overall model-quality verdict.',
  '- Nex-N2.5-mini Q6: a newly found Bartowski mirror was verified and added to the queue. Text-only evaluation will not test its advertised computer-use or vision capabilities.', '',
  '## Background model downloads','']
+lines[-2:]=[]
+lines+=['## Function-writing results','','Eight authored JavaScript tasks, 99 hidden checks, and input immutability. Generated functions execute only inside an isolated QuickJS WebAssembly guest, with no host functions or module loader. This is a small function-writing screen, not a standardized coding leaderboard or repository agent evaluation.','',
+ '| Model | Thinking | Functions fully correct | Hidden checks passed | Median generation seconds |','|---|---|---:|---:|---:|']
+for c in coding:
+    lines.append(f"| {c['model']} | {c['protocol']['thinking']} | {c['tasksPassed']}/{c['tasksTotal']} | {c['testsPassed']}/{c['testsTotal']} | {(c['medianWallMs'] or 0)/1000:.2f} |")
+lines+=['','Context is 16,384 tokens; output caps are 4,096 with thinking off and 8,192 with reasoning. Hidden-test counts are correlated within each function; passing a function requires all its checks. Prompts, generated code, sandbox dependency lock, and every observed result are saved.','','## Background model downloads','']
 for a in artifacts:
     lines.append(f"- {a['model']}: {a['status']}; {a['bytesDownloaded']/1e9:.2f} / {(a['expectedBytes'] or 0)/1e9:.2f} GB; complete-file hash verified: {a['verified']}.")
 lines += ['',
