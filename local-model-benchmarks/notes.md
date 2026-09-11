@@ -710,3 +710,18 @@ was used. The discovery sweep tried 100 lookups, preserved four HTTP 429 failure
 and left 253 pending entries. See validation.md for every raw evidence link. Fable accepted the final
 evidence at 19:11 MDT, agreeing it is adequate for the authorized bounded nightly experiment.
 See peer-review.md for the recorded verdict and limits. No changes have been pushed.
+
+## 2026-09-10 - Align benchmark admission with the 20:15 schedule
+
+Kody changed the scheduled task to 20:15 local and asked to fix the remaining 21:00
+admission gate. The controller started at 20:22, completed discovery, validated a candidate,
+and was waiting for the old window. The scheduler already records `15 20 * * *`.
+
+The policy now starts at exactly 20:15, and the harness compares hour and minute with an
+exclusive 06:00 end. Optional minute fields default to zero for older policies. Invalid
+hour/minute values are rejected. The versioned and deployed task prompts and the README
+now match the user's new time. Other admission limits and the daily ledger are unchanged.
+
+All 62 offline regression tests passed under Python 3.14.7 in 8.537 seconds, including
+20:14:59 refusal before contacting the runtime or reserving quota, admission at 20:15,
+midnight rollover, 06:00 refusal, same-day windows, legacy defaults, and invalid values.

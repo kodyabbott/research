@@ -18,8 +18,8 @@ A fixed battery, a fixed machine, and every measurement traceable to a command a
 
 Kody authorized autonomous model selection, downloads, and benchmarks within
 [policy.json](policy.json). [scheduled-task.md](scheduled-task.md) is the versioned copy of
-the Claude task instructions. The daily schedule remains 21:00 local; benchmark starts are
-limited to 21:00–05:59. Daytime catch-up runs collect candidates only.
+the Claude task instructions. The daily schedule is 20:15 local; benchmark starts are
+limited to 20:15–05:59 with minute precision. Daytime catch-up runs collect candidates only.
 
 Limits: one candidate attempt per day, 35 GiB per artifact, 240 GiB of task storage including
 temporary copies and orphaned import blobs, 25 GiB free disk, and a 60-minute worker deadline.

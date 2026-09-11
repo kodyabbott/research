@@ -37,6 +37,21 @@ def now():
     return dt.datetime.now().astimezone().isoformat(timespec='seconds')
 
 
+def benchmark_window_open(policy, local_time=None):
+    local_time = local_time if local_time is not None else dt.datetime.now()
+    start_hour, end_hour = policy['benchmarkWindowStartHour'], policy['benchmarkWindowEndHour']
+    start_minute, end_minute = policy.get('benchmarkWindowStartMinute', 0), policy.get('benchmarkWindowEndMinute', 0)
+    for name, value, maximum in (
+        ('start hour', start_hour, 23), ('end hour', end_hour, 23),
+        ('start minute', start_minute, 59), ('end minute', end_minute, 59),
+    ):
+        if type(value) is not int or not 0 <= value <= maximum:
+            raise ValueError(f'Invalid benchmark window {name}: expected an integer from 0 to {maximum}')
+    current = local_time.hour * 60 + local_time.minute
+    start, end = start_hour * 60 + start_minute, end_hour * 60 + end_minute
+    return (current >= start or current < end) if start > end else start <= current < end
+
+
 def read_json(path, default=None):
     return json.loads(path.read_text(encoding='utf-8-sig')) if path.exists() else default
 
@@ -760,10 +775,7 @@ class Harness:
             # Only the explicit human acceptance script calls this, never the nightly CLI.
             self.ledger_path = self.state / 'acceptance-ledger.json'
             self.report.update(mode='acceptance-validation', ledgerFile='state/acceptance-ledger.json')
-        hour = dt.datetime.now().hour
-        start, end = self.policy['benchmarkWindowStartHour'], self.policy['benchmarkWindowEndHour']
-        in_window = (hour >= start or hour < end) if start > end else start <= hour < end
-        if not in_window and not acceptance_validation:
+        if not benchmark_window_open(self.policy) and not acceptance_validation:
             self.report.update(status='deferred', reason='Daytime catch-up: benchmarks start only in the configured overnight window')
             return self.report
         reserved, measurements_done, plan = False, False, None

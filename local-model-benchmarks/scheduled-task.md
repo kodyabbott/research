@@ -17,7 +17,8 @@ download prohibition is replaced by this authorization. Skipping a night is vali
   copies and orphaned import blobs, 25 GiB free disk, and a 60-minute worker deadline.
   Work stops one minute earlier to allow bounded unload and child shutdown before hard kill.
   Interrupted downloads resume from content-addressed partial files and are fully rehashed.
-- Benchmark starts only from 21:00 through 05:59 local. Daytime catch-up runs collect candidates.
+- The daily schedule is 20:15 local. Benchmark starts are allowed from 20:15 through 05:59
+  local, matching the hour and minute fields in policy.json. Daytime catch-up runs collect candidates.
 - Fixed 8192-token context, temperature 0, seed 42, 512-token output limit, thinking disabled
   where supported, warmup plus three repetitions. Do not change these for an individual model.
 - A separate thinking-enabled trial uses at most 8192 generated tokens and 180 seconds. It

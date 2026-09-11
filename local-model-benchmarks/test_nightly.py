@@ -25,6 +25,8 @@ class HarnessTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
         self.policy = json.loads(Path(__file__).with_name('policy.json').read_text())
+        self.policy['benchmarkWindowStartMinute'] = 0
+        self.policy['benchmarkWindowEndMinute'] = 0
         self.policy['ollamaModelsDir'] = str(self.root / 'ollama')
         self.policy['taskStorageRoot'] = str(self.root / 'cache')
         self.policy['ollamaModelsDir'] = str(self.root / 'cache' / 'ollama')
@@ -236,6 +238,48 @@ class HarnessTests(unittest.TestCase):
         self.h.deadline = time.monotonic() - 1
         with self.assertRaises(TimeoutError):
             self.h.remaining()
+
+    def test_minute_precision_overnight_window_boundaries(self):
+        policy = {'benchmarkWindowStartHour': 20, 'benchmarkWindowStartMinute': 15,
+                  'benchmarkWindowEndHour': 6}
+        for clock, expected in [('20:00:00', False), ('20:14:59', False), ('20:15:00', True),
+                                ('23:59:59', True), ('00:00:00', True), ('05:59:59', True),
+                                ('06:00:00', False), ('12:00:00', False)]:
+            with self.subTest(clock=clock):
+                instant = nightly.dt.datetime.fromisoformat('2026-09-10T' + clock)
+                self.assertEqual(nightly.benchmark_window_open(policy, instant), expected)
+
+    def test_window_defaults_and_non_overnight_windows(self):
+        legacy = {'benchmarkWindowStartHour': 21, 'benchmarkWindowEndHour': 6}
+        self.assertFalse(nightly.benchmark_window_open(legacy, nightly.dt.datetime(2026, 9, 10, 20, 59)))
+        self.assertTrue(nightly.benchmark_window_open(legacy, nightly.dt.datetime(2026, 9, 10, 21)))
+        daytime = {'benchmarkWindowStartHour': 8, 'benchmarkWindowStartMinute': 15,
+                   'benchmarkWindowEndHour': 8, 'benchmarkWindowEndMinute': 45}
+        for minute, expected in [(14, False), (15, True), (44, True), (45, False)]:
+            self.assertEqual(nightly.benchmark_window_open(daytime, nightly.dt.datetime(2026, 9, 10, 8, minute)), expected)
+        self.assertFalse(nightly.benchmark_window_open({'benchmarkWindowStartHour': 8,
+            'benchmarkWindowEndHour': 8}, nightly.dt.datetime(2026, 9, 10, 8)))
+
+    def test_invalid_window_values_are_rejected(self):
+        policy = {'benchmarkWindowStartHour': 20, 'benchmarkWindowStartMinute': 15,
+                  'benchmarkWindowEndHour': 6}
+        for key, value in [('benchmarkWindowStartHour', 24), ('benchmarkWindowEndHour', -1),
+                           ('benchmarkWindowStartMinute', 60), ('benchmarkWindowEndMinute', -1),
+                           ('benchmarkWindowStartMinute', '15'), ('benchmarkWindowStartMinute', True)]:
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                nightly.benchmark_window_open(policy | {key: value})
+
+    def test_before_start_minute_does_not_touch_runtime_or_quota(self):
+        self.h.policy.update(benchmarkWindowStartHour=20, benchmarkWindowStartMinute=15,
+                             benchmarkWindowEndHour=6, benchmarkWindowEndMinute=0)
+        instant = nightly.dt.datetime(2026, 9, 10, 20, 14, 59)
+        with patch.object(nightly.dt, 'datetime', wraps=nightly.dt.datetime) as clock, \
+             patch.object(self.h, 'installed', side_effect=AssertionError('must not contact runtime')), \
+             patch.object(self.h, 'reserve', side_effect=AssertionError('must not reserve quota')), \
+             patch.object(self.h, 'download', side_effect=AssertionError('must not download')):
+            clock.now.return_value = instant
+            self.assertEqual(self.h.run_candidate(self.selection)['status'], 'deferred')
+        self.assertFalse((self.h.state / 'nightly-ledger.json').exists())
 
     def test_daytime_catchup_does_not_download_or_reserve(self):
         self.h.policy['benchmarkWindowStartHour'] = (nightly.dt.datetime.now().hour + 1) % 24
