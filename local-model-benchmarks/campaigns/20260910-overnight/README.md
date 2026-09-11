@@ -74,8 +74,8 @@ unexpected thinking marks the thinking-off screen invalid. If the ordinary batte
 returns unexpected thinking, the extra screen is skipped. Interrupted screens preserve partial
 responses and are labeled incomplete. Historical raw results remain unchanged.
 
-Validation before live use: all 80 offline tests passed in 8.817 seconds after review fixes, comprising the existing
-69 harness tests and 11 campaign/screen tests. These verify expiry, time zones, deadline
+Validation before live use: all 81 offline tests passed in 8.736 seconds after review fixes, comprising the existing
+69 harness tests and 12 campaign/screen tests. These verify expiry, time zones, deadline
 margin, changed-policy refusal, reservation/restoration behavior, unchanged normal daily quota,
 JSON grading, persistence, and partial/contaminated screens. No live result is implied by tests.
 

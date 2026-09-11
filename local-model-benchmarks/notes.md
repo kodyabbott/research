@@ -973,3 +973,6 @@ Campaign review correction: the first implementation used the normal calendar-da
 
 
 Campaign grading correction: the original strict Python-type comparison rejected correct JSON numbers such as 8.0 and 40.0 when an integer value was expected. The grader now accepts equivalent finite JSON numbers and still rejects booleans-as-numbers, duplicate keys, extra fields/text and nonstandard numbers. All 16 authored answer keys were independently reviewed. After both review fixes, all 80 offline tests passed in 8.817 seconds before inference.
+
+
+Final preflight grader review: a 400-digit JSON integer triggered float-conversion overflow. Finite checks now apply only to floats, so extreme incorrect integers fail their case without interrupting the screen. Null thinking fields are also treated consistently with the base battery. A focused regression covers the overflow and infinite-exponent cases; the successful screen fixture includes null thinking. All 81 offline tests passed in 8.736 seconds before live inference.
