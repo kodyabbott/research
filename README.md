@@ -22,4 +22,5 @@ See [CLAUDE.md](CLAUDE.md) for full agent instructions.
 - [jensen-gtc-agent-safety](jensen-gtc-agent-safety/) -- Jensen Huang's GTC comments on AI agent capability constraints
 - [simon-willison-lenny-podcast](simon-willison-lenny-podcast/) -- Simon Willison on Lenny's Podcast: AI state of the union, lethal trifecta, and agent security
 - [local-model-benchmarks](local-model-benchmarks/) -- Same-day benchmarks of trending open models on one known machine, with methodology stated so the numbers can be argued with
+- [mac-model-benchmarks](mac-model-benchmarks/) -- M5 Max measurements using native MLX and matched Ollama artifacts, with Windows references, raw results, and rerun commands
 - [anthropic-only-company-x-thread](anthropic-only-company-x-thread/) -- The Aug 2026 Baker/Douglas/Amodei X exchange on Anthropic, regulation, and open weights: curated full-text report of the public figures, IDs-only dataset (X Developer Policy), and collection cost analysis (X API vs browser automation)
