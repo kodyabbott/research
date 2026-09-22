@@ -22,14 +22,14 @@ def extract_answer(raw, is_gpt_oss):
     if not is_gpt_oss:
         return {'content': raw, 'thinking': '', 'parseError': None,
                 'unexpectedThinking': '<think>' in raw or '</think>' in raw}
-    marker = re.compile(r'(?:<\|im_start\|>assistant)?<\|meta_sep\|>final<\|im_sep\|>')
+    marker = re.compile(r'(?:<\|start\|>assistant)?<\|channel\|>final<\|message\|>|(?:<\|im_start\|>assistant)?<\|meta_sep\|>final<\|im_sep\|>')
     matches = list(marker.finditer(raw))
     if len(matches) != 1:
         return {'content': '', 'thinking': raw, 'parseError': 'Expected exactly one Harmony final channel', 'unexpectedThinking': False}
     match = matches[0]
     final = raw[match.end():]
     # EOS is normally excluded by stream_generate; remove only protocol trailers.
-    final = re.sub(r'(?:<\|fim_suffix\|>|<\|im_end\|>)$', '', final)
+    final = re.sub(r'(?:<\|fim_suffix\|>|<\|im_end\|>|<\|return\|>|<\|end\|>)$', '', final)
     return {'content': final, 'thinking': raw[:match.start()], 'parseError': None, 'unexpectedThinking': False}
 
 
@@ -61,7 +61,7 @@ class NativeReplay:
             'python':sys.version,'runnerSha256':mac_replay.sha(__file__),
             'hostBefore':mac_replay.host_snapshot(),'cases':[],
             'protocol':{**self.previous['protocol'],'variant':'native-mlx-direct-v1',
-                'prefillStepSize':2048,'maxKvSize':8192,'kvCacheQuantization':None,'crossRequestPromptCache':False,
+                'prefillStepSize':args.prefill_step_size,'maxKvSize':8192,'kvCacheQuantization':None,'crossRequestPromptCache':False,
                 'temperature':0,'seed':42,'top_p':1,'top_k':40,'repeatPenalty':1.0},
             'reference':{'file':str(reference.relative_to(args.repo)),'sha256':mac_replay.sha(reference),'summary':old['summary']},
             'comparisonLimits':['Different weight conversion and quantization from GGUF; do not attribute differences solely to the runtime.',
@@ -87,7 +87,7 @@ class NativeReplay:
         signal.setitimer(signal.ITIMER_REAL,120)
         try:
             for response in self.stream_generate(self.model,self.tokenizer,tokens,max_tokens=cap,
-                sampler=self.sampler,max_kv_size=8192,prefill_step_size=2048,kv_bits=None):
+                sampler=self.sampler,max_kv_size=8192,prefill_step_size=self.args.prefill_step_size,kv_bits=None):
                 if first is None:first=(time.perf_counter()-start)*1000
                 chunks.append(response.text);ids.append(response.token);last=response
             mx.synchronize()
@@ -170,6 +170,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--repo',type=Path,required=True);p.add_argument('--selection',type=Path,required=True)
     p.add_argument('--output',type=Path,required=True);p.add_argument('--worker',action='store_true')
+    p.add_argument('--prefill-step-size',type=int,choices=(2048,4096,8192),default=2048)
     a=p.parse_args()
     if a.worker:NativeReplay(a).run()
     else:
