@@ -56,7 +56,7 @@ def build(repo, raw_dir):
         '- Historical Windows files and the nightly policy remain unchanged. This is a separately requested manual Mac run; the canceled Windows campaign is not resumed.',
         '- Each request has a 120-second deadline and each model replay a 30-minute deadline. Failure preserves partial records and attempts model unload.',
         '- One model is loaded at a time. The host is an interactive desktop, not an isolated laboratory machine. GPU utilization is not continuously sampled; operating-system work and thermal conditions are uncontrolled.',
-        '- This measures the pinned Ollama configuration. MLX, LM Studio, current Ollama, other quantizations, long-context behavior, full coding suites, and energy consumption are not measured.', '',
+        '- This appendix measures the pinned Ollama configuration. The separate MLX experiment is in README.md; LM Studio, current Ollama, long-context behavior, full coding suites, and energy consumption are not measured.', '',
         '## Evidence', '',
     ]
     for r in rows:

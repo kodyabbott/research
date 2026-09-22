@@ -31,7 +31,17 @@
 
 ## Reproduction
 
-Python 3.11 or later is needed for the replay runner; it uses the standard library and the repository's existing helpers. No pip packages are required. Start the pinned standalone Ollama runtime with the environment above and the task-owned cache, then run from the repository root:
+Python 3.11 or later is needed for the replay runner; it uses the standard library and the repository's existing helpers. No pip packages are required. On this Mac, start the retained runtime in a separate terminal:
+
+```sh
+OLLAMA_HOST=127.0.0.1:11436 \
+OLLAMA_MODELS=/Users/kody/Documents/Codex/model-cache/mac-benchmarks/ollama \
+OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 \
+OLLAMA_CONTEXT_LENGTH=8192 OLLAMA_NO_CLOUD=1 \
+/Users/kody/Documents/Codex/2026-09-22/le/work/ollama-0.32.13/ollama serve
+```
+
+Then run from the repository root:
 
 ```sh
 python3 -m unittest discover -s mac-model-benchmarks -p 'test_*.py' -v
@@ -47,3 +57,49 @@ API timing semantics and thinking options were checked against the [Ollama chat 
 ## Results and completion
 
 Final observations, raw-run links, and caveats appear in [README.md](README.md). Completion and artifact-import evidence will be recorded alongside the runs.
+
+## Native MLX extension and final findings
+
+The user selected the Mac-focused option: find strong local performance with MLX or LM Studio, with runtime differences labeled. MLX was used directly. This extends the initial matched-Ollama run; the original Windows measurements remain the historical reference.
+
+Installed an isolated Python 3.12.14 environment at `/Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv`, with MLX 0.32.2 and MLX-LM 0.31.3. All 34 package versions are recorded in `requirements-mlx.txt`. No existing system Python environment or installed Ollama application was replaced. A sandbox restriction prevented `uv pip freeze` from opening its default cache; the completed dependency snapshot was read directly from installed package metadata instead.
+
+Pinned, downloaded, and verified every model file:
+
+- `mlx-community/Qwen3-Coder-30B-A3B-Instruct-4bit`, revision `6e302ea604ad9ab206367e2c501d1571023e7b6d`, about 17.20 GB.
+- `mlx-community/gpt-oss-20b-MXFP4-Q8`, revision `773a7da77e569019bb0fd17a554b263738d669a3`, about 12.10 GB.
+
+These native conversions have different weight formats, quantization, and chat templates from the GGUF runs. The MLX requests use fresh KV caches and an 8192-token rotating-cache limit. Complete prompts, rendered templates, generated token IDs, raw channel text, timing, and peak MLX memory are saved. Native per-request latency is measured in-process; compare to the Ollama HTTP latency with that overhead difference disclosed.
+
+The first GPT-OSS warmup exposed a bug in the new parser: this artifact uses `<|start|>`, `<|channel|>`, and `<|message|>` spellings. The parser initially recognized the older alias spellings only. The zero-case diagnostic is preserved, a regression test was added from its actual response, and the corrected run completed all 24 cases. This was a harness correction, not a model failure. Only the final channel is graded; reasoning text is retained separately.
+
+Activation quantization was inspected in installed `mlx_lm/utils.py`; it requires nvfp4 or mxfp8 and does not apply to these affine/mxfp4 artifacts. Instead, Qwen's prefill batch was increased from 2048 to 8192 for a separately labeled repeat. No additional model download was needed.
+
+Final native observations:
+
+- Qwen, prefill 2048: 3/24, 0.481 s median, 139.68 generation tok/s and 4780.08 ingest tok/s in the short battery.
+- Qwen, prefill 8192: 3/24, 0.473 s median, 136.44 generation tok/s and 5801.65 ingest tok/s.
+- GPT-OSS low reasoning: 20/24, 3.001 s median, 131.02 median generation tok/s across workload responses. This last rate is a workload statistic, not the short-battery metric.
+
+Qwen's larger prefill is the strongest long-prompt result among tested settings; its generation speed did not materially improve. Both MLX model conversions had lower observed median latency and one fewer correct case than the Mac GGUF rows. One pass is insufficient to establish a stable quality difference or a general model ranking. The 24-case screen is not a coding benchmark.
+
+### Native rerun commands
+
+From the repository root, with the retained model cache and pinned environment:
+
+```sh
+HF_HUB_OFFLINE=1 /Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/Qwen3-Coder-30B-A3B-Instruct-4bit-verified.json --prefill-step-size 8192 --output mac-model-benchmarks/native-runs/NEW-qwen-mlx.json
+HF_HUB_OFFLINE=1 /Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/gpt-oss-20b-MXFP4-Q8-verified.json --output mac-model-benchmarks/native-runs/NEW-gpt-oss-mlx.json
+```
+
+The model process has a 30-minute outer deadline; each generation has a 120-second alarm. The new native worker exits after the run and releases its model allocation. Timed native runs began after downloads completed and after the dedicated Ollama server was stopped. Small metadata/documentation checks ran during portions of the interactive experiment; the desktop was not isolated.
+
+### Completion verification
+
+- Six successful configurations, each with 24 cases: three matched Ollama rows and three native MLX rows. All 144 saved case scores were independently regraded from raw final answers.
+- Eight new harness tests and nine existing workload tests passed. No final successful row had a truncated response, unexpected thinking, channel parse error, or native context-budget overflow.
+- Dedicated Ollama port 11436 is closed. All benchmark workers and their temporary keep-awake processes exited. Native model release left only 8 or 24 bytes of active MLX bookkeeping allocations before process exit; swap usage was zero in saved snapshots.
+- Original `local-model-benchmarks` files have zero diff from cloned commit `db7b8bc`. No scheduled task was created or changed, and nothing was pushed.
+- The task model cache occupies about 149 GiB, including retained GGUF source/import copies and the native models. The small standalone runtime and Python environment are retained for reruns. Weights and environments are outside the Git repository.
+
+See `completion.json`, `server-provenance.json`, `gemma-import.json`, and `native-artifacts/` for the verification records. The final report is `README.md`; the exact-artifact system comparison is `OLLAMA-COMPARISON.md`.
