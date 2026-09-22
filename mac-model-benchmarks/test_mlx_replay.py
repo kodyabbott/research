@@ -3,6 +3,12 @@ from mlx_replay import extract_answer
 
 
 class ChannelParsingTests(unittest.TestCase):
+    def test_pinned_gpt_oss_tokenizer_channel_spelling(self):
+        raw='<|channel|>analysis<|message|>User wants exactly "ready".<|end|><|start|>assistant<|channel|>final<|message|>ready'
+        result=extract_answer(raw,True)
+        self.assertEqual(result['content'],'ready')
+        self.assertIsNone(result['parseError'])
+
     def test_only_final_channel_is_scored(self):
         raw='<|meta_sep|>analysis<|im_sep|>{"answer":999}<|im_end|><|im_start|>assistant<|meta_sep|>final<|im_sep|>{"answer":42}'
         result=extract_answer(raw,True)
