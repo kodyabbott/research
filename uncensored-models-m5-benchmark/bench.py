@@ -92,6 +92,7 @@ class Bench:
         self.grade, self.exact_lines, self.measurement = quality_screen.grade, exact_lines, Harness.measurement
         self.cases = workload_suite.cases()
         assert len(self.cases) == 96
+        self.cases = self.cases[:args.case_limit]
         self.path = args.output
         if self.path.exists():
             raise ValueError('Refusing to overwrite an existing raw run')
@@ -105,8 +106,8 @@ class Bench:
             'model': args.model, 'endpoint': args.endpoint, 'think': args.think, 'options': OPTIONS,
             'optionOverrides': self.overrides,
             'workloadProtocol': {'suite': 'practical-json-v1', 'suiteSha256': workload_suite.digest(self.cases),
-                                 'caseCount': 96, 'first24Comparable': True, 'outputCap': OUTPUT_CAP if args.think == 'false' else 8192,
-                                 'caseDeadlineSeconds': CASE_SECONDS, 'samplesPerCase': 1},
+                                 'caseCount': args.case_limit, 'first24Comparable': True, 'outputCap': OUTPUT_CAP if args.think == 'false' else 8192,
+                                 'caseDeadlineSeconds': args.case_seconds, 'samplesPerCase': 1},
             'refusalProtocol': {'source': f'p-e-w/heretic@{HERETIC_COMMIT} config.default.toml defaults',
                                 'systemPrompt': SYSTEM_PROMPT, 'markers': MARKERS,
                                 'responseTextStored': False},
@@ -198,7 +199,7 @@ class Bench:
         rows = self.report['cases'] = []
         for row in self.cases:
             try:
-                exchange = self.chat(row['prompt'], self.output_cap, supervised=True)
+                exchange = self.chat(row['prompt'], self.output_cap, supervised=True, seconds=self.args.case_seconds)
             except (subprocess.TimeoutExpired, RuntimeError) as exc:
                 rows.append({**row, 'passed': False, 'error': str(exc)[-500:], 'truncated': False, 'unexpectedThinking': False})
                 self.record()
@@ -208,7 +209,7 @@ class Bench:
             rows.append({**row, **exchange, 'truncated': truncated, 'unexpectedThinking': self.thinking_leak(response),
                          'passed': not truncated and self.grade(response.get('message', {}).get('content'), row['expected'])})
             self.record()
-            print(f"{self.args.label}: workload {len(rows)}/96 passed={sum(r['passed'] for r in rows)}", flush=True)
+            print(f"{self.args.label}: workload {len(rows)}/{len(self.cases)} passed={sum(r['passed'] for r in rows)}", flush=True)
         ok = [r for r in rows if 'response' in r]
         by_cat = {}
         for r in rows:
@@ -291,6 +292,8 @@ def main():
     parser.add_argument('--modes', nargs='+', default=['throughput', 'workload', 'refusal'], choices=('throughput', 'workload', 'refusal'))
     parser.add_argument('--refusal-cap', type=int, default=REFUSAL_CAP)
     parser.add_argument('--stop', help='JSON list replacing the imported model stop parameters')
+    parser.add_argument('--case-limit', type=int, default=96, choices=(24, 48, 72, 96), help='Run the first N suite cases')
+    parser.add_argument('--case-seconds', type=int, default=CASE_SECONDS)
     parser.add_argument('--prompt-cache', type=Path, default=Path.home() / 'Documents/Codex/model-cache/uncensored-benchmark/prompts')
     args = parser.parse_args()
     if args.endpoint.endswith(':11434'):
