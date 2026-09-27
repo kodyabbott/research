@@ -154,7 +154,7 @@ Requirements: the Ollama app (these runs used 0.34.4), Python 3.11 or later (sta
    python3 uncensored-models-m5-benchmark/summarize.py
    ```
 
-   The refusal prompts are downloaded once from the Hugging Face dataset API into `~/Documents/Codex/model-cache/uncensored-benchmark/prompts` (outside the repository) and checked by SHA-256 in each run record.
+   The refusal prompts are downloaded once from the Hugging Face dataset API into `~/Documents/Codex/model-cache/uncensored-benchmark/prompts` (outside the repository); each run record stores the dataset revision and the SHA-256 of the prompt list.
 
 5. Stop the dedicated server when finished.
 
