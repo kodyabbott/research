@@ -29,7 +29,7 @@ GPT-OSS 120B only works after a fix: Ollama's import of this Hugging Face GGUF g
 
 ## Models
 
-Selected from Hugging Face search results for uncensored, abliterated, heretic, and obliterated builds runnable in MLX or llama.cpp, sorted by downloads and trending score on September 26, 2026. Exact revisions, byte sizes, and SHA-256 values are in [selection.json](selection.json); every imported blob matched.
+Selected from Hugging Face search results for uncensored, abliterated, heretic, and obliterated builds runnable in MLX or llama.cpp, sorted by downloads and trending score on September 26, 2026. Exact revisions, byte sizes, and SHA-256 values are in [selection.json](selection.json); every model GGUF matched. Ollama also pulled vision projectors for the Qwen3.8, Qwen3.6, and Gemma repositories (0.9-1.2 GB each); those are not pinned in selection.json, and their digests are in the notes.
 
 | Base | Build | Quant | How it was uncensored (per its model card) |
 |---|---|---|---|
