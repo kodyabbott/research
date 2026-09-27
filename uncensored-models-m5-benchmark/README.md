@@ -89,7 +89,7 @@ Stock baselines already in this repository, one sample per case:
 | Qwen3.8-27B, thinking on | 96/96 ([Windows](../local-model-benchmarks/runs/20260911-104941-c75692e6.json) and three later offsets, BF16) | 96/96 | Same caveats |
 | Gemma 4 31B, thinking off | 10/24 first 24 ([this Mac, Sep 22](../mac-model-benchmarks/runs/20260922-gemma.json), Q8_0, Ollama 0.32.13) | 9/24 | Different Ollama version |
 
-No capability loss is visible for either Heretic build, but this suite has little power to show one: with thinking off, ledger, SQL, and Python trace are at 0/12 for every model except GPT-OSS and retrieval is 12/12 for all (floor and ceiling), and with thinking on Qwen3.8 is at 24/24 (ceiling). A one- or two-case difference with one sample per case is not a measured effect in either direction, and the Gemma comparison also crosses an Ollama version change (0.32.13 to 0.34.4). There are no stock baselines for the other three bases on this suite.
+No capability loss is visible for either Heretic build, but this suite has little power to show one: with thinking off, ledger, SQL, and Python trace are at 0/12 for every model except GPT-OSS and retrieval is 12/12 for all (floor and ceiling), and with thinking on Qwen3.8 is at 96/96 (ceiling). A one- or two-case difference with one sample per case is not a measured effect in either direction, and the Gemma comparison also crosses an Ollama version change (0.32.13 to 0.34.4). There are no stock baselines for the other three bases on this suite.
 
 ## Refusals
 
