@@ -97,9 +97,11 @@ class Bench:
             raise ValueError('Refusing to overwrite an existing raw run')
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.deadline = time.monotonic() + MODEL_BUDGET_SECONDS
+        self.overrides = {'stop': json.loads(args.stop)} if args.stop else {}
         self.report = {
             'schemaVersion': 1, 'startedAt': now(), 'status': 'running', 'label': args.label,
             'model': args.model, 'endpoint': args.endpoint, 'think': args.think, 'options': OPTIONS,
+            'optionOverrides': self.overrides,
             'workloadProtocol': {'suite': 'practical-json-v1', 'suiteSha256': workload_suite.digest(self.cases),
                                  'caseCount': 96, 'first24Comparable': True, 'outputCap': OUTPUT_CAP,
                                  'caseDeadlineSeconds': CASE_SECONDS, 'samplesPerCase': 1},
@@ -124,9 +126,10 @@ class Bench:
         if isinstance(messages, str):
             messages = [{'role': 'user', 'content': messages}]
         body = {'model': self.args.model, 'messages': messages, 'stream': False, 'keep_alive': '10m',
-                'options': {**OPTIONS, 'num_predict': cap}}
-        if 'thinking' in self.info.get('capabilities', []):
-            body['think'] = {'false': False, 'true': True}.get(self.args.think, self.args.think)
+                'options': {**OPTIONS, **self.overrides, 'num_predict': cap}}
+        # Always sent: the Gemma import thinks by default without advertising the capability,
+        # and every selected model accepted an explicit value in the smoke test.
+        body['think'] = {'false': False, 'true': True}.get(self.args.think, self.args.think)
         start = time.monotonic()
         if supervised:
             result = subprocess.run([sys.executable, str(self.root / 'api_probe.py')],
@@ -285,6 +288,7 @@ def main():
     parser.add_argument('--think', default='false', choices=('false', 'low', 'medium', 'high'))
     parser.add_argument('--modes', nargs='+', default=['throughput', 'workload', 'refusal'], choices=('throughput', 'workload', 'refusal'))
     parser.add_argument('--refusal-cap', type=int, default=REFUSAL_CAP)
+    parser.add_argument('--stop', help='JSON list replacing the imported model stop parameters')
     parser.add_argument('--prompt-cache', type=Path, default=Path.home() / 'Documents/Codex/model-cache/uncensored-benchmark/prompts')
     args = parser.parse_args()
     if args.endpoint.endswith(':11434'):
