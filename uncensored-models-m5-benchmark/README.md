@@ -48,7 +48,7 @@ Selected from Hugging Face search results for uncensored, abliterated, heretic, 
 
 | Base | Build | Quant | GGUF size | How it was uncensored (per its model card) |
 |---|---|---|---:|---|
-| Qwen3.8-27B (dense) | [llmfan46 Heretic](https://huggingface.co/llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF) | Q8_0 | 30.5 GB | [Heretic](https://github.com/p-e-w/heretic) v2.0.0.dev0, a variant of Magnitude-Preserving Orthogonal Ablation (MPOA) |
+| Qwen3.8-27B (dense) | [llmfan46 Heretic](https://huggingface.co/llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF) | Q8_0 | 30.5 GB | [Heretic](https://github.com/p-e-w/heretic) v2.0.0.dev0, a variant of Magnitude-Preserving Orthogonal Ablation ([MPOA](https://huggingface.co/blog/grimjim/norm-preserving-biprojected-abliteration), as linked from the card) |
 | Qwen3.6-35B-A3B (MoE) | [HauhauCS Aggressive](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive) | Q4_K_M | 21.2 GB | Abliteration, tool and method not disclosed (card: "abliterated weights") |
 | Gemma 4 31B (dense) | [llmfan46 Heretic](https://huggingface.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF) | Q8_0 | 32.6 GB | Heretic v1.2.0, Arbitrary-Rank Ablation (ARA) |
 | Qwen3-Coder-Next (MoE) | [huihui-ai abliterated, bartowski quants](https://huggingface.co/bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF) | Q4_K_M | 48.6 GB | [remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers), per the [upstream huihui-ai card](https://huggingface.co/huihui-ai/Huihui-Qwen3-Coder-Next-abliterated/blob/2b50acef370d315e904d9d3d2e26ac658ed49d57/README.md) (bartowski's quant card names only the original model) |
