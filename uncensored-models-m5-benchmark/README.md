@@ -67,7 +67,7 @@ With thinking off, most of these cases require step-by-step computation the mode
 
 ## Results: thinking on, first 24 cases
 
-8,192-token context with `num_predict` 8,192, so the effective output budget is 8,192 minus the prompt (prompts run up to about 2,070 tokens), 600 s per case, temperature 0, for the three models with a thinking mode. Model cards recommend sampling for thinking mode (the Qwen3.8 card: temperature 1.0, top_p 0.95, top_k 20); this protocol uses greedy decoding throughout, and every thinking-on score here is a lower bound under that constraint.
+8,192-token context with `num_predict` 8,192, so the effective output budget is 8,192 minus the prompt (prompts run up to about 2,070 tokens), 600 s per case, temperature 0, for the three models with a thinking mode. Model cards recommend sampling for thinking mode (the Qwen3.8 card: temperature 1.0, top_p 0.95, top_k 20); this protocol uses greedy decoding throughout, so scores may differ under the recommended sampling settings.
 
 | Model | Strict /24 | Fences stripped | Truncated | Median generated tokens | Wall time |
 |---|---:|---:|---:|---:|---:|
