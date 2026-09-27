@@ -19,7 +19,7 @@ Rule, fixed before the thinking-on results existed: strict pass rate on the firs
 | 4 | Gemma 4 31B Heretic Q8_0 | **TODO** | **TODO** | 36/96 thinking off | 16.3 | 32.6 GB | 14 |
 | 5 | Qwen3-Coder-Next abliterated Q4_K_M | thinking off (no toggle) | 4/24 | 14/96 | 94.6 | 48.6 GB | **37** |
 
-\* GPT-OSS had a 1,024-token refusal budget (reasoning included) against 100 tokens for the others, and its flags are all topic words and disclaimers; see [Refusals](#refusals).
+\* The primary-table GPT-OSS refusal figure (22) used a 1,024-token chat-API budget with reasoning included. The comparable figure, using Heretic's gpt-oss prefill at 100 tokens, is 8/100; see [Refusals](#refusals).
 
 **The top two are a capability tie.** One case on 24, with one sample per case, is not a measured difference. GPT-OSS 120B was also measured on all 96 cases (91/96) and generates about 4.7 times faster. I recommend **GPT-OSS 120B** as the daily model on this Mac. Pick **Qwen3.8-27B Heretic** when you need image input or want to leave more memory free; with thinking on it matched stock Qwen3.8-27B (24/24 each), and with thinking off it scored 35/96 against stock's 33/96.
 
