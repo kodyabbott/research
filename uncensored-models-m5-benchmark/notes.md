@@ -14,10 +14,10 @@ Candidates came from `hf models ls --search {uncensored,abliterated,heretic,obli
 | Base | Repository | File | Bytes | Why |
 |---|---|---|---:|---|
 | Qwen3.8-27B (dense) | `llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF` | `...-Q8_0.gguf` | 30,484,799,616 | Heretic build that publishes method and KL; standard Q8_0 |
-| Qwen3.6-35B-A3B (MoE) | `HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive` | `...-Q4_K_M.gguf` | 21,166,758,016 | Most-liked uncensored repo in the search (~3.8K likes); method undisclosed |
+| Qwen3.6-35B-A3B (MoE) | `HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive` | `...-Q4_K_M.gguf` | 21,166,758,016 | Most-liked uncensored repo in the search (3,768 likes on Sep 27); abliteration per the card, tool and method undisclosed |
 | Gemma 4 31B (dense) | `llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF` | `...-Q8_0.gguf` | 32,635,675,776 | Heretic ARA build; stock Gemma 4 31B Q8_0 was measured on this Mac on Sep 22 |
 | Qwen3-Coder-Next (MoE) | `bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF` | `...-Q4_K_M.gguf` | 48,556,632,000 | Coding-specific; huihui-ai abliteration, which the upstream [huihui-ai card at 2b50ace](https://huggingface.co/huihui-ai/Huihui-Qwen3-Coder-Next-abliterated/blob/2b50acef370d315e904d9d3d2e26ac658ed49d57/README.md) (line 16) attributes to remove-refusals-with-transformers; bartowski's card names only the original model |
-| GPT-OSS 120B (MoE) | `HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive` | `...-MXFP4.gguf` | 65,369,016,544 | Largest practical reasoning model; method undisclosed |
+| GPT-OSS 120B (MoE) | `HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive` | `...-MXFP4.gguf` | 65,369,016,544 | Largest practical reasoning model; tagged `abliterated`, tool and method undisclosed |
 
 Exact revisions and LFS SHA-256 values are in [selection.json](selection.json). Each imported Ollama blob digest is compared against the pinned SHA-256.
 
