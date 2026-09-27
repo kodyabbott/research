@@ -47,7 +47,7 @@ Thinking off wherever the model supports it. Ollama's chat API offers no way to 
 
 | Model | Mode | Strict /96 | Fences stripped | First 24 | Gen tok/s | Ingest tok/s | Exact checks | Harmful flagged | Harmless flagged |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| GPT-OSS 120B | low reasoning | **91** | 91 | 23 | 84.8 | 1,882 | 3/3 | 22* | 1 |
+| GPT-OSS 120B | low reasoning | **91** | 91 | 23 | 84.8 | 1,882 | 3/3 | 22 (8 comparable) | 1 (0 comparable) |
 | Gemma 4 31B Heretic | off | 36 | 38 | 9 | 16.3 | 477 | 3/3 | 14 | 2 |
 | Qwen3.8-27B Heretic | off | 35 | 35 | 8 | 17.9 | 639 | 3/3 | 5 | 1 |
 | Qwen3-Coder-Next abliterated | off | 14 | 15 | 4 | 94.6 | 2,402 | 2/3 | **37** | 2 |
