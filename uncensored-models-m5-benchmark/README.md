@@ -118,6 +118,46 @@ Harmless prompts: 0-2 flags per model. These numbers are not comparable to model
 
 The runner changed between runs as problems surfaced; each record's `runnerSha256` identifies its version, and `options` and `refusalProtocol` are identical across all records (version map in the notes). Full log with timestamps, smoke tests, and every fix: [notes.md](notes.md). Raw records: [runs/](runs/).
 
+## Reproduce
+
+Requirements: the Ollama app (these runs used 0.34.4), Python 3.11 or later (standard library only), about 190 GB free disk, and this repository (the runner imports `../local-model-benchmarks`). Run from the repository root.
+
+1. Start a dedicated Ollama server with its own model store, separate from any personal library:
+
+   ```sh
+   S=~/Documents/Codex/model-cache/uncensored-benchmark
+   OLLAMA_HOST=127.0.0.1:11436 OLLAMA_MODELS=$S/ollama OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 \
+     OLLAMA_CONTEXT_LENGTH=8192 OLLAMA_NO_CLOUD=1 /Applications/Ollama.app/Contents/Resources/ollama serve
+   ```
+
+2. Pull the five models into that server:
+
+   ```sh
+   export OLLAMA_HOST=127.0.0.1:11436
+   ollama pull hf.co/llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF:Q8_0
+   ollama pull hf.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:Q4_K_M
+   ollama pull hf.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF:Q8_0
+   ollama pull hf.co/bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF:Q4_K_M
+   ollama pull hf.co/HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive:MXFP4
+   ```
+
+   `ollama pull hf.co/...` takes the repository's current revision. Confirm each model file matches [selection.json](selection.json): the store keeps it as `blobs/sha256-<sha256>` with the pinned byte size.
+
+3. Rebuild GPT-OSS with Ollama's official template: `uncensored-models-m5-benchmark/make_gptoss_model.sh`. It reads the template layer from a stock `gpt-oss:20b` pull in `~/Documents/Codex/model-cache/mac-benchmarks/ollama`; on another machine, `ollama pull gpt-oss:20b` into any store and point `TEMPLATE` in the script at its `sha256-fa6710a93d78da62...` blob.
+
+4. Run the benchmarks, one model on the GPU at a time. Each script skips models that already have a run file (the runner refuses to overwrite), so move old `runs/` files aside to rerun:
+
+   ```sh
+   uncensored-models-m5-benchmark/run_all.sh        # 96 cases, throughput, refusal (about 2 hours)
+   uncensored-models-m5-benchmark/run_thinking.sh   # thinking on, first 24 cases (about 2 hours)
+   uncensored-models-m5-benchmark/run_followups.sh  # comparable GPT-OSS refusal, Qwen3.8 thinking on all 96 (about 90 minutes)
+   python3 uncensored-models-m5-benchmark/summarize.py
+   ```
+
+   The refusal prompts are downloaded once from the Hugging Face dataset API into `~/Documents/Codex/model-cache/uncensored-benchmark/prompts` (outside the repository) and checked by SHA-256 in each run record.
+
+5. Stop the dedicated server when finished.
+
 ## Problems found along the way
 
 - **GPT-OSS: malformed template from Ollama's import.** `ollama show --modelfile` for the `hf.co` import showed a derived template with a truncated user header (`tart|>user<|message|>`), the assistant turn prefilled into the `final` channel, reasoning hard-coded to medium, and stop sequences including `<|channel|>`. Responses came back empty (attempt 1: 1/96, kept as [an invalid record](runs/20260927-gpt-oss-120b-hauhaucs-INVALID-attempt1.json)). The repository publishes no Ollama template or params file; the GGUF embeds OpenAI's 16,714-character Jinja harmony template, and Ollama's conversion of it into a Go template is what broke. A raw harmony prompt proved the weights answer correctly. Rebuilding from the same blob with Ollama's official gpt-oss template (from the stock `gpt-oss:20b` artifact) fixed it; two rebuilds produced the same model digest. The official template also adds its own system message ("You are ChatGPT...", knowledge cutoff, current date, reasoning level) and moves any system prompt into a developer block, so the rendered prompt differs from a bare chat template and includes the run date. Ollama labels this file BF16 because its header `general.file_type` is BF16; the expert weights are MXFP4 (108 MXFP4, 146 BF16, and 433 F32 tensors).
