@@ -76,7 +76,7 @@ With thinking off, most of these cases require step-by-step computation the mode
 | Gemma 4 31B Heretic | 6 | **21** | 1 | 3,202 | 83 min |
 
 - Qwen3.8 solves every case with short reasoning, and a separate run over all 96 cases also scored 96/96 (median 931 tokens, 81.5 minutes).
-- Qwen3.6's reasoning runs long: 8 of its 9 failures filled the 8,192-token context before answering. Its model card says to "Keep at least 128K context to preserve thinking capabilities," so 15/24 is a lower bound for this model with more context. Greedy decoding may also contribute: on two Python-trace cases the reasoning contained the correct answer and kept re-verifying until the context ran out.
+- Qwen3.6's reasoning runs long: 8 of its 9 failures filled the 8,192-token context before answering. Its model card says to "Keep at least 128K context to preserve thinking capabilities," so 15/24 likely understates this model with more context. Greedy decoding may also contribute: on two Python-trace cases the reasoning contained the correct answer and kept re-verifying until the context ran out.
 - Gemma's thinking mode cannot be requested through Ollama's `think` flag for this import (HTTP 400); it thinks when the flag is omitted. It scored 6/24 strict but 21/24 with fences stripped: 17 of its 18 failures wrap the answer in a ```json fence despite the prompt's "No markdown," and 15 of those are correct once the fence is removed. Its thinking mode solves most of these cases but does not follow the output-format instruction, so under strict grading its best mode is thinking off (9/24). It is also the slowest configuration here, at about 3.5 minutes per case.
 
 ## Did uncensoring cost capability?
