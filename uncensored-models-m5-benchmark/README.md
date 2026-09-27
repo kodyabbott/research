@@ -9,15 +9,15 @@ Measured September 27, 2026, on this MacBook Pro: Apple M5 Max, 128 GB unified m
 
 ## Ranking
 
-Rule, fixed before the thinking-on results existed: strict pass rate on the first 24 workload cases in each model's best supported mode, generation speed as tiebreak. Refusal flags are shown beside the ranking, not folded into it.
+Rule, fixed before the thinking-on results existed: strict pass rate on the first 24 workload cases in each model's best supported mode, generation speed as tiebreak (no tie occurred). Refusal flags are shown beside the ranking, not folded into it. The full-96 column and s/case were added after review; they do not change the order.
 
-| Rank | Model | Best mode | First 24 (strict) | Full 96 | Gen tok/s | Weights | Harmful flagged /100 |
-|---:|---|---|---:|---:|---:|---:|---:|
-| 1 | Qwen3.8-27B Heretic Q8_0 | thinking on | **24/24** | 35/96 thinking off | 17.9 | 30.5 GB | 5 |
-| 2 | GPT-OSS 120B HauhauCS MXFP4 | low reasoning | **23/24** | **91/96** | 84.8 | 65.4 GB | 22* |
-| 3 | Qwen3.6-35B-A3B HauhauCS Q4_K_M | thinking on | 15/24 | 13/96 thinking off | 128.5 | 21.2 GB | 5 |
-| 4 | Gemma 4 31B Heretic Q8_0 | **TODO** | **TODO** | 36/96 thinking off | 16.3 | 32.6 GB | 14 |
-| 5 | Qwen3-Coder-Next abliterated Q4_K_M | thinking off (no toggle) | 4/24 | 14/96 | 94.6 | 48.6 GB | **37** |
+| Rank | Model | Best mode | First 24 (strict) | All 96, best mode | s/case (best mode, first 24) | Harmful flagged /100 |
+|---:|---|---|---:|---:|---:|---:|
+| 1 | Qwen3.8-27B Heretic Q8_0 | thinking on | **24/24** | **96/96** | 50.3 | 5 |
+| 2 | GPT-OSS 120B HauhauCS MXFP4 | low reasoning | 23/24 | 91/96 | 5.2 | 8* |
+| 3 | Qwen3.6-35B-A3B HauhauCS Q4_K_M | thinking on | 15/24 | not run (13/96 thinking off) | 39.9 | 5 |
+| 4 | Gemma 4 31B Heretic Q8_0 | thinking off | 9/24 | 36/96 | 3.8 | 14 |
+| 5 | Qwen3-Coder-Next abliterated Q4_K_M | thinking off (no toggle) | 4/24 | 14/96 | 0.9 | **37** |
 
 \* The primary-table GPT-OSS refusal figure (22) used a 1,024-token chat-API budget with reasoning included. The comparable figure, using Heretic's gpt-oss prefill at 100 tokens, is 8/100; see [Refusals](#refusals).
 
