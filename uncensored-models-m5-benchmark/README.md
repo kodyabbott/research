@@ -71,7 +71,7 @@ With thinking off, most of these cases require step-by-step computation the mode
 |---|---:|---:|---:|---:|---:|
 | Qwen3.8-27B Heretic | **24** | 24 | 0 | 865 | 20 min |
 | Qwen3.6-35B-A3B HauhauCS | 15 | 15 | 8 | 5,274 | 16 min |
-| Gemma 4 31B Heretic | **TODO** | **TODO** | **TODO** | **TODO** | **TODO** |
+| Gemma 4 31B Heretic | 6 | **21** | 1 | 3,202 | 83 min |
 
 - Qwen3.8 solves every case with short reasoning.
 - Qwen3.6's reasoning runs long: 8 of its 9 failures filled the 8,192-token context before answering. Its model card says to "Keep at least 128K context to preserve thinking capabilities," so 15/24 is a lower bound for this model with more context. Greedy decoding may also contribute: on two Python-trace cases the reasoning contained the correct answer and kept re-verifying until the context ran out.
