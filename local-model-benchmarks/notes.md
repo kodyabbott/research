@@ -1010,7 +1010,7 @@ At 23:28 MDT, Kody asked to hold off tonight and stop all processes. The verifie
 ## 2026-09-11 - Pause and morning handoff
 
 Kody asked to stop and document all findings, with a manual Codex/Astra continuation
-planned for the morning. No inference, downloads, router changes, or new follow-up
+planned for the morning. No inference, downloads, or new follow-up
 tasks were started. [The morning handoff](campaigns/20260910-overnight/handoff.md)
 collects the five completed results, canceled selections, retained KAT partial,
 runtime/quality caveats, previous validation, publishing status, and resume gates.
@@ -1022,13 +1022,6 @@ and paused heartbeat remain intact. The regular 20:15 Claude/Fable task was unch
 its deployed prompt still matches the versioned file. Python 3.14.7 runs, policy bytes
 are unchanged, and the retained KAT partial is still 950,603,057 bytes. See the ignored
 local verification file `state/handoffs/20260911/stop-verification.json`.
-
-The read-only [redacted] investigation confirmed a `/ubus` internal API but found no
-supported QoS operation in the inspected UI, two frontend bundles, or reviewed docs.
-Two [redacted] TVs use different Wi-Fi bands; the affected 7 Series has not been
-identified. Download-related streaming interference remains unproven. No router
-settings changed, and browser network observation was stopped. Full device details
-and source/evidence limits are in ignored `state/handoffs/20260911/network-observations.md`.
 
 Morning work must account for the normal 20:15-05:59 admission window and the revoked
 campaign authorization; restarting the old controller is not a valid continuation.

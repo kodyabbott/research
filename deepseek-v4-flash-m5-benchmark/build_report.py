@@ -7,7 +7,7 @@ import shutil
 import statistics
 
 root=Path(__file__).resolve().parent
-out=Path('/Users/<user>/Documents/Codex/2026-09-22/le/outputs/deepseek-v4-report')
+out=Path.home()/('Documents/Codex/2026-09-22/le/outputs/deepseek-v4-report')
 def load(p):return json.loads(p.read_text())
 old=load(root/'run.json');new=load(root/'thinking-run.json');s=load(out/'summary.json')
 assert new['status']=='completed' and len(new['modes']['thinking']['cases'])==24
@@ -19,7 +19,7 @@ chat=s['chat'];think=s['thinking'];thermal=s['thermal'];trials=old['throughput']
 peak=max(r['response']['peakMemoryGB'] for r in new['modes']['thinking']['cases'])
 oldpeak=max(t[k]['peakMemoryGB'] for t in trials for k in ('short','ingest'))
 throughput=s['throughput'];ttfy=statistics.median(t['ingest']['timeToFirstYieldMs']/1000 for t in trials)
-previous=load(Path('/Users/<user>/repos/research/mac-model-benchmarks/native-runs/20260922-mlx-gpt-oss-v2.json'))
+previous=load(Path.home()/('repos/research/mac-model-benchmarks/native-runs/20260922-mlx-gpt-oss-v2.json'))
 gpt=previous['summary']
 category_rows='\n'.join(f"| {category} | {chat['categories'][category]['passed']}/{chat['categories'][category]['total']} | {result['passed']}/{result['total']} |" for category,result in think['categories'].items())
 comparisons=[dict(model='DeepSeek V4 Flash 0731 2.4-bit mixed',mode='chat, temperature 0',source='chat-and-speed-run.json',**chat),

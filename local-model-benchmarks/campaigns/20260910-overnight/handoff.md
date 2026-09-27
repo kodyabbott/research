@@ -116,51 +116,10 @@ a fresh read handle correctly showed progress. See
 [download-observations.json](download-observations.json). Do not mistake these probes
 for an internet speed test or evidence that a download accelerator will fix streaming.
 
-## TV streaming and router investigation
-
-Kody reported possible interference with [redacted] on a [redacted] 7 Series TV.
-The goal is to give the TV enough bandwidth when it needs it and leave spare
-capacity for the PC, without a blanket PC cap. Causation was not established.
-
-The [redacted] [redacted] router, firmware 1.6.1, exposes a real internal HTTP API at
-`/ubus`. The local page was observed calling `data_repo.webinfo.system`,
-`op-mode.get`, and `data_repo.webinfo.devices`. Its loaded JavaScript also contains
-configuration setters, so it would be incorrect to call the API read-only.
-
-Neither the inspected local/cloud settings nor the two inspected frontend bundles
-exposed QoS, SQM, traffic shaping, or bandwidth-limit controls. The inspected [redacted]
-detail page offered reserved IP, DMZ, and port forwarding; those do not implement
-streaming priority. No supported/public QoS API was found. This is **not** an exhaustive
-backend enumeration or proof that hidden firmware support cannot exist.
-
-Two [redacted] TVs were connected on different bands, one 5 GHz and one 2.4 GHz.
-It remains unknown which is the 7 Series and whether it connects through the extender.
-Identifying that TV and testing a stronger wireless link or Ethernet are useful next
-diagnostics before blaming PC traffic. No router, firewall, DNS, radio, DMZ, or
-remote-assistance settings were changed. Browser network observation was stopped.
-
-WMM prioritizes traffic classes within Wi-Fi; it does not automatically make every
-Wi-Fi device outrank Ethernet at the internet bottleneck. The desired policy would
-require suitable per-device/class QoS and queuing at the constrained link. A router
-replacement is only a possible future option, with QoS throughput verified at the
-household's actual multi-gig service rate, not inferred from its port labels.
-
-Primary references checked during the investigation:
-
-- [Cisco: WMM and wireless QoS](https://www.cisco.com/c/en/us/support/docs/wireless/catalyst-9800-series-wireless-controllers/221906-understand-troubleshoot-qos-over-wirel.html).
-- [[redacted]: advanced network settings](https://[redacted].com/support/en/answer/1858/).
-- [[redacted]: using your own router](https://[redacted].com/support/en/answer/1816/).
-- [[redacted]: available video quality](https://help.[redacted].com/hc/en-us/articles/36816426440980-What-video-quality-options-do-I-have).
-
-Detailed local device identifiers, account-plan observations, API method inventory,
-and evidence limits are saved in `state/handoffs/20260911/network-observations.md`.
-That directory is ignored by Git and stays local to this workstation. No credentials,
-cookies, request headers, or full router responses were saved.
-
 ## Morning continuation
 
 1. Wait for Kody's new resume request in Codex with Astra. Read this handoff,
-   `results.md`, `compatibility.md`, and the local network note. Inspect current Git,
+   `results.md`, and `compatibility.md`. Inspect current Git,
    process, queue, policy, disk, and GPU state before any launch.
 2. **Do not simply restart the old controller.** Its queue is canceled and its
    authorization cutoff is revoked. In addition, `nightly.py` only admits ordinary
@@ -176,7 +135,7 @@ cookies, request headers, or full router responses were saved.
    screen, a carefully scoped Muse compatibility diagnosis, or a stronger realistic
    coding evaluation for Qwen3.5/Qwen3.8 against the coder baseline. Keep distinct
    protocols labeled. Resume KAT/new downloads only within the new request and with
-   the streaming concern considered. No network prioritization solution was implemented.
+   the streaming concern considered.
 5. Run relevant offline tests after any harness/protocol changes, then run one
    supervised candidate at a time and review terminal raw JSON before scaling up.
    Retain pinned sources, publisher admission, ownership checks, resource limits,
@@ -202,4 +161,4 @@ for that payload. No new push was attempted during shutdown/documentation.
 
 Read repo instructions before further changes. Prior campaign source/URL/adversarial
 reviews are recorded in `notes.md`; this pause did not restart reviewers. Any later
-public push must also exclude the ignored private network observations.
+public push must also exclude the ignored private `state/` files.
