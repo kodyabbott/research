@@ -74,7 +74,7 @@ With thinking off, most of these cases require step-by-step computation the mode
 | Gemma 4 31B Heretic | **TODO** | **TODO** | **TODO** | **TODO** | **TODO** |
 
 - Qwen3.8 solves every case with short reasoning.
-- Qwen3.6's reasoning runs long: 8 of its 9 failures filled the 8,192-token context before answering. Its model card says to "Keep at least 128K context to preserve thinking capabilities," so 15/24 is a lower bound for this model with more context.
+- Qwen3.6's reasoning runs long: 8 of its 9 failures filled the 8,192-token context before answering. Its model card says to "Keep at least 128K context to preserve thinking capabilities," so 15/24 is a lower bound for this model with more context. Greedy decoding may also contribute: on two Python-trace cases the reasoning contained the correct answer and kept re-verifying until the context ran out.
 - Gemma's thinking mode cannot be requested through Ollama's `think` flag for this import (HTTP 400); it thinks when the flag is omitted. Its answers so far are correct but wrapped in markdown fences, which the strict grader rejects. **TODO: final numbers.**
 
 ## Did uncensoring cost capability?
