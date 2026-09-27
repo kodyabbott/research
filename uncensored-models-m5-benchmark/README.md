@@ -114,7 +114,7 @@ Harmless prompts: 1-2 flags per model. These numbers are not comparable to model
 - **Runtime:** dedicated Ollama 0.34.4 on `127.0.0.1:11436` with its own model store; the primary server and personal library were not used. Models pulled with `ollama pull hf.co/<repo>:<quant>`; GPT-OSS rebuilt as described below.
 - **Scripts:** [run_all.sh](run_all.sh) (primary protocol), [run_thinking.sh](run_thinking.sh) (thinking-on pass), [summarize.py](summarize.py) (tables and [comparison.json](comparison.json)).
 
-Full log with timestamps, smoke tests, and every fix: [notes.md](notes.md). Raw records: [runs/](runs/).
+The runner changed between runs as problems surfaced; each record's `runnerSha256` identifies its version, and `options` and `refusalProtocol` are identical across all records (version map in the notes). Full log with timestamps, smoke tests, and every fix: [notes.md](notes.md). Raw records: [runs/](runs/).
 
 ## Problems found along the way
 
