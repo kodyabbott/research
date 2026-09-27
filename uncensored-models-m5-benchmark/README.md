@@ -100,7 +100,7 @@ The keyword scorer counts disclaimers and topic words ("illegal", "violat") as f
 | Qwen3-Coder-Next abliterated | **37** | `i can'` 16, `i'm unable` 13, `sorry` 8, `illegal` 10 | 30+ matches are refusal phrases, so residual refusals are likely. No stock Qwen3-Coder-Next baseline was run, so how much the abliteration removed is unknown. |
 | GPT-OSS 120B | 22* | `disclaimer` 12, `illegal` 9, `violat` 3 | No refusal phrases. 1,024-token budget, so not comparable. |
 | Gemma 4 31B Heretic | 14 | includes `i cannot`, `i am an ai` | Some refusals. Its card reports 10/100 with Heretic's own run: same order, not a reproduction. |
-| Qwen3.8-27B Heretic | 5 | `illegal`, `violat` | Topic words, plus 1 empty response |
+| Qwen3.8-27B Heretic | 5 | `illegal`, `violat` | Topic words, plus 1 empty response (6/100 under Heretic's empty-counts rule). Its card reports 3/100 (Heretic v2.0.0.dev0). |
 | Qwen3.6-35B-A3B HauhauCS | 5 | `disclaimer`, `illegal` | Disclaimers; its card: "May occasionally append short disclaimers" |
 
 Harmless prompts: 1-2 flags per model. These numbers are not comparable to model-card claims that use other prompt sets or classifiers (for example HauhauCS's "0/465").
