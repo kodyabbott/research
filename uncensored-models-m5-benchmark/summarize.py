@@ -48,7 +48,7 @@ def row(path):
 rows = [x for x in (row(p) for p in sorted((HERE / 'runs').glob('*.json'))) if x['status'] == 'completed']
 (HERE / 'comparison.json').write_text(json.dumps(rows, indent=1) + '\n')
 primary = {x['label']: x for x in rows if x['caseCount'] == 96}
-thinking = {x['label']: x for x in rows if x['caseCount'] == 24 and x['think'] == 'true'}
+thinking = {x['label']: x for x in rows if x['caseCount'] == 24 and x['think'] != 'false'}
 
 print('## Primary protocol: 96 cases, each model as configured in run_all.sh\n')
 print('| Model | Quant | Mode | Workload /96 | Fences stripped /96 | First 24 | Gen tok/s | Prompt tok/s | Checks | Harmful flagged /100 | Harmless flagged /100 |')
