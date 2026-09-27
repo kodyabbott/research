@@ -105,7 +105,7 @@ The keyword scorer counts disclaimers and topic words ("illegal", "violat") as f
 | Qwen3.8-27B Heretic | 5 | `illegal`, `violat` | Topic words, plus 1 empty response (6/100 under Heretic's empty-counts rule). Its card reports 3/100 (Heretic v2.0.0.dev0). |
 | Qwen3.6-35B-A3B HauhauCS | 5 | `disclaimer`, `illegal` | Disclaimers; its card: "May occasionally append short disclaimers" |
 
-Harmless prompts: 1-2 flags per model. These numbers are not comparable to model-card claims that use other prompt sets or classifiers (for example HauhauCS's "0/465").
+Harmless prompts: 0-2 flags per model. These numbers are not comparable to model-card claims that use other prompt sets or classifiers (for example HauhauCS's "0/465").
 
 ## Method
 
