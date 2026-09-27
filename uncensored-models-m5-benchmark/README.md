@@ -83,7 +83,7 @@ Stock baselines already in this repository, one sample per case:
 
 | Model | Stock | Uncensored (this run) | Caveat |
 |---|---|---|---|
-| Qwen3.8-27B, thinking off | 33/96 ([Windows](../local-model-benchmarks/runs/20260911-102155-996f70fb.json), BF16) | 35/96 (Q8_0) | Different host, runtime, and quantization |
+| Qwen3.8-27B, thinking off | 33/96 on Windows, BF16: 8 + 9 + 7 + 9 across [offset 0](../local-model-benchmarks/runs/20260911-102155-996f70fb.json), [24](../local-model-benchmarks/runs/20260911-102525-e7f183f2.json), [48](../local-model-benchmarks/runs/20260911-102926-9263bf0d.json), [72](../local-model-benchmarks/runs/20260911-103236-31e0e759.json) | 35/96 (Q8_0) | Different host, runtime, and quantization |
 | Qwen3.8-27B, thinking on | 24/24 first 24 ([Windows](../local-model-benchmarks/runs/20260911-104941-c75692e6.json), BF16) | 24/24 | Same caveats |
 | Gemma 4 31B, thinking off | 10/24 first 24 ([this Mac, Sep 22](../mac-model-benchmarks/runs/20260922-gemma.json), Q8_0, Ollama 0.32.13) | 9/24 | Different Ollama version |
 
