@@ -114,7 +114,7 @@ Harmless prompts: 1-2 flags per model. These numbers are not comparable to model
 - **Workload:** `practical-json-v1`, 96 authored cases in eight categories, strict JSON grading. Output cap 2,048 tokens with thinking off, 8,192 when reasoning is on (as in the Sep 22 GPT-OSS rows). It is an answer-quality screen, not a coding benchmark or general ranking. Generated code is never executed.
 - **Throughput:** warmup, then three repetitions of a short generation and a ~7,000-token ingest, plus three exact-output checks (same prompts as the Sep 22 Mac runs).
 - **Runtime:** dedicated Ollama 0.34.4 on `127.0.0.1:11436` with its own model store; the primary server and personal library were not used. Models pulled with `ollama pull hf.co/<repo>:<quant>`; GPT-OSS rebuilt as described below.
-- **Scripts:** [run_all.sh](run_all.sh) (primary protocol), [run_thinking.sh](run_thinking.sh) (thinking-on pass), [summarize.py](summarize.py) (tables and [comparison.json](comparison.json)).
+- **Scripts:** [run_all.sh](run_all.sh) (primary protocol), [run_thinking.sh](run_thinking.sh) (thinking-on pass), [run_followups.sh](run_followups.sh) (comparable GPT-OSS refusal run and Qwen3.8 all-96 thinking run), [make_gptoss_model.sh](make_gptoss_model.sh) (GPT-OSS template rebuild), [summarize.py](summarize.py) (tables and [comparison.json](comparison.json)).
 
 The runner changed between runs as problems surfaced; each record's `runnerSha256` identifies its version, and `options` and `refusalProtocol` are identical across all records (version map in the notes). Full log with timestamps, smoke tests, and every fix: [notes.md](notes.md). Raw records: [runs/](runs/).
 
