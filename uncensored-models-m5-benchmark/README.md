@@ -19,9 +19,11 @@ Rule, fixed before the thinking-on results existed: strict pass rate on the firs
 | 4 | Gemma 4 31B Heretic Q8_0 | thinking off | 9/24 | 36/96 | 3.8 | 14 |
 | 5 | Qwen3-Coder-Next abliterated Q4_K_M | thinking off (no toggle) | 4/24 | 14/96 | 0.9 | **37** |
 
-\* The primary-table GPT-OSS refusal figure (22) used a 1,024-token chat-API budget with reasoning included. The comparable figure, using Heretic's gpt-oss prefill at 100 tokens, is 8/100; see [Refusals](#refusals).
+\* Comparable run using Heretic's gpt-oss prefill at 100 tokens. The chat-API run at a 1,024-token budget with reasoning included flagged 22; see [Refusals](#refusals).
 
-**The top two are a capability tie.** One case on 24, with one sample per case, is not a measured difference. GPT-OSS 120B was also measured on all 96 cases (91/96) and generates about 4.7 times faster. I recommend **GPT-OSS 120B** as the daily model on this Mac. Pick **Qwen3.8-27B Heretic** when you need image input or want to leave more memory free; with thinking on it matched stock Qwen3.8-27B (24/24 each), and with thinking off it scored 35/96 against stock's 33/96.
+**Qwen3.8-27B Heretic is the most capable model here.** With thinking on it passed all 96 cases, the same as stock Qwen3.8-27B on this suite, and it flagged 5 of 100 harmful prompts, all on topic words or an empty reply. It is also slow on this Mac: about 50 seconds per case at 18 tok/s. **GPT-OSS 120B is the fast alternative:** 91/96 at about 5 seconds per case, roughly a tenth of the wall time, with 8/100 flagged on the comparable refusal run. It needs twice the memory and a template fix. The one-case gap on the first 24 is not meaningful alone; the 96-case runs (96 vs 91, one sample per case) are the stronger evidence.
+
+Recommendation: Qwen3.8-27B Heretic when correctness matters more than latency, GPT-OSS 120B for interactive use. Gemma 4 with thinking on reaches 21/24 once markdown fences are stripped, but ignores the prompt's format instruction and takes about 3.5 minutes per case. Qwen3-Coder-Next abliterated still refuses often and scored lowest.
 
 GPT-OSS 120B only works after a fix: Ollama's import of this Hugging Face GGUF generated a malformed chat template that emptied every response. [make_gptoss_model.sh](make_gptoss_model.sh) rebuilds it from the same file with Ollama's official template. Details under [Problems found](#problems-found-along-the-way).
 
