@@ -41,7 +41,7 @@ Quantization differs across rows, so this answers "which of these should I run,"
 
 ## Results: 96 cases, primary protocol
 
-Thinking off wherever the model supports it. Ollama's chat API offers no way to turn GPT-OSS reasoning off, so it runs at low effort (as the Sep 22 GPT-OSS 20B row did); medium and high effort were not run. "Fences stripped" is a diagnostic regrade that removes a surrounding ```json fence before the same strict grader; the prompts say "No markdown," so the strict column is the result.
+Thinking off wherever the model supports it. Ollama's chat API offers no way to turn GPT-OSS reasoning off, so it runs at low effort (as the Sep 22 GPT-OSS 20B row did); medium and high effort were not run. "Fences stripped" is a diagnostic regrade that removes one surrounding ``` or ```json fence (case-insensitive) before the same strict grader. It covers that one format habit only; other format misses, such as a bare array without the `{"answer": ...}` wrapper, still fail. The prompts say "No markdown," so the strict column is the result.
 
 | Model | Mode | Strict /96 | Fences stripped | First 24 | Gen tok/s | Ingest tok/s | Exact checks | Harmful flagged | Harmless flagged |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
