@@ -34,7 +34,7 @@ Selected from Hugging Face search results for uncensored, abliterated, heretic, 
 | Qwen3.8-27B (dense) | [llmfan46 Heretic](https://huggingface.co/llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF) | Q8_0 | [Heretic](https://github.com/p-e-w/heretic) |
 | Qwen3.6-35B-A3B (MoE) | [HauhauCS Aggressive](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive) | Q4_K_M | Not disclosed |
 | Gemma 4 31B (dense) | [llmfan46 Heretic](https://huggingface.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF) | Q8_0 | Heretic ARA |
-| Qwen3-Coder-Next (MoE) | [huihui-ai abliterated, bartowski quants](https://huggingface.co/bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF) | Q4_K_M | [remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers) |
+| Qwen3-Coder-Next (MoE) | [huihui-ai abliterated, bartowski quants](https://huggingface.co/bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF) | Q4_K_M | [remove-refusals-with-transformers](https://github.com/Sumandora/remove-refusals-with-transformers), per the [upstream huihui-ai card](https://huggingface.co/huihui-ai/Huihui-Qwen3-Coder-Next-abliterated/blob/2b50acef370d315e904d9d3d2e26ac658ed49d57/README.md) (bartowski's quant card names only the original model) |
 | GPT-OSS 120B (MoE) | [HauhauCS Aggressive](https://huggingface.co/HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive) | MXFP4 | Not disclosed |
 
 Quantization differs across rows, so this answers "which of these should I run," not "which uncensoring method preserves the most capability."
