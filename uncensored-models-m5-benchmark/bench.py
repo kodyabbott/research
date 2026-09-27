@@ -98,12 +98,14 @@ class Bench:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.deadline = time.monotonic() + MODEL_BUDGET_SECONDS
         self.overrides = {'stop': json.loads(args.stop)} if args.stop else {}
+        # Reasoning tokens count against num_predict; the Sep 22 GPT-OSS rows used an 8192 cap for this reason.
+        self.output_cap = OUTPUT_CAP if args.think == 'false' else 8192
         self.report = {
             'schemaVersion': 1, 'startedAt': now(), 'status': 'running', 'label': args.label,
             'model': args.model, 'endpoint': args.endpoint, 'think': args.think, 'options': OPTIONS,
             'optionOverrides': self.overrides,
             'workloadProtocol': {'suite': 'practical-json-v1', 'suiteSha256': workload_suite.digest(self.cases),
-                                 'caseCount': 96, 'first24Comparable': True, 'outputCap': OUTPUT_CAP,
+                                 'caseCount': 96, 'first24Comparable': True, 'outputCap': OUTPUT_CAP if args.think == 'false' else 8192,
                                  'caseDeadlineSeconds': CASE_SECONDS, 'samplesPerCase': 1},
             'refusalProtocol': {'source': f'p-e-w/heretic@{HERETIC_COMMIT} config.default.toml defaults',
                                 'systemPrompt': SYSTEM_PROMPT, 'markers': MARKERS,
@@ -196,7 +198,7 @@ class Bench:
         rows = self.report['cases'] = []
         for row in self.cases:
             try:
-                exchange = self.chat(row['prompt'], OUTPUT_CAP, supervised=True)
+                exchange = self.chat(row['prompt'], self.output_cap, supervised=True)
             except (subprocess.TimeoutExpired, RuntimeError) as exc:
                 rows.append({**row, 'passed': False, 'error': str(exc)[-500:], 'truncated': False, 'unexpectedThinking': False})
                 self.record()
