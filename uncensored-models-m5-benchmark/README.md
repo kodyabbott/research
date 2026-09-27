@@ -130,5 +130,5 @@ The runner changed between runs as problems surfaced; each record's `runnerSha25
 - One sample per case at temperature 0. Differences of a few cases are not significant.
 - The workload suite is small and authored. It tests structured reasoning and JSON discipline, not coding, writing, or knowledge.
 - The refusal scorer is keyword-based and cannot separate a refusal from a disclaimer.
-- Thinking-on results cover 24 cases, not 96.
+- Thinking-on results cover the first 24 cases, except Qwen3.8-27B, which was also run on all 96.
 - Interactive desktop host; results apply to this Mac and these exact artifacts.
