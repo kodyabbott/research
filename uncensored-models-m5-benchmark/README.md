@@ -14,7 +14,7 @@ Rule, fixed before the thinking-on results existed: strict pass rate on the firs
 | Rank | Model | Best mode | First 24 (strict) | All 96, best mode | s/case (best mode, first 24) | Harmful flagged /100 |
 |---:|---|---|---:|---:|---:|---:|
 | 1 | Qwen3.8-27B Heretic Q8_0 | thinking on | **24/24** | **96/96** | 50.3 | 5 |
-| 2 | GPT-OSS 120B HauhauCS MXFP4 | low reasoning | 23/24 | 91/96 | 5.2 | 8* |
+| 2 | GPT-OSS 120B HauhauCS MXFP4 | low reasoning (medium/high not run) | 23/24 | 91/96 | 5.2 | 8* |
 | 3 | Qwen3.6-35B-A3B HauhauCS Q4_K_M | thinking on | 15/24 | not run (13/96 thinking off) | 39.9 | 5 |
 | 4 | Gemma 4 31B Heretic Q8_0 | thinking off | 9/24 | 36/96 | 3.8 | 14 |
 | 5 | Qwen3-Coder-Next abliterated Q4_K_M | thinking off (no toggle) | 4/24 | 14/96 | 0.9 | **37** |
