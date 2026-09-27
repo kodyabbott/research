@@ -21,7 +21,7 @@ Rule, fixed before the thinking-on results existed: strict pass rate on the firs
 
 \* GPT-OSS had a 1,024-token refusal budget (reasoning included) against 100 tokens for the others, and its flags are all topic words and disclaimers; see [Refusals](#refusals).
 
-**The top two are a capability tie.** One case on 24, with one sample per case, is not a measured difference. GPT-OSS 120B was also measured on all 96 cases (91/96) and generates about 4.7 times faster. I recommend **GPT-OSS 120B** as the daily model on this Mac. Pick **Qwen3.8-27B Heretic** when you need image input or want to leave more memory free; it matched stock Qwen3.8-27B exactly.
+**The top two are a capability tie.** One case on 24, with one sample per case, is not a measured difference. GPT-OSS 120B was also measured on all 96 cases (91/96) and generates about 4.7 times faster. I recommend **GPT-OSS 120B** as the daily model on this Mac. Pick **Qwen3.8-27B Heretic** when you need image input or want to leave more memory free; with thinking on it matched stock Qwen3.8-27B (24/24 each), and with thinking off it scored 35/96 against stock's 33/96.
 
 GPT-OSS 120B only works after a fix: Ollama's import of this Hugging Face GGUF generated a malformed chat template that emptied every response. [make_gptoss_model.sh](make_gptoss_model.sh) rebuilds it from the same file with Ollama's official template. Details under [Problems found](#problems-found-along-the-way).
 
