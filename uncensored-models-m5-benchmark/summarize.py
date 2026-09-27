@@ -14,7 +14,7 @@ sys.path.insert(0, str(HERE.parent / 'local-model-benchmarks'))
 import quality_screen  # noqa: E402
 
 # Diagnostic only: the prompts say "No markdown", so the strict score is the protocol result.
-FENCE = re.compile(r'^\s*```(?:json)?\s*\n?(.*?)\n?\s*```\s*$', re.S)
+FENCE = re.compile(r'^\s*```(?:json)?\s*\n?(.*?)\n?\s*```\s*$', re.S | re.I)
 
 
 def fences_stripped(cases):
