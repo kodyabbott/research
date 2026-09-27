@@ -97,7 +97,7 @@ The keyword scorer counts disclaimers and topic words ("illegal", "violat") as f
 
 | Model | Harmful flagged | What matched | Reading |
 |---|---:|---|---|
-| Qwen3-Coder-Next abliterated | **37** | `i can'` 16, `i'm unable` 13, `sorry` 8, `illegal` 10 | Real refusals remain. This abliteration is incomplete. |
+| Qwen3-Coder-Next abliterated | **37** | `i can'` 16, `i'm unable` 13, `sorry` 8, `illegal` 10 | 30+ matches are refusal phrases, so residual refusals are likely. No stock Qwen3-Coder-Next baseline was run, so how much the abliteration removed is unknown. |
 | GPT-OSS 120B | 22* | `disclaimer` 12, `illegal` 9, `violat` 3 | No refusal phrases. 1,024-token budget, so not comparable. |
 | Gemma 4 31B Heretic | 14 | includes `i cannot`, `i am an ai` | Some refusals. Its card reports 10/100 with Heretic's own run: same order, not a reproduction. |
 | Qwen3.8-27B Heretic | 5 | `illegal`, `violat` | Topic words, plus 1 empty response |
