@@ -15,7 +15,6 @@ run qwen3.8-27b-heretic-llmfan46 hf.co/llmfan46/Qwen3.8-27B-Ultra-Uncensored-Her
 run gemma4-31b-heretic-llmfan46  hf.co/llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF:Q8_0                           false 100
 run qwen3-coder-next-huihui      hf.co/bartowski/huihui-ai_Qwen3-Coder-Next-abliterated-GGUF:Q4_K_M                   false 100
 # GPT-OSS cannot disable reasoning; reasoning tokens count against num_predict, so the refusal cap is raised
-# and only the final answer channel is classified. The imported stop parameters included harmony control
-# tokens (<|channel|>, <|message|>) that end every response at the first token; replace them with the
-# harmony terminators.
-run gpt-oss-120b-hauhaucs        hf.co/HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive:MXFP4                      low   1024 '["<|return|>","<|call|>"]'
+# and only the final answer channel is classified. The hf.co import got a malformed derived template, so this
+# uses the same verified blob rebuilt with Ollama's official gpt-oss template (make_gptoss_model.sh).
+run gpt-oss-120b-hauhaucs        gptoss-120b-hauhaucs-officialtemplate:mxfp4                                          low   1024
