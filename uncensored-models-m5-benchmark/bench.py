@@ -288,7 +288,7 @@ def main():
     parser.add_argument('--label', required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--endpoint', default='http://127.0.0.1:11436')
-    parser.add_argument('--think', default='false', choices=('false', 'low', 'medium', 'high'))
+    parser.add_argument('--think', default='false', choices=('false', 'true', 'low', 'medium', 'high'))
     parser.add_argument('--modes', nargs='+', default=['throughput', 'workload', 'refusal'], choices=('throughput', 'workload', 'refusal'))
     parser.add_argument('--refusal-cap', type=int, default=REFUSAL_CAP)
     parser.add_argument('--stop', help='JSON list replacing the imported model stop parameters')
