@@ -130,9 +130,10 @@ class Bench:
             messages = [{'role': 'user', 'content': messages}]
         body = {'model': self.args.model, 'messages': messages, 'stream': False, 'keep_alive': '10m',
                 'options': {**OPTIONS, **self.overrides, 'num_predict': cap}}
-        # Always sent: the Gemma import thinks by default without advertising the capability,
-        # and every selected model accepted an explicit value in the smoke test.
-        body['think'] = {'false': False, 'true': True}.get(self.args.think, self.args.think)
+        # Sent unless 'default': the Gemma import thinks by default without advertising the capability,
+        # accepts think=false, and rejects think=true (HTTP 400), so its thinking-on run omits the field.
+        if self.args.think != 'default':
+            body['think'] = {'false': False, 'true': True}.get(self.args.think, self.args.think)
         start = time.monotonic()
         if supervised:
             result = subprocess.run([sys.executable, str(self.root / 'api_probe.py')],
@@ -288,7 +289,7 @@ def main():
     parser.add_argument('--label', required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--endpoint', default='http://127.0.0.1:11436')
-    parser.add_argument('--think', default='false', choices=('false', 'true', 'low', 'medium', 'high'))
+    parser.add_argument('--think', default='false', choices=('false', 'true', 'default', 'low', 'medium', 'high'))
     parser.add_argument('--modes', nargs='+', default=['throughput', 'workload', 'refusal'], choices=('throughput', 'workload', 'refusal'))
     parser.add_argument('--refusal-cap', type=int, default=REFUSAL_CAP)
     parser.add_argument('--stop', help='JSON list replacing the imported model stop parameters')
