@@ -27,6 +27,21 @@ Recommendation: Qwen3.8-27B Heretic when correctness matters more than latency, 
 
 GPT-OSS 120B only works after a fix: Ollama's import of this Hugging Face GGUF generated a malformed chat template that emptied every response. [make_gptoss_model.sh](make_gptoss_model.sh) rebuilds it from the same file with Ollama's official template. Details under [Problems found](#problems-found-along-the-way).
 
+## What's in this folder
+
+| File | Contents |
+|---|---|
+| [README.md](README.md) | This report |
+| [notes.md](notes.md) | Timestamped research log: every run, smoke test, failure, fix, and review finding |
+| [selection.json](selection.json) | The five pinned GGUFs: repository, revision, file, byte size, SHA-256, license |
+| [candidates-2026-09-26.json](candidates-2026-09-26.json) | Hugging Face search queries and candidates behind the selection |
+| [bench.py](bench.py) | Runner: workload, throughput, and refusal passes against a dedicated Ollama server |
+| [run_all.sh](run_all.sh), [run_thinking.sh](run_thinking.sh), [run_followups.sh](run_followups.sh) | The exact command lines for every run |
+| [make_gptoss_model.sh](make_gptoss_model.sh) | GPT-OSS rebuild with Ollama's official template |
+| [summarize.py](summarize.py), [comparison.json](comparison.json) | Tables in this README and the per-run summary data |
+| [runs/](runs/) | One raw JSON record per run: settings, runtime, model identity, every workload prompt and response, refusal verdicts (no refusal response text), host state |
+| [session-urls.md](session-urls.md) | Every external URL reviewed in the research session, with citation coverage |
+
 ## Models
 
 Selected from Hugging Face search results for uncensored, abliterated, heretic, and obliterated builds runnable in MLX or llama.cpp, sorted by downloads and trending score on September 26, 2026. The queries and the top 100 candidates are saved in [candidates-2026-09-26.json](candidates-2026-09-26.json). Exact revisions, byte sizes, and SHA-256 values are in [selection.json](selection.json); every model GGUF matched. Ollama also pulled vision projectors for the Qwen3.8, Qwen3.6, and Gemma repositories (0.9-1.2 GB each); those are not pinned in selection.json, and their digests are in the notes.
