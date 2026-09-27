@@ -3,7 +3,7 @@
 ## Scope and source state
 
 - Requested September 22, 2026: clone Kody's GitHub research repository, inspect the nightly benchmarks, and run some of the same models on the new MacBook.
-- Cloned `https://github.com/kodyabbott/research` to `/Users/kody/repos/research`. The fetched tip was `db7b8bc` (September 11). These are the latest committed results available in this clone, not proof that the Windows scheduler has produced nothing since then.
+- Cloned `https://github.com/kodyabbott/research` to `/Users/<user>/repos/research`. The fetched tip was `db7b8bc` (September 11). These are the latest committed results available in this clone, not proof that the Windows scheduler has produced nothing since then.
 - New local branch: `codex/m5-max-benchmark-comparison`. Original Windows policy, canceled campaigns, historical raw records, and scheduler are unchanged. No push was requested.
 - Initial selection: Qwen3-Coder 30B Q4_K_M, GPT-OSS 20B MXFP4 with low reasoning, and Gemma 4 31B Q8_0 with thinking off. The first two provide an exact registry-artifact match; Gemma provides the pinned dense-model comparison.
 
@@ -15,7 +15,7 @@
 - [Release](https://github.com/ollama/ollama/releases/tag/v0.32.13), [archive](https://github.com/ollama/ollama/releases/download/v0.32.13/ollama-darwin.tgz), [published checksum](https://github.com/ollama/ollama/releases/download/v0.32.13/sha256sum.txt). Verified archive SHA-256: `71efd44f3b5f2019f42bae17ae58eb3de8bd25ce3ca3bc89aea58e53e5d091d1`.
 - Qwen registry manifest: `06c1097efce0431c2045fe7b2e5108366e43bee1b4603a7aded8f21689e90bca`; GPT-OSS: `17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7`. Ollama pull completed and reported both exact historical digests.
 - Gemma source: [pinned Hugging Face repository](https://huggingface.co/unsloth/gemma-4-31B-it-GGUF/tree/c1ac76e99d5513b141e8adde7288b85c3f9c32ec), `gemma-4-31B-it-Q8_0.gguf`, 32,635,677,632 bytes, SHA-256 `d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67`. Metadata was checked at the pinned revision before download; the complete file is verified before import.
-- Dedicated server on `127.0.0.1:11436`. Store: `/Users/kody/Documents/Codex/model-cache/mac-benchmarks/ollama`. Process environment: `OLLAMA_NUM_PARALLEL=1`, `OLLAMA_MAX_LOADED_MODELS=1`, `OLLAMA_CONTEXT_LENGTH=8192`, `OLLAMA_NO_CLOUD=1`. No personal model library or existing server was used.
+- Dedicated server on `127.0.0.1:11436`. Store: `/Users/<user>/Documents/Codex/model-cache/mac-benchmarks/ollama`. Process environment: `OLLAMA_NUM_PARALLEL=1`, `OLLAMA_MAX_LOADED_MODELS=1`, `OLLAMA_CONTEXT_LENGTH=8192`, `OLLAMA_NO_CLOUD=1`. No personal model library or existing server was used.
 - A two-token Qwen smoke response returned `ready`. Server log confirmed Metal and 49/49 layers offloaded. This smoke check overlapped downloads and is excluded from all timed results.
 - Source snapshots, prompts, raw responses, identity checks, actual loaded model/context, host state, timing fields, and unload verification are retained in each replay record.
 
@@ -35,10 +35,10 @@ Python 3.11 or later is needed for the replay runner; it uses the standard libra
 
 ```sh
 OLLAMA_HOST=127.0.0.1:11436 \
-OLLAMA_MODELS=/Users/kody/Documents/Codex/model-cache/mac-benchmarks/ollama \
+OLLAMA_MODELS=/Users/<user>/Documents/Codex/model-cache/mac-benchmarks/ollama \
 OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 \
 OLLAMA_CONTEXT_LENGTH=8192 OLLAMA_NO_CLOUD=1 \
-/Users/kody/Documents/Codex/2026-09-22/le/work/ollama-0.32.13/ollama serve
+/Users/<user>/Documents/Codex/2026-09-22/le/work/ollama-0.32.13/ollama serve
 ```
 
 Then run from the repository root:
@@ -62,7 +62,7 @@ Final observations, raw-run links, and caveats appear in [README.md](README.md).
 
 The user selected the Mac-focused option: find strong local performance with MLX or LM Studio, with runtime differences labeled. MLX was used directly. This extends the initial matched-Ollama run; the original Windows measurements remain the historical reference.
 
-Installed an isolated Python 3.12.14 environment at `/Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv`, with MLX 0.32.2 and MLX-LM 0.31.3. All 34 package versions are recorded in `requirements-mlx.txt`. No existing system Python environment or installed Ollama application was replaced. A sandbox restriction prevented `uv pip freeze` from opening its default cache; the completed dependency snapshot was read directly from installed package metadata instead.
+Installed an isolated Python 3.12.14 environment at `/Users/<user>/Documents/Codex/2026-09-22/le/work/mlx-venv`, with MLX 0.32.2 and MLX-LM 0.31.3. All 34 package versions are recorded in `requirements-mlx.txt`. No existing system Python environment or installed Ollama application was replaced. A sandbox restriction prevented `uv pip freeze` from opening its default cache; the completed dependency snapshot was read directly from installed package metadata instead.
 
 Pinned, downloaded, and verified every model file:
 
@@ -88,8 +88,8 @@ Qwen's larger prefill is the strongest long-prompt result among tested settings;
 From the repository root, with the retained model cache and pinned environment:
 
 ```sh
-HF_HUB_OFFLINE=1 /Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/Qwen3-Coder-30B-A3B-Instruct-4bit-verified.json --prefill-step-size 8192 --output mac-model-benchmarks/native-runs/NEW-qwen-mlx.json
-HF_HUB_OFFLINE=1 /Users/kody/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/gpt-oss-20b-MXFP4-Q8-verified.json --output mac-model-benchmarks/native-runs/NEW-gpt-oss-mlx.json
+HF_HUB_OFFLINE=1 /Users/<user>/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/Qwen3-Coder-30B-A3B-Instruct-4bit-verified.json --prefill-step-size 8192 --output mac-model-benchmarks/native-runs/NEW-qwen-mlx.json
+HF_HUB_OFFLINE=1 /Users/<user>/Documents/Codex/2026-09-22/le/work/mlx-venv/bin/python mac-model-benchmarks/mlx_replay.py --repo "$PWD" --selection mac-model-benchmarks/native-artifacts/gpt-oss-20b-MXFP4-Q8-verified.json --output mac-model-benchmarks/native-runs/NEW-gpt-oss-mlx.json
 ```
 
 The model process has a 30-minute outer deadline; each generation has a 120-second alarm. The new native worker exits after the run and releases its model allocation. Timed native runs began after downloads completed and after the dedicated Ollama server was stopped. Small metadata/documentation checks ran during portions of the interactive experiment; the desktop was not isolated.

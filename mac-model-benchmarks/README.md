@@ -56,7 +56,7 @@ These historical medians include the Python supervisor startup, unlike the HTTP-
 
 ## Evidence and reuse
 
-The repository is `/Users/kody/repos/research`, local branch `codex/m5-max-benchmark-comparison`. The original nightly policy and all historical records are unchanged. Models remain in `/Users/kody/Documents/Codex/model-cache/mac-benchmarks` for reuse; weights are not committed.
+The repository is `/Users/<user>/repos/research`, local branch `codex/m5-max-benchmark-comparison`. The original nightly policy and all historical records are unchanged. Models remain in `/Users/<user>/Documents/Codex/model-cache/mac-benchmarks` for reuse; weights are not committed.
 
 - [Research notes and commands](notes.md)
 - [Native replay runner](mlx_replay.py), [Ollama replay runner](mac_replay.py)

@@ -148,4 +148,4 @@ These attempts produced no complete score and are excluded from aggregate accura
 
 - workload-gemma-think-pilot (20260911-131310-ae09b0ba): Request exceeded 120 seconds.
 - workload-granite-think-pilot (20260911-144135-ee0a14fb): Request exceeded 120 seconds.
-- humaneval-chat-gptoss-low-part4 (20260911-141203-d02cec45): [WinError 5] Access is denied: 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'.
+- humaneval-chat-gptoss-low-part4 (20260911-141203-d02cec45): [WinError 5] Access is denied: 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'.
