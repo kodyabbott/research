@@ -85,3 +85,21 @@ Quantization differs across rows (Q8_0, Q4_K_M, MXFP4). This ranking answers "wh
 - 03:05 MDT: Gemma 4 thinking-on in progress (field omitted; thinking present on every response). The first four answers are numerically correct but wrapped in ```json fences, so the strict grader fails them: the suite prompt says "Return exactly one JSON object ... No markdown or explanation." Strict grading stays the protocol result. Added a **diagnostic** "fences stripped" regrade to `summarize.py` (strip one surrounding ```/```json fence, then the same strict grader; truncated responses still fail) for every run, reported beside the strict score, never replacing it. Current effect: GPT-OSS 91 -> 91, Gemma thinking-off 36 -> 38, Qwen3-Coder-Next 14 -> 15, Qwen3.6 and Qwen3.8 unchanged. Gemma thinking-on runs about 4.5K reasoning tokens per case at ~16 tok/s (4-8 minutes each), so the pass should finish around 04:30.
 - Omitted earlier, recorded here after the source-verifier review: at 00:14 MDT my first chain for the thinking pass waited with `while pgrep -f 'uncensored-models-m5-benchmark/run_all.sh'`. That pattern also matched the waiting shell's own command line, so the loop could never exit. I stopped it before it started anything and replaced it with a wait on the queue's PID (`kill -0 70339`). No inference ran under the broken waiter.
 - Scorer difference, found by the source-verifier review: `bench.py` uses Heretic's prompts, system prompt, 100-token cap, and the 33-marker list, but not Heretic's matcher (`src/heretic/scorers/keyword_rate.py` at 3521f86, lines 126-137), which counts empty responses as matches, removes `*`, and collapses whitespace before matching. `bench.py` lowercases and normalizes the curly apostrophe only, and reports empty responses as their own verdict. Under Heretic's rule Qwen3.8 thinking-off would be 6/100 (its one empty response); the other models had no empty responses. README wording changed from "own evaluation defaults" to "evaluation settings" with this disclosed.
+- Evidence for the GPT-OSS template diagnosis, recorded verbatim after the source-verifier review noted it was not in any run record. `OLLAMA_HOST=127.0.0.1:11436 ollama show --modelfile hf.co/HauhauCS/GPTOSS-120B-Uncensored-HauhauCS-Aggressive:MXFP4` at 03:36 MDT (metadata only; no model load), with the `FROM` line and comments removed:
+
+  ```
+  TEMPLATE "{{ if .System }}<|start|>system<|message|>You are ChatGPT, a large language model trained by OpenAI.
+  Knowledge cutoff: 2024-06
+  Current date: 2026-09-26
+  Reasoning: medium
+  {{ .System }}
+  <|end|>{{ end }}{{ if .Prompt }}tart|>user<|message|>{{ .Prompt }}<|end|>{{ end }}<|start|>assistant<|channel|>final<|message|>{{ .Response }}<|return|>"
+  PARAMETER stop <|start|>
+  PARAMETER stop <|message|>
+  PARAMETER stop <|end|>
+  PARAMETER stop <|channel|>
+  PARAMETER stop <|return|>
+  PARAMETER stop tart|>user<|message|>
+  ```
+
+  The "two rebuilds produced the same model digest" statement comes from `/api/tags` read before and after rerunning `make_gptoss_model.sh` at 02:02 MDT: `aa659d3d8fff5614a5ce881061cbfcfcb1796d987b4ba207baafa4c2aadca1bf` both times. The GPT-OSS run record's `artifact.digest` holds the same value.
