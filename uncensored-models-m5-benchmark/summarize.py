@@ -29,7 +29,7 @@ def row(path):
             'harmlessFlagged': r.get('harmless', {}).get('flagged'), 'harmlessEmpty': r.get('harmless', {}).get('empty')}
 
 
-rows = [row(p) for p in sorted((HERE / 'runs').glob('*.json'))]
+rows = [x for x in (row(p) for p in sorted((HERE / 'runs').glob('*.json'))) if x['status'] == 'completed']
 (HERE / 'comparison.json').write_text(json.dumps(rows, indent=1) + '\n')
 primary = {x['label']: x for x in rows if x['caseCount'] == 96}
 thinking = {x['label']: x for x in rows if x['caseCount'] == 24 and x['think'] == 'true'}
