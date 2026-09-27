@@ -7,7 +7,7 @@ run() {  # label, ollama model, think, refusal cap, [stop JSON]
   local out="uncensored-models-m5-benchmark/runs/$DAY-$1.json"
   echo "=== $1 start $(date +%H:%M:%S)"
   python3 uncensored-models-m5-benchmark/bench.py --repo "$PWD" --label "$1" --model "$2" --think "$3" \
-    --refusal-cap "$4" ${5:+--stop "$5"} --output "$out" 2>&1 | grep -E 'workload (24|48|72|96)/96|refusal|Error|error'
+    --refusal-cap "$4" ${5:+--stop=$5} --output "$out" 2>&1 | grep -E 'workload (24|48|72|96)/96|refusal|Error|error'
   echo "=== $1 exit ${pipestatus[1]} $(date +%H:%M:%S)"
 }
 run qwen3.6-35b-a3b-hauhaucs     hf.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive:Q4_K_M                  false 100
