@@ -103,3 +103,8 @@ Quantization differs across rows (Q8_0, Q4_K_M, MXFP4). This ranking answers "wh
   ```
 
   The "two rebuilds produced the same model digest" statement comes from `/api/tags` read before and after rerunning `make_gptoss_model.sh` at 02:02 MDT: `aa659d3d8fff5614a5ce881061cbfcfcb1796d987b4ba207baafa4c2aadca1bf` both times. The GPT-OSS run record's `artifact.digest` holds the same value.
+- Vision projectors (adversarial-review M2): `ollama pull hf.co/...` also pulled each repository's projector GGUF. They are not pinned in `selection.json`, and "every imported blob matched" applies to the model GGUFs only. Digests from the dedicated store's manifests:
+  - `llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF/Q8_0`: `sha256:21487ff26d08f7ddd1d654d3bbfc1ae1020aab3119f5bf654742ce4697732e4e`, 1,200,726,208 bytes
+  - `llmfan46/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF/Q8_0`: `sha256:0fe0a1d29608720236b06f54b313df5277fb724b89a09817f8900d76e5be58ca`, 931,145,888 bytes
+  - `HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive/Q4_K_M`: `sha256:c8e702344a81f8c226a914aa980ed6e1f604bce9374f1fed8e65c896908af414`, 899,283,072 bytes
+  The README's size column lists model GGUFs only; loaded memory also includes these projectors. Vision was never tested.
