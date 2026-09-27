@@ -61,7 +61,7 @@ Per category (12 cases each):
 | Qwen3-Coder-Next abliterated | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 12 |
 | Qwen3.6-35B-A3B HauhauCS | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 12 |
 
-With thinking off, most of these cases require step-by-step computation the models cannot show, which is why GPT-OSS (always reasoning) leads by a wide margin here.
+With thinking off, most of these cases require step-by-step computation the models cannot show. GPT-OSS reasons on every case and also has roughly three to four times the total parameters of the others; this suite cannot separate those two causes of its lead. Two of the three shortest-path cases in the first 24 are trivial (the start node reaches nothing), as are `graph-5` and `graph-9`.
 
 ## Results: thinking on, first 24 cases
 
