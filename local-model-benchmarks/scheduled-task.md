@@ -3,7 +3,7 @@ name: nightly-model-bench
 description: Choose one useful local model per night, download and benchmark within fixed budgets, and commit reproducible results.
 ---
 
-Run in `C:\Users\kody1\repos\research\local-model-benchmarks` using Claude Fable 5.1 (`claude-fable-5-1`).
+Run in `C:\Users\<user>\repos\research\local-model-benchmarks` using Claude Fable 5.1 (`claude-fable-5-1`).
 
 ## Standing authorization
 

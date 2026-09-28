@@ -541,7 +541,7 @@ Personal model digests unchanged: True.
 
 ### workload-gemma-think-pilot
 
-Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.99934490000305 seconds
+Run issue: Command '['C:\\Users\\<user>\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.99934490000305 seconds
 Personal model digests unchanged: True.
 
 ### coding-gemma-think-pilot
@@ -614,7 +614,7 @@ Personal model digests unchanged: True.
 
 ### workload-granite-think-pilot
 
-Run issue: Command '['C:\\Users\\kody1\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.98379620000196 seconds
+Run issue: Command '['C:\\Users\\<user>\\AppData\\Local\\Programs\\Python\\Python314\\python.exe', 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\api_probe.py']' timed out after 119.98379620000196 seconds
 Personal model digests unchanged: True.
 
 ### coding-granite-think
@@ -715,7 +715,7 @@ Personal model digests unchanged: True.
 
 ### humaneval-chat-gptoss-low-part4
 
-Run issue: [WinError 5] Access is denied: 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\kody1\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'
+Run issue: [WinError 5] Access is denied: 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json.57b529f98cb842db90d7d3ac3c4fcb7b.tmp' -> 'C:\\Users\\<user>\\repos\\research\\local-model-benchmarks\\runs\\20260911-141203-d02cec45.json'
 Personal model digests unchanged: True.
 
 ### humaneval-chat-qwen38-off-part4

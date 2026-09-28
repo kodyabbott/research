@@ -6,7 +6,7 @@ The user requested a DeepSeek V4 Flash test and additional models that may excel
 
 - Model: `mlx-community/DeepSeek-V4-Flash-0731-2.4bit-mixed` at `10001e0065f8394e03e968e652cbbe7cd2ca122c`.
 - Weight tensors: 92,831,787,464 bytes; 24 downloaded files verified against LFS SHA256 or Git blob SHA1. The manifest also records SHA256 hashes.
-- The cache is `/Users/kody/Documents/Codex/model-cache/mac-benchmarks/mlx/DeepSeek-V4-Flash-0731-2.4bit-mixed`.
+- The cache is `/Users/<user>/Documents/Codex/model-cache/mac-benchmarks/mlx/DeepSeek-V4-Flash-0731-2.4bit-mixed`.
 - The [conversion card](https://huggingface.co/mlx-community/DeepSeek-V4-Flash-0731-2.4bit-mixed) specifies "oMLX 0.5.7 or newer." This is the relevant deployment constraint; Hugging Face's generic auto-generated MLX snippet is not sufficient.
 - Initially inspected oMLX source at `8288884d9b4f6db7b547633a94d36794c6b1d52d`. It was installed in an isolated source environment but was not used for reported inference.
 - The source-only installation lacks compiled native indexer kernels without the full Metal toolchain. This host has Command Line Tools, not full Xcode. Used the [official oMLX v0.6.4 release](https://github.com/jundot/omlx/releases/tag/v0.6.4) Python 3.12 wheel instead.
