@@ -58,7 +58,7 @@ def build(root):
     lines += ['',
         'These historical medians include the Python supervisor startup, unlike the HTTP-only column above. See [the full matched comparison](OLLAMA-COMPARISON.md) for the Gemma/Qwen throughput and source-run links. All three matched Mac reference runs completed without truncation or unexpected thinking, and unloaded successfully.', '',
         '## Evidence and reuse', '',
-        'The repository is `~/repos/research`, local branch `codex/m5-max-benchmark-comparison`. The original nightly policy and all historical records are unchanged. Models remain in `/Users/kody/Documents/Codex/model-cache/mac-benchmarks` for reuse; weights are not committed.', '',
+        'The repository is `~/repos/research`, local branch `codex/m5-max-benchmark-comparison`. The original nightly policy and all historical records are unchanged. Models remain in `~/Documents/Codex/model-cache/mac-benchmarks` for reuse; weights are not committed.', '',
         '- [Research notes and commands](notes.md)',
         '- [Native replay runner](mlx_replay.py), [Ollama replay runner](mac_replay.py)',
         '- [Native comparison data](native-comparison.json), [matched comparison data](comparison.json)',
