@@ -30,7 +30,7 @@ try:
         if monitor.poll() is not None:raise RuntimeError('Telemetry process exited before benchmark')
         env=dict(os.environ,HF_HUB_OFFLINE='1',HF_HUB_DISABLE_TELEMETRY='1',TOKENIZERS_PARALLELISM='false')
         cmd=[str(root/'release-venv/bin/python'),str(root/'deepseek_replay.py'),
-            '--repo','/Users/<user>/repos/research','--selection',str(root/'verified.json'),
+            '--repo',str(Path.home()/'repos/research'),'--selection',str(root/'verified.json'),
             '--output',str(output),'--modes','thinking','--skip-throughput','--worker']
         with (root/'thinking-benchmark.log').open('x') as log:
             bench=subprocess.Popen(cmd,stdout=log,stderr=subprocess.STDOUT,env=env)

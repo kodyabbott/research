@@ -10,7 +10,7 @@ import sys
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--input-dir',type=Path,default=Path(__file__).resolve().parent)
 parser.add_argument('--output-dir',type=Path)
-parser.add_argument('--repo',type=Path,default=Path('/Users/<user>/repos/research'))
+parser.add_argument('--repo',type=Path,default=Path.home()/'repos/research')
 args=parser.parse_args()
 root=args.input_dir
 out=args.output_dir or root
