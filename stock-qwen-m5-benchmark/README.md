@@ -56,7 +56,7 @@ The thinking-off score is unchanged across the stock and Heretic builds, and thi
 | Qwen3.8-27B (dense, Aug 14, 2026) | Ollama registry `qwen3.8:27b-q8_0` | Q8_0 | 29 GB + 931 MB vision projector | Same quant as the Sep 27 Heretic row, so those two rows compare directly |
 | Qwen3.8-Flash-Next (125B MoE, 6B active, released Aug 24, 2026 per the Hub `created_at`) | [unsloth/Qwen3.8-Flash-Next-GGUF](https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/tree/38bb39ee97821de2c9009abb7e93950eec396e66) `UD-Q3_K_XL` | 3-bit dynamic | 89 GB (three shards) | Qwen's model card calls it "this experimental preview of the architecture that will underpin Qwen4" ([card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)); 125B with 6B activated, plus 51B n-gram embedding and 4B MTP, license qwen-community-1.0. Ollama cannot pull sharded GGUFs from hf.co; imported with `ollama create` from the shard directory |
 
-Why 3-bit for Flash-Next: Unsloth's 4-bit tiers are 94-111 GB and Ollama's own tags start at 105 GB, which leaves too little of the 128 GB for KV cache; UD-Q3_K_XL at 90 GB is the largest tier with real headroom ([Unsloth guide](https://unsloth.ai/docs/models/qwen3.8-next)). Low-bit quality loss is one of the things this run measures.
+Why 3-bit for Flash-Next: Unsloth's 4-bit tiers are 94-111 GB and Ollama's own [`qwen3.8-flash-next` tags](https://ollama.com/library/qwen3.8-flash-next/tags) start at 105 GB (nvfp4, mlx) and 120 GB (q4_K_M), which leaves too little of the 128 GB for KV cache; UD-Q3_K_XL at 90 GB is the largest tier with real headroom ([Unsloth guide](https://unsloth.ai/docs/models/qwen3.8-next)). Low-bit quality loss is one of the things this run measures.
 
 ## Method
 
