@@ -42,6 +42,7 @@ RESULT_READ_CAP = 192 * 1024 * 1024    # results.jsonl / meta.json requested via
 PROFILE_TEMPLATE = """(version 1)
 (deny default)
 (deny network*)
+(allow sysctl-read)
 (allow process-exec
   (literal "@PYTHON@")
   (literal "@PYTHON_APP@")

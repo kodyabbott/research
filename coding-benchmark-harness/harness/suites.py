@@ -71,6 +71,15 @@ class Task:
     def times_for(self, which: str) -> list:
         return (self.expected.get(which) or {}).get("times") or []
 
+    def reference_wall_seconds(self, which: str) -> float:
+        """Wall time the canonical solution needed for this whole input set, at prepare time.
+
+        Includes the harness's own serialization cost, which for a handful of tasks dwarfs the
+        function calls (Mbpp/255 returns a single value whose canonical form is ~3 GB). Candidate
+        budgets are scaled from this so a correct answer is not killed by the grader's own work.
+        """
+        return float((self.expected.get(which) or {}).get("sandboxWallMs") or 0.0) / 1000.0
+
 
 @dataclass
 class Suite:

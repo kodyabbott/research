@@ -67,10 +67,16 @@ def grade_task(sandbox: SandboxExec, task: suites.Task, code: str, args) -> tupl
             dataset=task.dataset, inputs=raw_inputs, per_input_seconds=limits,
             not_none_mode=grader.not_none_mode_for(task.dataset, task.entry_point, trusted=False),
             record_time=False, exec_seconds=min(30.0, args.grade_wall_seconds))
+        cpu_seconds, wall_seconds = grader.task_budget(
+            task.reference_wall_seconds(which), args.cpu_seconds, args.grade_wall_seconds)
         result, meta, rows = grader.run_in_sandbox(
-            sandbox, job, wall_seconds=args.grade_wall_seconds, cpu_seconds=args.cpu_seconds)
+            sandbox, job, wall_seconds=wall_seconds, cpu_seconds=cpu_seconds)
         outcomes[which] = grader.grade_set(task.dataset, task.entry_point, task.task_id,
                                           raw_inputs, expected, task.atol, result, meta, rows)
+        outcomes[which].sandbox["cpuSecondsAllowed"] = cpu_seconds
+        outcomes[which].sandbox["wallSecondsAllowed"] = round(wall_seconds, 1)
+        outcomes[which].sandbox["canonicalWallSeconds"] = round(
+            task.reference_wall_seconds(which), 3)
         if which == "base" and not outcomes["base"].passed and args.stop_on_base_failure:
             outcomes["plus"] = grader.SetResult(
                 inputs=len(task.plus_input), statuses="-" * len(task.plus_input),
@@ -158,6 +164,8 @@ def main(argv: list[str] | None = None) -> int:
         "taskSeconds": args.task_seconds,
         "gradeWallSeconds": args.grade_wall_seconds,
         "cpuSeconds": args.cpu_seconds,
+        "perTaskBudget": "max(--cpu-seconds, 4 x the canonical solution's measured sandbox wall "
+                         "time for that input set); recorded per task under base/plus.sandbox",
         "samplingProfile": "greedy-v1",
         "samplesPerTask": 1,
         "perInputTimeout": "max(1.0s, 4 x canonical per-input time) -- EvalPlus "

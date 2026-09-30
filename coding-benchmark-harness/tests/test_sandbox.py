@@ -215,6 +215,80 @@ class RunnerCase(unittest.TestCase):
         self.assertLess(deny_home, allow_work, "later rules win; WORKDIR allow must come last")
 
 
+class EncodingCase(unittest.TestCase):
+    """Encoder properties that do not need the sandbox: digest identity and order insensitivity."""
+
+    def digests(self, obj):
+        import hashlib
+        from harness import sandbox_runner
+        materialized = hashlib.sha256(
+            sandbox_runner._dumps(sandbox_runner.encode(obj)).encode()).hexdigest()
+        streamed = hashlib.sha256(
+            "".join(sandbox_runner.canonical_chunks(obj)).encode()).hexdigest()
+        return materialized, streamed
+
+    def test_streaming_and_materialized_digests_are_byte_identical(self):
+        for obj in (list(range(20000)),
+                    [[index, float(index), str(index)] for index in range(4000)],
+                    [(index, {"k": [index]}) for index in range(3000)],
+                    [{1, 2, 3}] * 3000,
+                    [{"a": 1, "b": 2}] * 3000,
+                    ["x" * 100] * 2000):
+            with self.subTest(kind=type(obj[0]).__name__):
+                materialized, streamed = self.digests(obj)
+                self.assertEqual(materialized, streamed)
+
+    def test_oversized_values_report_a_matching_digest(self):
+        from harness import sandbox_runner
+        obj = list(range(20000))
+        tagged = sandbox_runner.encode_or_digest(obj)
+        self.assertEqual(tagged["t"], "digest")
+        self.assertEqual(tagged["v"], self.digests(obj)[0])
+        self.assertGreater(tagged["bytes"], sandbox_runner.MAX_VALUE_BYTES)
+
+    def test_small_values_are_not_digested(self):
+        from harness import sandbox_runner
+        self.assertEqual(sandbox_runner.encode_or_digest([1, 2, 3])["t"], "list")
+        self.assertEqual(sandbox_runner.encode_or_digest("x")["t"], "str")
+
+    def test_set_and_dict_encodings_ignore_insertion_order(self):
+        from harness import sandbox_runner
+        left, right = set(), set()
+        for value in (5, 1, 9, 3, 7):
+            left.add(value)
+        for value in (9, 7, 3, 5, 1):
+            right.add(value)
+        self.assertEqual(sandbox_runner._dumps(sandbox_runner.encode(left)),
+                         sandbox_runner._dumps(sandbox_runner.encode(right)))
+        self.assertEqual(sandbox_runner._dumps(sandbox_runner.encode({"z": 1, "a": 2})),
+                         sandbox_runner._dumps(sandbox_runner.encode({"a": 2, "z": 1})))
+
+    def test_large_equal_sets_digest_identically(self):
+        from harness import sandbox_runner
+        left = sandbox_runner.encode_or_digest(set(range(3000)))
+        right = sandbox_runner.encode_or_digest(set(range(2999, -1, -1)))
+        self.assertEqual(left["t"], "digest")
+        self.assertEqual(left, right)
+
+    def test_digest_comparison_is_available_to_the_grader(self):
+        from harness import sandbox_runner
+        tagged = sandbox_runner.encode_or_digest(list(range(20000)))
+        self.assertTrue(values.is_digest(tagged))
+        self.assertEqual(values.digest_of(tagged), tagged["v"])
+        # digest_of over a whole tagged value reproduces the same hash
+        small = sandbox_runner.encode([1, 2, 3])
+        self.assertEqual(len(values.digest_of(small)), 64)
+        self.assertIsInstance(values.decode(tagged), values.Digest)
+
+    def test_decoded_digests_compare_only_to_the_same_hash(self):
+        left = values.decode({"t": "digest", "v": "a" * 64, "bytes": 10})
+        same = values.decode({"t": "digest", "v": "a" * 64, "bytes": 99})
+        other = values.decode({"t": "digest", "v": "b" * 64})
+        self.assertEqual(left, same)
+        self.assertNotEqual(left, other)
+        self.assertNotEqual(left, [1, 2, 3])
+
+
 class NonMacCase(unittest.TestCase):
     def test_refuses_without_sandbox_exec(self):
         if MAC:

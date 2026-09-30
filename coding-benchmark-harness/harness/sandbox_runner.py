@@ -40,6 +40,12 @@ MAX_DEPTH = 100
 MAX_NODES = 2_000_000
 # Values whose canonical JSON exceeds this are reported as a digest instead of a value.
 MAX_VALUE_BYTES = 64 * 1024
+# Above this many nodes, digest by streaming instead of materializing the tagged structure. The
+# smallest possible node is `{"t":"none"}` at 12 bytes, so anything past MAX_VALUE_BYTES // 12
+# nodes is certain to be digested either way -- and the two paths emit identical bytes. Keeping
+# this low matters because the encoder's work counts against the candidate's RLIMIT_CPU, and
+# EvalPlus compares a million-element list with a single `==`.
+STREAM_NODES = 8192
 MAX_REPR = 4096
 MAX_ERROR = 600
 
@@ -86,12 +92,15 @@ def encode(obj, budget: _Budget | None = None, depth: int = 0):
         return {"t": "list" if cls is list else "tuple",
                 "v": [encode(item, budget, depth + 1) for item in obj]}
     if cls in (set, frozenset):
+        # Members are ordered by their own canonical form. Two equal sets can iterate differently
+        # depending on insertion history, which would otherwise give them different digests.
         return {"t": "set" if cls is set else "frozenset",
-                "v": [encode(item, budget, depth + 1) for item in obj]}
+                "v": sorted((encode(item, budget, depth + 1) for item in obj), key=_dumps)}
     if cls is dict:
+        # Same reasoning: dict equality ignores order, so the encoding must too.
         return {"t": "dict",
-                "v": [[encode(key, budget, depth + 1), encode(value, budget, depth + 1)]
-                      for key, value in obj.items()]}
+                "v": sorted(([encode(key, budget, depth + 1), encode(value, budget, depth + 1)]
+                             for key, value in obj.items()), key=_dumps)}
     if isinstance(obj, bool):
         return {"t": "bool", "v": bool(obj), "cls": cls.__name__}
     if isinstance(obj, int):
@@ -111,6 +120,10 @@ def encode(obj, budget: _Budget | None = None, depth: int = 0):
 
 
 _CONTAINER_TAGS = {list: "list", tuple: "tuple", set: "set", frozenset: "frozenset"}
+# Only sequences are streamed. Sets and dicts need their members sorted by canonical form before
+# they can be emitted, which cannot be done without materializing them, so `canonical_chunks`
+# delegates those to `encode` -- guaranteeing the two paths stay byte-identical.
+_STREAMABLE_TAGS = {list: "list", tuple: "tuple"}
 
 
 def count_nodes(obj, limit: int = MAX_NODES, depth: int = 0) -> int:
@@ -145,7 +158,7 @@ def canonical_chunks(obj, depth: int = 0):
     if depth > MAX_DEPTH:
         raise ValueError("value nests deeper than the encoder supports")
     cls = type(obj)
-    tag = _CONTAINER_TAGS.get(cls)
+    tag = _STREAMABLE_TAGS.get(cls)
     if tag is not None:
         yield '{"t":"' + tag + '","v":['
         first = True
@@ -154,20 +167,6 @@ def canonical_chunks(obj, depth: int = 0):
                 yield ","
             first = False
             yield from canonical_chunks(item, depth + 1)
-        yield "]}"
-        return
-    if cls is dict:
-        yield '{"t":"dict","v":['
-        first = True
-        for key, value in obj.items():
-            if not first:
-                yield ","
-            first = False
-            yield "["
-            yield from canonical_chunks(key, depth + 1)
-            yield ","
-            yield from canonical_chunks(value, depth + 1)
-            yield "]"
         yield "]}"
         return
     yield _dumps(encode(obj, _Budget(), depth))
@@ -180,7 +179,7 @@ def encode_or_digest(obj):
     `make_a_pile(1000000)` (a million integers). Shipping those out of the sandbox for every input
     would produce multi-hundred-megabyte payloads, so oversized values are compared by digest.
     """
-    if count_nodes(obj) > MAX_NODES:
+    if count_nodes(obj, STREAM_NODES) > STREAM_NODES:
         digest = hashlib.sha256()
         total = 0
         for chunk in canonical_chunks(obj):
@@ -386,9 +385,13 @@ def main() -> int:
             if not isinstance(args, (list, tuple)):
                 args = [args]
             started = time.perf_counter()
+            elapsed = None
             try:
                 signal.setitimer(signal.ITIMER_REAL, per_input[index])
                 value = function(*args)
+                # Timed here and nowhere else: EvalPlus's trusted_exec measures only the call, so
+                # serialization cost must not inflate the reference times that set candidate limits.
+                elapsed = time.perf_counter() - started
                 signal.setitimer(signal.ITIMER_REAL, 0)
                 if not_none_mode == "trusted":
                     value = value is not None
@@ -402,7 +405,8 @@ def main() -> int:
                 signal.setitimer(signal.ITIMER_REAL, 0)
                 row.update(status="exception", error=_short(exc))
             if record_time:
-                row["seconds"] = round(time.perf_counter() - started, 6)
+                row["seconds"] = round(
+                    elapsed if elapsed is not None else time.perf_counter() - started, 6)
             _emit(handle, row)
             completed += 1
     finally:

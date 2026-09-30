@@ -226,6 +226,20 @@ def per_input_limits(reference_times: list[float] | None, count: int) -> list[fl
     return limits
 
 
+def task_budget(reference_wall_seconds: float, floor_cpu: int, floor_wall: float,
+                factor: float = GT_TIME_LIMIT_FACTOR) -> tuple[int, float]:
+    """Per-task (cpu_seconds, wall_seconds), scaled from the canonical solution's own cost.
+
+    Same reasoning as the per-input limits: give a candidate `factor` times what ground truth
+    needed, never less than the configured floor. Without this, a correct answer to a task whose
+    values are enormous would be killed by the grader's serialization cost rather than its own.
+    """
+    scaled = factor * max(0.0, reference_wall_seconds)
+    cpu = max(int(floor_cpu), int(scaled) + 1 if scaled else 0)
+    wall = max(float(floor_wall), scaled + 30.0 if scaled else 0.0)
+    return cpu, wall
+
+
 def build_job(code: str, entry_point: str, task_id: str, dataset: str, inputs: list,
               per_input_seconds: list[float], not_none_mode: str | None = None,
               record_time: bool = False, exec_seconds: float = 10.0) -> dict:
@@ -327,7 +341,15 @@ def grade_set(dataset: str, entry_point: str, task_id: str, raw_inputs: list,
             if values.is_digest(actual_tagged) or values.is_digest(expected_tagged):
                 # One side was too large to ship out of the sandbox, so the two canonical forms
                 # are compared by hash. Exact equality only: no tolerance, no special oracle.
-                matched = values.digest_of(expected_tagged) == values.digest_of(actual_tagged)
+                #
+                # If only one side is digested the values cannot be equal: the encoding is
+                # deterministic and order-insensitive, so equal values have identical canonical
+                # forms and therefore identical sizes -- they would both be on the same side of
+                # the size threshold.
+                if values.is_digest(actual_tagged) != values.is_digest(expected_tagged):
+                    matched = False
+                else:
+                    matched = values.digest_of(expected_tagged) == values.digest_of(actual_tagged)
                 label = "pass" if matched else "wrong-answer"
                 if not matched and outcome.first_failure is None:
                     outcome.first_failure = {

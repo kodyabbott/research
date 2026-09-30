@@ -8,10 +8,12 @@ Kody Abbott.
 
 ## Environment
 
-Captured 2026-09-29 23:59 MDT on the 2023 MacBook Pro 16" (M2 Max, 64 GB):
+Captured 2026-09-29 23:59 MDT. Host values below are what `harness/record.py::host_snapshot()`
+actually reported on this machine, not what I assumed (see the correction entry of 2026-09-30 01:35):
 
 | Item | Value |
 | --- | --- |
+| host | `Mac17,6`, Apple M5 Max, 128 GB, AC power |
 | macOS | 27.0 (build 26A428), `Darwin 27.0.0` |
 | python3 | 3.14.7, `/opt/homebrew/opt/python@3.14/bin/python3.14` (`which python3` -> `/opt/homebrew/bin/python3`) |
 | python3 realpath | `/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14` |
@@ -82,6 +84,7 @@ cache rather than from disk.
 | --- | --- |
 | `(version 1)` | Required profile header. |
 | `(deny default)` | Deny-default posture: nothing is permitted unless listed below. |
+| `(allow sysctl-read)` | Read-only system information. The interpreter starts without it, but `numpy` calls `os.uname()` during import and fails with `EPERM` otherwise. DESIGN.md's sandbox section lists this rule, and granting it means a candidate that imports numpy behaves as it would in EvalPlus's reference environment. It grants no file, network or process access. |
 | `(deny network*)` | Hard requirement. Verified by self-test against a live local listener (EPERM, listener accepted nothing). Redundant with `deny default`, kept explicit so the intent survives edits. |
 | `(allow process-exec (literal @PYTHON@) (literal @PYTHON_APP@) + Data-volume mirrors)` | The interpreter binary and the `Python.app` binary it re-execs. Narrow literals, not `process-exec*`. `process-fork` is **not** allowed, so the sandboxed process cannot spawn helpers -- verified: `subprocess.run(["/bin/echo"])` raises `PermissionError`. |
 | `(allow file-read* (subpath @PYTHON_PREFIX@) + mirror)` | The interpreter, its framework `Python` dylib, and the standard library. `@PYTHON_PREFIX@` is `/opt/homebrew` here, derived from the resolved interpreter path. |
@@ -92,8 +95,9 @@ cache rather than from disk.
 | `(allow file-read* (subpath @WORKDIR@) + mirror)` | The per-task work directory, which is itself under `$HOME` (`~/Documents/Codex/model-cache/coding-benchmark/work/task-*`). This is the only readable location inside `$HOME`. |
 | `(allow file-write* (subpath @WORKDIR@) + mirror)` | The only writable location anywhere. Hard requirement, verified: writes to `/private/tmp` and to `$HOME` both return `PermissionError:EPERM` and no file is created. |
 
-Rules that turned out to be **unnecessary and were left out**: `sysctl-read`, `mach-lookup`,
-`signal`, `process-fork`, `file-read-metadata`, and any `/dev` access. Python 3.14.7 starts and runs
+Rules that turned out to be **unnecessary and were left out**: `mach-lookup`, `signal`,
+`process-fork`, `file-read-metadata`, and any `/dev` access. (`sysctl-read` is also unnecessary for
+startup but is granted deliberately -- see the correction entry of 2026-09-30 01:35.) Python 3.14.7 starts and runs
 the whole standard library without them. `signal.setitimer(ITIMER_REAL, ...)` and SIGALRM delivery
 work with no `signal` rule (kernel-delivered), which is what the per-input timeout relies on --
 `setitimer`, not `signal.alarm`, because the per-input limits are fractional seconds.
@@ -109,11 +113,11 @@ raises `OSError 24`. Wall timeout is `subprocess.run(timeout=...)`, verified ind
 rule (design revisions item 3). The interpreter is launched **without** `-I`/`-E`, because those
 would discard `PYTHONHASHSEED=0` and with it the determinism of set/dict iteration order.
 
-**Third-party packages are not importable in the sandbox.** `import numpy` raises
-`PermissionError` (its install lives under `$HOME`); scipy/sympy/pandas are not installed at all.
-EvalPlus's own reference environment has numpy. This affects only *candidate* code that tries to
-import it (scored as a runtime error); the HumanEval+/MBPP+ canonical solutions are pure standard
-library, so expected outputs are unaffected. Noted in README limitations.
+**Third-party packages in the sandbox.** *Superseded by the correction entry of
+2026-09-30 01:35: numpy 2.5.3, Pillow 12.3.0 and certifi are all importable once `sysctl-read` is
+granted, because the interpreter's own site-packages sit inside the readable prefix. The claim
+originally recorded here -- that nothing third-party was reachable, and that numpy failed because it
+lives under `$HOME` -- was wrong on both counts.*
 
 **Known fidelity limit.** Candidate code shares the interpreter with the per-input timer, so it
 could in principle reinstall the SIGALRM handler or call `signal.setitimer(..., 0)` and evade the
@@ -349,42 +353,54 @@ Collected in one place. Each is explained in the log entry above it.
 3. **`RLIMIT_FSIZE` is 128 MiB, not 16 MiB.** Three HumanEval+ canonical solutions legitimately
    write more than 16 MiB of results across their plus inputs. Still a hard cap, still only inside
    the per-task work directory, which is deleted immediately afterwards.
-4. **`RLIMIT_CPU` defaults to 60 s** per grading invocation (this is design revisions item 2b, not a
+4. **Per-task CPU and wall ceilings are scaled from the canonical solution's measured cost**
+   (`max(--cpu-seconds, 4 x canonical sandbox wall seconds)`), because for three tasks this
+   harness's serialization of very large values costs far more than the solutions themselves and a
+   fixed 60 s ceiling would mis-score a correct answer as a timeout. The floor is the design's
+   value and the effective budget is recorded per task. Same `4x` philosophy EvalPlus applies to
+   per-input limits.
+5. **One-sided digests are a mismatch by construction**, not a cross-representation hash
+   comparison: equal values have identical canonical forms, hence identical sizes, hence the same
+   side of the size threshold.
+6. **`(allow sysctl-read)` is granted**, which DESIGN.md's sandbox section lists but which the
+   interpreter does not need to start. It is what makes numpy importable, matching EvalPlus's
+   reference environment more closely.
+7. **`RLIMIT_CPU` defaults to 60 s** per grading invocation (this is design revisions item 2b, not a
    deviation) and `prepare.py` uses a far larger budget (600 s wall, 300 s CPU) because computing
    ground truth is a one-time trusted operation; `Mbpp/255` alone needs about 200 s.
-5. **Oversized values are compared by SHA-256 of their canonical form.** Threshold 64 KiB per value;
+8. **Oversized values are compared by SHA-256 of their canonical form.** Threshold 64 KiB per value;
    exact equality only, no tolerance and no special oracle on that path. Used for 0.1% of values.
-6. **`sys.set_int_max_str_digits(0)` inside the sandbox**, so two HumanEval+ tasks that build
+9. **`sys.set_int_max_str_digits(0)` inside the sandbox**, so two HumanEval+ tasks that build
    >4300-digit integers remain scoreable on Python 3.11+.
-7. **`atol` is not loop-carried.** EvalPlus mutates its local `atol` inside the per-input loop; this
+10. **`atol` is not loop-carried.** EvalPlus mutates its local `atol` inside the per-input loop; this
    harness recomputes per input. Stricter; can only differ for a task with mixed float/non-float
    expected values.
-8. **`missing-entry-point` is classified `runtime-error`, not `no-code`.** Code was produced and
+11. **`missing-entry-point` is classified `runtime-error`, not `no-code`.** Code was produced and
    executed; it just never defined the required function. `no-code` is reserved for extraction
    failures.
-9. **Values are compared after a serialize/rebuild round trip,** not as live objects. Faithful for
+12. **Values are compared after a serialize/rebuild round trip,** not as live objects. Faithful for
    every type the suites actually use; objects with no serializable form become an `Opaque` keyed on
    class name and `repr`. The only tasks where EvalPlus depends on such objects are the three
    not-None tasks, and those are reduced to booleans inside the sandbox first, so nothing is lost.
-10. **MBPP+ has no `text` field.** The statement and the example assertion are both split out of the
+13. **MBPP+ has no `text` field.** The statement and the example assertion are both split out of the
     dataset's `prompt` docstring, and the assertion used is the *curated* one the dataset puts there
     (set-form for the set-equality tasks) rather than the first line of the separate `assertion`
     field. This also settles the design's open question: one assertion, the curated one.
-11. **Extraction adds three tolerances the design did not list:** `~~~` fences, indented fence
+14. **Extraction adds three tolerances the design did not list:** `~~~` fences, indented fence
     markers, and an unterminated final fence (truncated answers would otherwise be misreported as
     `no-code`). The design's literal rule ordering is otherwise preserved, including the
     consequence that unfenced content with a *foreign* `def` falls through to `empty`.
-12. **`prepare.py` also accepts a local `fixture` suite** registered with `localPath` instead of
+15. **`prepare.py` also accepts a local `fixture` suite** registered with `localPath` instead of
     `url`, so the tests and the end-to-end replay run go through exactly the same loader, sandbox
     and grading code as the real suites.
-13. **Sandbox self-test rigour.** The design's network check
+16. **Sandbox self-test rigour.** The design's network check
     (`socket.create_connection(("127.0.0.1", 11436), 1)` raises) would pass whether or not the
     sandbox works, since nothing need be listening -- and if the deny rule were broken it would
     complete a TCP connect to the live model server. Replaced with: the harness opens its own
     ephemeral listener, and the check requires `EPERM` **and** that the listener accepted nothing.
     The read/write checks likewise target files that exist, so `ENOENT` cannot be mistaken for
     denial.
-14. **Per-input timeouts use `signal.setitimer(ITIMER_REAL, ...)`, not `signal.alarm`,** because the
+17. **Per-input timeouts use `signal.setitimer(ITIMER_REAL, ...)`, not `signal.alarm`,** because the
     limits are fractional seconds (`max(1.0, 4 x t)`).
 
 **Not implemented, as scoped out by DESIGN.md:** Docker sandbox (interface stub only), JavaScript and
@@ -393,3 +409,97 @@ repository-editing suites, pass@k, cloud reference models, Windows support.
 **Not done, and out of scope for this work:** acceptance item 4, the live Ollama run. Ports 11434 and
 11436 were off limits throughout (design revisions item 1). The exact command for the first live run
 is in the handoff and in README.md.
+
+### 2026-09-30 01:35 MDT -- corrections found in review
+
+Five issues, all found by review rather than by a failing test. Four change recorded numbers, so
+everything was recomputed; the earlier tables are left in place and superseded by the table at the
+end of this entry.
+
+**Correction: the Environment table named the wrong machine.** It said "2023 MacBook Pro 16" (M2
+Max, 64 GB)". That was copied from my assumption about the workspace, not measured. `host_snapshot()`
+reports `Mac17,6`, `Apple M5 Max`, `memory_gb: 128`. Corrected in place above, with a pointer here.
+I should have read the snapshot my own code produces before writing the table -- the repository's
+source rules require a source for every factual claim, and "the user's machine list" is not a source
+for what this machine is.
+
+1. **Per-input reference times included serialization cost.** `row["seconds"]` was computed after
+   `encode_or_digest(value)` ran, so for large values the recorded time was mostly my encoder rather
+   than the canonical solution. That made the cached `times` not what the record claims they are and
+   inflated the derived candidate limits (`max(1.0 s, 4 x t)`). The clock is now read immediately
+   after `function(*args)` returns and nowhere else, matching `trusted_exec`, which times only the
+   call. `Mbpp/255`'s "199 s" in the previous entry was an artifact of this bug.
+
+2. **The encoder's cost counted against the candidate's CPU limit.** A correct candidate returning
+   a million-element list would have been killed by `RLIMIT_CPU` while my encoder materialized a
+   million-node tagged structure -- where EvalPlus does one `==`. `encode_or_digest` now switches to
+   the streaming digest above `STREAM_NODES = 8192` nodes instead of 2,000,000. The threshold is
+   safe by construction: the smallest tagged node (`{"t":"none"}`) is 12 bytes, so anything past
+   `MAX_VALUE_BYTES // 12` (5462) nodes is certain to be digested on either path, and the two paths
+   were already proven to emit identical bytes. `MAX_NODES` stays as `encode`'s overflow guard.
+
+3. **Digests were order-sensitive for sets and dicts.** Decoded sets compare by membership, but a
+   *digested* set hashed its iteration order, and two equal sets can iterate differently depending
+   on insertion history even with `PYTHONHASHSEED=0`. Fixed at the source: `encode` now sorts set
+   members, and dict pairs, by their own canonical form. Since sorting cannot be done without
+   materializing, `canonical_chunks` no longer streams sets or dicts and delegates them to `encode`,
+   which keeps the two paths byte-identical by construction. Dict and set equality ignore order in
+   Python, so sorting changes no verdict. Tested directly: equal sets built in opposite orders now
+   produce one digest, and streaming and materializing agree byte for byte across six shapes
+   including nested sets and dicts.
+
+4. **numpy is importable inside the sandbox after all, and now is.** The earlier note claimed no
+   third-party package was reachable. That was wrong: `/opt/homebrew/lib/python3.14/site-packages`
+   is inside `@PYTHON_PREFIX@` and is on `sys.path`, and `PIL` 12.3.0 and `certifi` import fine
+   there. numpy alone failed, and not because of the path -- it calls `os.uname()` during import,
+   which needs `sysctl-read`. Adding `(allow sysctl-read)` -- which DESIGN.md's sandbox section
+   explicitly lists -- makes `numpy 2.5.3` import and `numpy.allclose` work. I had dropped the rule
+   because the interpreter starts without it. Keeping it is the better call: EvalPlus's reference
+   environment has numpy, so a candidate that imports it now behaves as it would there. `mach-lookup`
+   is still not needed and is still not granted. Reachable inside the sandbox:
+   numpy 2.5.3, Pillow 12.3.0, certifi, pybind11, pip, wheel. Not installed anywhere: scipy, sympy,
+   pandas.
+
+5. Adding the profile rule changes `sandboxProfileSha256`, and fixing the timing changes
+   `sandboxRunnerSha256`; both are embedded in every expected-output file, so all three suite
+   digests change. Full recompute below.
+
+**Recompute after the corrections.** All expected outputs regenerated from scratch
+(`prepare.py --recompute`), the replay run redone, the summarizer rerun, and the full test suite
+green at **203 tests, 1 skipped**. New hashes: sandbox profile `130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc`,
+sandbox runner `6f72bfb5636d7d9c027462e26a1a073ca97c9c4ca348912c294367362d48da22`.
+
+| suite | tasks | skipped | base inputs | plus inputs | suite digest | prepare wall |
+| --- | --- | --- | --- | --- | --- | --- |
+| humaneval-plus (v0.1.10) | 164/164 | **0** | 1570 | 122683 | `ba4c53edbcd325af92eae08c010cbc88ee321969fc98bb9ce3e9472ac6acd6ef` | 41.6s |
+| mbpp-plus (v0.2.0) | 378/378 | **0** | 1174 | 39841 | `463f84ce53806efd921297f7966635fe86cfb75fd651c33f3aff4f60a68c3fc9` | 252.3s |
+| fixture (fixture-v1) | 3/3 | **0** | 6 | 10 | `0eb532889f5aaaa9d2ab183700146f366610fe23050159d8dc07d734d028f8aa` | 0.3s |
+
+Input counts are unchanged and still match `datasets.json` exactly. Still 0 skipped in every suite.
+
+**Corrected canonical timings.** These are now the function calls alone, and they are much smaller
+than what the buggy version reported. Slowest tasks by summed per-input canonical time: HumanEval+
+`HumanEval/139` 2.633s, `HumanEval/83` 0.82s, `HumanEval/15` 0.732s, `HumanEval/36` 0.643s; MBPP+ `Mbpp/599` 6.031s, `Mbpp/603` 1.546s, `Mbpp/271` 1.476s, `Mbpp/392` 1.143s. `Mbpp/255`, previously reported as the worst at 199 s, actually spends
+**0.669 s** in `combinations_colors` across its 109 plus inputs and no longer appears in the top ten.
+`HumanEval/130` went from 6.006 s to 0.486 s. Total function time across all 545 prepared tasks is
+**22.5 s**; total sandbox wall time is **281.9 s**, so 92% of prepare's cost is this harness's
+serialization, not the solutions.
+
+**A real remaining cost, measured and handled.** `Mbpp/255` returns one value whose canonical form is
+**3.0 GB** (3.66 GB across 18 digested values in that task); streaming a SHA-256 over it takes ~193 s.
+`HumanEval/130` is 314 MB / 13.8 s and `Mbpp/630` 73 MB / 4.3 s. EvalPlus compares such values with a
+single C-speed `==`; this harness serializes them, which is roughly two orders of magnitude slower.
+Left as-is, a **correct** candidate for `Mbpp/255` would have been killed by the default 60 s
+`RLIMIT_CPU` and mis-scored as `timeout` -- a failure caused by the grader, not the model. Fixed by
+scaling the per-task ceiling from the measured canonical cost, the same way EvalPlus scales per-input
+limits: `cpu_seconds = max(--cpu-seconds, 4 x canonical sandbox wall seconds)` and
+`wall = max(--grade-wall-seconds, 4 x canonical + 30 s)`. For `Mbpp/255` that is 773 s CPU / 802 s
+wall; for the overwhelming majority of tasks the floor applies unchanged. The effective budget and
+the canonical reference time are recorded per task under `base.sandbox` / `plus.sandbox`, so the
+numbers are auditable rather than magic.
+
+**Simplified digest comparison.** When exactly one side of an input is digested, the values cannot be
+equal: the encoding is deterministic and (after the set/dict sorting fix) order-insensitive, so equal
+values have identical canonical forms and therefore identical sizes, and would both fall on the same
+side of the 64 KiB threshold. That case is now a mismatch by construction rather than a hash
+comparison across representations.

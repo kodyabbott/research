@@ -179,6 +179,70 @@ class PerInputLimitCase(unittest.TestCase):
         self.assertEqual(per_input_limits([0.0], 1), [1.0])
 
 
+class TaskBudgetCase(unittest.TestCase):
+    """Per-task budgets scale from the canonical solution's measured cost."""
+
+    def test_floor_applies_for_cheap_tasks(self):
+        self.assertEqual(grader.task_budget(0.04, 60, 300.0), (60, 300.0))
+        self.assertEqual(grader.task_budget(0.0, 60, 300.0), (60, 300.0))
+
+    def test_expensive_tasks_get_four_times_the_canonical_cost(self):
+        # Mbpp/255's canonical run needed ~193 s of sandbox wall time, nearly all of it the
+        # harness's own serialization of a ~3 GB canonical value.
+        cpu, wall = grader.task_budget(193.0, 60, 300.0)
+        self.assertEqual(cpu, 773)
+        self.assertAlmostEqual(wall, 802.0)
+
+    def test_budget_never_drops_below_the_configured_floor(self):
+        for reference in (0.0, 1.0, 10.0, 14.9):
+            with self.subTest(reference=reference):
+                cpu, wall = grader.task_budget(reference, 60, 300.0)
+                self.assertGreaterEqual(cpu, 60)
+                self.assertGreaterEqual(wall, 300.0)
+
+    def test_negative_reference_is_ignored(self):
+        self.assertEqual(grader.task_budget(-5.0, 60, 300.0), (60, 300.0))
+
+
+class DigestComparisonCase(unittest.TestCase):
+    def digest_tag(self, seed="a", size=100000):
+        return {"t": "digest", "v": seed * 64, "bytes": size}
+
+    def test_equal_digests_pass(self):
+        expected = actual = self.digest_tag()
+        outcome = grade_set("humaneval", "f", "T/0", [[1]], [expected], 0.0,
+                            fake_sandbox_result(), {"stage": "done"},
+                            [{"i": 0, "status": "ok", "value": actual}])
+        self.assertTrue(outcome.passed)
+
+    def test_different_digests_fail(self):
+        outcome = grade_set("humaneval", "f", "T/0", [[1]], [self.digest_tag("a")], 0.0,
+                            fake_sandbox_result(), {"stage": "done"},
+                            [{"i": 0, "status": "ok", "value": self.digest_tag("b")}])
+        self.assertEqual(outcome.failure_class, "wrong-answer")
+        self.assertEqual(outcome.first_failure["oracle"], "digest")
+
+    def test_one_sided_digest_is_a_mismatch(self):
+        # A digested value is over the size threshold and a tagged one is under it, so equal
+        # values could never land on opposite sides.
+        outcome = grade_set("humaneval", "f", "T/0", [[1]], [self.digest_tag()], 0.0,
+                            fake_sandbox_result(), {"stage": "done"},
+                            [{"i": 0, "status": "ok", "value": tag([1, 2, 3])}])
+        self.assertEqual(outcome.failure_class, "wrong-answer")
+        outcome = grade_set("humaneval", "f", "T/0", [[1]], [tag([1, 2, 3])], 0.0,
+                            fake_sandbox_result(), {"stage": "done"},
+                            [{"i": 0, "status": "ok", "value": self.digest_tag()}])
+        self.assertEqual(outcome.failure_class, "wrong-answer")
+
+    def test_digest_path_bypasses_oracles_and_tolerance(self):
+        # `are_equivalent` normally accepts anything; on the digest path it does not.
+        outcome = grade_set("mbpp", "are_equivalent", "Mbpp/164", [[1]],
+                            [self.digest_tag("a")], 1.0, fake_sandbox_result(),
+                            {"stage": "done"},
+                            [{"i": 0, "status": "ok", "value": self.digest_tag("b")}])
+        self.assertFalse(outcome.passed)
+
+
 def fake_sandbox_result(status="ok", signal=None):
     return SandboxResult(status=status, returncode=0 if status == "ok" else 1, signal=signal)
 

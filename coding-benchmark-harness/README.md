@@ -109,7 +109,8 @@ Also enforced: no `process-fork`, so the sandboxed process cannot spawn helpers
 (`subprocess.run(["/bin/echo"])` raises `PermissionError`); `RLIMIT_NOFILE` 64; `RLIMIT_FSIZE`
 128 MiB; a scrubbed environment with `HOME` and `TMPDIR` pointing into the work directory; a
 per-input `setitimer` timeout of `max(1.0 s, 4 x canonical per-input time)`; and a per-task
-`RLIMIT_CPU` of 60 s plus a wall-clock timeout. Work directories are deleted after each task. The
+`RLIMIT_CPU` of at least 60 s (scaled up from the canonical solution's measured cost where that is
+larger) plus a wall-clock timeout. Work directories are deleted after each task. The
 profile template's SHA-256 is recorded in every run.
 
 Every allow rule and the empirical process that produced it -- including the macOS firmlink and
@@ -120,8 +121,9 @@ documented in [notes.md](notes.md).
 
 Expected outputs are produced once, at prepare time, by running each canonical solution
 (`prompt + canonical_solution`, exactly as `evalplus.evaluate.get_groundtruth` does) over the base
-and plus inputs **inside the same sandbox**, recording per-input wall times at the same time.
-**Both suites prepare with 0 skipped tasks: 164/164 and 378/378.**
+and plus inputs **inside the same sandbox**, recording per-input wall times at the same time (the
+call only, as `trusted_exec` does). **Both suites prepare with 0 skipped tasks: 164/164 and
+378/378.**
 
 Ported from EvalPlus tag `v0.3.1`, commit `e5d0ed0bab96280b60b637ec7f15b5e4841b0cb2` (files and
 line-level citations in [notes.md](notes.md)):
@@ -149,11 +151,12 @@ big integers, complex numbers and bytes survive intact.
 - **macOS only.** `sandbox-exec` is a macOS facility, and it is formally deprecated by Apple even
   though it works on macOS 27. The Docker sandbox in the design is an interface stub, not an
   implementation. There is no Windows or Linux path.
-- **No third-party packages inside the sandbox.** `import numpy` raises `PermissionError` (its
-  install lives under `$HOME`, which is unreadable); scipy, sympy and pandas are not installed.
-  EvalPlus's reference environment has numpy. This only affects *candidate* code that tries to
-  import it, which is scored as a runtime error; the canonical solutions are pure standard library,
-  so expected outputs are unaffected.
+- **Only the interpreter's own site-packages are importable inside the sandbox.** numpy 2.5.3,
+  Pillow 12.3.0, certifi, pybind11, pip and wheel are reachable (they live under the readable
+  interpreter prefix); scipy, sympy and pandas are not installed on this machine at all, and
+  anything in the user site-packages under `$HOME` is unreadable by design. numpy needed
+  `(allow sysctl-read)` -- which DESIGN.md's sandbox section lists -- because it calls `os.uname()`
+  during import.
 - **Per-input timeouts are evadable from inside.** Candidate code shares the interpreter with the
   `setitimer` timer and could reinstall the handler. EvalPlus has the same exposure. The per-task
   `RLIMIT_CPU` and wall-clock timeout are the backstop and cannot be evaded.
@@ -161,6 +164,14 @@ big integers, complex numbers and bytes survive intact.
   HumanEval+, 94 of 41,015 in MBPP+) are too large to ship out of the sandbox and are compared by
   SHA-256 of their canonical form: exact equality only, no tolerance and no special oracle. None of
   the affected tasks has a special oracle and all have `atol == 0`.
+- **Serialization, not the solutions, dominates grading cost on a few tasks.** EvalPlus compares
+  large values with one C-speed `==`; this harness serializes them, which is about two orders of
+  magnitude slower. `Mbpp/255` returns a single value whose canonical form is 3.0 GB and takes
+  ~193 s to hash, against 0.669 s of actual function time. The per-task CPU and wall ceilings are
+  therefore scaled from the canonical solution's own measured cost
+  (`max(--cpu-seconds, 4 x canonical sandbox wall seconds)`), so a correct answer is not mis-scored
+  as a `timeout`; the effective budget is recorded per task. Three tasks need this: `Mbpp/255`
+  (~193 s), `HumanEval/130` (~14 s) and `Mbpp/630` (~4 s).
 - **Per-input detail in records is compact,** not a full value dump: a one-character status per
   input, status counts, and the first failing input with truncated `repr`s. A full dump of
   HumanEval+'s ~123,000 plus inputs would not fit the repository's run-record budget.
