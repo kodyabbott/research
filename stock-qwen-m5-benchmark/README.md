@@ -13,7 +13,7 @@ Measured September 29-30, 2026 (MDT), on this MacBook Pro: Apple M5 Max, 18 CPU 
 
 **Mac Q8_0 vs Windows BF16.** The stronger evidence for the quantization is case-level: against the Sep 11 Windows run of `qwen3.8:27b-mtp-bf16` (same prompts, greedy decoding, Ollama 0.32.13, RTX PRO 6000), the Mac Q8_0 thinking-on pass produced **23 of 24 byte-identical final answers** (the 24th differs only in JSON whitespace) and **17 of 24 byte-identical reasoning traces**, including the full 2,949-character trace on `ledger-0`. Greedy decoding followed the same trajectory across Q8_0/BF16, Ollama 0.34.4/0.32.13, and Metal/CUDA for most cases. Recomputed from the two records' `cases[]` arrays.
 
-**Tradeoffs, not a verdict.** Flash-Next is faster at equal score on this suite. Against that: it needs 90 GB on disk and about 119 GB resident (Metal plus the CPU-mapped embedding table) versus 29 GB for the 27B, it runs at 3-bit versus Q8_0, its GGUF declares `requires 0.35.0` while this server is 0.34.4, and this suite is not a coding or writing benchmark. A coding harness is being built separately ([coding-benchmark-harness](../coding-benchmark-harness/)).
+**Tradeoffs, not a verdict.** Flash-Next is faster at equal score on this suite. Against that: it needs 90 GB on disk and about 119 GB of mapped model buffers (50.0 + 40.0 GB on Metal plus the 28.8 GB CPU-mapped embedding table) versus 29 GB for the 27B, it runs at 3-bit versus Q8_0, its GGUF declares `requires 0.35.0` while this server is 0.34.4, and this suite is not a coding or writing benchmark. A coding harness is being built separately ([coding-benchmark-harness](../coding-benchmark-harness/)).
 
 ## Results
 
