@@ -1,6 +1,6 @@
 # Stock Qwen on the M5 Max: research notes
 
-Running log. Times are MDT. Host: MacBook Pro Mac17,6, Apple M5 Max, 18 CPU / 40 GPU cores, 128 GB unified memory, macOS 26.5.
+Running log. Times are MDT. Host: MacBook Pro Mac17,6, Apple M5 Max, 18 CPU / 40 GPU cores, 128 GB unified memory, macOS 27.0 (26A428).
 
 ## 2026-09-29
 
@@ -40,3 +40,4 @@ Running log. Times are MDT. Host: MacBook Pro Mac17,6, Apple M5 Max, 18 CPU / 40
 - 00:45 MDT: **Flash-Next artifacts verified.** The Hugging Face tree API at the pinned revision (`/api/models/unsloth/Qwen3.8-Flash-Next-GGUF/tree/38bb39ee…/UD-Q3_K_XL`) lists LFS SHA-256 `f2ef4328929d8b8c8930e2856eef52128dd4ce3425302f04bc3c657431cc4c49` (10,946,624 B), `7d230e7c9421d868b89eebaf23033af0ea1a4e046956df00fb156814fb62346e` (49,983,253,824 B), `21d4f90f9cd7b7c3a1582667c20cb22f7b03de895b88a23bb20aaeaa44f2c199` (39,992,153,376 B). The dedicated store's manifest for `qwen3.8-flash-next-ud-q3kxl:latest` has exactly those three layer digests and sizes (Ollama names blobs by SHA-256 and verifies on create), so the benchmarked model is byte-identical to the pinned upload. The 27B came from the Ollama registry: model blob `2bb22714289826d7b9e0ba376c3ce47d08bce39abe598745857c44d88c09bdbf` (29,047,084,384 B), projector `ac3714bfdddeca31351f2752bf1a63f266f4df87c0b68c895e44945ca704448e`.
 - Ollama release check (GitHub API, 00:45 MDT): v0.35.0 was published 2026-09-28, five days after the installed 0.34.4 (2026-09-23); v0.35.1-rc0 on 2026-09-29. The installed app did not auto-update before these runs.
 - 00:50 MDT: attribution fix. My earlier note said Qwen "describes" Flash-Next as the first open-weight release of the Qwen 4 architecture; that wording came from a search-result summary, and the Qwen blog page did not render for me. The model card's own sentence is "This experimental preview of the architecture that will underpin Qwen4" and "Number of Parameters: 125B with 6B activated, plus 51B n-gram embedding and 4B MTP", license `qwen-community-1.0` ([card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)). README now quotes the card. The 0.35.0 release notes contain no `qwen4exp` item, so the `requires 0.35.0` flag stays an unexplained caveat.
+- 01:05 MDT corrections from the source-verifier pass (report: `source-verification.md`). (1) Host OS: I wrote "macOS 26.5" from the Sep 22 notes; every run record's `hostBefore.os` and live `sw_vers` say **macOS 27.0 (26A428)**; fixed in README and the header above. The Sep 27 records also show 27.0, so the host was upgraded between Sep 22 and Sep 27.
