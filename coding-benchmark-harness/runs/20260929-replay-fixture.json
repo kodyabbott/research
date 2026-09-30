@@ -1,0 +1,367 @@
+{
+ "schemaVersion": 1,
+ "label": "replay-fixture",
+ "startedAt": "2026-09-30T00:37:34-06:00",
+ "finishedAt": "2026-09-30T00:37:35-06:00",
+ "status": "completed",
+ "error": null,
+ "host": {
+  "capturedAt": "2026-09-30T00:37:34-06:00",
+  "model_identifier": "Mac17,6",
+  "chip": "Apple M5 Max",
+  "cpu_cores": "18",
+  "gpu_cores": "40",
+  "memory_gb": 128,
+  "os_version": "27.0",
+  "os_build": "26A428",
+  "kernel": "27.0.0",
+  "power_source": "AC Power",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "swap": "total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)",
+  "identifiersOmitted": "hardware identifiers are never collected; see record.HARDWARE_KEYS and record.FORBIDDEN_KEYS",
+  "caveat": "Interactive desktop host; dedicated-host isolation is not established."
+ },
+ "runtime": {
+  "harness": "coding-benchmark-harness-v1",
+  "backend": "replay",
+  "endpoint": "replay://fixture",
+  "sandboxPython": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+  "sandboxPythonVersion": "3.14.7",
+  "sandboxProfileSha256": "b10d6b75cbcdba8c0c985a0166335749d4ae0a37c36bea5367ec8a8d3e94a3d5",
+  "sandboxRunnerSha256": "c8b2f64bbc6350e0461f685bd5a53a6b9cf463d00bb36e1cf8af4bbb7bc79349",
+  "sandboxSelfTest": {
+   "profileSha256": "b10d6b75cbcdba8c0c985a0166335749d4ae0a37c36bea5367ec8a8d3e94a3d5",
+   "python": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+   "pythonVersion": "3.14.7",
+   "checks": [
+    {
+     "name": "normal-program-returns-json",
+     "passed": true,
+     "status": "ok",
+     "detail": null
+    },
+    {
+     "name": "network-denied",
+     "passed": true,
+     "probe": {
+      "result": "EPERM",
+      "type": "PermissionError"
+     },
+     "listenerAccepted": false,
+     "listenerPort": 60090,
+     "detail": null
+    },
+    {
+     "name": "write-outside-workdir-denied",
+     "passed": true,
+     "probe": {
+      "tmp": "PermissionError:EPERM",
+      "home": "PermissionError:EPERM"
+     },
+     "filesCreated": false,
+     "detail": null
+    },
+    {
+     "name": "read-home-and-repo-denied",
+     "passed": true,
+     "probe": {
+      "home": "PermissionError:EPERM",
+      "repo": "PermissionError:EPERM"
+     },
+     "homeProbePath": "/Users/kody/.sandbox-read-probe-58713.txt",
+     "repoProbePath": "/Users/kody/repos/research/coding-benchmark-harness/DESIGN.md",
+     "detail": null
+    },
+    {
+     "name": "infinite-loop-killed",
+     "passed": true,
+     "status": "cpu-timeout",
+     "signal": 24,
+     "wallMs": 2045.08,
+     "detail": null
+    }
+   ],
+   "passed": true,
+   "ranAt": "2026-09-30T00:37:34-0600"
+  },
+  "harnessPython": "3.14.7"
+ },
+ "model": {
+  "name": "replay-fixture-v1",
+  "digest": null,
+  "replay": true,
+  "responses": [
+   "Fixture/0",
+   "Fixture/1",
+   "Fixture/2"
+  ],
+  "contextCheck": {
+   "requestedContext": 16384,
+   "loadedContext": 16384,
+   "verified": true,
+   "replay": true
+  }
+ },
+ "protocol": {
+  "suite": "fixture",
+  "suiteDigest": "afd6421fc701d704109d2c2cdc747bbcf733455eb508ea1c9a0550b48f0b04d0",
+  "datasetSha256": "df1bbe5bb4480436c3d2892e25d554e3dc857250866d64a7b54e2941711cd0a8",
+  "evalplusVersion": "fixture-v1",
+  "promptTemplateSha256": "0e9b9e3372769158bb2c6fdabf5447566933cdbeb7aab13abb5477c29f3836f6",
+  "tasks": 3,
+  "tasksInSuite": 3,
+  "skippedAtPrepare": 0,
+  "think": "false",
+  "options": {
+   "replay": true,
+   "num_predict": 4096
+  },
+  "outputCap": 4096,
+  "context": 16384,
+  "taskSeconds": 300.0,
+  "gradeWallSeconds": 300.0,
+  "cpuSeconds": 60,
+  "samplingProfile": "greedy-v1",
+  "samplesPerTask": 1,
+  "perInputTimeout": "max(1.0s, 4 x canonical per-input time) -- EvalPlus DEFAULT_MIN_TIME_LIMIT / DEFAULT_GT_TIME_LIMIT_FACTOR",
+  "codeExecution": "sandbox-exec deny-default, see runtime.sandboxProfileSha256",
+  "scope": "fixture pass@1 with one greedy sample per task; a task passes only when both the base and the plus inputs pass. Not a repository-editing agent eval."
+ },
+ "tasks": [
+  {
+   "id": "Fixture/0",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\ndef add_two(a: int, b: int) -> int:\n    \"\"\" Return the sum of a and b.\n    >>> add_two(1, 2)\n    3\n    \"\"\"\n",
+   "response": {
+    "content": "Here you go.\n\n```python\ndef add_two(a: int, b: int) -> int:\n    \"\"\" Return the sum of a and b. \"\"\"\n    return a + b\n```\n",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 42,
+    "eval_duration": 2000000000,
+    "prompt_eval_count": 90,
+    "prompt_eval_duration": 150000000,
+    "total_duration": 2200000000,
+    "load_duration": 10000000,
+    "usage": null,
+    "genTokPerSec": 21.0
+   },
+   "wallMs": 2210.0,
+   "code": "def add_two(a: int, b: int) -> int:\n    \"\"\" Return the sum of a and b. \"\"\"\n    return a + b\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 2,
+    "completed": 2,
+    "counts": {
+     "pass": 2
+    },
+    "statuses": "..",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 37.09
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 4,
+    "completed": 4,
+    "counts": {
+     "pass": 4
+    },
+    "statuses": "....",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 40.87
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "Fixture/1",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List, Tuple\n\n\ndef min_max(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" Return a tuple of the smallest and largest value in numbers.\n    >>> min_max([3, 1, 2])\n    (1, 3)\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List, Tuple\n\n\ndef min_max(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" Return a tuple of the smallest and largest value in numbers. \"\"\"\n    return [min(numbers), max(numbers)]\n```\n",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 60,
+    "eval_duration": 3000000000,
+    "prompt_eval_count": 120,
+    "prompt_eval_duration": 200000000,
+    "total_duration": 3300000000,
+    "load_duration": 0,
+    "usage": null,
+    "genTokPerSec": 20.0
+   },
+   "wallMs": 3310.0,
+   "code": "from typing import List, Tuple\n\n\ndef min_max(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" Return a tuple of the smallest and largest value in numbers. \"\"\"\n    return [min(numbers), max(numbers)]\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": false,
+    "inputs": 2,
+    "completed": 2,
+    "counts": {
+     "wrong-answer": 2
+    },
+    "statuses": "xx",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 40.73
+    },
+    "firstFailure": {
+     "index": 0,
+     "status": "wrong-answer",
+     "oracle": null,
+     "expected": "(1, 3)",
+     "actual": "[1, 3]"
+    },
+    "failureClass": "wrong-answer",
+    "failureDetail": "input 0: expected (1, 3) got [1, 3]"
+   },
+   "plus": {
+    "passed": false,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "wrong-answer": 3
+    },
+    "statuses": "xxx",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 41.05
+    },
+    "firstFailure": {
+     "index": 0,
+     "status": "wrong-answer",
+     "oracle": null,
+     "expected": "(-9, 4)",
+     "actual": "[-9, 4]"
+    },
+    "failureClass": "wrong-answer",
+    "failureDetail": "input 0: expected (-9, 4) got [-9, 4]"
+   },
+   "failureClass": "wrong-answer",
+   "failureDetail": "input 0: expected (1, 3) got [1, 3]"
+  },
+  {
+   "id": "Fixture/2",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef mean_of(numbers: List[float]) -> float:\n    \"\"\" Return the arithmetic mean of numbers.\n    >>> mean_of([1.0, 2.0])\n    1.5\n    \"\"\"\n",
+   "response": {
+    "content": "return sum(numbers) / len(numbers)\n",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 12,
+    "eval_duration": 600000000,
+    "prompt_eval_count": 105,
+    "prompt_eval_duration": 180000000,
+    "total_duration": 800000000,
+    "load_duration": 0,
+    "usage": null,
+    "genTokPerSec": 20.0
+   },
+   "wallMs": 810.0,
+   "code": "from typing import List\n\n\ndef mean_of(numbers: List[float]) -> float:\n    \"\"\" Return the arithmetic mean of numbers.\n    >>> mean_of([1.0, 2.0])\n    1.5\n    \"\"\"\n    return sum(numbers) / len(numbers)\n",
+   "extractionRule": "raw-body",
+   "completionPrefixed": true,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 2,
+    "completed": 2,
+    "counts": {
+     "pass": 2
+    },
+    "statuses": "..",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 41.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 39.11
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  }
+ ],
+ "summary": {
+  "tasksTotal": 3,
+  "tasksAttempted": 3,
+  "basePass": 2,
+  "plusPass": 2,
+  "passAt1": 0.6667,
+  "basePassAt1": 0.6667,
+  "failureClasses": {
+   "none": 2,
+   "wrong-answer": 1
+  },
+  "medianWallMs": 2210.0,
+  "medianGenTokPerSec": 20.0,
+  "medianGeneratedTokens": 42,
+  "medianThinkingChars": 0,
+  "truncated": 0,
+  "unexpectedThinking": 0,
+  "protocolValid": true
+ },
+ "unload": {
+  "confirmed": true,
+  "replay": true
+ },
+ "updatedAt": "2026-09-30T00:37:35-06:00",
+ "hostAfter": {
+  "capturedAt": "2026-09-30T00:37:35-06:00",
+  "model_identifier": "Mac17,6",
+  "chip": "Apple M5 Max",
+  "cpu_cores": "18",
+  "gpu_cores": "40",
+  "memory_gb": 128,
+  "os_version": "27.0",
+  "os_build": "26A428",
+  "kernel": "27.0.0",
+  "power_source": "AC Power",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "swap": "total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)",
+  "identifiersOmitted": "hardware identifiers are never collected; see record.HARDWARE_KEYS and record.FORBIDDEN_KEYS",
+  "caveat": "Interactive desktop host; dedicated-host isolation is not established."
+ }
+}

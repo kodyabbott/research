@@ -1,0 +1,36 @@
+{
+  "model": "replay-fixture-v1",
+  "note": "Canned assistant messages for the three fixture tasks. Chosen to exercise three different extraction rules and two different outcomes: Fixture/0 passes from a fenced block, Fixture/1 returns a list where a tuple is required (wrong answer, and the exact case a naive grader would miss), Fixture/2 passes via the bare-body completion rule.",
+  "responses": {
+    "Fixture/0": {
+      "content": "Here you go.\n\n```python\ndef add_two(a: int, b: int) -> int:\n    \"\"\" Return the sum of a and b. \"\"\"\n    return a + b\n```\n",
+      "eval_count": 42,
+      "eval_duration": 2000000000,
+      "prompt_eval_count": 90,
+      "prompt_eval_duration": 150000000,
+      "total_duration": 2200000000,
+      "load_duration": 10000000,
+      "wallMs": 2210.0
+    },
+    "Fixture/1": {
+      "content": "```python\nfrom typing import List, Tuple\n\n\ndef min_max(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" Return a tuple of the smallest and largest value in numbers. \"\"\"\n    return [min(numbers), max(numbers)]\n```\n",
+      "eval_count": 60,
+      "eval_duration": 3000000000,
+      "prompt_eval_count": 120,
+      "prompt_eval_duration": 200000000,
+      "total_duration": 3300000000,
+      "load_duration": 0,
+      "wallMs": 3310.0
+    },
+    "Fixture/2": {
+      "content": "return sum(numbers) / len(numbers)\n",
+      "eval_count": 12,
+      "eval_duration": 600000000,
+      "prompt_eval_count": 105,
+      "prompt_eval_duration": 180000000,
+      "total_duration": 800000000,
+      "load_duration": 0,
+      "wallMs": 810.0
+    }
+  }
+}
