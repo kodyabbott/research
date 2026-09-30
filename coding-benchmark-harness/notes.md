@@ -301,3 +301,95 @@ Regenerated deterministically by `tests/fixtures/make_fixture.py` (gzip `mtime=0
 `datasets.json`. It is registered as a suite with `localPath` instead of `url`, so `prepare.py
 --suite fixture` and `run.py --suite fixture` work through exactly the same code paths as the real
 suites.
+
+### 2026-09-30 00:40 MDT -- backends, record, run, summarizer, end-to-end
+
+**Backends.** All three are implemented; only `replay` was ever exercised against real traffic.
+`OllamaBackend` posts one non-streaming `/api/chat` per task with `options.num_ctx` set explicitly
+(design revisions item 4), `keep_alive: "10m"`, and `think` sent unless the mode is `default` --
+`{'false': False, 'true': True}.get(mode, mode)`, copied from `bench.py`, because at least one
+import (Gemma) rejects the field with HTTP 400. `preflight()` refuses to start when `/api/ps`
+already shows a loaded model, and `verify_context()` aborts when the loaded `context_length` differs
+from the requested one. `unload()` posts `keep_alive: 0` and polls `/api/ps` for up to 60 s.
+`OpenAIBackend` posts `/v1/chat/completions` with `temperature 0, seed 42, top_p 1, max_tokens`,
+records `usage`, leaves server timings `null`, and reports `verified: false` with a caveat for the
+context check because the API exposes no context length.
+
+Every HTTP call in the package goes through the single module-level function
+`harness.backends._urlopen`, which the tests replace with a `FakeServer` that records each request.
+**No request was made to 11434 or 11436 at any point during implementation** (hard rule 1). The 38
+backend tests assert on the exact bytes that would go over the wire: the full Ollama options dict,
+`num_ctx` at three context sizes, each `think` mode, the absence of a system message, the
+`keep_alive: 0` unload body, the context-mismatch abort, and the bearer header for the OpenAI path.
+
+**End-to-end replay run.** `runs/20260929-replay-fixture.json`: 3 tasks, 2/3 pass@1, status
+`completed`, `protocolValid: true`, sandbox self-test recorded and passing, 11 KB. The three canned
+responses were chosen to exercise three different extraction rules and the one comparison a naive
+grader gets wrong: `Fixture/0` passes from a fenced block (`fence-entry`), `Fixture/1` returns
+`[min, max]` where a tuple is required and is correctly graded `wrong-answer`
+(`expected (1, 3) got [1, 3]`), `Fixture/2` passes through `raw-body` with `completionPrefixed:
+true`. Summarized into `RESULTS.md` and `comparison.json` with no warnings.
+
+Test suite: **188 tests, 1 skipped** (the non-macOS refusal path, which cannot be exercised on
+macOS), `OK`.
+
+## Deviations from DESIGN.md
+
+Collected in one place. Each is explained in the log entry above it.
+
+1. **Results leave the sandbox in files, not on stdout.** `$WORKDIR/results.jsonl` (one JSON object
+   per input, flushed after each) plus `$WORKDIR/meta.json`. A candidate's stray `print()` would
+   corrupt a stdout payload, and a hard kill still leaves the completed rows on disk, which is how
+   partial progress gets reported. `sys.stdout`/`sys.stderr` are also redirected to a discarding
+   sink around `exec` and every call.
+2. **Per-input results in the run record are compact,** not a list of values: a one-character status
+   per input, status counts, and the first failing input with truncated `repr`s of expected and
+   actual. Dumping ~123,000 plus-input values per HumanEval+ run would blow far past the 2 MB the
+   design budgets for a record. Full expected values live in the out-of-repo prepare cache.
+3. **`RLIMIT_FSIZE` is 128 MiB, not 16 MiB.** Three HumanEval+ canonical solutions legitimately
+   write more than 16 MiB of results across their plus inputs. Still a hard cap, still only inside
+   the per-task work directory, which is deleted immediately afterwards.
+4. **`RLIMIT_CPU` defaults to 60 s** per grading invocation (this is design revisions item 2b, not a
+   deviation) and `prepare.py` uses a far larger budget (600 s wall, 300 s CPU) because computing
+   ground truth is a one-time trusted operation; `Mbpp/255` alone needs about 200 s.
+5. **Oversized values are compared by SHA-256 of their canonical form.** Threshold 64 KiB per value;
+   exact equality only, no tolerance and no special oracle on that path. Used for 0.1% of values.
+6. **`sys.set_int_max_str_digits(0)` inside the sandbox**, so two HumanEval+ tasks that build
+   >4300-digit integers remain scoreable on Python 3.11+.
+7. **`atol` is not loop-carried.** EvalPlus mutates its local `atol` inside the per-input loop; this
+   harness recomputes per input. Stricter; can only differ for a task with mixed float/non-float
+   expected values.
+8. **`missing-entry-point` is classified `runtime-error`, not `no-code`.** Code was produced and
+   executed; it just never defined the required function. `no-code` is reserved for extraction
+   failures.
+9. **Values are compared after a serialize/rebuild round trip,** not as live objects. Faithful for
+   every type the suites actually use; objects with no serializable form become an `Opaque` keyed on
+   class name and `repr`. The only tasks where EvalPlus depends on such objects are the three
+   not-None tasks, and those are reduced to booleans inside the sandbox first, so nothing is lost.
+10. **MBPP+ has no `text` field.** The statement and the example assertion are both split out of the
+    dataset's `prompt` docstring, and the assertion used is the *curated* one the dataset puts there
+    (set-form for the set-equality tasks) rather than the first line of the separate `assertion`
+    field. This also settles the design's open question: one assertion, the curated one.
+11. **Extraction adds three tolerances the design did not list:** `~~~` fences, indented fence
+    markers, and an unterminated final fence (truncated answers would otherwise be misreported as
+    `no-code`). The design's literal rule ordering is otherwise preserved, including the
+    consequence that unfenced content with a *foreign* `def` falls through to `empty`.
+12. **`prepare.py` also accepts a local `fixture` suite** registered with `localPath` instead of
+    `url`, so the tests and the end-to-end replay run go through exactly the same loader, sandbox
+    and grading code as the real suites.
+13. **Sandbox self-test rigour.** The design's network check
+    (`socket.create_connection(("127.0.0.1", 11436), 1)` raises) would pass whether or not the
+    sandbox works, since nothing need be listening -- and if the deny rule were broken it would
+    complete a TCP connect to the live model server. Replaced with: the harness opens its own
+    ephemeral listener, and the check requires `EPERM` **and** that the listener accepted nothing.
+    The read/write checks likewise target files that exist, so `ENOENT` cannot be mistaken for
+    denial.
+14. **Per-input timeouts use `signal.setitimer(ITIMER_REAL, ...)`, not `signal.alarm`,** because the
+    limits are fractional seconds (`max(1.0, 4 x t)`).
+
+**Not implemented, as scoped out by DESIGN.md:** Docker sandbox (interface stub only), JavaScript and
+repository-editing suites, pass@k, cloud reference models, Windows support.
+
+**Not done, and out of scope for this work:** acceptance item 4, the live Ollama run. Ports 11434 and
+11436 were off limits throughout (design revisions item 1). The exact command for the first live run
+is in the handoff and in README.md.
