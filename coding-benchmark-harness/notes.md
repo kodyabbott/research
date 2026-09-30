@@ -201,3 +201,103 @@ otherwise corrupt a stdout payload -- EvalPlus wraps execution in `swallow_io` f
 -- and a hard kill (SIGXCPU) still leaves the completed rows on disk, which is how partial progress
 is reported. `sys.stdout`/`sys.stderr` are additionally redirected to a discarding sink around
 `exec` and every call. **Deviation from DESIGN.md's "writes JSON to stdout".**
+
+### 2026-09-30 01:20 MDT -- datasets, suites, prepare
+
+**Dataset provenance.** The EvalPlus *code* repository's GitHub releases contain only pre-generated
+LLM samples, not the datasets. The datasets live in two separate release repositories, and the URL
+shape is built by `evalplus/data/utils.py::get_dataset_metadata`:
+`https://github.com/evalplus/<name lowercased>_release/releases/download/<version>/<Name>.jsonl.gz`.
+Versions are pinned in the EvalPlus source, not chosen by me:
+`HUMANEVAL_PLUS_VERSION = "v0.1.10"` (`evalplus/data/humaneval.py`) and
+`MBPP_PLUS_VERSION = "v0.2.0"` (`evalplus/data/mbpp.py`). Resolved URLs:
+
+- <https://github.com/evalplus/humanevalplus_release/releases/download/v0.1.10/HumanEvalPlus.jsonl.gz>
+- <https://github.com/evalplus/mbppplus_release/releases/download/v0.2.0/MbppPlus.jsonl.gz>
+
+Neither release publishes a checksum, and EvalPlus itself only hashes the file after download
+(`get_human_eval_plus_hash` md5s the decompressed jsonl at runtime). `datasets.json` therefore
+records the SHA-256 of the first download as the pin, plus the decompressed jsonl's SHA-256 and md5
+(the latter in EvalPlus's own scheme), and says so explicitly in a `checksumProvenance` field.
+Independent cross-checks that the files are the right ones: the gzip sizes match the sizes the
+GitHub releases API reports (925932 and 336032 bytes), and the record counts match the EvalPlus
+README, which states for the 2024-04-17 pre-`v0.3.0` entry: "MBPP+ is upgraded to `v0.2.0` by
+removing some broken tasks (399 -> 378 tasks)". Observed: 164 HumanEval+ tasks, 378 MBPP+ tasks.
+
+**Field adaptations.** HumanEval+ records have exactly the fields the design assumed. MBPP+ has no
+`text` field. Its `prompt` is `"""<statement>\nassert <one call>\n"""` -- verified uniform
+across all 378 records (every prompt is a triple-quoted block containing exactly one `assert`, and
+it is always the last line). The MBPP+ template therefore uses the statement as `{text}` and the
+prompt's own assertion as the example test. That assertion is the *curated* one: for the eight
+set-equality tasks it is written as `assert set(f(...)) == set(...)`, whereas the first line of the
+separate `assertion` field is the raw `== (4, 5)` form, which would tell the model to return an
+ordered tuple for a task graded as a set. Design's open question ("all three assertions or only the
+first?") is answered with: the single curated assertion the dataset itself puts in the prompt.
+
+**prepare.py results -- HumanEval+ (v0.1.10):**
+
+| | |
+| --- | --- |
+| tasks in dataset | 164 |
+| expected outputs computed | 164 |
+| **tasks skipped** | **0** |
+| base inputs | 1570 (mean 9.6 per task) |
+| plus inputs | 122683 (mean 748.1 per task) |
+| suite digest | `6413ed5c20cf5adbe678c75fff3bcd0a1a839692aaab9d6efced63a4fa376cb5` |
+| wall time | 38.2s |
+
+**prepare.py results -- MBPP+ (v0.2.0):**
+
+| | |
+| --- | --- |
+| tasks in dataset | 378 |
+| expected outputs computed | 378 |
+| **tasks skipped** | **0** |
+| base inputs | 1174 (mean 3.1 per task) |
+| plus inputs | 39841 (mean 105.4 per task) |
+| suite digest | `e3679496ade19f79acc0e170d100bda97d9686da312057576e9bc69bfd083f24` |
+| wall time | 269.5s |
+
+Input counts match `datasets.json` exactly in both cases. Slowest canonical solutions (total across
+all of a task's inputs, which is what sets that task's per-input candidate limits): HumanEval+
+`HumanEval/130` 6.006s, `HumanEval/139` 3.185s, `HumanEval/83` 1.712s, `HumanEval/15` 1.082s, `HumanEval/36` 0.652s; MBPP+ `Mbpp/255` 199.325s, `Mbpp/599` 6.41s, `Mbpp/271` 1.657s, `Mbpp/630` 1.653s, `Mbpp/603` 1.652s. `Mbpp/255` alone accounts for roughly 200 of MBPP+'s 270 seconds.
+
+**Three bugs and one Python-version difference found by the first prepare run.** The first attempt
+skipped 7 HumanEval+ tasks. All seven were my problem, not the dataset's:
+
+1. *Result files were being read through the 1 MiB stdout cap.* `HumanEval/14` (`all_prefixes`) and
+   `HumanEval/96` (`count_up_to`) write more than 1 MiB of results across their ~900 and ~180 plus
+   inputs, so the harness parsed a truncated `results.jsonl` and reported "completed 330/903
+   inputs". Fixed: `want` files get their own 192 MiB read cap; stdout/stderr keep the 1 MiB cap.
+2. *`RLIMIT_FSIZE` of 16 MiB was too small for ground truth.* `HumanEval/15` (`string_sequence`,
+   called with n up to 1000011 -- a ~7 MB string), `HumanEval/100` (`make_a_pile(1000000)`) and
+   `HumanEval/130` (`tri(1000004)`) crashed the runner mid-write. Raised to 128 MiB.
+   **Deviation from DESIGN.md's 16 MiB**, recorded here; it is still a hard cap and still applies
+   only inside the per-task work directory, which is deleted immediately afterwards.
+3. *Python 3.11+ limits int-to-str conversion to 4300 digits.* `HumanEval/83`
+   (`starts_one_ends(1000002)`) and `HumanEval/139` (`special_factorial(505)`) legitimately build
+   far larger integers, and their canonical solutions stringify them. EvalPlus's reference
+   environment predates the cap. The runner now calls `sys.set_int_max_str_digits(0)`.
+   **Deviation from stock interpreter behaviour**, deliberate, so these two tasks are scoreable.
+4. *Extreme values are compared by digest.* Even with the larger caps, shipping
+   `make_a_pile(1000000)`-sized values out of the sandbox for ~100 inputs would mean
+   hundreds of megabytes per task. Values whose canonical JSON exceeds 64 KiB are therefore
+   reported as `{"t": "digest", "v": sha256, "bytes": n}`, and the grader compares those inputs by
+   hash: exact equality only, no tolerance and no special oracle. The digest is byte-identical
+   whether it was streamed (never materialized) or taken over the materialized form, because
+   `json.dumps(..., separators=(",", ":"))` is compositional over the tagged encoding.
+   **In practice this path is almost never taken: 74 of 124,253 HumanEval+ expected values (0.06%)
+   and 94 of 41,015 MBPP+ values (0.23%).** None of the affected tasks has a special oracle, and
+   all have `atol == 0`, so nothing is lost. **Deviation from DESIGN.md**, recorded here.
+
+After those four changes, **both suites prepare with 0 skipped tasks**. The expected-output cache is
+18.9 MB for HumanEval+ and 8.8 MB for MBPP+, stored under
+`~/Documents/Codex/model-cache/coding-benchmark/expected/<suite>/` -- outside the repository, as
+required.
+
+**Fixture suite.** `tests/fixtures/FixtureSuite-v1.jsonl.gz` holds three synthetic tasks in the
+HumanEval+ record shape (`add_two`, `min_max` returning a tuple, `mean_of` returning a float).
+Regenerated deterministically by `tests/fixtures/make_fixture.py` (gzip `mtime=0`), sha256 pinned in
+`datasets.json`. It is registered as a suite with `localPath` instead of `url`, so `prepare.py
+--suite fixture` and `run.py --suite fixture` work through exactly the same code paths as the real
+suites.

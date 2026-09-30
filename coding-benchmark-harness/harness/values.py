@@ -7,6 +7,46 @@ keeps grading faithful to EvalPlus (tuple != list, `1 == 1.0`, set membership, N
 
 from __future__ import annotations
 
+import hashlib
+import json
+
+DIGEST_TAG = "digest"
+
+
+def _dumps(payload) -> str:
+    """Canonical serialization for digests. Must match sandbox_runner._dumps byte for byte."""
+    return json.dumps(payload, separators=(",", ":"), ensure_ascii=False)
+
+
+def digest_of(tagged) -> str:
+    """SHA-256 identifying a tagged value, whether it arrived whole or already digested."""
+    if isinstance(tagged, dict) and tagged.get("t") == DIGEST_TAG:
+        return tagged.get("v") or ""
+    return hashlib.sha256(_dumps(tagged).encode("utf-8")).hexdigest()
+
+
+def is_digest(tagged) -> bool:
+    return isinstance(tagged, dict) and tagged.get("t") == DIGEST_TAG
+
+
+class Digest:
+    """An oversized value represented only by the hash of its canonical form."""
+
+    __slots__ = ("hex", "bytes")
+
+    def __init__(self, hex_digest: str, size: int | None = None):
+        self.hex = hex_digest
+        self.bytes = size
+
+    def __eq__(self, other):
+        return isinstance(other, Digest) and self.hex == other.hex
+
+    def __hash__(self):
+        return hash(self.hex)
+
+    def __repr__(self):
+        return f"Digest({self.hex[:16]}..., bytes={self.bytes})"
+
 
 class Opaque:
     """Stand-in for an object EvalPlus would have compared by identity/equality in-process.
@@ -92,6 +132,8 @@ def decode(tagged):
         return result
     if kind == "repr":
         return Opaque(tagged.get("cls", "object"), tagged.get("v", ""))
+    if kind == DIGEST_TAG:
+        return Digest(tagged.get("v") or "", tagged.get("bytes"))
     if kind == "overflow":
         return Overflow()
     raise DecodeError(f"unknown tag {kind!r}")

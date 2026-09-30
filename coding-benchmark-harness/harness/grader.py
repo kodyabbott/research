@@ -324,6 +324,20 @@ def grade_set(dataset: str, entry_point: str, task_id: str, raw_inputs: list,
                     outcome.first_failure = {"index": index, "status": label, "error": str(exc)}
                 continue
             expected_tagged = expected[index] if index < len(expected) else None
+            if values.is_digest(actual_tagged) or values.is_digest(expected_tagged):
+                # One side was too large to ship out of the sandbox, so the two canonical forms
+                # are compared by hash. Exact equality only: no tolerance, no special oracle.
+                matched = values.digest_of(expected_tagged) == values.digest_of(actual_tagged)
+                label = "pass" if matched else "wrong-answer"
+                if not matched and outcome.first_failure is None:
+                    outcome.first_failure = {
+                        "index": index, "status": label, "oracle": "digest",
+                        "expected": values.brief(expected_tagged),
+                        "actual": values.brief(actual_tagged),
+                    }
+                counts[label] = counts.get(label, 0) + 1
+                chars.append(STATUS_CHAR[label])
+                continue
             try:
                 expected_value = values.decode(expected_tagged)
             except values.DecodeError as exc:

@@ -26,6 +26,7 @@ membership, NaN, arbitrary nesting) without ever executing anything.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
 import signal
@@ -33,10 +34,19 @@ import sys
 import time
 import traceback
 
-MAX_DEPTH = 64
-MAX_NODES = 200_000
+MAX_DEPTH = 100
+# Above this many nodes a value is hashed by streaming rather than materialized as tagged JSON,
+# so HumanEval+'s extreme inputs (make_a_pile(1000000) and friends) cannot exhaust memory.
+MAX_NODES = 2_000_000
+# Values whose canonical JSON exceeds this are reported as a digest instead of a value.
+MAX_VALUE_BYTES = 64 * 1024
 MAX_REPR = 4096
 MAX_ERROR = 600
+
+
+def _dumps(payload) -> str:
+    """The canonical serialization a digest is taken over. Must match harness.values._dumps."""
+    return json.dumps(payload, separators=(",", ":"), ensure_ascii=False)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -98,6 +108,91 @@ def encode(obj, budget: _Budget | None = None, depth: int = 0):
     except BaseException:  # pragma: no cover - pathological __repr__
         text = "<unreprable>"
     return {"t": "repr", "cls": cls.__name__, "v": text[:MAX_REPR]}
+
+
+_CONTAINER_TAGS = {list: "list", tuple: "tuple", set: "set", frozenset: "frozenset"}
+
+
+def count_nodes(obj, limit: int = MAX_NODES, depth: int = 0) -> int:
+    """Cheap node count with early exit. Never allocates a copy of the value."""
+    if depth > MAX_DEPTH:
+        return limit + 1
+    cls = type(obj)
+    if cls in _CONTAINER_TAGS:
+        total = 1
+        for item in obj:
+            total += count_nodes(item, limit, depth + 1)
+            if total > limit:
+                return total
+        return total
+    if cls is dict:
+        total = 1
+        for key, value in obj.items():
+            total += count_nodes(key, limit, depth + 1) + count_nodes(value, limit, depth + 1)
+            if total > limit:
+                return total
+        return total
+    return 1
+
+
+def canonical_chunks(obj, depth: int = 0):
+    """Yield exactly the bytes `_dumps(encode(obj))` would produce, without building it.
+
+    json.dumps with fixed separators is compositional over nested structures, and every tagged
+    object uses the same literal keys in the same order, so a streamed digest over these chunks is
+    byte-identical to hashing the materialized form.
+    """
+    if depth > MAX_DEPTH:
+        raise ValueError("value nests deeper than the encoder supports")
+    cls = type(obj)
+    tag = _CONTAINER_TAGS.get(cls)
+    if tag is not None:
+        yield '{"t":"' + tag + '","v":['
+        first = True
+        for item in obj:
+            if not first:
+                yield ","
+            first = False
+            yield from canonical_chunks(item, depth + 1)
+        yield "]}"
+        return
+    if cls is dict:
+        yield '{"t":"dict","v":['
+        first = True
+        for key, value in obj.items():
+            if not first:
+                yield ","
+            first = False
+            yield "["
+            yield from canonical_chunks(key, depth + 1)
+            yield ","
+            yield from canonical_chunks(value, depth + 1)
+            yield "]"
+        yield "]}"
+        return
+    yield _dumps(encode(obj, _Budget(), depth))
+
+
+def encode_or_digest(obj):
+    """Tagged value when it is small enough, otherwise a digest of its canonical form.
+
+    HumanEval+'s plus inputs include cases such as `string_sequence(1000011)` (a ~7 MB string) and
+    `make_a_pile(1000000)` (a million integers). Shipping those out of the sandbox for every input
+    would produce multi-hundred-megabyte payloads, so oversized values are compared by digest.
+    """
+    if count_nodes(obj) > MAX_NODES:
+        digest = hashlib.sha256()
+        total = 0
+        for chunk in canonical_chunks(obj):
+            encoded = chunk.encode("utf-8")
+            digest.update(encoded)
+            total += len(encoded)
+        return {"t": "digest", "v": digest.hexdigest(), "bytes": total}
+    tagged = encode(obj)
+    blob = _dumps(tagged).encode("utf-8")
+    if len(blob) > MAX_VALUE_BYTES:
+        return {"t": "digest", "v": hashlib.sha256(blob).hexdigest(), "bytes": len(blob)}
+    return tagged
 
 
 # ---------------------------------------------------------------------------------------------
@@ -203,6 +298,10 @@ def _short(exc: BaseException) -> str:
 
 
 def main() -> int:
+    if hasattr(sys, "set_int_max_str_digits"):
+        # Python 3.11+ caps int->str at 4300 digits; EvalPlus's reference environment predates
+        # that cap, and HumanEval/83 and /139 legitimately build much larger integers.
+        sys.set_int_max_str_digits(0)
     workdir = os.environ.get("WORKDIR") or os.getcwd()
     meta_path = os.path.join(workdir, "meta.json")
     results_path = os.path.join(workdir, "results.jsonl")
@@ -295,7 +394,7 @@ def main() -> int:
                     value = value is not None
                 elif not_none_mode == "candidate" and not isinstance(value, bool):
                     value = value is not None
-                row.update(status="ok", value=encode(value))
+                row.update(status="ok", value=encode_or_digest(value))
             except _PerInputTimeout:
                 signal.setitimer(signal.ITIMER_REAL, 0)
                 row.update(status="timeout", error=f"exceeded {per_input[index]:.3f}s")

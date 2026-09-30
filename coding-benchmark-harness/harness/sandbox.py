@@ -27,8 +27,12 @@ WORK_ROOT = CACHE_ROOT / "work"
 DEFAULT_WALL_SECONDS = 30.0
 DEFAULT_CPU_SECONDS = 60
 DEFAULT_NOFILE = 64
-DEFAULT_FSIZE = 16 * 1024 * 1024
-OUTPUT_READ_CAP = 1024 * 1024
+# The design specified 16 MiB. Raised because a canonical HumanEval+ solution over its ~1000 plus
+# inputs can legitimately write tens of megabytes of results (see notes.md); still a hard cap, and
+# still only writable inside the per-task work directory.
+DEFAULT_FSIZE = 128 * 1024 * 1024
+OUTPUT_READ_CAP = 1024 * 1024          # stdout/stderr, which should stay near-empty
+RESULT_READ_CAP = 192 * 1024 * 1024    # results.jsonl / meta.json requested via `want`
 
 # Deny-default profile. Placeholders are substituted per invocation; the SHA-256 recorded in run
 # records is of this template, so it is stable across work directories.
@@ -215,7 +219,8 @@ class SandboxExec:
             result = SandboxResult(
                 status=status, returncode=returncode, signal=signum, wall_ms=wall_ms,
                 stdout=_read_capped(out_path), stderr=_read_capped(err_path),
-                files={name: _read_capped(real / name) for name in want},
+                files={name: _read_capped(real / name, RESULT_READ_CAP)
+                       for name in want},
             )
             return result
         finally:
