@@ -668,3 +668,94 @@ the `symbol:`/`location:` detail lines** and the syntax patterns require corrobo
 `control-typo` (`xs.addd(...)`), `control-missing-import`, `control-type-mismatch` -- are ordinary
 Java 8 mistakes kept as false-positive tests. Verified: all 18 features detected, all 3 controls
 detected as nothing, and every pattern is exercised by the fixture it cites.
+
+### 2026-09-30 02:10 MDT -- humaneval-x-java
+
+**Dataset.** `zai-org/humaneval-x` (formerly `THUDM/humaneval-x`), file
+`data/java/data/humaneval.jsonl`, pinned at revision
+`62c78627f3072a1454fa0cb0184737cafe5e4198`, sha256
+`2157a77a6ff808020adc20142228b4ff698048c0696b33110786400c47c5d79c`, 474,987 bytes, 164 records.
+Hugging Face publishes no checksum for the file, so this is the first-download hash, pinned the same
+way the EvalPlus datasets are. Fields present and used: `task_id`, `prompt`, `declaration`,
+`canonical_solution`, `test`, `example_test`, plus an unused `text`. Every field the design expected
+exists -- no renaming needed.
+
+**Two field adaptations, both verified across all 164 records:**
+
+1. **No trailing brace.** DESIGN-JAVA.md says to compile `prompt + canonical_solution + "}"`.
+   `canonical_solution` already closes both the method and the class: brace balance of
+   `prompt + canonical_solution` is exactly 0 for every record, and every `canonical_solution` ends
+   with a closing brace pair. The extra brace would not parse. A test asserts the balance for all
+   164 tasks.
+2. **The hidden tests have no imports.** All 164 `test` values declare `public class Main` and
+   **none** contains an `import` line, while using `List`, `Arrays` and friends. Upstream
+   HumanEval-X concatenates prompt + solution + test into one `Main.java`, so the scaffold's imports
+   cover the test. This harness compiles **two files** instead (`Solution.java` + `Main.java`) and
+   copies each task's own import block into `Main.java`.
+
+   Two reasons, both load-bearing. First, DESIGN-JAVA.md revisions item 1 requires knowing *which
+   file* an error landed in to tell `signature-mismatch` from bad Java; in a single concatenated
+   file every diagnostic says `Main.java` and that distinction is impossible. Second, the
+   concatenated form makes a model writing `public class Solution` fail with "class Solution is
+   public, should be declared in a file named Solution.java" -- a file-layout artifact, not a Java
+   mistake. Import blocks are not uniform (159 tasks use `java.util.*` + `java.lang.*`, 4 add
+   `java.util.stream.Collectors`, 1 adds `java.math.BigInteger` + `java.security.*`), so the block
+   is copied per task. **Deviation from DESIGN-JAVA.md**, recorded here.
+
+**prepare.py --suite humaneval-x-java:**
+
+| | |
+| --- | --- |
+| tasks in dataset | 164 |
+| canonical compiles and passes on JDK 8 | **99** |
+| **skipped** | **65** |
+| suite digest | `2dc561c5ada4b60b928a087b4952eb7012483e8e1ef4a8399466bb22152729df` |
+| wall time | 45.5s |
+
+**Every one of the 65 skips is `java9plus-usage`** -- after the classifier fixes below there
+are no unexplained compile errors left. That is a finding about the dataset, not about any model:
+**HumanEval-X Java is only 99/164 (60%) usable on a real JDK 8.** Features found:
+
+| Feature | Tasks |
+| --- | --- |
+| `List.of` | 52 |
+| `arrow labels in a switch statement` | 3 |
+| `Optional.isEmpty` | 3 |
+| `the `\s` escape in a string literal` | 3 |
+| `pattern matching for instanceof` | 2 |
+| `String.repeat` | 2 |
+| `Map.of` | 1 |
+| `static members in inner classes` | 1 |
+| `String.strip` | 1 |
+| `Stream.toList` | 1 |
+
+The location matters too: **47 of the 65 skips have Java 9+ code only in the dataset's own
+hidden `Main.java`, not in the canonical solution** (18 involve `Solution.java`). The dominant
+cause is `List.of` in the *tests*: 55 of the 164 `test` values contain it, against 6 canonical
+solutions. Those tasks are unscoreable on JDK 8 no matter what a model writes, because the hidden
+test itself will not compile. Each per-task record keeps `java9plusInSolution`, so the two cases
+stay separable in analysis, and the summarizer can report them apart.
+
+**Two classifier bugs the real dataset exposed** that the synthetic fixtures alone had not:
+
+1. **`location:` names the receiver, not the declaring type.** My patterns required
+   `location: class String`, which is what javac prints for `" x ".strip()`. For `date.strip()` it
+   prints `location: variable date of type String`. That silently hid `String.strip` in Java/124 and
+   `Optional.isEmpty` on variables -- they were landing in the generic `compile-error` bucket and
+   under-counting the headline java9plus number. Fixed with a `_location()` helper matching both
+   forms, plus new fixtures `string-strip-on-variable` and `optional-isempty-on-variable` captured
+   for both shapes.
+2. **Four missing markers,** each now captured as its own fixture: arrow labels in a statement
+   `switch` (Java 14, `: expected`), pattern matching for `instanceof` (Java 16, `')' expected`),
+   static members in inner classes (Java 16, `Illegal static declaration in inner class`), and the
+   `\s` escape in a string literal (Java 15, `illegal escape character`). The last is worth
+   calling out: three canonical solutions write `"[.?!]\s*"` with a single backslash, which is only
+   legal from Java 15.
+
+The fixture set is now 27 cases (22 features plus 5 controls and receiver variants) against 22
+patterns; every pattern is exercised by the fixture it cites and the three control fixtures are
+still detected as nothing.
+
+One dataset quirk worth recording: **Java/153's method is named `StrongestExtension`** with a
+capital S. My first test asserted every entry point starts lowercase and failed on it; the parser was
+right and the assertion was wrong. The test now pins it as a known exception.

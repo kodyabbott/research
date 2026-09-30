@@ -46,6 +46,18 @@ class Java9Pattern:
                    for extra in self.corroborating)
 
 
+def _location(type_name: str) -> str:
+    """Match javac's `location:` line for a receiver of `type_name`.
+
+    javac names the receiver, not the declaring type, so the same missing method reads as
+    `location: class String` on a literal and `location: variable date of type String` on a
+    variable. Missing the second form silently under-counts java9plus usage -- it hid
+    `date.strip()` in HumanEval-X Java/124 until fixtures for both forms were captured.
+    """
+    return (rf"^\s*location:\s+(?:class|interface)\s+{type_name}\b"
+            rf"|^\s*location:\s+variable\s+\w+\s+of\s+type\s+{type_name}\b")
+
+
 # Every `primary` below is a literal read out of the named fixture's captured javac output.
 JAVA9PLUS_PATTERNS = (
     Java9Pattern("var", "local-variable type inference (`var`)", "Java 10", "var-local.txt",
@@ -57,33 +69,29 @@ JAVA9PLUS_PATTERNS = (
     Java9Pattern("switch-expression", "switch expressions", "Java 14", "switch-expression.txt",
                  r"error: illegal start of expression", (r"switch\s*\(", r"->",)),
     Java9Pattern("list-of", "List.of", "Java 9", "list-of.txt",
-                 r"^\s*symbol:\s+method of\(", (r"^\s*location:\s+interface List\b",)),
+                 r"^\s*symbol:\s+method of\(", (_location("List"),)),
     Java9Pattern("map-of", "Map.of", "Java 9", "map-of.txt",
-                 r"^\s*symbol:\s+method of\(", (r"^\s*location:\s+interface Map\b",)),
+                 r"^\s*symbol:\s+method of\(", (_location("Map"),)),
     Java9Pattern("set-of", "Set.of", "Java 9", "set-of.txt",
-                 r"^\s*symbol:\s+method of\(", (r"^\s*location:\s+interface Set\b",)),
+                 r"^\s*symbol:\s+method of\(", (_location("Set"),)),
     Java9Pattern("string-isblank", "String.isBlank", "Java 11", "string-isblank.txt",
-                 r"^\s*symbol:\s+method isBlank\(\)",
-                 (r"^\s*location:\s+class String\b",)),
+                 r"^\s*symbol:\s+method isBlank\(\)", (_location("String"),)),
     Java9Pattern("string-strip", "String.strip", "Java 11", "string-strip.txt",
-                 r"^\s*symbol:\s+method strip\(\)", (r"^\s*location:\s+class String\b",)),
+                 r"^\s*symbol:\s+method strip\(\)", (_location("String"),)),
     Java9Pattern("string-repeat", "String.repeat", "Java 11", "string-repeat.txt",
-                 r"^\s*symbol:\s+method repeat\(", (r"^\s*location:\s+class String\b",)),
+                 r"^\s*symbol:\s+method repeat\(", (_location("String"),)),
     Java9Pattern("string-lines", "String.lines", "Java 11", "string-lines.txt",
-                 r"^\s*symbol:\s+method lines\(\)", (r"^\s*location:\s+class String\b",)),
+                 r"^\s*symbol:\s+method lines\(\)", (_location("String"),)),
     Java9Pattern("stream-tolist", "Stream.toList", "Java 16", "stream-tolist.txt",
-                 r"^\s*symbol:\s+method toList\(\)",
-                 (r"^\s*location:\s+interface Stream\b",)),
+                 r"^\s*symbol:\s+method toList\(\)", (_location("Stream"),)),
     Java9Pattern("optional-isempty", "Optional.isEmpty", "Java 11", "optional-isempty.txt",
-                 r"^\s*symbol:\s+method isEmpty\(\)",
-                 (r"^\s*location:\s+class Optional\b",)),
+                 r"^\s*symbol:\s+method isEmpty\(\)", (_location("Optional"),)),
     Java9Pattern("optional-orelsethrow", "Optional.orElseThrow() with no argument", "Java 10",
                  "optional-orelsethrow.txt",
                  r"error: method orElseThrow in class Optional<T> cannot be applied",
                  (r"found:\s+no arguments",)),
     Java9Pattern("collectors-teeing", "Collectors.teeing", "Java 12", "collectors-teeing.txt",
-                 r"^\s*symbol:\s+method teeing\(",
-                 (r"^\s*location:\s+class Collectors\b",)),
+                 r"^\s*symbol:\s+method teeing\(", (_location("Collectors"),)),
     Java9Pattern("private-interface-method", "private interface methods", "Java 9",
                  "private-interface-method.txt",
                  r"error: modifier private not allowed here",
@@ -95,6 +103,18 @@ JAVA9PLUS_PATTERNS = (
     Java9Pattern("diamond-anonymous", "diamond operator with anonymous classes", "Java 9",
                  "diamond-anonymous.txt",
                  r"reason: cannot use '<>' with anonymous inner classes"),
+    Java9Pattern("switch-arrow-label", "arrow labels in a switch statement", "Java 14",
+                 "switch-arrow-label.txt",
+                 r"error: : expected", (r"case\s+.+?->",)),
+    Java9Pattern("instanceof-pattern", "pattern matching for instanceof", "Java 16",
+                 "instanceof-pattern.txt",
+                 r"error: '\)' expected", (r"instanceof\s+[\w.<>\[\]]+\s+\w+",)),
+    Java9Pattern("static-in-inner-class", "static members in inner classes", "Java 16",
+                 "static-in-inner-class.txt",
+                 r"error: Illegal static declaration in inner class"),
+    Java9Pattern("string-escape-s", r"the `\s` escape in a string literal", "Java 15",
+                 "string-escape-s.txt",
+                 r"error: illegal escape character", (r"\\s",)),
 )
 
 
@@ -119,11 +139,13 @@ class JavaOutcome:
     run: dict | None = None
     checks: dict | None = None
     java9plus: list = field(default_factory=list)
+    java9plus_in_solution: bool | None = None
 
     def as_dict(self) -> dict:
         return {"passed": self.passed, "failureClass": self.failure_class,
                 "failureDetail": self.failure_detail, "compile": self.compile,
-                "run": self.run, "checks": self.checks, "java9plus": self.java9plus}
+                "run": self.run, "checks": self.checks, "java9plus": self.java9plus,
+                "java9plusInSolution": self.java9plus_in_solution}
 
     def as_set_result(self) -> dict:
         """`base`/`plus` shape so `record.summarize` and `summarize.py` need no Java special case.
@@ -162,12 +184,14 @@ def classify_compile_failure(compile_result, solution_file: str = "Solution.java
         outcome.failure_class = "sandbox-error"
         outcome.failure_detail = diagnostics[-400:] or "javac could not be launched"
         return outcome
+    files = compile_result.files_with_errors or []
     if outcome.java9plus:
         names = ", ".join(item["feature"] for item in outcome.java9plus)
         outcome.failure_class = "java9plus-usage"
-        outcome.failure_detail = f"uses post-Java-8 features: {names}"
+        where = f" (errors in {', '.join(files)})" if files else ""
+        outcome.failure_detail = f"uses post-Java-8 features: {names}{where}"
+        outcome.java9plus_in_solution = solution_file in files
         return outcome
-    files = compile_result.files_with_errors or []
     if files and solution_file not in files:
         outcome.failure_class = "signature-mismatch"
         outcome.failure_detail = (

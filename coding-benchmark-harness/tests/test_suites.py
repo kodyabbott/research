@@ -215,6 +215,133 @@ class MbppPromptCase(unittest.TestCase):
         self.assertNotIn('"""', rendered)
 
 
+class JavaSuiteCase(unittest.TestCase):
+    """HumanEval-X Java loader. Skips when the dataset has not been downloaded."""
+
+    def setUp(self):
+        if not suites.dataset_path("humaneval-x-java").exists():
+            self.skipTest("run: python3 coding-benchmark-harness/prepare.py "
+                          "--suite humaneval-x-java")
+
+    def test_registry_pins_the_revision_and_checksum(self):
+        entry = suites.entry_for("humaneval-x-java")
+        self.assertEqual(entry["revision"], "62c78627f3072a1454fa0cb0184737cafe5e4198")
+        self.assertEqual(entry["language"], "java")
+        self.assertEqual(entry["asset"], "data/java/data/humaneval.jsonl")
+        self.assertEqual(entry["tasks"], 164)
+        self.assertIn("zai-org/humaneval-x", entry["url"])
+        self.assertIn(entry["revision"], entry["url"])
+
+    def test_dataset_matches_its_pinned_sha256(self):
+        entry = suites.entry_for("humaneval-x-java")
+        self.assertEqual(suites.sha256_file(suites.dataset_path("humaneval-x-java")),
+                         entry["sha256"])
+
+    def test_all_164_tasks_parse(self):
+        tasks = suites.build_tasks("humaneval-x-java")
+        self.assertEqual(len(tasks), 164)
+        self.assertTrue(all(task.language == "java" for task in tasks))
+        self.assertTrue(all(task.is_java for task in tasks))
+        self.assertEqual(tasks[0].task_id, "Java/0")
+
+    def test_dataset_fields_are_the_ones_the_design_expected(self):
+        for record in suites.read_jsonl(suites.dataset_path("humaneval-x-java"))[:5]:
+            for field_name in suites.JAVA_REQUIRED_FIELDS:
+                self.assertIn(field_name, record)
+
+    def test_prompt_states_the_java8_constraint_by_default(self):
+        task = suites.build_tasks("humaneval-x-java")[0]
+        self.assertIn("Target Java 8", task.prompt)
+        self.assertIn("```java", task.prompt)
+        self.assertIn("List.of/Map.of/Set.of", task.prompt)
+        self.assertTrue(task.prompt.endswith(task.source_prompt))
+
+    def test_no_java8_hint_variant_omits_the_constraint(self):
+        task = suites.build_tasks("humaneval-x-java", java8_hint=False)[0]
+        self.assertNotIn("Target Java 8", task.prompt)
+        self.assertIn("```java", task.prompt)
+
+    def test_canonical_is_prompt_plus_solution_with_no_extra_brace(self):
+        # DESIGN-JAVA.md says `prompt + canonical_solution + "}"`, but canonical_solution already
+        # closes the method and the class in every record; an extra brace would not parse.
+        for task in suites.build_tasks("humaneval-x-java"):
+            with self.subTest(task=task.task_id):
+                program = task.canonical_java
+                self.assertEqual(program.count("{"), program.count("}"))
+                self.assertEqual(program, task.source_prompt + task.canonical_solution)
+
+    def test_entry_points_are_parsed_for_every_task(self):
+        tasks = suites.build_tasks("humaneval-x-java")
+        by_id = {task.task_id: task.entry_point for task in tasks}
+        self.assertEqual(by_id["Java/0"], "hasCloseElements")
+        # Java/162 declares `throws NoSuchAlgorithmException`, which broke the first regex.
+        self.assertEqual(by_id["Java/162"], "stringToMd5")
+        # Java/84 and Java/161 genuinely have a method called `solve`.
+        self.assertEqual(by_id["Java/84"], "solve")
+        self.assertEqual(len(by_id), 164)
+        self.assertTrue(all(name.isidentifier() for name in by_id.values()))
+        # Java/153's method really is `StrongestExtension` in the dataset -- a capitalised method
+        # name is unusual Java, but it is what the prompt declares, so the parser is right.
+        self.assertEqual(by_id["Java/153"], "StrongestExtension")
+        odd = sorted(task for task, name in by_id.items() if not name[0].islower())
+        self.assertEqual(odd, ["Java/153"])
+
+    def test_hidden_tests_get_the_scaffold_imports(self):
+        """None of the 164 dataset `test` values carry imports, so Main cannot compile alone."""
+        for record in suites.read_jsonl(suites.dataset_path("humaneval-x-java")):
+            self.assertNotIn("\nimport ", "\n" + record["test"])
+        task = suites.build_tasks("humaneval-x-java")[0]
+        sources = task.java_sources("class Solution {}\n")
+        self.assertEqual(sorted(sources), ["Main.java", "Solution.java"])
+        self.assertTrue(sources["Main.java"].startswith("import java.util.*;"))
+        self.assertIn("public class Main", sources["Main.java"])
+
+    def test_import_block_is_taken_from_each_task(self):
+        # 4 tasks add java.util.stream.Collectors and 1 adds BigInteger/security.
+        blocks = {task.task_id: task.import_block
+                  for task in suites.build_tasks("humaneval-x-java")}
+        self.assertIn("import java.util.stream.Collectors;", "".join(blocks.values()))
+        self.assertIn("import java.math.BigInteger;", blocks["Java/162"])
+
+    def test_solution_and_tests_are_separate_files(self):
+        task = suites.build_tasks("humaneval-x-java")[0]
+        sources = task.java_sources("class Solution { }\n")
+        self.assertEqual(sources["Solution.java"], "class Solution { }\n")
+        self.assertNotIn("class Solution", sources["Main.java"])
+
+
+class JavaPreparedSuiteCase(unittest.TestCase):
+    def setUp(self):
+        if not (suites.expected_dir("humaneval-x-java") / "_skipped.json").exists():
+            self.skipTest("run: python3 coding-benchmark-harness/prepare.py "
+                          "--suite humaneval-x-java")
+
+    def test_loaded_suite_excludes_the_skipped_tasks(self):
+        suite = suites.load("humaneval-x-java")
+        self.assertEqual(suite.language, "java")
+        self.assertEqual(suite.total_tasks, 164)
+        self.assertEqual(len(suite.tasks) + len(suite.skipped), 164)
+        self.assertGreater(len(suite.tasks), 0)
+        for task in suite.tasks:
+            self.assertNotIn(task.task_id, suite.skipped)
+
+    def test_every_skip_has_a_diagnostic_reason(self):
+        for task_id, reason in suites.load("humaneval-x-java").skipped.items():
+            with self.subTest(task=task_id):
+                self.assertTrue(reason.strip())
+                self.assertIn(":", reason)
+
+    def test_protocol_records_the_language_and_digest(self):
+        protocol = suites.load("humaneval-x-java").protocol()
+        self.assertEqual(protocol["language"], "java")
+        self.assertEqual(protocol["tasksInSuite"], 164)
+        self.assertEqual(len(protocol["suiteDigest"]), 64)
+
+    def test_digest_is_stable(self):
+        self.assertEqual(suites.load("humaneval-x-java").digest,
+                         suites.load("humaneval-x-java").digest)
+
+
 class RealDatasetCase(unittest.TestCase):
     """Only runs when the pinned datasets are already in the out-of-repo cache."""
 

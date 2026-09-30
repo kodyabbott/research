@@ -168,6 +168,61 @@ public class Main {
     }
 }
 """),
+    "switch-arrow-label": ("Java 14 arrow labels in a statement switch", """import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> out = new ArrayList<>();
+        String k = "o";
+        switch (k) {
+            case "o" -> out.add(4);
+            case "p" -> out.add(2);
+        }
+        System.out.println(out);
+    }
+}
+"""),
+    "instanceof-pattern": ("Java 16 pattern matching for instanceof", """public class Main {
+    public static void main(String[] args) {
+        Object o = "text";
+        if (o instanceof String s && s.length() > 2) {
+            System.out.println(s);
+        }
+    }
+}
+"""),
+    "static-in-inner-class": ("Java 16 static members in inner classes", """public class Main {
+    class Helper {
+        public static boolean isPrime(int n) { return n == 2; }
+    }
+    public static void main(String[] args) {
+        System.out.println("x");
+    }
+}
+"""),
+    "string-escape-s": ("Java 15 `\\s` escape in a string literal", """public class Main {
+    public static void main(String[] args) {
+        String[] parts = "a b".split("[.?!]\\s*");
+        System.out.println(parts.length);
+    }
+}
+"""),
+    "string-strip-on-variable": ("Java 11 String.strip called on a variable, not a literal",
+                                 """public class Main {
+    public static void main(String[] args) {
+        String date = "  2026-01-01  ";
+        System.out.println(date.strip());
+    }
+}
+"""),
+    "optional-isempty-on-variable": ("Java 11 Optional.isEmpty on a variable",
+                                     """import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Optional<String> maybe = Optional.of("x");
+        System.out.println(maybe.isEmpty());
+    }
+}
+"""),
     # Controls: ordinary Java 8 mistakes that must NOT be classified as java9plus-usage.
     "control-typo": ("CONTROL: a plain typo in a method name (not a Java 9+ feature)",
                      """import java.util.*;
