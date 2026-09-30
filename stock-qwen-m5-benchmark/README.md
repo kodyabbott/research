@@ -7,16 +7,16 @@
 
 Measured September 29-30, 2026 (MDT), on this MacBook Pro: Apple M5 Max, 18 CPU / 40 GPU cores, 128 GB unified memory, macOS 26.5, Ollama 0.34.4 on a dedicated local server. Kody asked whether stock (not uncensored) Qwen models are capable on this Mac, and to download and test them. Earlier reports here covered stock Qwen3-Coder 30B ([Sep 22](../mac-model-benchmarks/)) and five uncensored builds ([Sep 27](../uncensored-models-m5-benchmark/)); this is the first stock Qwen3.8 run on this host.
 
-**Result: both stock models are capable here, and Flash-Next is the better pick.** With thinking on, stock Qwen3.8-27B Q8_0 and Qwen3.8-Flash-Next at 3-bit both solved all 24 cases. Flash-Next did it in 8.7 minutes at about 49 tok/s; the dense 27B took 21.6 minutes at about 18 tok/s. With thinking off, Flash-Next scored 9/24 and the 27B 8/24, and Flash-Next's 24-case wall time was 41 s against 118 s. The stock 27B matched the Sep 27 Heretic build exactly in both modes (8/24 and 24/24), so on this suite the uncensoring cost nothing and there is no reason to prefer the uncensored build for capability.
+**Result: both stock models are capable here, and Flash-Next is the better pick.** With thinking on, stock Qwen3.8-27B Q8_0 and Qwen3.8-Flash-Next at 3-bit both solved all 24 cases. Flash-Next did it in 8.7 minutes at about 49 tok/s; the dense 27B took 19.2 minutes at about 18 tok/s, so Flash-Next generates 2.7x faster and finishes the 24-case pass 2.2x sooner. With thinking off, Flash-Next scored 9/24 and the 27B 8/24, and Flash-Next's 24-case wall time was 41 s against 118 s. The stock 27B matched the Sep 27 Heretic build exactly in both modes (8/24 and 24/24), so on this suite the uncensoring cost nothing and there is no reason to prefer the uncensored build for capability.
 
 ## Results
 
-Same 24 cases, one sample each, strict JSON grading. Category columns are passed/3.
+Same 24 cases, one sample each, strict JSON grading. Category columns are passed/3. Wall time is the workload's 24-case total (`workloadSummary.totalWallMs`), excluding model load, warmup, and the throughput battery.
 
 | Model | Mode | Passed | Ledger | Event | Sched | SQL | Path | Extract | Trace | Retrieve | Median gen tokens | Wall time |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Qwen3.8-27B Q8_0 (stock) | off | 8/24 | 0 | 0 | 1 | 0 | 2 | 2 | 0 | 3 | 63.5 | 118 s |
-| Qwen3.8-27B Q8_0 (stock) | on | **24/24** | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 903 | 21.6 min |
+| Qwen3.8-27B Q8_0 (stock) | on | **24/24** | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 903 | 19.2 min |
 | Qwen3.8-Flash-Next UD-Q3_K_XL | off | 9/24 | 0 | 0 | 1 | 0 | 2 | 3 | 0 | 3 | 34.5 | 41 s |
 | Qwen3.8-Flash-Next UD-Q3_K_XL | on | **24/24** | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 747 | 8.7 min |
 
