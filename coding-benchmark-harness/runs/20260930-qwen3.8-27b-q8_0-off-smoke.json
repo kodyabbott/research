@@ -1,0 +1,588 @@
+{
+ "schemaVersion": 1,
+ "label": "qwen3.8-27b-q8_0-off-smoke",
+ "startedAt": "2026-09-30T00:58:54-06:00",
+ "finishedAt": "2026-09-30T00:59:48-06:00",
+ "status": "completed",
+ "error": null,
+ "host": {
+  "capturedAt": "2026-09-30T00:58:54-06:00",
+  "model_identifier": "Mac17,6",
+  "chip": "Apple M5 Max",
+  "cpu_cores": "18",
+  "gpu_cores": "40",
+  "memory_gb": 128,
+  "os_version": "27.0",
+  "os_build": "26A428",
+  "kernel": "27.0.0",
+  "power_source": "AC Power",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "swap": "total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)",
+  "identifiersOmitted": "hardware identifiers are never collected; see record.HARDWARE_KEYS and record.FORBIDDEN_KEYS",
+  "caveat": "Interactive desktop host; dedicated-host isolation is not established."
+ },
+ "runtime": {
+  "harness": "coding-benchmark-harness-v1",
+  "backend": "ollama",
+  "endpoint": "http://127.0.0.1:11436",
+  "sandboxPython": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+  "sandboxPythonVersion": "3.14.7",
+  "sandboxProfileSha256": "130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc",
+  "sandboxRunnerSha256": "6f72bfb5636d7d9c027462e26a1a073ca97c9c4ca348912c294367362d48da22",
+  "sandboxSelfTest": {
+   "profileSha256": "130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc",
+   "python": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+   "pythonVersion": "3.14.7",
+   "checks": [
+    {
+     "name": "normal-program-returns-json",
+     "passed": true,
+     "status": "ok",
+     "detail": null
+    },
+    {
+     "name": "network-denied",
+     "passed": true,
+     "probe": {
+      "result": "EPERM",
+      "type": "PermissionError"
+     },
+     "listenerAccepted": false,
+     "listenerPort": 60642,
+     "detail": null
+    },
+    {
+     "name": "write-outside-workdir-denied",
+     "passed": true,
+     "probe": {
+      "tmp": "PermissionError:EPERM",
+      "home": "PermissionError:EPERM"
+     },
+     "filesCreated": false,
+     "detail": null
+    },
+    {
+     "name": "read-home-and-repo-denied",
+     "passed": true,
+     "probe": {
+      "home": "PermissionError:EPERM",
+      "repo": "PermissionError:EPERM"
+     },
+     "homeProbePath": "/Users/kody/.sandbox-read-probe-65146.txt",
+     "repoProbePath": "/Users/kody/repos/research/coding-benchmark-harness/DESIGN.md",
+     "detail": null
+    },
+    {
+     "name": "infinite-loop-killed",
+     "passed": true,
+     "status": "cpu-timeout",
+     "signal": 24,
+     "wallMs": 2056.22,
+     "detail": null
+    }
+   ],
+   "passed": true,
+   "ranAt": "2026-09-30T00:58:54-0600"
+  },
+  "harnessPython": "3.14.7"
+ },
+ "model": {
+  "name": "qwen3.8:27b-q8_0",
+  "digest": "8f5fb6b71ea00052cbe8545738c55ce61112c4e571cb60ca4dad00b131766039",
+  "sizeBytes": 29978242050,
+  "details": {
+   "parent_model": "",
+   "format": "gguf",
+   "family": "qwen35",
+   "families": [
+    "qwen35"
+   ],
+   "parameter_size": "27.3B",
+   "quantization_level": "Q8_0"
+  },
+  "capabilities": [
+   "completion",
+   "vision",
+   "tools",
+   "thinking"
+  ],
+  "parameters": "top_k                          20\ntop_p                          0.95\nmin_p                          0\npresence_penalty               0\nrepeat_penalty                 1\ntemperature                    1",
+  "templateSha256": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+  "modelInfo": {
+   "general.architecture": "qwen35",
+   "general.basename": "Qwen3.8",
+   "general.file_type": 7,
+   "general.license": "apache-2.0",
+   "general.parameter_count": 27320697856,
+   "general.quantization_version": 2,
+   "general.sampling.temp": 1,
+   "general.sampling.top_k": 20,
+   "general.sampling.top_p": 0.95,
+   "general.size_label": "27B",
+   "general.type": "model",
+   "general.version": "0814",
+   "qwen35.attention.head_count": 24,
+   "qwen35.attention.head_count_kv": 4,
+   "qwen35.attention.key_length": 256,
+   "qwen35.attention.layer_norm_rms_epsilon": 1e-06,
+   "qwen35.attention.value_length": 256,
+   "qwen35.block_count": 65,
+   "qwen35.context_length": 262144,
+   "qwen35.embedding_length": 5120,
+   "qwen35.feed_forward_length": 17408,
+   "qwen35.full_attention_interval": 4,
+   "qwen35.nextn_predict_layers": 1,
+   "qwen35.rope.dimension_count": 64,
+   "qwen35.rope.freq_base": 10000000,
+   "qwen35.ssm.conv_kernel": 4,
+   "qwen35.ssm.group_count": 16,
+   "qwen35.ssm.inner_size": 6144,
+   "qwen35.ssm.state_size": 128,
+   "qwen35.ssm.time_step_rank": 48,
+   "tokenizer.ggml.add_bos_token": false,
+   "tokenizer.ggml.bos_token_id": 248044,
+   "tokenizer.ggml.eos_token_id": 248046,
+   "tokenizer.ggml.model": "gpt2",
+   "tokenizer.ggml.padding_token_id": 248044,
+   "tokenizer.ggml.pre": "qwen35"
+  },
+  "serverVersion": {
+   "version": "0.34.4"
+  },
+  "contextCheck": {
+   "requestedContext": 16384,
+   "loaded": [
+    {
+     "name": "qwen3.8:27b-q8_0",
+     "model": "qwen3.8:27b-q8_0",
+     "size": 30439962049,
+     "digest": "8f5fb6b71ea00052cbe8545738c55ce61112c4e571cb60ca4dad00b131766039",
+     "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+       "qwen35"
+      ],
+      "parameter_size": "27.3B",
+      "quantization_level": "Q8_0"
+     },
+     "expires_at": "2026-09-30T01:09:09.511351-06:00",
+     "size_vram": 30439962049,
+     "context_length": 16384
+    }
+   ],
+   "verified": true,
+   "loadedContext": 16384,
+   "sizeVram": 30439962049,
+   "digest": "8f5fb6b71ea00052cbe8545738c55ce61112c4e571cb60ca4dad00b131766039"
+  }
+ },
+ "protocol": {
+  "suite": "humaneval-plus",
+  "suiteDigest": "ba4c53edbcd325af92eae08c010cbc88ee321969fc98bb9ce3e9472ac6acd6ef",
+  "datasetSha256": "272720b90ac375502c8ed23cd791c2a93dfb22a911641a494da74a426c09f101",
+  "evalplusVersion": "v0.1.10",
+  "promptTemplateSha256": "0e9b9e3372769158bb2c6fdabf5447566933cdbeb7aab13abb5477c29f3836f6",
+  "tasks": 5,
+  "tasksInSuite": 164,
+  "skippedAtPrepare": 0,
+  "think": "false",
+  "options": {
+   "temperature": 0,
+   "seed": 42,
+   "top_p": 1,
+   "top_k": 40,
+   "repeat_penalty": 1.0,
+   "num_ctx": 16384,
+   "num_predict": 4096
+  },
+  "outputCap": 4096,
+  "context": 16384,
+  "taskSeconds": 300.0,
+  "gradeWallSeconds": 300.0,
+  "cpuSeconds": 60,
+  "perTaskBudget": "max(--cpu-seconds, 4 x the canonical solution's measured sandbox wall time for that input set); recorded per task under base/plus.sandbox",
+  "samplingProfile": "greedy-v1",
+  "samplesPerTask": 1,
+  "perInputTimeout": "max(1.0s, 4 x canonical per-input time) -- EvalPlus DEFAULT_MIN_TIME_LIMIT / DEFAULT_GT_TIME_LIMIT_FACTOR",
+  "codeExecution": "sandbox-exec deny-default, see runtime.sandboxProfileSha256",
+  "scope": "humaneval-plus pass@1 with one greedy sample per task; a task passes only when both the base and the plus inputs pass. Not a repository-editing agent eval."
+ },
+ "tasks": [
+  {
+   "id": "HumanEval/0",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 173,
+    "eval_duration": 9463875000,
+    "prompt_eval_count": 165,
+    "prompt_eval_duration": 395137000,
+    "total_duration": 14684812667,
+    "load_duration": 4823484625,
+    "usage": null,
+    "genTokPerSec": 18.28003856771143
+   },
+   "wallMs": 14685.63,
+   "code": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 7,
+    "completed": 7,
+    "counts": {
+     "pass": 7
+    },
+    "statuses": ".......",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 49.56,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 999,
+    "completed": 999,
+    "counts": {
+     "pass": 999
+    },
+    "statuses": ".......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 55.82,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/1",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n    # Remove all spaces\n    s = paren_string.replace(' ', '')\n    \n    result = []\n    current = []\n    depth = 0\n    \n    for char in s:\n        if char == '(':\n            depth += 1\n            current.append(char)\n        elif char == ')':\n            depth -= 1\n            current.append(char)\n            if depth == 0:\n                result.append(''.join(current))\n                current = []\n    \n    return result\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 225,
+    "eval_duration": 12394820000,
+    "prompt_eval_count": 157,
+    "prompt_eval_duration": 378965000,
+    "total_duration": 12795444709,
+    "load_duration": 854084,
+    "usage": null,
+    "genTokPerSec": 18.15274445292469
+   },
+   "wallMs": 12796.17,
+   "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n    # Remove all spaces\n    s = paren_string.replace(' ', '')\n    \n    result = []\n    current = []\n    depth = 0\n    \n    for char in s:\n        if char == '(':\n            depth += 1\n            current.append(char)\n        elif char == ')':\n            depth -= 1\n            current.append(char)\n            if depth == 0:\n                result.append(''.join(current))\n                current = []\n    \n    return result\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 4,
+    "completed": 4,
+    "counts": {
+     "pass": 4
+    },
+    "statuses": "....",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 44.06,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 83,
+    "completed": 83,
+    "counts": {
+     "pass": 83
+    },
+    "statuses": "...................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 44.08,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/2",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\n\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+   "response": {
+    "content": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    return number - int(number)\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 97,
+    "eval_duration": 5316705000,
+    "prompt_eval_count": 126,
+    "prompt_eval_duration": 327420000,
+    "total_duration": 5665839750,
+    "load_duration": 831291,
+    "usage": null,
+    "genTokPerSec": 18.244382564012863
+   },
+   "wallMs": 5666.54,
+   "code": "def truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    return number - int(number)\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 46.75,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.037
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 971,
+    "completed": 971,
+    "counts": {
+     "pass": 971
+    },
+    "statuses": "...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 58.39,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.049
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/3",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 157,
+    "eval_duration": 8760291000,
+    "prompt_eval_count": 160,
+    "prompt_eval_duration": 421150000,
+    "total_duration": 9204755042,
+    "load_duration": 849500,
+    "usage": null,
+    "genTokPerSec": 17.921779082452854
+   },
+   "wallMs": 9205.49,
+   "code": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 6,
+    "completed": 6,
+    "counts": {
+     "pass": 6
+    },
+    "statuses": "......",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 85.93,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 898,
+    "completed": 898,
+    "counts": {
+     "pass": 898
+    },
+    "statuses": "..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 71.31,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/4",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    mad = sum(abs(x - mean) for x in numbers) / len(numbers)\n    return mad\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 169,
+    "eval_duration": 9607810000,
+    "prompt_eval_count": 159,
+    "prompt_eval_duration": 466208000,
+    "total_duration": 10096009709,
+    "load_duration": 865500,
+    "usage": null,
+    "genTokPerSec": 17.589856585423732
+   },
+   "wallMs": 10096.78,
+   "code": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    mad = sum(abs(x - mean) for x in numbers) / len(numbers)\n    return mad\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 49.87,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 785,
+    "completed": 785,
+    "counts": {
+     "pass": 785
+    },
+    "statuses": ".................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 61.54,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.049
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  }
+ ],
+ "summary": {
+  "tasksTotal": 5,
+  "tasksAttempted": 5,
+  "basePass": 5,
+  "plusPass": 5,
+  "passAt1": 1.0,
+  "basePassAt1": 1.0,
+  "failureClasses": {
+   "none": 5
+  },
+  "medianWallMs": 10096.78,
+  "medianGenTokPerSec": 18.153,
+  "medianGeneratedTokens": 169,
+  "medianThinkingChars": 0,
+  "truncated": 0,
+  "unexpectedThinking": 0,
+  "protocolValid": true
+ },
+ "unload": {
+  "confirmed": true,
+  "confirmedAt": "2026-09-30T00:59:48-0600"
+ },
+ "updatedAt": "2026-09-30T00:59:48-06:00",
+ "hostAfter": {
+  "capturedAt": "2026-09-30T00:59:48-06:00",
+  "model_identifier": "Mac17,6",
+  "chip": "Apple M5 Max",
+  "cpu_cores": "18",
+  "gpu_cores": "40",
+  "memory_gb": 128,
+  "os_version": "27.0",
+  "os_build": "26A428",
+  "kernel": "27.0.0",
+  "power_source": "AC Power",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "swap": "total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)",
+  "identifiersOmitted": "hardware identifiers are never collected; see record.HARDWARE_KEYS and record.FORBIDDEN_KEYS",
+  "caveat": "Interactive desktop host; dedicated-host isolation is not established."
+ }
+}
