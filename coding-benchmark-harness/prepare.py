@@ -31,7 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from harness import grader, java_toolchain, suites  # noqa: E402
+from harness import grader, java_grader, java_sandbox, java_toolchain, suites  # noqa: E402
 from harness.sandbox import SandboxExec, SandboxUnavailable, runner_sha256  # noqa: E402
 
 DOWNLOAD_TIMEOUT = 300
@@ -111,6 +111,142 @@ def compute_expected(sandbox: SandboxExec, task: suites.Task, which: str,
         "sandboxWallMs": result.wall_ms,
     }
     return payload, None
+
+
+def prepare_java_suite(suite_name: str, force: bool = False, recompute: bool = False,
+                       limit: int | None = None) -> dict:
+    """Compile and run every canonical Java solution on the pinned JDK 8.
+
+    For `humaneval-x-java` a task whose canonical fails is recorded in `_skipped.json` with the
+    compiler diagnostic and excluded from scoring -- which also measures how Java-8-clean the
+    dataset is. For the authored suite a failing canonical is a bug in the suite, so preparation
+    refuses to ship (DESIGN-JAVA.md: "refuses to ship a suite with a failing canonical").
+    """
+    entry = suites.entry_for(suite_name)
+    authored = bool(entry.get("authored"))
+    print(f"suite {suite_name} (java, {'authored' if authored else entry.get('version')})")
+    if entry.get("url"):
+        info = download(entry["url"], suites.DATASET_DIR / entry["localName"],
+                        entry.get("sha256"), entry.get("bytes"), force=force)
+        print(f"  dataset {'downloaded' if info['downloaded'] else 'already cached'}: "
+              f"{info['path']} (sha256 {info['sha256'][:16]}...)")
+        dataset_sha = info["sha256"]
+    else:
+        dataset_sha = suites.authored_digest(suite_name)
+        print(f"  authored suite digest {dataset_sha[:16]}...")
+
+    box = java_sandbox.load()
+    self_test = box.self_test()
+    if not self_test["passed"]:
+        raise SystemExit("java sandbox self-test failed:\n"
+                         + json.dumps(self_test, indent=1))
+    print(f"  java sandbox ok: {box.toolchain.record['javaVersion']} "
+          f"profile {box.profile_sha256[:16]}...")
+
+    tasks = suites.build_tasks(suite_name)
+    if entry.get("tasks") and len(tasks) != entry["tasks"]:
+        raise SystemExit(f"{suite_name} has {len(tasks)} tasks, datasets.json says "
+                         f"{entry['tasks']}")
+    if limit is not None:
+        tasks = tasks[:limit]
+    directory = suites.expected_dir(suite_name)
+    directory.mkdir(parents=True, exist_ok=True)
+
+    skipped: dict[str, str] = {}
+    computed = reused = 0
+    started = time.monotonic()
+    check_counts: dict[str, int] = {}
+    for index, task in enumerate(tasks, start=1):
+        path = directory / f"{suites.safe_id(task.task_id)}.json"
+        if path.exists() and not recompute:
+            try:
+                with path.open(encoding="utf-8") as handle:
+                    cached = json.load(handle)
+            except json.JSONDecodeError:
+                cached = {}
+            if cached.get("datasetSha256") == dataset_sha:
+                reused += 1
+                if cached.get("checks"):
+                    check_counts[task.task_id] = cached["checks"].get("total", 0)
+                continue
+        sources = task.java_sources(task.canonical_java)
+        compiled, ran = box.compile_and_run(sources)
+        outcome = (java_grader.grade_checked(compiled, ran) if authored
+                   else java_grader.grade_humaneval_x(compiled, ran))
+        if not outcome.passed:
+            reason = f"{outcome.failure_class}: {outcome.failure_detail}"
+            if authored:
+                raise SystemExit(
+                    f"canonical solution for {task.task_id} does not pass its own tests on "
+                    f"JDK 8 -- refusing to ship the suite.\n  {reason}\n"
+                    f"  diagnostics: {compiled.diagnostics[:1500]}")
+            skipped[task.task_id] = reason
+            print(f"  [{index}/{len(tasks)}] {task.task_id} SKIPPED -- {reason[:220]}")
+            path.unlink(missing_ok=True)
+            continue
+        if outcome.checks:
+            check_counts[task.task_id] = outcome.checks.get("total", 0)
+        record_payload = {
+            "taskId": task.task_id,
+            "suite": suite_name,
+            "language": "java",
+            "entryPoint": task.entry_point,
+            "datasetSha256": dataset_sha,
+            "canonicalPassesOnJdk8": True,
+            "compileSeconds": compiled.seconds,
+            "runSeconds": ran.seconds if ran else None,
+            "checks": outcome.checks,
+            "computedAt": now(),
+            "toolchain": box.toolchain.describe(),
+            "javaProfileSha256": box.profile_sha256,
+        }
+        temporary = path.with_suffix(".tmp")
+        with temporary.open("w", encoding="utf-8") as handle:
+            json.dump(record_payload, handle)
+        temporary.replace(path)
+        computed += 1
+        if computed % 20 == 0 or index == len(tasks):
+            print(f"  [{index}/{len(tasks)}] verified={computed} reused={reused} "
+                  f"skipped={len(skipped)} ({time.monotonic() - started:.0f}s)")
+
+    skip_path = directory / "_skipped.json"
+    existing = {} if recompute else suites.load_skipped(suite_name)
+    merged = {**existing, **skipped}
+    with skip_path.open("w", encoding="utf-8") as handle:
+        json.dump({"suite": suite_name, "datasetSha256": dataset_sha, "updatedAt": now(),
+                   "tasks": merged}, handle, indent=1)
+
+    suite = suites.load(suite_name, require_expected=False)
+    summary = {
+        "suite": suite_name,
+        "language": "java",
+        "version": entry.get("version"),
+        "datasetSha256": dataset_sha,
+        "tasksInDataset": len(suites.build_tasks(suite_name)),
+        "tasksPrepared": len(suite.tasks),
+        "tasksVerifiedNow": computed,
+        "tasksReusedFromCache": reused,
+        "tasksSkipped": len(merged),
+        "skipped": merged,
+        "suiteDigest": suite.digest,
+        "elapsedSeconds": round(time.monotonic() - started, 1),
+        "javaToolchain": box.toolchain.describe(),
+        "javaProfileSha256": box.profile_sha256,
+    }
+    if check_counts:
+        summary["checksPerTask"] = check_counts
+        summary["minChecksPerTask"] = min(check_counts.values())
+        summary["totalChecks"] = sum(check_counts.values())
+    print(f"  tasks in dataset : {summary['tasksInDataset']}")
+    print(f"  canonical passes : {summary['tasksPrepared']} "
+          f"(verified {computed}, reused {reused})")
+    print(f"  skipped          : {summary['tasksSkipped']}")
+    if check_counts:
+        print(f"  hidden checks    : {summary['totalChecks']} total, "
+              f"min {summary['minChecksPerTask']} per task")
+    print(f"  suite digest     : {summary['suiteDigest']}")
+    print(f"  elapsed          : {summary['elapsedSeconds']}s")
+    return summary
 
 
 def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
@@ -293,21 +429,34 @@ def main(argv: list[str] | None = None) -> int:
         if not args.suite:
             return 0
 
+    python_suites = [name for name in args.suite
+                     if suites.entry_for(name).get("language", "python") == "python"]
     try:
         sandbox = SandboxExec(python=args.sandbox_python)
     except SandboxUnavailable as exc:
         print(f"refusing to run: {exc}", file=sys.stderr)
         return 2
-    report = sandbox.self_test()
+    report = sandbox.self_test() if python_suites else {"skipped": "no python suites requested",
+                                                        "passed": True}
     if not report["passed"]:
         print("sandbox self-test failed; refusing to execute any code:", file=sys.stderr)
         print(json.dumps(report, indent=1), file=sys.stderr)
         return 2
-    print(f"sandbox self-test passed ({sandbox.python}, profile "
-          f"{sandbox.profile_sha256[:16]}...)")
+    if python_suites:
+        print(f"sandbox self-test passed ({sandbox.python}, profile "
+              f"{sandbox.profile_sha256[:16]}...)")
 
     summaries = []
     for suite_name in args.suite:
+        if suites.entry_for(suite_name).get("language") == "java":
+            try:
+                summaries.append(prepare_java_suite(
+                    suite_name, force=args.force_download, recompute=args.recompute,
+                    limit=args.limit))
+            except java_toolchain.ToolchainError as exc:
+                print(f"java suite {suite_name} needs a prepared JDK: {exc}", file=sys.stderr)
+                return 2
+            continue
         summaries.append(prepare_suite(
             suite_name, sandbox, force=args.force_download, recompute=args.recompute,
             wall_seconds=args.wall_seconds, cpu_seconds=args.cpu_seconds, limit=args.limit))

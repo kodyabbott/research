@@ -10,6 +10,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -32,8 +33,33 @@ MBPP_TEMPLATE = (
     "block containing the complete function and nothing else. Example test: {assertion}"
 )
 
+# Java prompt templates from DESIGN-JAVA.md. The Java 8 constraint is stated by default, because
+# that is how the constraint reaches a model in real use; `--no-java8-hint` flips to the second
+# template so default habits can be measured separately (design open question, default taken).
+JAVA_TEMPLATE = (
+    "Complete the following Java class. Target Java 8: do not use var, records, text blocks, "
+    "switch expressions, List.of/Map.of/Set.of, or any API newer than Java 8. Return the complete "
+    "Solution class (imports, class, and the finished method) in a single ```java code block and "
+    "nothing else.\n"
+    "\n"
+    "{prompt}"
+)
+JAVA_TEMPLATE_NO_HINT = (
+    "Complete the following Java class. Return the complete Solution class (imports, class, and "
+    "the finished method) in a single ```java code block and nothing else.\n"
+    "\n"
+    "{prompt}"
+)
+
 # Fields `evalplus.data.utils.completeness_check` requires of every task record.
 REQUIRED_FIELDS = ("prompt", "contract", "canonical_solution", "base_input", "plus_input", "atol")
+# HumanEval-X Java, verified against data/java/data/humaneval.jsonl at the pinned revision.
+JAVA_REQUIRED_FIELDS = ("task_id", "prompt", "declaration", "canonical_solution", "test")
+
+# Trailing `throws ...` is optional: Java/162 (`stringToMd5`) declares one.
+_JAVA_METHOD = re.compile(
+    r"(?:public|protected|private)?\s*(?:static\s+)?[\w<>\[\],.?\s]+?\s+(\w+)\s*\([^)]*\)"
+    r"(?:\s*throws\s[\w.,\s]+)?\s*\{?\s*$")
 
 
 class SuiteError(RuntimeError):
@@ -54,6 +80,13 @@ class Task:
     text: str | None = None      # MBPP+ problem statement without its assertion
     assertion: str | None = None  # the single curated assertion from the MBPP+ docstring
     expected: dict = field(default_factory=dict)  # {"base": {...}, "plus": {...}} once loaded
+    language: str = "python"
+    # Java only:
+    declaration: str = ""        # imports + class + signature, without the Javadoc
+    test: str = ""              # the hidden `Main` class
+    example_test: str = ""      # the visible `Main` from the dataset, not used for scoring
+    import_block: str = ""      # the scaffold's own imports, prepended to the hidden Main
+    files: dict = field(default_factory=dict)  # authored suites: file name -> text
 
     @property
     def canonical_program(self) -> str:
@@ -63,7 +96,40 @@ class Task:
     @property
     def allow_body_completion(self) -> bool:
         """Only HumanEval+ prompts are function-signature continuations."""
-        return self.dataset == "humaneval"
+        return self.language == "python" and self.dataset == "humaneval"
+
+    @property
+    def is_java(self) -> bool:
+        return self.language == "java"
+
+    def java_sources(self, solution_code: str) -> dict:
+        """The files handed to `javac`: the model's Solution plus the hidden tests.
+
+        Two files, not one. The upstream HumanEval-X harness concatenates prompt, solution and
+        test into a single `Main.java`; that makes every diagnostic point at `Main.java`, which
+        would make DESIGN-JAVA.md's `signature-mismatch` classification impossible, and it turns a
+        model writing `public class Solution` into a spurious "class Solution is public, should be
+        declared in Solution.java" error. Splitting them needs the scaffold's import block copied
+        into the hidden `Main`, because none of the 164 dataset `test` values carry imports of
+        their own.
+        """
+        if self.files:
+            sources = dict(self.files)
+            sources["Solution.java"] = solution_code
+            return sources
+        return {
+            "Solution.java": solution_code,
+            "Main.java": self.import_block + self.test,
+        }
+
+    @property
+    def canonical_java(self) -> str:
+        """`prompt + canonical_solution`.
+
+        No trailing brace is added: `canonical_solution` already closes both the method and the
+        class in all 164 HumanEval-X Java records (verified: brace balance is exactly 0).
+        """
+        return self.source_prompt + self.canonical_solution
 
     def expected_for(self, which: str) -> list:
         return (self.expected.get(which) or {}).get("expected") or []
@@ -92,6 +158,7 @@ class Suite:
     digest: str = ""
     skipped: dict = field(default_factory=dict)
     total_tasks: int = 0
+    language: str = "python"
 
     @property
     def prompt_template_sha256(self) -> str:
@@ -107,6 +174,7 @@ class Suite:
             "tasks": len(self.tasks),
             "tasksInSuite": self.total_tasks,
             "skippedAtPrepare": len(self.skipped),
+            "language": self.language,
         }
 
 
@@ -130,6 +198,8 @@ def dataset_path(suite_name: str) -> Path:
     entry = entry_for(suite_name)
     if entry.get("localPath"):
         return Path(__file__).resolve().parents[1] / entry["localPath"]
+    if not entry.get("localName"):
+        return Path(__file__).resolve().parents[1] / "suites" / suite_name
     return DATASET_DIR / entry["localName"]
 
 
@@ -173,6 +243,32 @@ def split_mbpp_prompt(prompt: str) -> tuple[str, str]:
     return statement, assertion
 
 
+def java_import_block(prompt: str) -> str:
+    """The scaffold's own import lines, copied into the hidden Main so it can compile alone."""
+    lines = []
+    for line in prompt.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("import ") and stripped.endswith(";"):
+            lines.append(stripped)
+        elif stripped.startswith(("class ", "public class ", "interface ", "abstract class ")):
+            break
+    return ("\n".join(lines) + "\n\n") if lines else ""
+
+
+def java_entry_point(declaration: str) -> str:
+    """Method name from the trailing signature of a HumanEval-X Java declaration."""
+    for line in reversed((declaration or "").strip().splitlines()):
+        match = _JAVA_METHOD.match(line.strip())
+        if match:
+            return match.group(1)
+    return "solve"
+
+
+def render_java_prompt(record: dict, java8_hint: bool = True) -> str:
+    template = JAVA_TEMPLATE if java8_hint else JAVA_TEMPLATE_NO_HINT
+    return template.format(prompt=record["prompt"])
+
+
 def render_prompt(dataset: str, record: dict) -> tuple[str, str | None, str | None]:
     """Return (rendered prompt, mbpp statement or None, mbpp assertion or None)."""
     if dataset == "humaneval":
@@ -183,9 +279,50 @@ def render_prompt(dataset: str, record: dict) -> tuple[str, str | None, str | No
     return rendered, text, assertion
 
 
-def build_tasks(suite_name: str) -> list[Task]:
+def build_java_tasks(suite_name: str, java8_hint: bool = True) -> list[Task]:
+    """Parse HumanEval-X Java into Task objects."""
+    entry = entry_for(suite_name)
+    path = dataset_path(suite_name)
+    if not path.exists():
+        raise SuiteError(f"dataset missing: {path}. Run prepare.py --suite {suite_name} first.")
+    tasks: list[Task] = []
+    for record in read_jsonl(path):
+        missing = [name for name in JAVA_REQUIRED_FIELDS if name not in record]
+        if missing:
+            raise SuiteError(f"{suite_name} {record.get('task_id')!r} lacks {missing}")
+        tasks.append(Task(
+            task_id=record["task_id"],
+            dataset=entry["dataset"],
+            language="java",
+            entry_point=java_entry_point(record["declaration"]),
+            prompt=render_java_prompt(record, java8_hint),
+            source_prompt=record["prompt"],
+            canonical_solution=record["canonical_solution"],
+            base_input=[], plus_input=[], atol=0.0,
+            declaration=record["declaration"],
+            test=record["test"],
+            example_test=record.get("example_test", ""),
+            import_block=java_import_block(record["prompt"]),
+        ))
+    return tasks
+
+
+def read_jsonl(path: Path) -> list[dict]:
+    """Read .jsonl or .jsonl.gz."""
+    if str(path).endswith(".gz"):
+        return read_jsonl_gz(path)
+    with path.open(encoding="utf-8") as handle:
+        return [json.loads(line) for line in handle if line.strip()]
+
+
+def build_tasks(suite_name: str, java8_hint: bool = True) -> list[Task]:
     """Parse the dataset into Task objects without touching the expected-output cache."""
     entry = entry_for(suite_name)
+    if entry.get("language") == "java":
+        if entry.get("authored"):
+            from . import java_authored
+            return java_authored.build_tasks(suite_name, java8_hint=java8_hint)
+        return build_java_tasks(suite_name, java8_hint=java8_hint)
     dataset = entry["dataset"]
     path = dataset_path(suite_name)
     if not path.exists():
@@ -227,6 +364,45 @@ def compute_digest(tasks: list[Task], expected_hashes: dict[str, str]) -> str:
     return digest.hexdigest()
 
 
+AUTHORED_FILES = ("task.json", "prompt.java", "Solution.java", "Main.java")
+
+
+def authored_root(suite_name: str) -> Path:
+    return Path(__file__).resolve().parents[1] / "suites" / suite_name
+
+
+def authored_task_dirs(suite_name: str) -> list[Path]:
+    root = authored_root(suite_name)
+    if not root.exists():
+        raise SuiteError(f"authored suite missing: {root}")
+    return sorted(path for path in root.iterdir()
+                  if path.is_dir() and (path / "task.json").exists())
+
+
+def authored_digest(suite_name: str) -> str:
+    """SHA-256 over all four files of every task, in task-id order.
+
+    DESIGN-JAVA.md: "Suite digest = SHA-256 over all four files per task in id order." The shared
+    `Check.java` is folded in too, since changing it changes what every task is graded against.
+    """
+    digest = hashlib.sha256()
+    check = authored_root(suite_name) / "Check.java"
+    if check.exists():
+        digest.update(b"Check.java\x00")
+        digest.update(check.read_bytes())
+        digest.update(b"\x1e")
+    for directory in authored_task_dirs(suite_name):
+        for name in AUTHORED_FILES:
+            path = directory / name
+            if not path.exists():
+                raise SuiteError(f"{directory.name} is missing {name}")
+            digest.update(f"{directory.name}/{name}".encode())
+            digest.update(b"\x00")
+            digest.update(path.read_bytes())
+            digest.update(b"\x1e")
+    return digest.hexdigest()
+
+
 def safe_id(task_id: str) -> str:
     return task_id.replace("/", "_")
 
@@ -241,7 +417,7 @@ def load_skipped(suite_name: str) -> dict:
 
 
 def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None,
-         require_expected: bool = True) -> Suite:
+         require_expected: bool = True, java8_hint: bool = True) -> Suite:
     """Load a suite with its cached expected outputs.
 
     Tasks that `prepare.py` recorded as skipped are excluded (they are not scoreable). `limit` and
@@ -249,7 +425,7 @@ def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None
     digest still identifies the suite it was drawn from.
     """
     entry = entry_for(suite_name)
-    all_tasks = build_tasks(suite_name)
+    all_tasks = build_tasks(suite_name, java8_hint=java8_hint)
     skipped = load_skipped(suite_name)
     directory = expected_dir(suite_name)
     dataset_sha = sha256_file(dataset_path(suite_name))
@@ -279,10 +455,16 @@ def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None
         task.expected = {"base": payload.get("base") or {}, "plus": payload.get("plus") or {}}
         scoreable.append(task)
 
-    template = HUMANEVAL_TEMPLATE if entry["dataset"] == "humaneval" else MBPP_TEMPLATE
+    if entry.get("language") == "java":
+        template = JAVA_TEMPLATE if java8_hint else JAVA_TEMPLATE_NO_HINT
+    elif entry["dataset"] == "humaneval":
+        template = HUMANEVAL_TEMPLATE
+    else:
+        template = MBPP_TEMPLATE
     suite = Suite(name=suite_name, dataset=entry["dataset"], tasks=scoreable,
                   dataset_sha256=dataset_sha, evalplus_version=entry.get("version", "local"),
-                  prompt_template=template, skipped=skipped, total_tasks=len(all_tasks))
+                  prompt_template=template, skipped=skipped, total_tasks=len(all_tasks),
+                  language=entry.get("language", "python"))
     suite.digest = compute_digest(scoreable, expected_hashes)
 
     if ids:

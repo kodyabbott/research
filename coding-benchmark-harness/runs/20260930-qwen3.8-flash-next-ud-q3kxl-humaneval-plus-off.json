@@ -1,0 +1,839 @@
+{
+ "schemaVersion": 1,
+ "label": "qwen3.8-flash-next-ud-q3kxl-humaneval-plus-off",
+ "startedAt": "2026-09-30T01:15:41-06:00",
+ "finishedAt": null,
+ "status": "running",
+ "error": null,
+ "host": {
+  "capturedAt": "2026-09-30T01:15:41-06:00",
+  "model_identifier": "Mac17,6",
+  "chip": "Apple M5 Max",
+  "cpu_cores": "18",
+  "gpu_cores": "40",
+  "memory_gb": 128,
+  "os_version": "27.0",
+  "os_build": "26A428",
+  "kernel": "27.0.0",
+  "power_source": "AC Power",
+  "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+  "swap": "total = 0.00M  used = 0.00M  free = 0.00M  (encrypted)",
+  "identifiersOmitted": "hardware identifiers are never collected; see record.HARDWARE_KEYS and record.FORBIDDEN_KEYS",
+  "caveat": "Interactive desktop host; dedicated-host isolation is not established."
+ },
+ "runtime": {
+  "harness": "coding-benchmark-harness-v1",
+  "backend": "ollama",
+  "endpoint": "http://127.0.0.1:11436",
+  "sandboxPython": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+  "sandboxPythonVersion": "3.14.7",
+  "sandboxProfileSha256": "130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc",
+  "sandboxRunnerSha256": "6f72bfb5636d7d9c027462e26a1a073ca97c9c4ca348912c294367362d48da22",
+  "sandboxSelfTest": {
+   "profileSha256": "130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc",
+   "python": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+   "pythonVersion": "3.14.7",
+   "checks": [
+    {
+     "name": "normal-program-returns-json",
+     "passed": true,
+     "status": "ok",
+     "detail": null
+    },
+    {
+     "name": "network-denied",
+     "passed": true,
+     "probe": {
+      "result": "EPERM",
+      "type": "PermissionError"
+     },
+     "listenerAccepted": false,
+     "listenerPort": 61433,
+     "detail": null
+    },
+    {
+     "name": "write-outside-workdir-denied",
+     "passed": true,
+     "probe": {
+      "tmp": "PermissionError:EPERM",
+      "home": "PermissionError:EPERM"
+     },
+     "filesCreated": false,
+     "detail": null
+    },
+    {
+     "name": "read-home-and-repo-denied",
+     "passed": true,
+     "probe": {
+      "home": "PermissionError:EPERM",
+      "repo": "PermissionError:EPERM"
+     },
+     "homeProbePath": "/Users/kody/.sandbox-read-probe-67603.txt",
+     "repoProbePath": "/private/tmp/harness-snapshot-192da50/coding-benchmark-harness/DESIGN.md",
+     "detail": null
+    },
+    {
+     "name": "infinite-loop-killed",
+     "passed": true,
+     "status": "cpu-timeout",
+     "signal": 24,
+     "wallMs": 2020.43,
+     "detail": null
+    }
+   ],
+   "passed": true,
+   "ranAt": "2026-09-30T01:15:41-0600"
+  },
+  "harnessPython": "3.14.7"
+ },
+ "model": {
+  "name": "qwen3.8-flash-next-ud-q3kxl:latest",
+  "digest": "ea16de1a7bee5588bccc3bc604a6ffc679d8d4dae4497cebf93b35f85fe61ad6",
+  "sizeBytes": 89986353967,
+  "details": {
+   "parent_model": "Qwen3.8-Flash-Next-UD-Q3_K_XL-00001-of-00003.gguf",
+   "format": "gguf",
+   "family": "qwen4exp",
+   "families": [
+    "qwen4exp"
+   ],
+   "parameter_size": "176.9B",
+   "quantization_level": "Q3_K_M"
+  },
+  "capabilities": [
+   "tools",
+   "thinking",
+   "completion"
+  ],
+  "parameters": null,
+  "templateSha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+  "modelInfo": {
+   "general.architecture": "qwen4exp",
+   "general.description": "A Preview of the Qwen4 Architecture",
+   "general.file_type": 12,
+   "general.parameter_count": 176943899520,
+   "general.quantization_version": 2,
+   "general.quantized_by": "Unsloth",
+   "general.repo_url": "https://huggingface.co/unsloth",
+   "general.sampling.temp": 1,
+   "general.sampling.top_k": 20,
+   "general.sampling.top_p": 0.95,
+   "general.size_label": "512x56B",
+   "general.type": "model",
+   "quantize.imatrix.chunks_count": 45,
+   "quantize.imatrix.dataset": "unsloth_calibration_Qwen3.8-Flash-Next.txt",
+   "quantize.imatrix.entries_count": 926,
+   "quantize.imatrix.file": "Qwen3.8-Flash-Next-GGUF/imatrix_unsloth.gguf",
+   "qwen4exp.attention.head_count": 24,
+   "qwen4exp.attention.head_count_kv": 2,
+   "qwen4exp.attention.indexer.head_count": 4,
+   "qwen4exp.attention.indexer.key_length": 128,
+   "qwen4exp.attention.indexer.top_k": 2048,
+   "qwen4exp.attention.key_length": 256,
+   "qwen4exp.attention.layer_norm_rms_epsilon": 1e-06,
+   "qwen4exp.attention.value_length": 256,
+   "qwen4exp.block_count": 48,
+   "qwen4exp.context_length": 262144,
+   "qwen4exp.embedding_length": 2560,
+   "qwen4exp.embedding_length_per_layer_input": 160,
+   "qwen4exp.expert_count": 512,
+   "qwen4exp.expert_feed_forward_length": 640,
+   "qwen4exp.expert_shared_feed_forward_length": 640,
+   "qwen4exp.expert_used_count": 10,
+   "qwen4exp.full_attention_interval": 4,
+   "qwen4exp.hyper_connection.count": 4,
+   "qwen4exp.hyper_connection.low_rank": 320,
+   "qwen4exp.ple.conv_kernel": 4,
+   "qwen4exp.ple.eos_token_id": 248044,
+   "qwen4exp.ple.heads_per_ngram": 8,
+   "qwen4exp.ple.image_token_id": 248056,
+   "qwen4exp.ple.ngram_size": 3,
+   "qwen4exp.rope.dimension_count": 64,
+   "qwen4exp.rope.freq_base": 10000000,
+   "qwen4exp.ssm.conv_kernel": 4,
+   "qwen4exp.ssm.group_count": 16,
+   "qwen4exp.ssm.inner_size": 6144,
+   "qwen4exp.ssm.state_size": 128,
+   "qwen4exp.ssm.time_step_rank": 48,
+   "split.count": 3,
+   "split.no": 0,
+   "split.tensors.count": 1224,
+   "tokenizer.ggml.add_bos_token": false,
+   "tokenizer.ggml.bos_token_id": 248044,
+   "tokenizer.ggml.eos_token_id": 248046,
+   "tokenizer.ggml.model": "gpt2",
+   "tokenizer.ggml.padding_token_id": 248044,
+   "tokenizer.ggml.pre": "qwen35"
+  },
+  "serverVersion": {
+   "version": "0.34.4"
+  },
+  "contextCheck": {
+   "requestedContext": 16384,
+   "loaded": [
+    {
+     "name": "qwen3.8-flash-next-ud-q3kxl:latest",
+     "model": "qwen3.8-flash-next-ud-q3kxl:latest",
+     "size": 40446585732,
+     "digest": "ea16de1a7bee5588bccc3bc604a6ffc679d8d4dae4497cebf93b35f85fe61ad6",
+     "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen4exp",
+      "families": [
+       "qwen4exp"
+      ],
+      "parameter_size": "176.9B",
+      "quantization_level": "Q3_K_M"
+     },
+     "expires_at": "2026-09-30T01:25:55.899638-06:00",
+     "size_vram": 40446585732,
+     "context_length": 16384
+    }
+   ],
+   "verified": true,
+   "loadedContext": 16384,
+   "sizeVram": 40446585732,
+   "digest": "ea16de1a7bee5588bccc3bc604a6ffc679d8d4dae4497cebf93b35f85fe61ad6"
+  }
+ },
+ "protocol": {
+  "suite": "humaneval-plus",
+  "suiteDigest": "ba4c53edbcd325af92eae08c010cbc88ee321969fc98bb9ce3e9472ac6acd6ef",
+  "datasetSha256": "272720b90ac375502c8ed23cd791c2a93dfb22a911641a494da74a426c09f101",
+  "evalplusVersion": "v0.1.10",
+  "promptTemplateSha256": "0e9b9e3372769158bb2c6fdabf5447566933cdbeb7aab13abb5477c29f3836f6",
+  "tasks": 164,
+  "tasksInSuite": 164,
+  "skippedAtPrepare": 0,
+  "think": "false",
+  "options": {
+   "temperature": 0,
+   "seed": 42,
+   "top_p": 1,
+   "top_k": 40,
+   "repeat_penalty": 1.0,
+   "num_ctx": 16384,
+   "num_predict": 4096
+  },
+  "outputCap": 4096,
+  "context": 16384,
+  "taskSeconds": 300.0,
+  "gradeWallSeconds": 300.0,
+  "cpuSeconds": 60,
+  "perTaskBudget": "max(--cpu-seconds, 4 x the canonical solution's measured sandbox wall time for that input set); recorded per task under base/plus.sandbox",
+  "samplingProfile": "greedy-v1",
+  "samplesPerTask": 1,
+  "perInputTimeout": "max(1.0s, 4 x canonical per-input time) -- EvalPlus DEFAULT_MIN_TIME_LIMIT / DEFAULT_GT_TIME_LIMIT_FACTOR",
+  "codeExecution": "sandbox-exec deny-default, see runtime.sandboxProfileSha256",
+  "scope": "humaneval-plus pass@1 with one greedy sample per task; a task passes only when both the base and the plus inputs pass. Not a repository-editing agent eval."
+ },
+ "tasks": [
+  {
+   "id": "HumanEval/0",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 173,
+    "eval_duration": 3486941000,
+    "prompt_eval_count": 165,
+    "prompt_eval_duration": 343550000,
+    "total_duration": 13963287125,
+    "load_duration": 10130001708,
+    "usage": null,
+    "genTokPerSec": 49.61368718312125
+   },
+   "wallMs": 13964.14,
+   "code": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 7,
+    "completed": 7,
+    "counts": {
+     "pass": 7
+    },
+    "statuses": ".......",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 45.08,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 999,
+    "completed": 999,
+    "counts": {
+     "pass": 999
+    },
+    "statuses": ".......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 55.21,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/1",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n    # Remove all spaces\n    s = paren_string.replace(\" \", \"\")\n    \n    result = []\n    current_group = []\n    depth = 0\n    \n    for char in s:\n        if char == '(':\n            depth += 1\n            current_group.append(char)\n        elif char == ')':\n            depth -= 1\n            current_group.append(char)\n            if depth == 0:\n                result.append(''.join(current_group))\n                current_group = []\n    \n    return result\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 230,
+    "eval_duration": 4656881000,
+    "prompt_eval_count": 157,
+    "prompt_eval_duration": 306827000,
+    "total_duration": 4980080625,
+    "load_duration": 1260667,
+    "usage": null,
+    "genTokPerSec": 49.389280078232616
+   },
+   "wallMs": 4980.74,
+   "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n    # Remove all spaces\n    s = paren_string.replace(\" \", \"\")\n    \n    result = []\n    current_group = []\n    depth = 0\n    \n    for char in s:\n        if char == '(':\n            depth += 1\n            current_group.append(char)\n        elif char == ')':\n            depth -= 1\n            current_group.append(char)\n            if depth == 0:\n                result.append(''.join(current_group))\n                current_group = []\n    \n    return result\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 4,
+    "completed": 4,
+    "counts": {
+     "pass": 4
+    },
+    "statuses": "....",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 44.3,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 83,
+    "completed": 83,
+    "counts": {
+     "pass": 83
+    },
+    "statuses": "...................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 44.68,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/2",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\n\n\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n",
+   "response": {
+    "content": "```python\ndef truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    return number - int(number)\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 97,
+    "eval_duration": 1942460000,
+    "prompt_eval_count": 126,
+    "prompt_eval_duration": 291164000,
+    "total_duration": 2249285375,
+    "load_duration": 854541,
+    "usage": null,
+    "genTokPerSec": 49.9366782327564
+   },
+   "wallMs": 2249.98,
+   "code": "def truncate_number(number: float) -> float:\n    \"\"\" Given a positive floating point number, it can be decomposed into\n    and integer part (largest integer smaller than given number) and decimals\n    (leftover part always smaller than 1).\n\n    Return the decimal part of the number.\n    >>> truncate_number(3.5)\n    0.5\n    \"\"\"\n    return number - int(number)\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 49.21,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.037
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 971,
+    "completed": 971,
+    "counts": {
+     "pass": 971
+    },
+    "statuses": "...........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 43.62,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.049
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/3",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 157,
+    "eval_duration": 3161779000,
+    "prompt_eval_count": 160,
+    "prompt_eval_duration": 316601000,
+    "total_duration": 3496186208,
+    "load_duration": 767291,
+    "usage": null,
+    "genTokPerSec": 49.65558946403275
+   },
+   "wallMs": 3496.85,
+   "code": "from typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and\n    at that point function should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 6,
+    "completed": 6,
+    "counts": {
+     "pass": 6
+    },
+    "statuses": "......",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 49.09,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 898,
+    "completed": 898,
+    "counts": {
+     "pass": 898
+    },
+    "statuses": "..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 55.6,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/4",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    mad = sum(abs(x - mean) for x in numbers) / len(numbers)\n    return mad\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 169,
+    "eval_duration": 3412438000,
+    "prompt_eval_count": 159,
+    "prompt_eval_duration": 310061000,
+    "total_duration": 3739584083,
+    "load_duration": 755958,
+    "usage": null,
+    "genTokPerSec": 49.52470931339998
+   },
+   "wallMs": 3740.28,
+   "code": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    mad = sum(abs(x - mean) for x in numbers) / len(numbers)\n    return mad\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 47.09,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 785,
+    "completed": 785,
+    "counts": {
+     "pass": 785
+    },
+    "statuses": ".................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 55.62,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.049
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/5",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n    if not numbers:\n        return []\n    result = [numbers[0]]\n    for num in numbers[1:]:\n        result.append(delimeter)\n        result.append(num)\n    return result\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 144,
+    "eval_duration": 2920286000,
+    "prompt_eval_count": 135,
+    "prompt_eval_duration": 295871000,
+    "total_duration": 3241897333,
+    "load_duration": 1218916,
+    "usage": null,
+    "genTokPerSec": 49.31023879167999
+   },
+   "wallMs": 3242.67,
+   "code": "from typing import List\n\n\ndef intersperse(numbers: List[int], delimeter: int) -> List[int]:\n    \"\"\" Insert a number 'delimeter' between every two consecutive elements of input list `numbers'\n    >>> intersperse([], 4)\n    []\n    >>> intersperse([1, 2, 3], 4)\n    [1, 4, 2, 4, 3]\n    \"\"\"\n    if not numbers:\n        return []\n    result = [numbers[0]]\n    for num in numbers[1:]:\n        result.append(delimeter)\n        result.append(num)\n    return result\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 49.44,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 153,
+    "completed": 153,
+    "counts": {
+     "pass": 153
+    },
+    "statuses": ".........................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 41.82,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.04
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/6",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n    def max_depth(group: str) -> int:\n        depth = 0\n        max_depth = 0\n        for char in group:\n            if char == '(':\n                depth += 1\n                if depth > max_depth:\n                    max_depth = depth\n            elif char == ')':\n                depth -= 1\n        return max_depth\n\n    groups = paren_string.split()\n    return [max_depth(group) for group in groups]\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 216,
+    "eval_duration": 4362230000,
+    "prompt_eval_count": 155,
+    "prompt_eval_duration": 307666000,
+    "total_duration": 4688537541,
+    "load_duration": 698750,
+    "usage": null,
+    "genTokPerSec": 49.51595858081761
+   },
+   "wallMs": 4689.27,
+   "code": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n    def max_depth(group: str) -> int:\n        depth = 0\n        max_depth = 0\n        for char in group:\n            if char == '(':\n                depth += 1\n                if depth > max_depth:\n                    max_depth = depth\n            elif char == ')':\n                depth -= 1\n        return max_depth\n\n    groups = paren_string.split()\n    return [max_depth(group) for group in groups]\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 3,
+    "completed": 3,
+    "counts": {
+     "pass": 3
+    },
+    "statuses": "...",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 48.52,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 66,
+    "completed": 66,
+    "counts": {
+     "pass": 66
+    },
+    "statuses": "..................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 48.25,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/7",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n    return [s for s in strings if substring in s]\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 112,
+    "eval_duration": 2298628000,
+    "prompt_eval_count": 135,
+    "prompt_eval_duration": 296778000,
+    "total_duration": 2619062750,
+    "load_duration": 829833,
+    "usage": null,
+    "genTokPerSec": 48.72471752715098
+   },
+   "wallMs": 2619.82,
+   "code": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n    return [s for s in strings if substring in s]\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 4,
+    "completed": 4,
+    "counts": {
+     "pass": 4
+    },
+    "statuses": "....",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 46.73,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 178,
+    "completed": 178,
+    "counts": {
+     "pass": 178
+    },
+    "statuses": "..................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 48.67,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.04
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  },
+  {
+   "id": "HumanEval/8",
+   "prompt": "Complete the following Python function. Return the complete function (signature, docstring, and body) in a single ```python code block and nothing else.\n\nfrom typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n",
+   "response": {
+    "content": "```python\nfrom typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n    total_sum = 0\n    total_product = 1\n    for num in numbers:\n        total_sum += num\n        total_product *= num\n    return (total_sum, total_product)\n```",
+    "thinking": "",
+    "done_reason": "stop",
+    "eval_count": 163,
+    "eval_duration": 3368214000,
+    "prompt_eval_count": 157,
+    "prompt_eval_duration": 314922000,
+    "total_duration": 3703865750,
+    "load_duration": 775042,
+    "usage": null,
+    "genTokPerSec": 48.393599694081196
+   },
+   "wallMs": 3704.62,
+   "code": "from typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n    total_sum = 0\n    total_product = 1\n    for num in numbers:\n        total_sum += num\n        total_product *= num\n    return (total_sum, total_product)\n",
+   "extractionRule": "fence-entry",
+   "completionPrefixed": false,
+   "truncated": false,
+   "unexpectedThinking": false,
+   "base": {
+    "passed": true,
+    "inputs": 5,
+    "completed": 5,
+    "counts": {
+     "pass": 5
+    },
+    "statuses": ".....",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 82.68,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.041
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "plus": {
+    "passed": true,
+    "inputs": 1000,
+    "completed": 1000,
+    "counts": {
+     "pass": 1000
+    },
+    "statuses": "........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
+    "stage": "done",
+    "sandbox": {
+     "status": "ok",
+     "signal": null,
+     "wallMs": 58.65,
+     "cpuSecondsAllowed": 60,
+     "wallSecondsAllowed": 300.0,
+     "canonicalWallSeconds": 0.05
+    },
+    "firstFailure": null,
+    "failureClass": "none",
+    "failureDetail": null
+   },
+   "failureClass": "none",
+   "failureDetail": null
+  }
+ ],
+ "summary": {},
+ "unload": null,
+ "updatedAt": "2026-09-30T01:16:25-06:00"
+}

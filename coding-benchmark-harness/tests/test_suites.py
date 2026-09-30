@@ -19,8 +19,24 @@ PREPARE_HINT = "run: python3 coding-benchmark-harness/prepare.py --suite fixture
 
 
 class RegistryCase(unittest.TestCase):
-    def test_registry_lists_the_three_suites(self):
-        self.assertEqual(suites.suite_names(), ["fixture", "humaneval-plus", "mbpp-plus"])
+    def test_registry_lists_the_python_and_java_suites(self):
+        names = suites.suite_names()
+        for expected in ("fixture", "humaneval-plus", "mbpp-plus"):
+            self.assertIn(expected, names)
+        registry = suites.registry()["suites"]
+        python = sorted(name for name, entry in registry.items()
+                        if entry.get("language", "python") == "python")
+        java = sorted(name for name, entry in registry.items()
+                      if entry.get("language") == "java")
+        self.assertEqual(python, ["fixture", "humaneval-plus", "mbpp-plus"])
+        self.assertTrue(java, "expected at least one Java suite")
+        for name in java:
+            self.assertIn(name, names)
+
+    def test_every_registry_entry_declares_a_language_or_defaults_to_python(self):
+        for name, entry in suites.registry()["suites"].items():
+            with self.subTest(suite=name):
+                self.assertIn(entry.get("language", "python"), ("python", "java"))
 
     def test_pinned_versions_match_the_evalplus_source(self):
         registry = suites.registry()

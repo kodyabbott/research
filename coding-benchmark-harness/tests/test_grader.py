@@ -107,6 +107,50 @@ class SameCase(unittest.TestCase):
         self.assertFalse(same([1], overflow))
 
 
+class BigIntegerCase(unittest.TestCase):
+    """Regression for the bug the first full live run hit at HumanEval/83.
+
+    Python 3.11+ caps integer<->string conversion at 4300 digits in both directions. The sandbox
+    runner lifts it for executed code, but the harness process also converts when decoding a
+    result (`int(tagged["v"])`) and when rendering a failure detail (`repr`). Before the fix, a
+    task returning a big integer raised ValueError out of `grade_set` and ended the run with
+    status `error` rather than scoring that one task.
+    """
+
+    HUGE = int("9" * 10000)
+
+    def test_decoding_a_10000_digit_integer_works(self):
+        decoded = values.decode(tag(self.HUGE))
+        self.assertEqual(decoded, self.HUGE)
+        self.assertEqual(len(str(decoded)), 10000)
+
+    def test_same_compares_big_integers(self):
+        self.assertTrue(same(self.HUGE, int("9" * 10000)))
+        self.assertFalse(same(self.HUGE, self.HUGE + 1))
+
+    def test_brief_renders_a_big_integer_without_raising(self):
+        rendered = values.brief(tag(self.HUGE))
+        self.assertTrue(rendered.endswith("..."))
+        self.assertLessEqual(len(rendered), 260)
+
+    def test_grade_set_scores_a_big_integer_result(self):
+        rows = [{"i": 0, "status": "ok", "value": tag(self.HUGE)}]
+        outcome = grade_set("humaneval", "f", "HumanEval/83", [[1]], [tag(self.HUGE)], 0.0,
+                            fake_sandbox_result(), {"stage": "done"}, rows)
+        self.assertTrue(outcome.passed, outcome.as_dict())
+
+    def test_grade_set_reports_a_big_integer_mismatch_without_raising(self):
+        rows = [{"i": 0, "status": "ok", "value": tag(self.HUGE)}]
+        outcome = grade_set("humaneval", "f", "HumanEval/83", [[1]],
+                            [tag(int("8" * 10000))], 0.0, fake_sandbox_result(),
+                            {"stage": "done"}, rows)
+        self.assertEqual(outcome.failure_class, "wrong-answer")
+        self.assertIsInstance(outcome.failure_detail, str)
+
+    def test_the_interpreter_limit_is_lifted_by_importing_harness(self):
+        self.assertEqual(sys.get_int_max_str_digits(), 0)
+
+
 class OracleCase(unittest.TestCase):
     """Ported from evalplus/eval/__init__.py and evalplus/eval/_special_oracle.py at v0.3.1."""
 

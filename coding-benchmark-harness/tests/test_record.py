@@ -80,6 +80,37 @@ class RecordCase(unittest.TestCase):
         resumed.add_task(task("A/2"))
         self.assertEqual(len(json.loads(self.path.read_text())["tasks"]), 3)
 
+    def test_resume_accepts_a_record_whose_status_is_error(self):
+        """A run that died mid-way must be resumable from its last completed task.
+
+        This is the state the first full live run left behind when a big-integer ValueError ended
+        it: status `error`, several tasks already recorded.
+        """
+        first = self.new()
+        first.add_task(task("A/0"))
+        first.add_task(task("A/1"))
+        first.set_status("error", "ValueError: Exceeds the limit (4300 digits)")
+        first.finish("error")
+        self.assertEqual(json.loads(self.path.read_text())["status"], "error")
+
+        resumed = self.new(resume=True)
+        self.assertEqual(resumed.completed_ids, {"A/0", "A/1"})
+        self.assertEqual(resumed.data["status"], "running")
+        self.assertIsNone(resumed.data["error"])
+        resumed.add_task(task("A/2"))
+        resumed.finish("completed")
+        payload = json.loads(self.path.read_text())
+        self.assertEqual(payload["status"], "completed")
+        self.assertEqual([entry["id"] for entry in payload["tasks"]], ["A/0", "A/1", "A/2"])
+
+    def test_resume_accepts_a_record_whose_status_is_incomplete(self):
+        first = self.new()
+        first.add_task(task("A/0"))
+        first.finish("incomplete")
+        resumed = self.new(resume=True)
+        self.assertEqual(resumed.completed_ids, {"A/0"})
+        self.assertEqual(resumed.data["status"], "running")
+
     def test_resume_on_a_missing_file_starts_fresh(self):
         resumed = self.new(resume=True)
         self.assertEqual(resumed.completed_ids, set())

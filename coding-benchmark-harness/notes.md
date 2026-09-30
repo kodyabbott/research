@@ -511,6 +511,45 @@ Kody Abbott. Same hard rule as the Python work: **the implementing agent never c
 server.** A live Python smoke run was in progress on 127.0.0.1:11436 during this work; no HTTP
 request was made to it and no `ollama` command was run.
 
+### 2026-09-30 01:50 MDT -- live-run bug: big integers killed the harness process
+
+**Reported from the first full live HumanEval+ run**, which ended with status `error` at
+HumanEval/83: `ValueError: Exceeds the limit (4300 digits) for integer string conversion: value has
+9876 digits`.
+
+I fixed the *sandbox* side of this cap during the Python work (`sys.set_int_max_str_digits(0)` in
+`sandbox_runner.py`, so HumanEval/83 and /139 could produce their large integers) and wrote in
+notes.md that the issue was handled. It was only half handled. **The cap applies in both
+directions**, and the harness process converts too:
+
+- `values.decode` does `int(tagged["v"])` -- string to integer, also capped;
+- `values.brief` does `repr(decode(...))` -- integer to string.
+
+So the value crossed the sandbox boundary fine and then blew up while being decoded for comparison.
+Worse, it raised out of `grade_set` into `run.py`'s catch-all, which marked the **whole run**
+`error` instead of scoring that one task.
+
+Fix: `sys.set_int_max_str_digits(0)` in `harness/__init__.py`, so every entry point that imports
+the package gets it -- `run.py`, `prepare.py`, `summarize.py` and the tests -- rather than
+repeating it per script. Verified in a fresh subprocess that `import run` leaves the limit at 0.
+
+Regression tests added (`tests/test_grader.py::BigIntegerCase`): decoding a 10,000-digit integer,
+comparing two of them, rendering one through `values.brief`, and grading both a matching and a
+mismatching big-integer result through `grade_set` without raising. Plus an assertion that
+importing `harness` lifts the interpreter limit, so a future edit that drops the line fails a test
+rather than a live run.
+
+**`--resume` after `status: "error"`** was also checked, since that is the state the live run left
+behind. It already worked -- `record.RunRecord._load_for_resume` gates on schema version and
+protocol/model/sandbox identity, never on status, and resets status to `running` while keeping the
+completed tasks. It was untested, so it is now locked in by
+`tests/test_record.py::test_resume_accepts_a_record_whose_status_is_error` (and the `incomplete`
+case), which builds an errored record, resumes it, and checks the earlier tasks survive and the
+run can finish `completed`.
+
+Lesson for my own notes: "fixed the int-digit cap" was too coarse a claim. The cap had two sides
+and I verified only the one I had just edited.
+
 ### 2026-09-30 01:10 MDT -- toolchain and Java sandbox
 
 **Not breaking the in-flight Python run.** `grader.run_in_sandbox` re-reads
