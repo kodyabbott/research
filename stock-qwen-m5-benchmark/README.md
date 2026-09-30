@@ -64,6 +64,39 @@ Same runner and settings as the Sep 27 report ([bench.py](../uncensored-models-m
 
 Dedicated server: `OLLAMA_HOST=127.0.0.1:11436`, own model store, `OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 OLLAMA_CONTEXT_LENGTH=8192 OLLAMA_NO_CLOUD=1`. One model loaded at a time; smoke tests are excluded from timing; no download or import overlapped a timed pass.
 
+## Artifacts verified
+
+All three Flash-Next shards match the LFS SHA-256 values in the pinned Hugging Face tree (digests in [notes.md](notes.md)); Ollama names blobs by SHA-256 and the store manifest carries the same three digests. The 27B is Ollama registry `qwen3.8:27b-q8_0`, model blob `2bb22714…`.
+
+## Reproduce
+
+Requirements: Ollama 0.34.4 app, Python 3.11+ (standard library only), `hf` CLI 2.x, about 120 GB free, this repository.
+
+```sh
+S=~/Documents/Codex/model-cache/stock-qwen-benchmark
+OLLAMA_HOST=127.0.0.1:11436 OLLAMA_MODELS=$S/ollama OLLAMA_NUM_PARALLEL=1 OLLAMA_MAX_LOADED_MODELS=1 \
+  OLLAMA_CONTEXT_LENGTH=8192 OLLAMA_NO_CLOUD=1 /Applications/Ollama.app/Contents/Resources/ollama serve &
+export OLLAMA_HOST=127.0.0.1:11436
+ollama pull qwen3.8:27b-q8_0
+# Ollama cannot pull sharded GGUFs from hf.co; download the shards and import from the directory.
+hf download unsloth/Qwen3.8-Flash-Next-GGUF \
+  UD-Q3_K_XL/Qwen3.8-Flash-Next-UD-Q3_K_XL-00001-of-00003.gguf \
+  UD-Q3_K_XL/Qwen3.8-Flash-Next-UD-Q3_K_XL-00002-of-00003.gguf \
+  UD-Q3_K_XL/Qwen3.8-Flash-Next-UD-Q3_K_XL-00003-of-00003.gguf \
+  --revision 38bb39ee97821de2c9009abb7e93950eec396e66 --local-dir $S/hf/Qwen3.8-Flash-Next-GGUF
+printf 'FROM %s\n' "$S/hf/Qwen3.8-Flash-Next-GGUF/UD-Q3_K_XL" > $S/Modelfile.flash-next   # FROM <first shard> fails
+ollama create qwen3.8-flash-next-ud-q3kxl -f $S/Modelfile.flash-next
+# From the repository root; bench.py needs the full tag for created models, and refuses to start if a model is loaded.
+python3 uncensored-models-m5-benchmark/bench.py --repo "$PWD" --label 27b-off --model qwen3.8:27b-q8_0 --think false \
+  --modes throughput workload --case-limit 24 --output stock-qwen-m5-benchmark/runs/NEW-27b-off.json
+python3 uncensored-models-m5-benchmark/bench.py --repo "$PWD" --label 27b-on --model qwen3.8:27b-q8_0 --think true \
+  --modes throughput workload --case-limit 24 --output stock-qwen-m5-benchmark/runs/NEW-27b-on.json
+python3 uncensored-models-m5-benchmark/bench.py --repo "$PWD" --label flash-off --model qwen3.8-flash-next-ud-q3kxl:latest --think false \
+  --modes throughput workload --case-limit 24 --output stock-qwen-m5-benchmark/runs/NEW-flash-off.json
+python3 uncensored-models-m5-benchmark/bench.py --repo "$PWD" --label flash-on --model qwen3.8-flash-next-ud-q3kxl:latest --think true \
+  --modes throughput workload --case-limit 24 --output stock-qwen-m5-benchmark/runs/NEW-flash-on.json
+```
+
 ## Evidence
 
 - [notes.md](notes.md): timestamped log, digests, smoke tests, failures
