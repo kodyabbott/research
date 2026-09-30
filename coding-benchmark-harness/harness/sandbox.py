@@ -68,6 +68,42 @@ PROFILE_TEMPLATE = """(version 1)
 
 PROFILE_TEMPLATE_SHA256 = hashlib.sha256(PROFILE_TEMPLATE.encode()).hexdigest()
 
+# Java profile. Kept as a separate template rather than extending the Python one, so that adding
+# Java support cannot change `sandboxProfileSha256` for existing Python runs. Rule-by-rule
+# justification, and the discovery process, are in notes.md.
+JAVA_PROFILE_TEMPLATE = """(version 1)
+(deny default)
+(deny network*)
+(allow sysctl-read)
+(allow process-fork)
+(allow process-exec
+  (subpath "@JAVA_HOME@")
+  (subpath "@DATA@@JAVA_HOME@"))
+(allow file-read*
+  (subpath "/usr/lib")
+  (subpath "/usr/share")
+  (subpath "/System/Library")
+  (subpath "/private/var/db/dyld")
+  (subpath "@DATA@/private/var/db/dyld")
+  (literal "/dev/urandom")
+  (literal "/dev/random")
+  (literal "/dev/null")
+  (literal "/")
+  (literal "/opt")
+  (literal "/Library")
+  (literal "/System/Volumes")
+  (literal "@DATA@")
+  (literal "@DATA@/Library"))
+(allow file-write-data (literal "/dev/null"))
+(deny file-read* (subpath "@HOME@") (subpath "@DATA@@HOME@"))
+(allow file-read-metadata @ANCESTORS@)
+(allow file-read* (subpath "@JAVA_HOME@") (subpath "@DATA@@JAVA_HOME@"))
+(allow file-read* (subpath "@WORKDIR@") (subpath "@DATA@@WORKDIR@"))
+(allow file-write* (subpath "@WORKDIR@") (subpath "@DATA@@WORKDIR@"))
+"""
+
+JAVA_PROFILE_TEMPLATE_SHA256 = hashlib.sha256(JAVA_PROFILE_TEMPLATE.encode()).hexdigest()
+
 
 class SandboxUnavailable(RuntimeError):
     """Raised when sandbox-exec is missing or a self-test fails. There is no unsandboxed fallback."""
@@ -126,7 +162,9 @@ class SandboxExec:
         self.home = os.path.realpath(home or os.path.expanduser("~"))
         self.work_root = Path(work_root or WORK_ROOT)
         self.work_root.mkdir(parents=True, exist_ok=True)
+        self.profile_template = PROFILE_TEMPLATE
         self.profile_sha256 = PROFILE_TEMPLATE_SHA256
+        self.java_home: str | None = None
 
     def describe(self) -> dict:
         return {
@@ -149,8 +187,33 @@ class SandboxExec:
         except Exception as exc:  # pragma: no cover - diagnostic only
             return f"unknown ({exc!r})"
 
+    def ancestor_literals(self, workdir: str) -> str:
+        """`file-read-metadata` literals for every ancestor of JAVA_HOME and WORKDIR.
+
+        Both live under `$HOME`, which the profile denies wholesale, and the JDK's launcher and
+        classpath resolution both call `realpath()`, which needs to stat each ancestor directory.
+        Metadata only -- these rules grant no directory listing and no file contents, so nothing
+        under `$HOME` becomes readable.
+        """
+        paths: set[str] = set()
+        for start in (self.java_home, workdir):
+            if not start:
+                continue
+            current = os.path.realpath(start)
+            while current not in ("/", ""):
+                current = os.path.dirname(current)
+                if current:
+                    paths.add(current)
+        rules = []
+        for path in sorted(paths):
+            rules.append(f'(literal "{path}")')
+            rules.append(f'(literal "{DATA_VOLUME}{path}")')
+        return " ".join(rules)
+
     def profile_text(self, workdir: str) -> str:
-        return (PROFILE_TEMPLATE
+        return (self.profile_template
+                .replace("@ANCESTORS@", self.ancestor_literals(workdir))
+                .replace("@JAVA_HOME@", self.java_home or "/nonexistent-java-home")
                 .replace("@PYTHON_APP@", self.python_app)
                 .replace("@PYTHON_PREFIX@", self.python_prefix)
                 .replace("@PYTHON@", self.python)
@@ -180,16 +243,7 @@ class SandboxExec:
             profile = real / "profile.sb"
             profile.write_text(self.profile_text(str(real)), encoding="utf-8")
 
-            env = {
-                "PATH": "/usr/bin:/bin",
-                # HOME and TMPDIR point into WORKDIR so expanduser()/tempfile never need a rule.
-                "HOME": str(real),
-                "TMPDIR": str(real),
-                "WORKDIR": str(real),
-                "PYTHONHASHSEED": "0",
-                "PYTHONDONTWRITEBYTECODE": "1",
-                "PYTHONNOUSERSITE": "1",
-            }
+            env = child_env(real)
             # No -I/-E: those would discard PYTHONHASHSEED=0, which we rely on for determinism.
             command = [SANDBOX_EXEC, "-f", str(profile), self.python, *argv]
             out_path, err_path = real / "_stdout.txt", real / "_stderr.txt"
@@ -229,6 +283,15 @@ class SandboxExec:
                 print(f"sandbox workdir kept: {real}", file=sys.stderr)
             else:
                 shutil.rmtree(workdir, ignore_errors=True)
+
+    def workspace(self, files: dict[str, str] | None = None,
+                  keep: bool = False) -> Workspace:
+        """Fresh work directory for a multi-command sandboxed session (compile, then run)."""
+        path = Path(os.path.realpath(tempfile.mkdtemp(prefix="task-", dir=self.work_root)))
+        space = Workspace(self, path, keep=keep)
+        for name, text in (files or {}).items():
+            space.write(name, text)
+        return space
 
     # -- self tests --------------------------------------------------------------------------
 
@@ -393,6 +456,102 @@ class SandboxExec:
         return {"name": "infinite-loop-killed", "passed": ok, "status": res.status,
                 "signal": res.signal, "wallMs": res.wall_ms,
                 "detail": None if ok else f"stderr={res.stderr[-400:]}"}
+
+
+def child_env(workdir: Path, extra: dict | None = None) -> dict:
+    """The scrubbed environment every sandboxed process gets.
+
+    HOME and TMPDIR point into WORKDIR so `expanduser()`, `tempfile` and `java.io.tmpdir` never
+    need an allow rule outside the work directory.
+    """
+    env = {
+        "PATH": "/usr/bin:/bin",
+        "HOME": str(workdir),
+        "TMPDIR": str(workdir),
+        "WORKDIR": str(workdir),
+        "PYTHONHASHSEED": "0",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1",
+    }
+    env.update(extra or {})
+    return env
+
+
+def classify_exit(returncode: int | None, status: str) -> tuple[str, int | None]:
+    """Map a subprocess exit into (status, signal)."""
+    signum = None
+    if returncode is not None and returncode < 0:
+        signum = -returncode
+        # SIGXCPU (24) is the RLIMIT_CPU soft limit; SIGKILL follows the hard limit.
+        status = "cpu-timeout" if signum in (24, 9) else "crashed"
+    elif returncode:
+        status = "crashed" if status == "ok" else status
+    return status, signum
+
+
+class Workspace:
+    """A single sandboxed work directory that survives several commands.
+
+    Java needs this: `javac` writes class files that the following `java` invocation must read, so
+    compile and run share one directory. Created by `SandboxExec.workspace()`.
+    """
+
+    def __init__(self, sandbox: "SandboxExec", path: Path, keep: bool = False):
+        self.sandbox = sandbox
+        self.path = path
+        self.keep = keep
+        self.profile = path / "profile.sb"
+        self.profile.write_text(sandbox.profile_text(str(path)), encoding="utf-8")
+
+    def write(self, name: str, text: str) -> Path:
+        target = self.path / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+        return target
+
+    def read(self, name: str, cap: int = RESULT_READ_CAP) -> str:
+        return _read_capped(self.path / name, cap)
+
+    def run(self, argv: list[str], timeout: float = DEFAULT_WALL_SECONDS,
+            cpu_seconds: int = DEFAULT_CPU_SECONDS, stdin_text: str = "",
+            env_extra: dict | None = None) -> SandboxResult:
+        """Run `argv` (argv[0] may be an absolute path outside WORKDIR) under the profile."""
+        command = [SANDBOX_EXEC, "-f", str(self.profile), *argv]
+        out_path = self.path / "_stdout.txt"
+        err_path = self.path / "_stderr.txt"
+        started = time.monotonic()
+        status, returncode = "ok", None
+        with out_path.open("wb") as out_fh, err_path.open("wb") as err_fh:
+            try:
+                proc = subprocess.run(
+                    command, cwd=str(self.path), env=child_env(self.path, env_extra),
+                    stdout=out_fh, stderr=err_fh, timeout=timeout,
+                    preexec_fn=_limit_setter(cpu_seconds),
+                    input=stdin_text.encode("utf-8"))
+                returncode = proc.returncode
+            except subprocess.TimeoutExpired:
+                status = "timeout"
+            except OSError as exc:
+                status = "sandbox-error"
+                err_fh.write(f"\nharness OSError: {exc!r}\n".encode())
+        wall_ms = round((time.monotonic() - started) * 1000, 2)
+        status, signum = classify_exit(returncode, status)
+        return SandboxResult(status=status, returncode=returncode, signal=signum,
+                             wall_ms=wall_ms, stdout=_read_capped(out_path),
+                             stderr=_read_capped(err_path))
+
+    def close(self) -> None:
+        if self.keep:  # pragma: no cover - debugging aid
+            print(f"sandbox workspace kept: {self.path}", file=sys.stderr)
+        else:
+            shutil.rmtree(self.path, ignore_errors=True)
+
+    def __enter__(self) -> "Workspace":
+        return self
+
+    def __exit__(self, *_exc) -> bool:
+        self.close()
+        return False
 
 
 def _limit_setter(cpu_seconds: int):

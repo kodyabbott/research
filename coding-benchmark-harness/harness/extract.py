@@ -132,3 +132,70 @@ def extract(content: str | None, entry_point: str, prompt: str = "",
         return Extraction("", "too-large", blocks=len(blocks),
                           detail=f"extracted code exceeds {MAX_CODE_BYTES} bytes")
     return Extraction(code, rule, completion_prefixed, blocks=len(blocks))
+
+
+# -- Java ---------------------------------------------------------------------------------------
+
+MAX_JAVA_BYTES = 256 * 1024
+_PACKAGE_LINE = re.compile(r"^[ \t]*package[ \t]+[\w.]+[ \t]*;[ \t]*\r?\n?", re.MULTILINE)
+_SOLUTION_CLASS = re.compile(r"\b(?:class|interface|enum)\s+Solution\b")
+
+JAVA_RULES = ("fence-solution", "fence-last", "raw-solution", "wrong-class", "empty", "too-large")
+
+
+@dataclass
+class JavaExtraction:
+    code: str
+    rule: str
+    package_stripped: bool = False
+    blocks: int = 0
+    detail: str | None = None
+
+    @property
+    def usable(self) -> bool:
+        return bool(self.code.strip()) and self.rule not in ("empty", "too-large", "wrong-class")
+
+
+def extract_java(content: str | None) -> JavaExtraction:
+    """Pick the `Solution` class out of an assistant message.
+
+    Rules, in order: the first fenced block declaring `Solution`; otherwise the last fenced block;
+    otherwise raw content that declares `Solution`. A `package ...;` line is stripped (Java files
+    here are compiled in the default package) and nothing else is modified. Content that has no
+    `Solution` declaration after that is `wrong-class` -- which, per DESIGN-JAVA.md, is also where
+    a body-only reply lands: the prompt asks for the complete class, so a bare method body is an
+    instruction-following miss rather than a Java failure.
+    """
+    text = content or ""
+    if len(text.encode("utf-8", "replace")) > MAX_JAVA_BYTES:
+        return JavaExtraction("", "too-large", detail=f"content exceeds {MAX_JAVA_BYTES} bytes")
+    blocks = fenced_blocks(text)
+
+    code, rule = "", "empty"
+    if blocks:
+        bodies = [body for _language, body in blocks]
+        chosen = next((body for body in bodies if _SOLUTION_CLASS.search(body)), None)
+        if chosen is not None:
+            code, rule = chosen, "fence-solution"
+        else:
+            code, rule = bodies[-1], "fence-last"
+    elif _SOLUTION_CLASS.search(text):
+        code, rule = text, "raw-solution"
+    elif text.strip():
+        code, rule = text, "wrong-class"
+
+    if not code.strip():
+        return JavaExtraction("", "empty", blocks=len(blocks),
+                              detail="no fenced block or Solution declaration found")
+
+    stripped = _PACKAGE_LINE.sub("", code, count=1)
+    package_stripped = stripped != code
+    code = stripped.rstrip() + "\n"
+
+    if not _SOLUTION_CLASS.search(code):
+        return JavaExtraction(code, "wrong-class", package_stripped, blocks=len(blocks),
+                              detail="no `class Solution` declaration in the extracted code")
+    if len(code.encode("utf-8", "replace")) > MAX_JAVA_BYTES:
+        return JavaExtraction("", "too-large", blocks=len(blocks),
+                              detail=f"extracted code exceeds {MAX_JAVA_BYTES} bytes")
+    return JavaExtraction(code, rule, package_stripped, blocks=len(blocks))

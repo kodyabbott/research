@@ -503,3 +503,129 @@ equal: the encoding is deterministic and (after the set/dict sorting fix) order-
 values have identical canonical forms and therefore identical sizes, and would both fall on the same
 side of the 64 KiB threshold. That case is now a mismatch by construction rather than a hash
 comparison across representations.
+
+## Java 8 extension (DESIGN-JAVA.md)
+
+Design by Claude Fable 5.1; implementation by Claude Opus (Anthropic) via Claude Code, directed by
+Kody Abbott. Same hard rule as the Python work: **the implementing agent never contacted a model
+server.** A live Python smoke run was in progress on 127.0.0.1:11436 during this work; no HTTP
+request was made to it and no `ollama` command was run.
+
+### 2026-09-30 01:10 MDT -- toolchain and Java sandbox
+
+**Not breaking the in-flight Python run.** `grader.run_in_sandbox` re-reads
+`harness/sandbox_runner.py` from disk on *every task*, so editing that file mid-run would change
+the behaviour of a running benchmark. It was left untouched; Java needs no in-sandbox Python runner
+because `javac`/`java` are invoked directly. Every other module is imported once at process start,
+so additive edits are safe. Java also got its **own** profile template rather than an extension of
+the Python one, which keeps `PROFILE_TEMPLATE_SHA256` at
+`130725dd62edac6f75294223a380fc8eb63c43c4611968bffa85b43135a3bdcc` -- the value embedded in all 545
+prepared Python expected-output files. A test asserts that hash so a future edit cannot move it
+silently.
+
+**Toolchain: Azul Zulu 8.96.0.205 (`jdk8.0.504`), macOS aarch64.**
+
+| | |
+| --- | --- |
+| file | `zulu8.96.0.205-ca-jdk8.0.504-macosx_aarch64.tar.gz` |
+| url | <https://cdn.azul.com/zulu/bin/zulu8.96.0.205-ca-jdk8.0.504-macosx_aarch64.tar.gz> |
+| sha256 | `58bb3c08f2aa63d9743cf31899fa4b8c6c9effefce9479e7288c26621c3bb21b` |
+| hash source | <https://api.azul.com/metadata/v1/zulu/packages/16811ca3-e48b-459d-abc4-f6b273023a54> |
+| `java -version` | `openjdk version "1.8.0_504"` / Zulu 8.96.0.205-CA-macos-aarch64 |
+| mode | `jdk8` |
+
+The published SHA-256 was read from Azul's **per-package detail** endpoint and compared against the
+value pinned in `java_toolchain.ZULU8` *before* downloading; `prepare.py --jdk` aborts if Azul ever
+publishes a different hash for this package rather than silently drifting. Trust-on-first-download
+exists only behind `--allow-unpinned-jdk` and was not used. The design's `release8-on-21` Temurin
+fallback was not needed and is **not implemented**; `mode` is always `"jdk8"`.
+
+*One adaptation:* Azul's metadata advertises `size: 103714000` but the file is 103,714,410 bytes.
+The published SHA-256 matched exactly, so the hash is treated as the authority and the size
+difference is recorded (`advertisedSizeMismatch`) rather than fatal. A size check that overrides a
+matching cryptographic hash would be worse than useless.
+
+**Java sandbox profile -- what the discovery loop found.** Two failures that a hand-written profile
+would not have anticipated:
+
+1. **The `$HOME` deny killed the JDK.** `JAVA_HOME` lives under
+   `~/Documents/Codex/model-cache/coding-benchmark/jdk/`, i.e. inside the very tree the profile
+   denies. Because later rules win, the `(deny file-read* (subpath "@HOME@"))` line silently
+   revoked the JDK allow that came before it, and the launcher reported
+   `Error: Could not find Java SE Runtime Environment.` The JDK and WORKDIR allows now come
+   **after** the deny.
+2. **`realpath()` on ancestors, again.** Even with the JDK re-allowed, `java` could not load a
+   class that demonstrably existed (`Could not find or load main class Main`). Both the launcher
+   and classpath resolution `realpath()` their arguments, which stats every ancestor directory --
+   and all of those are under `$HOME`. Fixed with `(allow file-read-metadata ...)` on the ancestor
+   directories of `JAVA_HOME` **and** `WORKDIR`. **Metadata only:** unlike the Python case, full
+   `file-read*` was not required here, so no directory under `$HOME` becomes listable and no file
+   contents become readable. The literals are generated per invocation by
+   `SandboxExec.ancestor_literals()`, so the profile *template* hash stays stable.
+
+Every rule in `sandbox.py::JAVA_PROFILE_TEMPLATE`:
+
+| Rule | Why |
+| --- | --- |
+| `(deny default)` | Deny-default posture. |
+| `(deny network*)` | Hard requirement; verified against a live local listener. |
+| `(allow sysctl-read)` | The JVM calls `os.uname()`-equivalent sysctls during startup, as numpy does on the Python side. |
+| `(allow process-fork)` | The `java`/`javac` launchers fork. Note this is **more** permissive than the Python profile, which denies fork -- but `process-exec` is restricted to the JDK subtree, so nothing else can be launched. Verified: `Runtime.exec("/bin/echo")` is blocked. |
+| `(allow process-exec (subpath "@JAVA_HOME@"))` | `bin/javac`, `bin/java` and the JDK's own helper binaries. Subpath rather than literals because `javac` execs `java` internally. |
+| `(allow file-read* ...)` for `/usr/lib`, `/usr/share`, `/System/Library`, `/private/var/db/dyld` | The launchers link `Cocoa`, `Security` and `ApplicationServices` (confirmed with `otool -L`), plus the dyld cache. `/System/Library` reads were expected per the design's handoff note. |
+| `(allow file-read* (literal "/dev/urandom") (literal "/dev/random"))` | `SecureRandom` seeding, reached by `UUID.randomUUID()` and some `HashMap` seeding. |
+| `(allow file-read* (literal "/dev/null"))` + `(allow file-write-data (literal "/dev/null"))` | The JVM opens `/dev/null`. Write-**data** only, not `file-write*`. |
+| `(allow file-read* (literal "/") (literal "/opt") (literal "/Library") (literal "/System/Volumes") ...)` | Ancestor directory reads for the same `realpath()` reason as the Python profile; `literal`, so nothing recursive. |
+| `(deny file-read* (subpath "@HOME@") + Data mirror)` | No reads under `$HOME`, including this repository. |
+| `(allow file-read-metadata @ANCESTORS@)` | Finding 2. Metadata only. |
+| `(allow file-read* (subpath "@JAVA_HOME@"))` | The JDK, re-allowed after the `$HOME` deny (finding 1). |
+| `(allow file-read*/file-write* (subpath "@WORKDIR@"))` | The per-task work directory; the only writable location. |
+
+Rules deliberately **not** granted: `mach-lookup`, `signal`, and any `/Library/Java` read (the
+`java_home` lookup path -- the pinned JDK is addressed by absolute path, so it is never consulted).
+`-XX:-UsePerfData` is required, not cosmetic: JDK 8 writes `/tmp/hsperfdata_<user>/<pid>`
+regardless of `-Djava.io.tmpdir`, which would fail against the write-denied `/private/tmp`.
+
+Java profile template SHA-256: `2cce26979b251f2af7d7a87ea0185b1cfcb783456a642c2408ae44fcc7098d49`.
+
+**The five Java self-tests all pass** (7.4 s total):
+
+| Check | Result |
+| --- | --- |
+| `java-hello-world-compiles-and-runs` | pass -- compiles and prints a sorted list |
+| `java-network-denied` | pass -- `BLOCKED java.net.ConnectException`, and a **real listener on an ephemeral port accepted nothing** |
+| `java-write-outside-workdir-denied` | pass -- `BLOCKED java.io.FileNotFoundException`, no file created under `$HOME` |
+| `java-infinite-loop-killed` | pass -- `cpu-timeout` after 4.0 s |
+| `java9plus-rejected-on-jdk8` | pass -- `List.of` fails with `cannot find symbol` / `symbol: method of(String,String)` / `location: interface List` |
+
+The network check uses the ephemeral-listener pattern from the Python work rather than the design's
+`connect to 127.0.0.1:11436`: connecting to a dead port raises regardless of the sandbox (a vacuous
+test), and a broken deny rule must not let the JVM reach a model server while a live run is going.
+
+**java9plus patterns are read off JDK 8's own output, not guessed.**
+`tests/fixtures/java9plus/capture.py` compiles 21 single-file cases on the pinned Zulu 8 and checks
+in each one's raw `javac` output. All 18 Java 9+ cases fail to compile; the diagnostics are mostly
+generic, which is the whole point:
+
+| Feature | Since | JDK 8 says |
+| --- | --- | --- |
+| `var` | 10 | `cannot find symbol` / `symbol: class var` |
+| records | 16 | `cannot find symbol` / `symbol: class record` |
+| text blocks | 15 | `unclosed string literal` |
+| switch expressions | 14 | `illegal start of expression` |
+| `List.of` / `Map.of` / `Set.of` | 9 | `symbol: method of(...)` / `location: interface List\|Map\|Set` |
+| `String.isBlank` / `strip` / `repeat` / `lines` | 11 | `symbol: method isBlank()` etc. / `location: class String` |
+| `Stream.toList` | 16 | `symbol: method toList()` / `location: interface Stream` |
+| `Optional.isEmpty` | 11 | `symbol: method isEmpty()` / `location: class Optional` |
+| `Optional.orElseThrow()` no-arg | 10 | `cannot be applied to given types` / `found: no arguments` |
+| `Collectors.teeing` | 12 | `symbol: method teeing(...)` |
+| private interface methods | 9 | `modifier private not allowed here` |
+| try-with-resources on a variable | 9 | `<identifier> expected` |
+| diamond with anonymous class | 9 | `cannot use '<>' with anonymous inner classes` |
+
+Because `cannot find symbol` is also what an ordinary typo produces, **every API pattern requires
+the `symbol:`/`location:` detail lines** and the syntax patterns require corroborating source text
+(`"""` for text blocks, `switch (` plus `->` for switch expressions). Three control fixtures --
+`control-typo` (`xs.addd(...)`), `control-missing-import`, `control-type-mismatch` -- are ordinary
+Java 8 mistakes kept as false-positive tests. Verified: all 18 features detected, all 3 controls
+detected as nothing, and every pattern is exercised by the fixture it cites.

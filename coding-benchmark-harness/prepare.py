@@ -31,7 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from harness import grader, suites  # noqa: E402
+from harness import grader, java_toolchain, suites  # noqa: E402
 from harness.sandbox import SandboxExec, SandboxUnavailable, runner_sha256  # noqa: E402
 
 DOWNLOAD_TIMEOUT = 300
@@ -253,9 +253,14 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--suite", action="append", required=True,
+    parser.add_argument("--suite", action="append", default=[],
                         choices=suites.suite_names(),
                         help="repeatable; e.g. --suite humaneval-plus --suite mbpp-plus")
+    parser.add_argument("--jdk", action="store_true",
+                        help="download, verify and pin the Azul Zulu 8 JDK (Java suites need it)")
+    parser.add_argument("--allow-unpinned-jdk", action="store_true",
+                        help="fall back to trust-on-first-download if Azul's hash endpoint is "
+                             "unreachable (documented fallback only)")
     parser.add_argument("--force-download", action="store_true",
                         help="re-download even if the cached file verifies")
     parser.add_argument("--recompute", action="store_true",
@@ -266,6 +271,27 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, help="only prepare the first N tasks (smoke path)")
     parser.add_argument("--summary-json", type=Path, help="write the summary as JSON")
     args = parser.parse_args(argv)
+    if not args.suite and not args.jdk:
+        parser.error("nothing to do: pass --jdk and/or --suite")
+
+    jdk_record = None
+    if args.jdk:
+        print("toolchain: Azul Zulu JDK 8 (macOS aarch64)")
+        try:
+            jdk_record = java_toolchain.prepare(
+                allow_trust_on_first_download=args.allow_unpinned_jdk)
+        except java_toolchain.ToolchainError as exc:
+            print(f"jdk preparation failed: {exc}", file=sys.stderr)
+            return 2
+        parsed = jdk_record["parsedVersion"]
+        print(f"  java -version : {jdk_record['javaVersionOutput'].splitlines()[0]}")
+        print(f"  parsed        : {parsed['version']} (major {parsed['major']}, "
+              f"isJava8={parsed['isJava8']})")
+        print(f"  sha256        : {jdk_record['sha256']}")
+        print(f"  hash source   : {jdk_record['hashSource']} "
+              f"(verified={jdk_record['hashVerifiedAgainstPublishedValue']})")
+        if not args.suite:
+            return 0
 
     try:
         sandbox = SandboxExec(python=args.sandbox_python)
@@ -286,6 +312,8 @@ def main(argv: list[str] | None = None) -> int:
             suite_name, sandbox, force=args.force_download, recompute=args.recompute,
             wall_seconds=args.wall_seconds, cpu_seconds=args.cpu_seconds, limit=args.limit))
     payload = {"preparedAt": now(), "sandboxSelfTest": report, "suites": summaries}
+    if jdk_record:
+        payload["javaToolchain"] = jdk_record
     if args.summary_json:
         args.summary_json.write_text(json.dumps(payload, indent=1) + "\n", encoding="utf-8")
         print(f"summary written to {args.summary_json}")
