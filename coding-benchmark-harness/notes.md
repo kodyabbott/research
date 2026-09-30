@@ -123,3 +123,81 @@ per-input timeout. EvalPlus has the same exposure with its `time_limit` context 
 Sandbox self-tests: all five pass (`normal-program-returns-json`, `network-denied`,
 `write-outside-workdir-denied`, `read-home-and-repo-denied`, `infinite-loop-killed`). Profile
 template SHA-256 is recorded in each run record as `sandboxProfileSha256`.
+
+### 2026-09-30 00:45 MDT -- extraction and grading
+
+**EvalPlus source pinned for the grading rules.** All comparison behaviour is ported from
+EvalPlus tag **v0.3.1**, commit **e5d0ed0bab96280b60b637ec7f15b5e4841b0cb2** (the current release;
+`main` was at `26d6d00bb1fd0fa37f39c99d5290da67891d1c5e`, 2025-10-02, which does not touch these
+files). Files read:
+
+- `evalplus/eval/__init__.py` -- `unsafe_execute()`: the special-oracle block and the `atol` /
+  `np.allclose(rtol=1e-07)` fallback.
+- `evalplus/eval/_special_oracle.py` -- `MBPP_OUTPUT_NOT_NONE_TASKS`, `MBPP_OUTPUT_SET_EQ_TASKS`,
+  `_surface_Area` (Mbpp/581), `_digit_distance_nums` (Mbpp/558), `_poly` (HumanEval/32).
+- `evalplus/config.py` -- `DEFAULT_MIN_TIME_LIMIT = 1.0`, `DEFAULT_GT_TIME_LIMIT_FACTOR = 4.0`.
+- `evalplus/data/mbpp.py` -- `MBPP_PLUS_VERSION = "v0.2.0"`, `mbpp_deserialize_inputs()`.
+- `evalplus/data/humaneval.py` -- `HUMANEVAL_PLUS_VERSION = "v0.1.10"`.
+- `evalplus/data/utils.py` -- `get_dataset_metadata()`, which is where the release URL shape comes
+  from, and `completeness_check()`, which lists the required task fields.
+- `evalplus/gen/util/__init__.py` -- `trusted_exec()`: `deepcopy` of each input, per-input timing,
+  and the `output_not_none` transform.
+- `evalplus/evaluate.py` -- `get_groundtruth()`: expected outputs come from
+  `prompt + canonical_solution` (the `contract` field is *not* included), computed once per task.
+
+**Oracles implemented** (`harness/grader.py::compare_output`), in EvalPlus's own order:
+`are_equivalent` (Mbpp/164, any answer accepted), `sum_div` (Mbpp/295, also accepts 0),
+`surface_Area` (Mbpp/581, alternate oracle within atol), `digit_distance_nums` (Mbpp/558, alternate
+oracle), the 8 `MBPP_OUTPUT_SET_EQ_TASKS` (compared as sets), the 3 `MBPP_OUTPUT_NOT_NONE_TASKS`
+(both sides reduced to booleans), and HumanEval `find_zero` (checks `abs(_poly(xs, out)) <= atol`
+and ignores the recorded expected value).
+
+**Deliberate divergences from the EvalPlus code, with reasons:**
+
+1. *No loop-carried `atol`.* EvalPlus's `unsafe_execute` does `atol = 1e-6` inside the per-input
+   loop when `atol == 0 and is_floats(exp)`, which leaves the tolerance in place for every later
+   input of that task even when those expected values are not floats. `same()` recomputes the
+   tolerance per input instead. This is stricter and, I believe, the intended behaviour; it can
+   only change a verdict for a task with mixed float/non-float expected values.
+2. *Values cross a process boundary.* EvalPlus compares live Python objects; this harness compares
+   values that were serialized in the sandbox and rebuilt here. Faithful for every JSON-shaped
+   type plus tuples, sets, frozensets, complex, bytes and big ints. Objects with no serializable
+   form (`re.Match`, generators, custom classes) become an `Opaque` carrying the class name and
+   `repr`, which only equals an identical `Opaque`. The only tasks where EvalPlus relies on such
+   objects are the three not-None tasks, and those are reduced to booleans inside the sandbox
+   before encoding -- exactly as `trusted_exec(output_not_none=True)` and the
+   `isinstance(out, bool)` branch of `unsafe_execute` do -- so no fidelity is lost there.
+3. *`set(out) == set(exp)` on rebuilt values.* Decoded tuples/scalars are hashable, so the eight
+   set-equality tasks behave as in EvalPlus. If a candidate returned unhashable members, EvalPlus
+   would raise (counted as a failure) and this harness returns `False` (also a failure).
+4. *`np.allclose` is reimplemented* as `abs(a - b) <= atol + 1e-07 * abs(b)`, elementwise over
+   same-length sequences, NaN never close, infinities equal only to themselves. This matches
+   numpy's documented formula and its `equal_nan=False` default. numpy is not available (standard
+   library only, and it is not importable inside the sandbox).
+5. *`missing-entry-point` is classified as `runtime-error`*, not `no-code`: code was produced and
+   executed, it simply never defined the required function. `no-code` is reserved for extraction
+   failures.
+
+**Extraction** (`harness/extract.py`) implements DESIGN.md's five rules literally, including the
+consequence that unfenced content containing a *foreign* `def` but not the entry point falls
+through to `empty` (rule 3 requires the entry point, rule 4 requires no `def` at all). Additions
+beyond the design, all tested: `~~~` fences and indented fence markers are recognised, and an
+unterminated final fence is still extracted (truncated answers otherwise become spurious `no-code`
+failures). When the completion prefix is applied to a bare body, the body is indented so that
+`prompt + body` compiles.
+
+**Run-record size.** HumanEval+ carries up to 1000 plus-inputs per task (median 972 across 164
+tasks); MBPP+ up to 147 (median 105 across 378). Storing every input's expected and actual value
+would put a single run far past the 2 MB the design budgets for a run record. Per-input detail is
+therefore kept compact: a one-character-per-input status string (`.` pass, `x` wrong answer,
+`e` exception, `t` timeout, `h` harness error, `-` not run), status counts, and the first failing
+input with truncated `repr`s of expected and actual. Full expected outputs stay in the
+out-of-repository prepare cache. **Deviation from DESIGN.md's `base: {passed, results}`**, recorded
+here as required.
+
+**Results leave the sandbox in files, not on stdout** (`$WORKDIR/results.jsonl`, one JSON object per
+input, flushed after each; summary in `$WORKDIR/meta.json`). A candidate's stray `print()` would
+otherwise corrupt a stdout payload -- EvalPlus wraps execution in `swallow_io` for the same reason
+-- and a hard kill (SIGXCPU) still leaves the completed rows on disk, which is how partial progress
+is reported. `sys.stdout`/`sys.stderr` are additionally redirected to a discarding sink around
+`exec` and every call. **Deviation from DESIGN.md's "writes JSON to stdout".**
