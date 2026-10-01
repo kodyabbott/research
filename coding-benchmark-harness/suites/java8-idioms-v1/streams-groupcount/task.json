@@ -1,0 +1,22 @@
+{
+  "id": "streams-groupcount",
+  "title": "Count records per key into a TreeMap",
+  "category": "streams-collections",
+  "java8Features": [
+    "Collectors.groupingBy",
+    "Collectors.counting",
+    "Function.identity",
+    "TreeMap supplier",
+    "Stream.filter"
+  ],
+  "testCount": 9,
+  "contract": "Counts per extracted key. Null extracted keys are ignored. Null or empty input gives an empty map. Result is a TreeMap so keys ascend in natural String order, and counts are Long. A null keyExtractor throws IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "null extracted keys dropped",
+    "null records list",
+    "key ordering is String order not insertion order",
+    "counts are Long not Integer",
+    "a non-first-letter extractor",
+    "null keyExtractor rejection"
+  ]
+}

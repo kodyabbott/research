@@ -1,0 +1,25 @@
+{
+  "id": "money-allocate",
+  "title": "Split an amount by ratios with largest-remainder distribution",
+  "category": "money",
+  "java8Features": [
+    "BigDecimal.movePointRight",
+    "longValueExact",
+    "BigDecimal.valueOf(long,int)",
+    "Comparator.comparing().reversed().thenComparing",
+    "List.sort"
+  ],
+  "testCount": 16,
+  "contract": "Converts the amount to whole cents (at most two decimals), gives each party floor(cents*ratio/totalRatio), then hands leftover cents one each by largest fractional remainder, ties by lowest index. Zero ratios get nothing and no leftover. Results have scale 2 and sum exactly to the input. Null/negative/over-precise amounts and null/empty/negative/zero-sum ratios throw IllegalArgumentException.",
+  "expectedValuesFrom": "Allocations computed independently in Python integer arithmetic, not by running Solution.",
+  "notShownInJavadoc": [
+    "two leftover cents",
+    "seven-way split",
+    "zero ratio",
+    "unequal ratios",
+    "single-cent tie by lowest index",
+    "zero amount",
+    "scale is exactly 2",
+    "all six rejection cases"
+  ]
+}

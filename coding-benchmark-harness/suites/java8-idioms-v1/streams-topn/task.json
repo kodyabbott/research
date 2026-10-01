@@ -1,0 +1,22 @@
+{
+  "id": "streams-topn",
+  "title": "Top N by score descending, ties by name ascending",
+  "category": "streams-collections",
+  "java8Features": [
+    "Comparator.comparingInt",
+    "reversed",
+    "thenComparing",
+    "Stream.limit",
+    "method references"
+  ],
+  "testCount": 11,
+  "contract": "Orders players by score descending then name ascending, returns the first n names. n greater than the list size returns all; n <= 0 returns empty. Null list is empty; null elements are ignored.",
+  "notShownInJavadoc": [
+    "tie-break by name ascending",
+    "all-equal-score ordering",
+    "negative n",
+    "negative scores",
+    "null elements",
+    "null list"
+  ]
+}

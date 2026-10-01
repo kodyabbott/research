@@ -1,0 +1,22 @@
+{
+  "id": "time-parse-mixed",
+  "title": "Normalize three date formats to ISO-8601",
+  "category": "datetime",
+  "java8Features": [
+    "DateTimeFormatter.ofPattern",
+    "Locale.ENGLISH",
+    "ResolverStyle.STRICT",
+    "DateTimeParseException",
+    "LocalDate.format"
+  ],
+  "testCount": 14,
+  "contract": "Accepts yyyy-MM-dd, MM/dd/yyyy and dd-MMM-yyyy (English month, case-insensitive), ignores surrounding whitespace, and returns yyyy-MM-dd. Null, blank, unrecognized, and syntactically valid but non-existent dates all throw IllegalArgumentException; non-existent dates must not roll over.",
+  "notShownInJavadoc": [
+    "upper and lower case month names",
+    "valid leap day",
+    "February 30 rejected rather than rolled over",
+    "blank input",
+    "prose date format",
+    "non-English month name"
+  ]
+}

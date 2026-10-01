@@ -1,0 +1,23 @@
+{
+  "id": "oop-value-object",
+  "title": "Mrn value object: equals, hashCode and compareTo",
+  "category": "oop-interfaces",
+  "java8Features": [
+    "equals/hashCode contract",
+    "Comparable",
+    "HashSet dedupe",
+    "TreeSet ordering",
+    "Locale.ROOT case folding"
+  ],
+  "testCount": 23,
+  "contract": "Mrn equality and ordering use the normalized value (trimmed, upper-cased with Locale.ROOT). equals is reflexive, symmetric, false for null and for other types, and consistent with hashCode. Natural ordering is String.compareTo on the normalized value, so it is lexical and not numeric. countDistinct and sortedDistinct treat a null collection as empty and ignore null elements. The Mrn constructor rejects a null raw value with IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "equals(null)",
+    "equals of a different type",
+    "hashCode equals the normalized String hashCode",
+    "null collection",
+    "null elements",
+    "lexical ordering of MRN-1/MRN-10/MRN-2",
+    "constructor null rejection"
+  ]
+}

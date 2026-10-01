@@ -1,0 +1,26 @@
+{
+  "id": "time-window-bucket",
+  "title": "Floor instants to 15-minute buckets and count them",
+  "category": "datetime",
+  "java8Features": [
+    "Instant.atZone",
+    "ZonedDateTime.truncatedTo",
+    "withMinute",
+    "toEpochSecond",
+    "TreeMap then LinkedHashMap"
+  ],
+  "testCount": 12,
+  "contract": "Floors each instant to the start of its 15-minute window as seen in the given zone, keyed by that window start in epoch seconds (unambiguous across DST; the zone only sets alignment). Keys ascend. Null or empty list gives an empty map; null elements ignored. Null zone throws IllegalArgumentException.",
+  "expectedValuesFrom": "Epoch seconds computed independently in Python with zoneinfo('America/Denver'), not by running Solution. Denver 2026 transitions: spring-forward 2026-03-08, fall-back 2026-11-01.",
+  "notShownInJavadoc": [
+    "several instants collapsing into one bucket",
+    "window-start boundary",
+    "the next window",
+    "both sides of the spring-forward gap",
+    "the repeated hour on fall-back day",
+    "ascending order from unordered input",
+    "null elements",
+    "a second zone",
+    "null zone rejection"
+  ]
+}

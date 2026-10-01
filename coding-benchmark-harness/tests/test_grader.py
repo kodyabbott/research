@@ -3,6 +3,7 @@
 The timeout and syntax-error cases use the real sandbox with tiny programs, as DESIGN.md requires.
 """
 
+import math
 import os
 import sys
 import unittest
@@ -211,6 +212,76 @@ class OracleCase(unittest.TestCase):
 
     def test_poly_matches_evalplus(self):
         self.assertAlmostEqual(grader._poly([1, 2, 3], 2.0), 1 + 4 + 12)
+
+
+class FindZeroOracleCase(unittest.TestCase):
+    """HumanEval/32's oracle, and the live-run report of a 'expected X got X' failure.
+
+    The second live-run finding: HumanEval/32 was graded wrong-answer with
+    `input 119: expected 17.3124550475086 got 17.3124550475086`. The values print identically, so
+    the report asked whether atol was being dropped. It was not: `find_zero` deliberately ignores
+    the recorded value and checks the polynomial residual, and for that input the residual exceeds
+    the task's atol *even for the canonical answer*, because the polynomial's largest term is ~4e13
+    and double precision cannot resolve 1e-4 there. Those inputs are unpassable by any answer.
+    `prepare.py` keeps the task (dropping it would make the suite easier than EvalPlus) and
+    records the undecidable inputs under `oracleUndecidableInputs`.
+    """
+
+    # Verbatim from runs/20260930-qwen3.8-27b-q8_0-humaneval-plus-off.json, HumanEval/32 input 119.
+    COEFFICIENTS = [9450000, 9, -7, 3, 2, 6, 1, -4, -10, 6, 17, -1]
+    ROOT = 17.3124550475086
+    ATOL = 0.0001
+
+    def test_the_two_printed_values_really_are_the_same_float(self):
+        model = float("17.3124550475086")
+        canonical = self.ROOT
+        self.assertEqual(model, canonical)
+        self.assertEqual(repr(model), repr(canonical))
+
+    def test_find_zero_ignores_the_recorded_value_and_checks_the_residual(self):
+        # Equal values still fail, because the oracle never compares them.
+        passed, oracle = compare_output("humaneval", "find_zero", [self.COEFFICIENTS],
+                                        self.ROOT, self.ROOT, self.ATOL)
+        self.assertEqual(oracle, "humaneval:find_zero")
+        self.assertFalse(passed)
+
+    def test_the_residual_exceeds_atol_by_more_than_an_order_of_magnitude(self):
+        residual = abs(grader._poly(self.COEFFICIENTS, self.ROOT))
+        self.assertGreater(residual, self.ATOL * 10)
+        # And the reason: the largest term is far beyond double precision's reach for 1e-4.
+        largest = max(abs(c * self.ROOT ** k) for k, c in enumerate(self.COEFFICIENTS))
+        self.assertGreater(largest, 1e13)
+
+    def test_atol_is_honoured_when_the_residual_is_small(self):
+        # 2 + 3x has its root at -2/3; the residual there is ~0, so the same oracle passes.
+        passed, _oracle = compare_output("humaneval", "find_zero", [[2, 3]], 0.0,
+                                         -2.0 / 3.0, self.ATOL)
+        self.assertTrue(passed)
+        # And a wrong root fails, so the oracle is not vacuous.
+        self.assertFalse(compare_output("humaneval", "find_zero", [[2, 3]], 0.0, 5.0,
+                                        self.ATOL)[0])
+
+    def test_atol_zero_would_make_find_zero_unpassable(self):
+        # Documents why the dataset sets atol=1e-4 for this task rather than leaving it 0.
+        # x**2 - 2 at the nearest double to sqrt(2) leaves a residual of ~4.4e-16, so the best
+        # possible float root fails at atol=0 and passes at the task's atol. (2 + 3x at -2/3 is
+        # no use here: that residual happens to round to exactly 0.0.)
+        root = math.sqrt(2)
+        self.assertFalse(compare_output("humaneval", "find_zero", [[-2, 0, 1]], 0.0,
+                                        root, 0.0)[0])
+        self.assertTrue(compare_output("humaneval", "find_zero", [[-2, 0, 1]], 0.0,
+                                       root, self.ATOL)[0])
+
+    def test_the_loop_carried_atol_deviation_is_not_involved(self):
+        # `same()` is never reached for find_zero, so the per-input atol recomputation cannot
+        # affect this task either way.
+        passed, oracle = compare_output("humaneval", "find_zero", [self.COEFFICIENTS],
+                                        self.ROOT, self.ROOT, self.ATOL)
+        self.assertEqual(oracle, "humaneval:find_zero")
+        self.assertFalse(passed)
+        # Plain same() on those identical floats does pass, which is why the detail line looked
+        # like a false failure.
+        self.assertTrue(same(self.ROOT, self.ROOT, self.ATOL))
 
 
 class PerInputLimitCase(unittest.TestCase):

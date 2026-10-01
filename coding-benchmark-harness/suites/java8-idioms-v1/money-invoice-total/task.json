@@ -1,0 +1,23 @@
+{
+  "id": "money-invoice-total",
+  "title": "Invoice total with per-line banker's rounding and tax applied once",
+  "category": "money",
+  "java8Features": [
+    "BigDecimal.multiply",
+    "setScale with RoundingMode.HALF_EVEN",
+    "BigDecimal.valueOf",
+    "signum"
+  ],
+  "testCount": 18,
+  "contract": "Each line extends to quantity * unitPrice rounded to scale 2 HALF_EVEN; extensions are summed to a subtotal; tax = subtotal * taxRate rounded to scale 2 HALF_EVEN is added once. Result has scale 2. Null/empty lines total 0.00 and null lines are ignored. Null or negative taxRate, negative quantity, and null or negative unit price all throw IllegalArgumentException.",
+  "expectedValuesFrom": "Computed independently in Python with decimal.Decimal and ROUND_HALF_EVEN, not by running Solution.",
+  "notShownInJavadoc": [
+    "five banker's-rounding boundary cases",
+    "rounding per line before summing",
+    "tax applied once rather than per line",
+    "zero quantity",
+    "null lines",
+    "scale is exactly 2",
+    "all five rejection cases"
+  ]
+}

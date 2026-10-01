@@ -1,0 +1,24 @@
+{
+  "id": "time-business-days",
+  "title": "Business days between two dates, skipping weekends and holidays",
+  "category": "datetime",
+  "java8Features": [
+    "LocalDate",
+    "DayOfWeek",
+    "plusDays",
+    "isBefore",
+    "Set membership"
+  ],
+  "testCount": 11,
+  "contract": "Counts non-weekend days in the half-open range [start, end) that are not in holidays. Reversed arguments are swapped so the result is never negative; equal dates give zero. Null holidays is empty. A holiday on a weekend changes nothing. Null start or end throws IllegalArgumentException.",
+  "expectedValuesFrom": "Computed independently in Python with datetime/weekday(), not by running Solution.",
+  "notShownInJavadoc": [
+    "reversed arguments",
+    "holiday falling on a weekend",
+    "Friday-to-Tuesday weekend skip",
+    "empty vs null holidays",
+    "weekend-only span",
+    "month boundary",
+    "null argument rejection"
+  ]
+}

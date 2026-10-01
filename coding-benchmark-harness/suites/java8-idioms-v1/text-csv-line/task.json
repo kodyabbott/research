@@ -1,0 +1,22 @@
+{
+  "id": "text-csv-line",
+  "title": "RFC 4180 single-line CSV parser",
+  "category": "text-parsing",
+  "java8Features": [
+    "StringBuilder",
+    "char scanning",
+    "no regex shortcuts"
+  ],
+  "testCount": 16,
+  "contract": "Comma-separated fields; a field starting with a quote is quoted, where commas are literal and \"\" is one quote. Quotes are only special at field start. Whitespace is never trimmed. Empty input is one empty field; a trailing comma adds a trailing empty field. Null input, an unterminated quoted field, and text after a closing quote all throw IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "empty input",
+    "leading/middle/trailing empty fields",
+    "whitespace preserved",
+    "quoted empty field",
+    "a literal quote mid-field",
+    "a field that is only an escaped quote",
+    "a quoted comma-only field",
+    "all three rejection cases"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "algo-lru-cache",
+  "title": "LRU cache with LinkedHashMap access order",
+  "category": "algorithms",
+  "java8Features": [
+    "LinkedHashMap(int,float,boolean) access order",
+    "removeEldestEntry override",
+    "anonymous subclass"
+  ],
+  "testCount": 17,
+  "contract": "Fixed capacity; get and put both count as uses and the least recently used key is evicted when a put would exceed capacity. Re-putting replaces the value and promotes the key. keys() lists least-recently-used first. A miss does not promote. Capacity below 1 throws IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "get promotes so a different key is evicted",
+    "eviction order without a promoting get",
+    "keys() ordering",
+    "re-put promotes as well as replaces",
+    "capacity 1",
+    "a miss does not promote",
+    "capacity 0 and negative rejection",
+    "empty cache"
+  ]
+}

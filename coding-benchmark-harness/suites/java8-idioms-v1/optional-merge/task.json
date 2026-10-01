@@ -1,0 +1,19 @@
+{
+  "id": "optional-merge",
+  "title": "Combine two Optionals with a BinaryOperator",
+  "category": "optional-null-safety",
+  "java8Features": [
+    "Optional.isPresent",
+    "Optional.ofNullable",
+    "BinaryOperator"
+  ],
+  "testCount": 11,
+  "contract": "Both present: Optional of merger.apply(left, right). Exactly one present: that one unchanged. Neither: empty. A null Optional argument is empty. A merger returning null gives empty. A null merger throws IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "null Optional arguments",
+    "argument order reaching the merger",
+    "merger returning null",
+    "merger is not invoked when only one side is present",
+    "null merger rejection"
+  ]
+}

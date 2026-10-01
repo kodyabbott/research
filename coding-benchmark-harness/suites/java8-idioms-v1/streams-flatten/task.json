@@ -1,0 +1,22 @@
+{
+  "id": "streams-flatten",
+  "title": "Flatten, trim, drop blanks, de-duplicate and sort case-insensitively",
+  "category": "streams-collections",
+  "java8Features": [
+    "nested iteration or flatMap",
+    "String.trim",
+    "String.CASE_INSENSITIVE_ORDER",
+    "TreeSet with a comparator",
+    "List.sort"
+  ],
+  "testCount": 9,
+  "contract": "Flattens, trims each value, drops nulls and values blank after trimming, removes case-insensitive duplicates keeping the first occurrence, and sorts with String.CASE_INSENSITIVE_ORDER. Null outer and inner lists are empty.",
+  "notShownInJavadoc": [
+    "first case variant is the one kept",
+    "whitespace-only and tab values",
+    "nulls inside inner lists",
+    "case-insensitive sort differs from natural sort",
+    "trim happens before dedupe",
+    "interleaving across inner lists"
+  ]
+}

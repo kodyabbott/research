@@ -1,0 +1,22 @@
+{
+  "id": "exc-try-with-resources",
+  "title": "Count non-blank lines, closing the Reader with try-with-resources",
+  "category": "exceptions-validation",
+  "java8Features": [
+    "try-with-resources",
+    "BufferedReader.readLine",
+    "IOException propagation",
+    "AutoCloseable"
+  ],
+  "testCount": 13,
+  "contract": "Counts lines that are not empty or whitespace-only, accepting \\n, \\r\\n and \\r separators. Always closes the reader before returning, including when reading throws, and the IOException propagates. A null reader returns 0.",
+  "notShownInJavadoc": [
+    "empty and whitespace-only input",
+    "no trailing newline",
+    "CRLF and bare CR separators",
+    "close called exactly once on success",
+    "close called on failure while the IOException still propagates",
+    "padded lines count",
+    "several blank runs"
+  ]
+}

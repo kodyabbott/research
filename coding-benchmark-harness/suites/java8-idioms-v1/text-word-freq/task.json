@@ -1,0 +1,23 @@
+{
+  "id": "text-word-freq",
+  "title": "Top-k word frequency, case-insensitive, ties by word",
+  "category": "text-parsing",
+  "java8Features": [
+    "Character.isLetterOrDigit",
+    "LinkedHashMap counting",
+    "Comparator.comparing().reversed().thenComparing",
+    "Map.Entry method references"
+  ],
+  "testCount": 13,
+  "contract": "Splits on runs of non-alphanumeric characters, folds case, returns the k most frequent words lower-cased, most frequent first, ties by word ascending. k above the distinct count returns all; k <= 0, null text, or text with no words returns empty.",
+  "notShownInJavadoc": [
+    "tie-break by word ascending",
+    "k larger than distinct count",
+    "negative k",
+    "text with no words",
+    "punctuation splitting",
+    "case folding output",
+    "digits as word characters",
+    "frequency outranking alphabetical order"
+  ]
+}

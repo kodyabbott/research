@@ -1,0 +1,23 @@
+{
+  "id": "exc-collect-errors",
+  "title": "Collect all validation errors into one checked exception",
+  "category": "exceptions-validation",
+  "java8Features": [
+    "custom checked exception",
+    "collecting rather than fail-fast",
+    "TreeMap ordering",
+    "Collections.sort"
+  ],
+  "testCount": 12,
+  "contract": "Validates every required field rather than stopping at the first failure. Absent gives \"<field> is required\"; null or blank-once-trimmed gives \"<field> is blank\". Messages sorted by field name and thrown together in one ValidationException (checked). With no errors, returns every form entry trimmed, ordered by key. Null form is empty; null required means nothing required.",
+  "notShownInJavadoc": [
+    "all errors collected at once",
+    "message sort order",
+    "absent vs blank wording",
+    "a present null value counts as blank",
+    "the exception message text",
+    "ValidationException is checked not runtime",
+    "unrequired fields are trimmed too",
+    "output key ordering"
+  ]
+}

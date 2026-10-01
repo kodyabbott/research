@@ -1,0 +1,25 @@
+{
+  "id": "text-kv-tokens",
+  "title": "Parse percent-encoded key=value pairs into a LinkedHashMap",
+  "category": "text-parsing",
+  "java8Features": [
+    "String.split with limit",
+    "indexOf",
+    "ByteArrayOutputStream",
+    "LinkedHashMap ordering",
+    "UTF-8 decoding"
+  ],
+  "testCount": 15,
+  "contract": "Splits on ';', then each segment on its first '=' only. Percent-decodes keys and values as UTF-8; '+' stays literal. Empty values allowed, empty keys not. Repeated keys: last value wins, first position kept. Empty segments skipped. Null or blank gives an empty map. Iteration is first-seen key order. A segment without '=', an empty key, or a malformed escape throws IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "empty value",
+    "percent decoding of space and semicolon",
+    "'+' is literal",
+    "value containing '='",
+    "last-wins with first position",
+    "empty segments",
+    "insertion order not sorted",
+    "multi-byte UTF-8 escape",
+    "all four rejection cases"
+  ]
+}

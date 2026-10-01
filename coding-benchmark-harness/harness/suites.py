@@ -87,6 +87,7 @@ class Task:
     example_test: str = ""      # the visible `Main` from the dataset, not used for scoring
     import_block: str = ""      # the scaffold's own imports, prepended to the hidden Main
     files: dict = field(default_factory=dict)  # authored suites: file name -> text
+    metadata: dict = field(default_factory=dict)  # authored suites: task.json contents
 
     @property
     def canonical_program(self) -> str:
@@ -124,11 +125,14 @@ class Task:
 
     @property
     def canonical_java(self) -> str:
-        """`prompt + canonical_solution`.
+        """The canonical program to compile as `Solution.java`.
 
-        No trailing brace is added: `canonical_solution` already closes both the method and the
-        class in all 164 HumanEval-X Java records (verified: brace balance is exactly 0).
+        Authored tasks ship a complete `Solution.java`, so it is used as-is. For HumanEval-X it is
+        `prompt + canonical_solution` with **no** trailing brace: `canonical_solution` already
+        closes both the method and the class in all 164 records (brace balance is exactly 0).
         """
+        if self.files:
+            return self.canonical_solution
         return self.source_prompt + self.canonical_solution
 
     def expected_for(self, which: str) -> list:
@@ -156,6 +160,7 @@ class Suite:
     evalplus_version: str
     prompt_template: str
     digest: str = ""
+    raw_file_digest: str = ""   # over the expected files verbatim; forensics only, not stable
     skipped: dict = field(default_factory=dict)
     total_tasks: int = 0
     language: str = "python"
@@ -175,6 +180,10 @@ class Suite:
             "tasksInSuite": self.total_tasks,
             "skippedAtPrepare": len(self.skipped),
             "language": self.language,
+            # Hash of the expected files verbatim. Not stable across `prepare.py --recompute`
+            # (it includes timestamps and measured timings), so it is never used to decide
+            # comparability -- recorded only so a record can be traced to a specific cache.
+            "suiteDigestRawFiles": self.raw_file_digest,
         }
 
 
@@ -349,6 +358,30 @@ def build_tasks(suite_name: str, java8_hint: bool = True) -> list[Task]:
     return tasks
 
 
+def expected_fingerprint(payload: dict) -> str:
+    """Hash of the parts of an expected-output file that define the benchmark.
+
+    Deliberately excludes `computedAt`, the measured per-input `times`, and the sandbox/toolchain
+    block. Those change on every recompute, and hashing the raw file made a harmless `--recompute`
+    change the suite digest -- which would wrongly mark two runs of the same benchmark as
+    incomparable. What remains is the task identity, its tolerance, and the expected values.
+    """
+    material = {
+        "taskId": payload.get("taskId"),
+        "entryPoint": payload.get("entryPoint"),
+        "atol": payload.get("atol"),
+        "notNoneMode": payload.get("notNoneMode"),
+        "language": payload.get("language"),
+        "canonicalPassesOnJdk8": payload.get("canonicalPassesOnJdk8"),
+        "checkTotal": (payload.get("checks") or {}).get("total"),
+    }
+    for which in ("base", "plus"):
+        block = payload.get(which) or {}
+        material[which] = {"inputs": block.get("inputs"), "expected": block.get("expected")}
+    return hashlib.sha256(
+        json.dumps(material, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
 def compute_digest(tasks: list[Task], expected_hashes: dict[str, str]) -> str:
     """SHA-256 over ordered task ids, rendered prompts, entry points, and expected-file hashes."""
     digest = hashlib.sha256()
@@ -380,27 +413,13 @@ def authored_task_dirs(suite_name: str) -> list[Path]:
 
 
 def authored_digest(suite_name: str) -> str:
-    """SHA-256 over all four files of every task, in task-id order.
+    """SHA-256 over Check.java plus all four files of every task, in task-id order.
 
     DESIGN-JAVA.md: "Suite digest = SHA-256 over all four files per task in id order." The shared
     `Check.java` is folded in too, since changing it changes what every task is graded against.
     """
-    digest = hashlib.sha256()
-    check = authored_root(suite_name) / "Check.java"
-    if check.exists():
-        digest.update(b"Check.java\x00")
-        digest.update(check.read_bytes())
-        digest.update(b"\x1e")
-    for directory in authored_task_dirs(suite_name):
-        for name in AUTHORED_FILES:
-            path = directory / name
-            if not path.exists():
-                raise SuiteError(f"{directory.name} is missing {name}")
-            digest.update(f"{directory.name}/{name}".encode())
-            digest.update(b"\x00")
-            digest.update(path.read_bytes())
-            digest.update(b"\x1e")
-    return digest.hexdigest()
+    from . import java_authored
+    return java_authored.digest(suite_name)
 
 
 def safe_id(task_id: str) -> str:
@@ -428,12 +447,17 @@ def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None
     all_tasks = build_tasks(suite_name, java8_hint=java8_hint)
     skipped = load_skipped(suite_name)
     directory = expected_dir(suite_name)
-    dataset_sha = sha256_file(dataset_path(suite_name))
-    if entry.get("sha256") and dataset_sha != entry["sha256"]:
-        raise SuiteError(
-            f"{suite_name} dataset SHA-256 mismatch: expected {entry['sha256']}, got {dataset_sha}")
+    if entry.get("authored"):
+        # No dataset file: the authored files themselves are the pinned artifact.
+        dataset_sha = authored_digest(suite_name)
+    else:
+        dataset_sha = sha256_file(dataset_path(suite_name))
+        if entry.get("sha256") and dataset_sha != entry["sha256"]:
+            raise SuiteError(f"{suite_name} dataset SHA-256 mismatch: expected "
+                             f"{entry['sha256']}, got {dataset_sha}")
 
     expected_hashes: dict[str, str] = {}
+    raw_hashes: dict[str, str] = {}
     scoreable: list[Task] = []
     for task in all_tasks:
         if task.task_id in skipped:
@@ -445,9 +469,10 @@ def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None
                     f"expected outputs missing for {task.task_id} ({path}). "
                     f"Run prepare.py --suite {suite_name}.")
             continue
-        expected_hashes[task.task_id] = sha256_file(path)
         with path.open(encoding="utf-8") as handle:
             payload = json.load(handle)
+        expected_hashes[task.task_id] = expected_fingerprint(payload)
+        raw_hashes[task.task_id] = sha256_file(path)
         if payload.get("datasetSha256") != dataset_sha:
             raise SuiteError(
                 f"expected outputs for {task.task_id} were computed from dataset "
@@ -466,6 +491,7 @@ def load(suite_name: str, limit: int | None = None, ids: list[str] | None = None
                   prompt_template=template, skipped=skipped, total_tasks=len(all_tasks),
                   language=entry.get("language", "python"))
     suite.digest = compute_digest(scoreable, expected_hashes)
+    suite.raw_file_digest = compute_digest(scoreable, raw_hashes)
 
     if ids:
         wanted = [value.strip() for value in ids if value.strip()]

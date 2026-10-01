@@ -31,7 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from harness import grader, java_grader, java_sandbox, java_toolchain, suites  # noqa: E402
+from harness import grader, java_grader, java_sandbox, java_toolchain, suites, values  # noqa: E402
 from harness.sandbox import SandboxExec, SandboxUnavailable, runner_sha256  # noqa: E402
 
 DOWNLOAD_TIMEOUT = 300
@@ -71,6 +71,43 @@ def download(url: str, target: Path, expected_sha256: str | None, expected_bytes
         raise SystemExit(f"size mismatch for {url}: expected {expected_bytes} bytes, got {size}")
     os.replace(temporary, target)
     return {"downloaded": True, "path": str(target), "sha256": digest, "bytes": size}
+
+
+def undecidable_inputs(task: suites.Task, which: str, payload: dict) -> list[dict]:
+    """Inputs where the canonical's own answer does not satisfy the task's oracle.
+
+    Diagnostic only: these inputs stay in the suite and are still graded. Recording them matters
+    because a handful of them cannot discriminate between a right and a wrong answer at all.
+
+    Recording the canonical's outputs is not the same as checking that it passes. Most oracles
+    compare expected against actual, so feeding the canonical's value in as both sides passes
+    trivially -- but not all of them: `find_zero` ignores the recorded value and checks
+    `abs(_poly(xs, out)) <= atol`, and `surface_Area` / `digit_distance_nums` recompute an
+    alternative. For those, an input can be unpassable by *any* implementation, including the
+    reference, and without this check the task ships as scoreable and every model fails it.
+
+    Found by the first live run: HumanEval/32 (`find_zero`) has 6 of 788 plus inputs where the
+    canonical root's residual is ~0.002 against an atol of 1e-4, because the polynomial's largest
+    term is ~4e13 and double precision cannot do better than ~0.009 there. The task is *not*
+    skipped and no input is dropped -- that would make the suite easier than EvalPlus and the
+    numbers incomparable. It is reported so the limit is visible.
+    """
+    raw_inputs = task.base_input if which == "base" else task.plus_input
+    expected = payload["expected"]
+    found = []
+    for index, raw in enumerate(raw_inputs):
+        if index >= len(expected):
+            break
+        try:
+            value = values.decode(expected[index])
+        except values.DecodeError:
+            continue
+        passed, oracle = grader.compare_output(task.dataset, task.entry_point, raw,
+                                               value, value, task.atol)
+        if not passed:
+            found.append({"index": index, "oracle": oracle or "same()",
+                          "canonical": values.brief(expected[index], 60)})
+    return found
 
 
 def compute_expected(sandbox: SandboxExec, task: suites.Task, which: str,
@@ -282,6 +319,7 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
     directory.mkdir(parents=True, exist_ok=True)
 
     skipped: dict[str, str] = {}
+    oracle_notes: dict[str, dict] = {}
     existing = suites.load_skipped(suite_name) if not recompute else {}
     computed = reused = 0
     started = time.monotonic()
@@ -311,6 +349,7 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
             payload, reason = compute_expected(sandbox, task, which, wall_seconds, cpu_seconds)
             if reason is not None:
                 break
+            payload["oracleUndecidableInputs"] = undecidable_inputs(task, which, payload)
             payloads[which] = payload
         if reason is not None:
             skipped[task.task_id] = reason
@@ -342,6 +381,18 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
         computed += 1
         base_inputs += payloads["base"]["inputs"]
         plus_inputs += payloads["plus"]["inputs"]
+        undecidable = {which: payloads[which]["oracleUndecidableInputs"]
+                       for which in ("base", "plus")
+                       if payloads[which]["oracleUndecidableInputs"]}
+        if undecidable:
+            oracle_notes[task.task_id] = {
+                which: {"count": len(items), "ofInputs": payloads[which]["inputs"],
+                        "oracle": items[0]["oracle"], "firstIndex": items[0]["index"]}
+                for which, items in undecidable.items()}
+            print(f"  [{index}/{len(tasks)}] {task.task_id} NOTE -- the oracle cannot decide "
+                  + ", ".join(f"{len(items)}/{payloads[w]['inputs']} {w} inputs"
+                              for w, items in undecidable.items())
+                  + " (the canonical's own answer is rejected there); kept in the suite")
         total_seconds = sum(payloads["plus"]["times"]) + sum(payloads["base"]["times"])
         slowest.append((total_seconds, task.task_id))
         if computed % 20 == 0 or index == len(tasks):
@@ -370,6 +421,7 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
         "plusInputs": plus_inputs,
         "suiteDigest": suite.digest,
         "elapsedSeconds": round(time.monotonic() - started, 1),
+        "oracleUndecidableInputs": oracle_notes,
         "slowestCanonicalTasks": [
             {"taskId": task_id, "canonicalSeconds": round(seconds, 3)}
             for seconds, task_id in sorted(slowest, reverse=True)[:10]],
@@ -378,6 +430,9 @@ def prepare_suite(suite_name: str, sandbox: SandboxExec, force: bool = False,
     print(f"  expected cached  : {summary['tasksPrepared']} "
           f"(computed {computed}, reused {reused})")
     print(f"  skipped          : {summary['tasksSkipped']}")
+    if oracle_notes:
+        print(f"  oracle undecided : {len(oracle_notes)} task(s) have inputs their oracle cannot "
+              f"decide: {', '.join(sorted(oracle_notes))} (kept, see notes.md)")
     print(f"  inputs per suite : base {base_inputs}, plus {plus_inputs}")
     print(f"  inputs per task  : base {base_inputs / max(1, summary['tasksPrepared']):.1f}, "
           f"plus {plus_inputs / max(1, summary['tasksPrepared']):.1f} (mean)")

@@ -1,0 +1,25 @@
+{
+  "id": "algo-toposort",
+  "title": "Kahn's topological sort with alphabetical tie-breaking",
+  "category": "algorithms",
+  "java8Features": [
+    "PriorityQueue",
+    "TreeSet",
+    "in-degree counting",
+    "Map iteration"
+  ],
+  "testCount": 15,
+  "contract": "Edges go key -> each element of its value list (key comes first). Every node named as a key or inside a value list appears exactly once. Ready nodes are emitted in ascending alphabetical order, making output deterministic. Null or empty value lists mean no outgoing edges; duplicate edges are ignored; a null graph is empty. A cycle throws IllegalArgumentException whose message names at least one node in the cycle -- the exact wording is not graded, only the type and that a cycle node is mentioned.",
+  "notShownInJavadoc": [
+    "alphabetical ties among independent nodes",
+    "a node appearing only in a value list",
+    "dependency order overriding alphabetical order",
+    "a diamond",
+    "isolated nodes interleaved",
+    "null value list",
+    "duplicate edges",
+    "a longer chain",
+    "two-node, self and three-node cycles",
+    "a cycle alongside an acyclic part"
+  ]
+}

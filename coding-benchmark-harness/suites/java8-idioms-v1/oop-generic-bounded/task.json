@@ -1,0 +1,21 @@
+{
+  "id": "oop-generic-bounded",
+  "title": "Generic maxOf with a bounded type parameter",
+  "category": "oop-interfaces",
+  "java8Features": [
+    "<T extends Comparable<? super T>>",
+    "Optional.ofNullable",
+    "Collection iteration"
+  ],
+  "testCount": 12,
+  "contract": "Returns the maximum by natural ordering as an Optional; empty for null or all-null input. Null elements ignored. The first of several equal maxima is returned. Must use compareTo, not field access.",
+  "notShownInJavadoc": [
+    "all-null collection",
+    "nulls around a real maximum",
+    "String and BigDecimal element types",
+    "a type whose compareTo reverses field order",
+    "identity of the first equal maximum",
+    "Set input",
+    "negative values"
+  ]
+}

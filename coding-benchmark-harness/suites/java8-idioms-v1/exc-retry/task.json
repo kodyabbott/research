@@ -1,0 +1,24 @@
+{
+  "id": "exc-retry",
+  "title": "Retry a Callable only for selected exceptions",
+  "category": "exceptions-validation",
+  "java8Features": [
+    "Callable",
+    "Predicate<Exception>",
+    "exception chaining with a cause",
+    "custom unchecked exception"
+  ],
+  "testCount": 18,
+  "contract": "Attempts the task up to maxAttempts times. Returns the first successful value immediately, making no further attempt. On failure, retries only while the predicate accepts the exception and attempts remain; otherwise throws RetryExhaustedException whose cause is the last exception and whose getAttempts() is the number of attempts made. Null task or predicate, or maxAttempts below 1, throw IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "success on attempt k stops there",
+    "attempt counting on exhaustion",
+    "the cause is the last exception not the first",
+    "the exception message text",
+    "a non-retryable exception stops after one attempt",
+    "predicate selecting by exception type",
+    "maxAttempts of 1",
+    "a null result counts as success",
+    "all three argument rejections"
+  ]
+}

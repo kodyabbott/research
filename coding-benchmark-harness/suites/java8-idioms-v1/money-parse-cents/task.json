@@ -1,0 +1,22 @@
+{
+  "id": "money-parse-cents",
+  "title": "Parse money strings to whole cents",
+  "category": "money",
+  "java8Features": [
+    "Pattern/Matcher",
+    "String.replace",
+    "Long.parseLong",
+    "Math.multiplyExact"
+  ],
+  "testCount": 20,
+  "contract": "Trims, accepts an optional $ and an optional - on either side of it, grouping commas in 3-digit groups, exactly zero or two decimal places, and parentheses meaning negative. Returns whole cents. Null, blank, one or three decimals, bad grouping, unbalanced parentheses, both parentheses and a minus, and any other text throw IllegalArgumentException.",
+  "notShownInJavadoc": [
+    "surrounding whitespace",
+    "minus on either side of the dollar sign",
+    "zero",
+    "two grouping commas",
+    "dollar sign inside parentheses",
+    "a large in-range value",
+    "all eight rejection cases"
+  ]
+}
