@@ -787,3 +787,14 @@ Reconstructed from the run records, `logs/run_code_night.log` and the dedicated 
 - **Ollama 0.35.0, not 0.34.4.** The app updated itself and the 0.34.4 binary is gone. The dedicated server on 127.0.0.1:11436 runs with the same store (`stock-qwen-benchmark/ollama`) and the same environment as before (`OLLAMA_NUM_PARALLEL=1`, `OLLAMA_MAX_LOADED_MODELS=1`, `OLLAMA_CONTEXT_LENGTH=8192`, `OLLAMA_NO_CLOUD=1`). The model digests match the earlier records (27B `8f5fb6b7...`, Flash-Next `ea16de1a...`). The thinking-on and thinking-off records therefore differ in server version, and the comparison must say so.
 
 **Early observation (Flash-Next, first 108 tasks):** 8 tasks (HumanEval/32, 36, 39, 47, 75, 76, 91, 99) ended `truncated`: the full 16,384-token budget went to thinking and produced no code. The two inspected are repetition loops, not long reasoning: HumanEval/47's thinking ends in an endless `assert candidate([1, 2, 3, ... 72,` list, and HumanEval/99's in thousands of `0`s. The run is greedy (temperature 0, `greedy-v1`). **TODO:** verify against the Qwen3.8 model card whether Qwen advises against greedy decoding in thinking mode. A thinking-on score under greedy decoding may say more about the sampling profile than about thinking.
+
+**Restart results** (both completed, `protocolValid: true`, suite digest `3dcb7527...`, Ollama 0.35.0, `--task-seconds 1200`, greedy):
+
+| HumanEval+ | Thinking off (0.34.4) | Thinking on (0.35.0) | Truncated (on) |
+|---|---|---|---|
+| Qwen3.8-27B Q8_0 | 149/164 (90.9%), base 160 | **150/164 (91.5%)**, base 160 | 1 |
+| Qwen3.8-Flash-Next UD-Q3_K_XL | 152/164 (92.7%), base 159 | **144/164 (87.8%)**, base 149 | 15 |
+
+- Flash-Next (10:23-12:48): 15 tasks hit the 16,384-token cap with no code (HumanEval/32, 36, 39, 47, 75, 76, 91, 99, 108, 124, 125, 129, 145, 146, 157); 10 of them passed with thinking off. Thinking on fails 12 tasks that off passes and fixes 4 (113, 116, 140, 163). Median 650 generated tokens, 13.7 s per task.
+- 27B (12:48-14:57): one truncation (HumanEval/39, 914 s). Thinking on fails HumanEval/10 and 130, which off passes, and fixes 115, 116 and 125. Median 689 generated tokens, 37.9 s per task. Its first 39 tasks gave the same class counts as the timed-out 0.34.4 run (37 pass, 1 runtime-error, 1 wrong-answer); per-task outputs not compared.
+- Greedy thinking hurts Flash-Next through repetition loops and barely moves the 27B. Comparisons across the two columns also cross a server-version change.
